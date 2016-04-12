@@ -1,7 +1,7 @@
 About
 =====
 
-*oz-gui-default* is GUI written in Ember disitrbuted with OZ worker.
+*oz-gui-default* is GUI written in Ember distributed with OZ worker.
 
 Goals
 -----
