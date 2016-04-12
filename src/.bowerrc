@@ -1,1 +1,4 @@
-../oz-gui-default/src/.bowerrc
+{
+  "directory": "bower_components",
+  "analytics": false
+}
