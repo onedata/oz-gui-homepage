@@ -1,0 +1,1 @@
+../../../../oz-gui-default/src/tests/integration/components/alias-panel-test.js

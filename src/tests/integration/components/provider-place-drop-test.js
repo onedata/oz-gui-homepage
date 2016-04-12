@@ -1,0 +1,1 @@
+../../../../oz-gui-default/src/tests/integration/components/provider-place-drop-test.js

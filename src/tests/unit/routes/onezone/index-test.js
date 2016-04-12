@@ -1,0 +1,1 @@
+../../../../../oz-gui-default/src/tests/unit/routes/onezone/index-test.js

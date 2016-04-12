@@ -1,0 +1,1 @@
+../../../../oz-gui-default/src/app/locales/en/config.js

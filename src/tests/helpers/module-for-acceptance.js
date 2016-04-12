@@ -1,0 +1,1 @@
+../../../oz-gui-default/src/tests/helpers/module-for-acceptance.js

@@ -1,0 +1,1 @@
+../../../../oz-gui-default/src/tests/integration/components/onezone-top-bar-test.js

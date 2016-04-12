@@ -1,0 +1,1 @@
+../../../oz-gui-default/src/app/components/providers-accordion.js
