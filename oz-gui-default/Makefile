@@ -14,7 +14,7 @@ deps:
 build_dev: deps
 	cd $(SRC_DIR) && ember build -dev --output-path=../$(REL_DIR)
 
-build_prod:
+build_prod: deps
 	cd $(SRC_DIR) && ember build -prod --output-path=../$(REL_DIR)
 
 doc:
