@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 
 /**
   Makes an element fixed positioned, with coordinates (left, top) of its parent.
