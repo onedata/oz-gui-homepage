@@ -1,5 +1,5 @@
 gui:
-  image: docker.onedata.org/oz-gui-default:TODO
+  image: docker.onedata.org/oz-gui-default:VFS-1825
   restart: always
   volumes:
     - /var/www/html
