@@ -1,1 +1,3 @@
-../oz-gui-default/src/.watchmanconfig
+{
+  "ignore_dirs": ["tmp", "dist"]
+}

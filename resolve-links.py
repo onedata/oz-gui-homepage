@@ -33,7 +33,7 @@ overrides = []
 count_homepage_files = 0
 
 # Excluded directories
-exclude = set(['node_modules', 'bower_components', 'tmp'])
+exclude = set(['node_modules', 'bower_components', 'tmp', 'dist'])
 
 # Walk the oz-gui-default dir and resolve links
 for root, dirs, files in os.walk(def_gui_src_path, topdown=True):
