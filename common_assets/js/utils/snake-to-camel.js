@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 
 /**
  * Converts some-string string to someString (snake case to camel case).
