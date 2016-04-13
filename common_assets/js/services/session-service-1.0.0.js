@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 
 /**
  * Provides a session abstraction using ember-simple-auth. The session validity
