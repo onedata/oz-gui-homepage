@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 /**
  * Provides communication with Server.
  * @module services/server
