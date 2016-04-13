@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 
 /**
  * Custom adapter that handles model synchronization between client and server

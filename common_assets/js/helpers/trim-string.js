@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 import Ember from 'ember';
 
 export function trimString(params/*, hash*/) {

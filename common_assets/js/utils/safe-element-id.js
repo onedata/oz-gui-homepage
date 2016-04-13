@@ -1,4 +1,4 @@
-// jshint esversion: 6
+// jshint esnext: true
 
 /**
  * Convert string to safe element id for HTML.

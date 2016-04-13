@@ -1,3 +1,33 @@
+/// Import OpenSans Regular
+@font-face {
+    font-family: 'Open Sans';
+    src: url('OpenSans-Regular-webfont.eot');
+    src: local('Open Sans'), local('OpenSans'),
+         url('fonts/opensans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/opensans/OpenSans-Regular-webfont.woff') format('woff'),
+         url('fonts/opensans/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('fonts/opensans/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/// Import OpenSans Bold
+@font-face {
+    font-family: 'Open Sans';
+    src: url('OpenSans-Bold-webfont.eot');
+    src: local('Open Sans'), local('OpenSans'),
+         url('fonts/opensans/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/opensans/OpenSans-Bold-webfont.woff') format('woff'),
+         url('fonts/opensans/OpenSans-Bold-webfont.ttf') format('truetype'),
+         url('fonts/opensans/OpenSans-Bold-webfont.svg#open_sansbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/// Icons-fonts
+$icomoon-font-path: 'fonts/oneicons';
+@import 'oneicons/style.scss';
+
 .one-row {
   display: table;
   > * {
@@ -11,6 +41,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .route-loading {
