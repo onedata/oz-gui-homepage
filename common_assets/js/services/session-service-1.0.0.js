@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 /**
  * Provides a session abstraction using ember-simple-auth. The session validity
  * is resolved via WebSocket.
