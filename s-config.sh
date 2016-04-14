@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # we need to set dependency to compile image.
-DOCKER_IMAGE_NAME="oz-gui-homepage"
+DOCKER_IMAGE_NAME="oz-gui-default"
 DOCKER_REPOSITORY="docker.onedata.org"
 
 # uncomment this variable to enable debug logging to file
