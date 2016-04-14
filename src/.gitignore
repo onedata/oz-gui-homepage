@@ -223,3 +223,4 @@ tests/unit/services/top-menu-test.js
 tests/unit/utils/safe-element-id-test.js
 tests/unit/utils/snake-to-camel-test.js
 vendor/.gitkeep
+vendor/majonez
