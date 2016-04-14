@@ -133,6 +133,8 @@ app/utils/snake-to-camel.js
 config/environment.js
 public/crossdomain.xml
 public/robots.txt
+public/assets/fonts/oneicons
+public/assets/fonts/opensans
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.eot
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.svg
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.ttf
