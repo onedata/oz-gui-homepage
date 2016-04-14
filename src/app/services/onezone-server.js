@@ -1,1 +1,0 @@
-../../../oz-gui-default/src/app/services/onezone-server.js

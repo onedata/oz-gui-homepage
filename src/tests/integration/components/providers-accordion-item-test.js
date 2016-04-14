@@ -1,1 +1,0 @@
-../../../../oz-gui-default/src/tests/integration/components/providers-accordion-item-test.js

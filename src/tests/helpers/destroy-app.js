@@ -1,1 +1,0 @@
-../../../oz-gui-default/src/tests/helpers/destroy-app.js

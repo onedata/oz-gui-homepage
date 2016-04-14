@@ -1,1 +1,0 @@
-../../../../oz-gui-default/src/tests/integration/components/account-item-test.js

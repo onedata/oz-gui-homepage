@@ -1,1 +1,0 @@
-../../../oz-gui-default/src/app/components/alias-panel.js

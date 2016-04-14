@@ -1,1 +1,0 @@
-../../../oz-gui-default/src/app/adapters/application.js
