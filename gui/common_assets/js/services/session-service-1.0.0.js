@@ -22,6 +22,7 @@ export default SessionService.extend({
   sessionInitReject: null,
   sessionRestoreResolve: null,
   sessionRestoreReject: null,
+  
 
   // This flag indicates if the client has active session. Null when
   // the session validity hasn't been resolved yet.
