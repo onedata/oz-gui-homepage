@@ -8,6 +8,7 @@ all: build_dev
 rel: build_prod
 
 deps:
+	./inject-default-gui.py
 	cd $(SRC_DIR) && npm install
 	cd $(SRC_DIR) && bower install --allow-root
 
