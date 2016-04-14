@@ -26,6 +26,8 @@ testem.log
 app/app.js
 app/index.html
 app/router.js
+app/adapters/application.js
+app/authenticators/basic.js
 app/components/.gitkeep
 app/components/account-add.js
 app/components/account-item.js
@@ -77,6 +79,8 @@ app/routes/home/logout.js
 app/routes/onezone/index.js
 app/services/onezone-server.js
 app/services/page-title-list.js
+app/services/server.js
+app/services/session.js
 app/services/top-menu.js
 app/session-stores/application.js
 app/styles/app.scss
@@ -89,6 +93,8 @@ app/styles/main-menu.scss
 app/styles/onezone.scss
 app/styles/provider-place-drop.scss
 app/styles/provider-place.scss
+app/styles/oneicons/style.scss
+app/styles/oneicons/variables.scss
 app/templates/application.hbs
 app/templates/home.hbs
 app/templates/onezone.hbs
@@ -126,6 +132,8 @@ app/utils/snake-to-camel.js
 config/environment.js
 public/crossdomain.xml
 public/robots.txt
+public/assets/fonts/oneicons
+public/assets/fonts/opensans
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.eot
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.svg
 public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.ttf

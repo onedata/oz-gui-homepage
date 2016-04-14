@@ -68,8 +68,11 @@ def resolve_symlink(_original_path, _path_to_check, _rel_path, _results):
     if os.path.islink(_path_to_check):
         orig_link_target = os.readlink(_original_path)
         curr_link_target = os.readlink(_path_to_check)
+        print(orig_link_target, curr_link_target)
         if orig_link_target == curr_link_target:
+            print('the same')
             _results['count_links_ok'] += 1
+            _results['to_ignore'].append(_rel_path)
         else:
             abs_curr_link_target = os.path.abspath(
                 os.path.join(os.path.dirname(_path_to_check),
@@ -81,7 +84,6 @@ def resolve_symlink(_original_path, _path_to_check, _rel_path, _results):
             else:
                 _results['count_links_broken'] += 1
                 _results['links_broken'].append(_rel_path)
-        pass
     elif os.path.isdir(_path_to_check):
         _results['count_homepage_files'] += 1
         _results['homepage_files'].append(_rel_path)
