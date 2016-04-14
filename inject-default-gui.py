@@ -104,7 +104,8 @@ for root, dirs, files in os.walk(def_gui_src_path, topdown=True):
                 homepage_files.append(rel_dir_path)
             else:
                 link_target = os.readlink(abs_dir_path)
-                os.symlink(link_target, path_to_check)
+                symlink(link_target, path_to_check)
+                to_ignore.append(rel_dir_path)
                 count_links_created += 1
 
     for file in files:
