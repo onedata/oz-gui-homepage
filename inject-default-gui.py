@@ -182,6 +182,8 @@ for root, dirs, files in os.walk(src_path, topdown=True):
                     results['links_broken'].append(rel_file_path)
 
 # Modify gitignore - add all files that were copied from default gui
+# Sort to ignore list - diffs of gitignore are clearer
+results['to_ignore'].sort()
 gitignore_path = os.path.join(script_dir, 'src', '.gitignore')
 with open(gitignore_path) as gitignore_read:
     content = gitignore_read.readlines()
