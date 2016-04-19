@@ -68,9 +68,7 @@ def resolve_symlink(_original_path, _path_to_check, _rel_path, _results):
     if os.path.islink(_path_to_check):
         orig_link_target = os.readlink(_original_path)
         curr_link_target = os.readlink(_path_to_check)
-        print(orig_link_target, curr_link_target)
         if orig_link_target == curr_link_target:
-            print('the same')
             _results['count_links_ok'] += 1
             _results['to_ignore'].append(_rel_path)
         else:
