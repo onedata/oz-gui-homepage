@@ -66,10 +66,12 @@ app/models/authorizer.js
 app/models/clienttoken.js
 app/models/provider.js
 app/models/space.js
+app/router.js
 app/routes/.gitkeep
 app/routes/application.js
 app/routes/home.js
 app/routes/home/_page-base.js
+app/routes/home/index.js
 app/routes/home/login.js
 app/routes/home/logout.js
 app/routes/index.js
@@ -81,6 +83,7 @@ app/services/server.js
 app/services/session.js
 app/services/top-menu.js
 app/session-stores/application.js
+app/styles/app.scss
 app/styles/bootstrap-config.scss
 app/styles/colors.scss
 app/styles/dropdowns.scss
@@ -116,7 +119,9 @@ app/templates/components/spaces-accordion-item.hbs
 app/templates/components/spaces-accordion.hbs
 app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
+app/templates/components/top-bar.hbs
 app/templates/home.hbs
+app/templates/home/index.hbs
 app/templates/home/login.hbs
 app/templates/home/logout.hbs
 app/templates/onezone.hbs
