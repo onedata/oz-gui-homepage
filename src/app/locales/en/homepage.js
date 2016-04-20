@@ -1,6 +1,7 @@
 export default {
   application: {
     homepage: 'homepage',
+    onezone: 'manage account',
 
     getStarted: 'get started',
     documentation: 'documentation',
