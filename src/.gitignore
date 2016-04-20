@@ -59,8 +59,8 @@ app/index.html
 app/initializers/i18n.js
 app/initializers/inject-session.js
 app/instance-initializers/session-events.js
+app/locales/en/base.js
 app/locales/en/config.js
-app/locales/en/translations.js
 app/models/.gitkeep
 app/models/authorizer.js
 app/models/clienttoken.js
@@ -104,7 +104,6 @@ app/templates/components/one-icon.hbs
 app/templates/components/onezone-atlas.hbs
 app/templates/components/onezone-modal-container.hbs
 app/templates/components/onezone-sidebar.hbs
-app/templates/components/onezone-top-bar.hbs
 app/templates/components/panel-onezone.hbs
 app/templates/components/provider-place-drop.hbs
 app/templates/components/provider-place.hbs

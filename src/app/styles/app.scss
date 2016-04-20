@@ -2,8 +2,3 @@
 @import "app-default";
 @import "index";
 @import "owl-carousel";
-
-// TODO: HACK: force navbar brand to be displayed above navbar, should be ported to gui-default!
-.navbar-brand {
-  z-index: 2000;
-}
