@@ -16,27 +16,35 @@ Getting Started
 ---------------
 
 To build a development release of GUI:
+
 ```
 make             # run natively (requires npm, bower, ember)
 ./make.py        # run in docker (onedata/builder) that has all deps
 ```
 
+
 To build a production release of GUI:
+
 ```
 make rel         # run natively (requires npm, bower, ember)
 ./make.py rel    # run in docker (onedata/builder) that has all deps
 ```
 
+
 To package a built release into a static docker:
+
 ```
 ./sr-dockerbuild
 ```
 
+
 To package a built release into a static docker and 
 push it to docker repo: 
+
 ```
 ./sr-dockerbuild --push --remove
 ```
+
 
 To get more info on ****sr-dockerbuild.sh**** usage: 
 ```
