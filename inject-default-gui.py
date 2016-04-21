@@ -10,10 +10,11 @@ This script is used to automate maintenance of dependency between
 oz-gui-default and oz-gui-homepage, which works as follows.
 
 oz-gui-default is included in this project as a subtree. In src dir, there are
-symbolic links to all of the files of oz-gui-default. This ensures that the
-same codebase is used. Programmer may decide to override a file, and when he
-places a regular file in src dir, it will NOT be automatically replaced by a
-symbolic link. He may also create new files that do not exist in oz-gui-default
+copies of all the files of oz-gui-default. This ensures that the same codebase
+is used. All such files are read-only and are automatically added to .gitignore.
+Programmer may decide to override a file, and when he places a non-readonly
+file in src dir, it will NOT be automatically replaced by a copy from
+oz-gui-default. He may also create new files that do not exist in oz-gui-default
 and they will stay untouched.
 """
 
