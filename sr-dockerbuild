@@ -4,7 +4,7 @@
 source $(dirname $0)/s-config.sh
 
 # this function takes two parameters:
-# @param exitcode - it's a last operation exit code 0 -succees
+# @param exitcode - it's a last operation exit code 0 - success
 # @param msg - this is optional message to be displayed on error
 exit_on_error(){
     local exitcode=$1
