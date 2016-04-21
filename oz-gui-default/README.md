@@ -65,6 +65,7 @@ To find all broken symbolic links (those that point to nothing):
 ```
 ./find_broken_links.sh
 ```
+<br />
 
 Support
 -------
