@@ -1,0 +1,1 @@
+../../../gui/common_assets/js/components/spin-button-onedata.js

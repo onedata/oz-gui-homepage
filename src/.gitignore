@@ -31,6 +31,7 @@ app/components/account-add.js
 app/components/account-item.js
 app/components/accounts-list.js
 app/components/alias-panel.js
+app/components/common-loader.js
 app/components/main-menu-item.js
 app/components/navbar-toggle.js
 app/components/one-icon.js
@@ -47,6 +48,7 @@ app/components/social-box-list.js
 app/components/social-box.js
 app/components/spaces-accordion-item.js
 app/components/spaces-accordion.js
+app/components/spin-button-onedata.js
 app/components/tokens-list-item.js
 app/components/tokens-list.js
 app/components/top-bar.js
@@ -61,6 +63,7 @@ app/initializers/inject-session.js
 app/instance-initializers/session-events.js
 app/locales/en/base.js
 app/locales/en/config.js
+app/mixins/promise-loading.js
 app/models/.gitkeep
 app/models/authorizer.js
 app/models/clienttoken.js
@@ -75,6 +78,7 @@ app/routes/home/logout.js
 app/routes/index.js
 app/routes/onezone.js
 app/routes/onezone/index.js
+app/services/common-loader.js
 app/services/onezone-server.js
 app/services/page-title-list.js
 app/services/server.js
@@ -83,21 +87,25 @@ app/services/top-menu.js
 app/session-stores/application.js
 app/styles/bootstrap-config.scss
 app/styles/colors.scss
+app/styles/common-loader.scss
 app/styles/dropdowns.scss
 app/styles/fonts.scss
 app/styles/login.scss
 app/styles/main-menu.scss
+app/styles/onedata-common.scss
 app/styles/oneicons/style.scss
 app/styles/oneicons/variables.scss
 app/styles/onezone.scss
 app/styles/provider-place-drop.scss
 app/styles/provider-place.scss
+app/styles/spin-button-base.scss
 app/templates/application.hbs
 app/templates/components/.gitkeep
 app/templates/components/account-add.hbs
 app/templates/components/account-item.hbs
 app/templates/components/accounts-list.hbs
 app/templates/components/alias-panel.hbs
+app/templates/components/common-loader.hbs
 app/templates/components/main-menu-item.hbs
 app/templates/components/navbar-toggle.hbs
 app/templates/components/one-icon.hbs
@@ -113,6 +121,7 @@ app/templates/components/social-box-list.hbs
 app/templates/components/social-box.hbs
 app/templates/components/spaces-accordion-item.hbs
 app/templates/components/spaces-accordion.hbs
+app/templates/components/spin-button-onedata.hbs
 app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
 app/templates/home.hbs
@@ -147,6 +156,7 @@ public/assets/images/index/why-infrastructure.svg
 public/assets/images/index/why-opendata.svg
 public/assets/images/index/why-performance.svg
 public/assets/images/index/why-virtualized.svg
+public/assets/images/loading-128.gif
 public/assets/images/loading-32-inverted.gif
 public/assets/images/loading-32.gif
 public/assets/images/login/zone-arrow.svg
@@ -155,7 +165,6 @@ public/assets/images/logo.svg
 public/assets/images/main-background.jpg
 public/assets/images/navbar-close.svg
 public/assets/images/onezone/arrow-down.svg
-public/assets/images/onezone/onezone-atlas-calibrated.svg
 public/assets/images/onezone/onezone-atlas.svg
 public/crossdomain.xml
 public/robots.txt

@@ -36,6 +36,7 @@ $body-font: 'Open Sans';
 $icomoon-font-path: "fonts/oneicons";
 @import "oneicons/style.scss";
 
+@import "onedata-common";
 @import "colors";
 @import "fonts";
 @import "main-menu";
@@ -44,6 +45,7 @@ $icomoon-font-path: "fonts/oneicons";
 @import "provider-place";
 @import "provider-place-drop";
 @import "dropdowns";
+@import "common-loader";
 
 html, body {
   height: 100%;
@@ -337,4 +339,12 @@ input {
 }
 .loading-label {
   padding-left: 15px;
+}
+
+// loading state for sidebar element
+.sidebar-item-is-loading {
+  * {
+    pointer-events: none;
+    color: rgba(white, 0.5) !important;
+  }
 }
