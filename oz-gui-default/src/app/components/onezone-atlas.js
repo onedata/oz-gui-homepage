@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+// TODO: clip the south of atlas
+// - new aspect ratio (to size of clipped image) - compute from stored image size?
+// - centerY should be computed regards to new atlas center position (percentaage)
+//   because its not anymore in the height/2
+// - provider-place component should use width/height other than width/height of
+//   displayed image - it should be a separate property of onezone-atlas
+
 /**
  * A world map, on which providers are placed.
  * @module components/onezone-atlas
@@ -10,8 +17,11 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['onezone-atlas'],
 
+  // Map size (rasterized): 2058 × 1512
+  // Aspect ratio ~: 1.361111112
+
   /** Atlas image aspect ratio - needed when recomputing new atlas size */
-  ATLAS_AR: 2.0347372134038797,
+  ATLAS_AR: 1.361111111112,
 
   /** Resizes a atlas to fit its container, keeping aspect ratio */
   resizeToFit: function() {
@@ -34,11 +44,17 @@ export default Ember.Component.extend({
   },
 
   widthChanged: function() {
-    this.$().width(this.get('width'));
+    this.$().css({
+      width: this.get('width'),
+      backgroundSize: `${this.get('width')} ${this.get('height')}`
+    });
   }.observes('width'),
 
   heightChanged: function() {
-    this.$().height(this.get('height'));
+    this.$().css({
+      height: (this.get('height')),
+      backgroundSize: `${this.get('width')} ${this.get('height')}`
+    });
   }.observes('height'),
 
   centerX: function() {

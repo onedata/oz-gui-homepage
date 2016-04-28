@@ -145,8 +145,9 @@ $search-box-height: 36px;
     margin-left: auto;
     margin-right: auto;
     background-image: url("/assets/images/onezone/onezone-atlas.svg");
+    // size will be set by script
     background-size: cover;
-    background-position: center center;
+    background-position: top left;
     background-repeat: no-repeat;
   }
 }
