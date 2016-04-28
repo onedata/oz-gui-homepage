@@ -58,6 +58,11 @@ export default Ember.Component.extend({
     $(window).scroll(updater);
   },
 
+  click(event) {
+    event.preventDefault();
+    return false;
+  },
+
   actions: {
     goToFiles() {
       this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id')).then((url) => {
