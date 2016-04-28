@@ -3,7 +3,11 @@
     data-toggle="dropdown" role="button" aria-haspopup="true"
     aria-expanded="false">
     <div class="account-icon account-add-icon">
-      {{one-icon icon='add'}}
+      {{#if isLoading}}
+        <div class="loading-throbber inverted with-background"></div>
+      {{else}}
+        {{one-icon icon='add'}}
+      {{/if}}
     </div>
     <div class="account-label connect-new">
       {{t 'onezone.accountAdd.connectNewAccount'}}
@@ -11,7 +15,6 @@
   </a>
   <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
     {{!-- TODO: style and copy button --}}
-    {{!-- TODO: loading icon --}}
     {{#each authProviders as |authProvider|}}
       {{account-item type=authProvider.type label=authProvider.label
         mode="connect" action="connectNewAccount"}}
