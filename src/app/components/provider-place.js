@@ -18,18 +18,15 @@ export default Ember.Component.extend({
   /** A provider model that will be represented on map */
   provider: null,
 
-  /*** Multipliers used to compute size of circle relative to world map size ***/
-  /*** Manipulate 0.5 multiplier to change relative size of circle ***/
-  ICON_AR_X: 0.052344031*0.5,
-  ICON_AR_Y: 0.10648918*0.5,
+  // TODO: map to provider props
+  latitude: Ember.computed.alias('provider.latitude'),
+  longitude: Ember.computed.alias('provider.longitude'),
 
   width: function() {
-    return this.get('atlas.width')*this.ICON_AR_X;
+    return this.get('atlas.width')*0.02;
   }.property('atlas.width'),
 
-  height: function() {
-    return this.get('atlas.height')*this.ICON_AR_Y;
-  }.property('atlas.height'),
+  height: Ember.computed.alias('width'),
 
   sizeChanged: function() {
     let circle = this.$().find('.circle');
@@ -42,17 +39,20 @@ export default Ember.Component.extend({
   }.observes('width', 'height'),
 
   posY: function() {
-    return this.get('atlas.centerY') -
+    let h = this.get('atlas.height');
+    let ltr = this.get('latitude') * (Math.PI/180);
 
-      (this.get('provider.latitude')/90)*(this.get('atlas.height')/2) -
-      (this.get('height')/2);
-  }.property('provider.latitude', 'atlas.centerY'),
+    let y = 1.25 * Math.log(Math.tan(Math.PI / 4 + 0.4 * ltr));
+    let yp = this.get('atlas.centerY') - (h/2) * y * (1/2.303412543) - this.get('height')/2;
+    console.debug(`lat ${ltr} -> y ${y} -> y' ${yp}`);
+    return yp;
+  }.property('latitude', 'atlas.centerY', 'height'),
 
   posX: function() {
     return this.get('atlas.centerX') +
-      (this.get('provider.longitude')/180)*(this.get('atlas.width')/2) -
+      (this.get('longitude')/180)*(this.get('atlas.width')/2) -
       (this.get('width')/2);
-  }.property('provider.longitude', 'atlas.centerX'),
+  }.property('longitude', 'atlas.centerX', 'atlas.width', 'width'),
 
   positionChanged: function() {
     if (this.get('posX') && this.get('posY')) {
