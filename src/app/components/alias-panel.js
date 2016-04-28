@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import PromiseLoadingMixin from '../mixins/promise-loading';
 
 /**
  * One of main sidebar items: allows to change alias.
@@ -7,11 +8,14 @@ import Ember from 'ember';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
+export default Ember.Component.extend(PromiseLoadingMixin, {
   store: Ember.inject.service(),
   onezoneServer: Ember.inject.service(),
 
   classNames: ['secondary-accordion', 'alias-panel', 'accordion-content'],
+  classNameBindings: ['isLoading:sidebar-item-is-loading'],
+
+  isLoading: false,
 
   /** Returns true if aliasText is not blank - used for showing no alias message otherwise */
   correctAlias: function() {
@@ -29,7 +33,7 @@ export default Ember.Component.extend({
 
   /** Fetch alias from server on init - sets aliasText */
   updateAliasText: function() {
-    this.get('onezoneServer').getUserAlias().then(
+    this.promiseLoading(this.get('onezoneServer').getUserAlias()).then(
       (alias) => {
         this.set('aliasText', alias);
       },
@@ -58,19 +62,23 @@ export default Ember.Component.extend({
     },
 
     endEditAlias: function(aliasName) {
-      try {
-        this.get('onezoneServer').setUserAlias(aliasName).then(
-          (newAlias) => {
-            this.set('aliasText', newAlias);
-            console.debug('Set alias successful');
-          },
-          (error) => {
-            window.alert('Set alias failed: ' + error.message);
-          }
-        );
-      } finally {
-        this.set('aliasEditing', false);
-      }
+      this.set('isLoading', true);
+      let setAliasPromise = this.get('onezoneServer').setUserAlias(aliasName);
+      setAliasPromise.then(
+        (newAlias) => {
+          this.set('aliasText', newAlias);
+          console.debug('Set alias successful');
+        },
+        (error) => {
+          window.alert('Set alias failed: ' + error.message);
+        }
+      );
+      setAliasPromise.finally(() => {
+        this.setProperties({
+          aliasEditing: false,
+          isLoading: false
+        });
+      });
     }
   }
 });

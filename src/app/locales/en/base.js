@@ -1,6 +1,7 @@
 export default {
   common: {
-    fetchingToken: 'Fetching token...'
+    fetchingToken: 'Fetching token...',
+    loading: 'Loading...'
   },
   application: {
     title: 'Onezone',
