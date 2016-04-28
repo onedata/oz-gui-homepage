@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import PromiseLoadingMixin from '../mixins/promise-loading';
 import bindFloater from '../utils/bind-floater';
 
 /**
@@ -8,9 +9,12 @@ import bindFloater from '../utils/bind-floater';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
+export default Ember.Component.extend(PromiseLoadingMixin, {
   onezoneServer: Ember.inject.service('onezoneServer'),
   classNames: ['account-add', 'account-item'],
+  classNameBindings: ['isLoading:sidebar-item-is-loading'],
+
+  isLoading: false,
   authProviders: null,
 
   didInsertElement() {
@@ -30,13 +34,16 @@ export default Ember.Component.extend({
       plgrid: 'PLGrid OpenID'
     };
 
-    this.get('onezoneServer').getSupportedAuthorizers().then((data) => {
+    this.promiseLoading(
+      this.get('onezoneServer').getSupportedAuthorizers()
+    ).then((data) => {
       data.forEach((authorizerId) => {
         authProviders.push([authorizerId, allAuthProviders[authorizerId]]);
       });
       authProviders = authProviders.map((item) => {
         return {
           type: item[0],
+          // TODO: translate connect by
           label: `Connect by ${item[1]}`
         };
       });
@@ -46,9 +53,16 @@ export default Ember.Component.extend({
 
   actions: {
     connectNewAccount(providerName) {
-      this.get('onezoneServer').getConnectAccountEndpoint(providerName).then((url) => {
-        window.location = url;
-      });
+      this.promiseLoading(
+        this.get('onezoneServer').getConnectAccountEndpoint(providerName)
+      ).then(
+        (url) => {
+          window.location = url;
+        },
+        (error) => {
+          window.alert(`Error getting url to authorizer: ${error.message}`);
+        }
+      );
     }
   }
 });
