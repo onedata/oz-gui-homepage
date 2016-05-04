@@ -1,7 +1,7 @@
 {
-  "name": "onedata-org",
-  "version": "0.0.0",
-  "description": "Small description for onedata-org goes here",
+  "name": "oz-worker-gui",
+  "version": "3.0.0-beta3",
+  "description": "GUI for oz-worker",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -32,7 +32,7 @@
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-ic-ajax": "0.2.4",
     "ember-cli-inject-live-reload": "^1.3.1",
-    "ember-cli-qunit": "^1.0.4",
+    "ember-cli-mocha": "0.10.2",
     "ember-cli-release": "0.2.8",
     "ember-cli-sass": "5.2.1",
     "ember-cli-sri": "^1.2.0",
