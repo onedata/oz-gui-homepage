@@ -12,10 +12,6 @@ ease of maintenance and lowers build times.
 It is able to build a release containing only compiled GUI static files
 and create a static docker with those files.
 
-This repo is an extension of oz-gui-default repo. It includes it as 
-codebase and overrides / extends it. This is done using the script
-**inject-default-gui.py**.
-
 Getting Started
 ---------------
 
@@ -32,13 +28,6 @@ To build a production release of GUI:
 ```
 make rel         # run natively (requires npm, bower, ember)
 ./make.py rel    # run in docker (onedata/builder) that has all deps
-```
-<br />
-
-To inject default gui - copy files shared with oz-gui-default:
-
-```
-./inject-default-gui.py
 ```
 <br />
 
