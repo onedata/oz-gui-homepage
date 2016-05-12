@@ -55,5 +55,8 @@ dockerimage.sha
 # compiled app
 rel
 
+# test results
+src/tests/test-results.xml
+
 # OSX
 .DS_Store
