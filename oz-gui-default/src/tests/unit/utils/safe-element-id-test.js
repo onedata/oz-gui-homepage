@@ -1,10 +1,21 @@
-import safeElementId from '../../../utils/safe-element-id';
-import { module, test } from 'qunit';
+/* jshint expr:true */
+import { expect } from 'chai';
+import {
+  describe,
+  it
+} from 'mocha';
+import safeElementId from 'oz-worker-gui/utils/safe-element-id';
 
-module('Unit | Utility | safe element id');
+describe('safeElementId', function() {
+  it('preserves alphanumeric chars and dashes', function() {
+    expect(safeElementId('hello-world')).to.be.equal('hello-world');
+  });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
-  let result = safeElementId();
-  assert.ok(result);
+  it('eliminates # chars', function() {
+    expect(safeElementId('hello#onedata')).to.be.equal('helloonedata');
+  });
+
+  it('eliminates . chars', function() {
+    expect(safeElementId('hello.onedata')).to.be.equal('helloonedata');
+  });
 });

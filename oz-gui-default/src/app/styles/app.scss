@@ -98,7 +98,7 @@ img {
   text-align: right;
 }
 
-html {
+html:not(.test-runner) {
   // TODO: background size is corrupted on mobile devices (Android Chrome)
   background-image: url('/assets/images/main-background.jpg');
   background-repeat: no-repeat;

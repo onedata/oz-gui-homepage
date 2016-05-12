@@ -1,0 +1,50 @@
+diff --git a/gui/common_assets/js/mixins/promise-loading.js b/gui/common_assets/js/mixins/promise-loading.js
+index 84758c4..4d66b30 100644
+--- a/gui/common_assets/js/mixins/promise-loading.js
++++ b/gui/common_assets/js/mixins/promise-loading.js
+@@ -28,7 +28,12 @@ export default Ember.Mixin.create({
+     @param {RSVP.Promise} promise A promise to bind loading set/unset
+     @returns {RSVP.Promise} Passed promise
+   */
+-  promiseLoading(promise) {
++  promiseLoading(promise, propertyNames) {
++    if (propertyNames === undefined) {
++      propertyNames = ['isLoading'];
++    } else {
++      if (propertyNames )
++    }
+     this.set('isLoading', true);
+     promise.finally(() => this.set('isLoading', false));
+     return promise;
+diff --git a/src/app/components/alias-panel.js b/src/app/components/alias-panel.js
+index 2483146..9141bb6 100644
+--- a/src/app/components/alias-panel.js
++++ b/src/app/components/alias-panel.js
+@@ -62,8 +62,11 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
+     },
+ 
+     endEditAlias: function(aliasName) {
+-      this.set('isLoading', true);
+-      let setAliasPromise = this.get('onezoneServer').setUserAlias(aliasName);
++      // this.set('isLoading', true);
++      let setAliasPromise = this.promiseLoading(
++        this.get('onezoneServer').setUserAlias(aliasName)
++      );
++
+       setAliasPromise.then(
+         (newAlias) => {
+           this.set('aliasText', newAlias);
+@@ -73,12 +76,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
+           window.alert('Set alias failed: ' + error.message);
+         }
+       );
+-      setAliasPromise.finally(() => {
+-        this.setProperties({
+-          aliasEditing: false,
+-          isLoading: false
+-        });
+-      });
++      setAliasPromise.finally(() => this.set('aliasEditing', false));
+     }
+   }
+ });
