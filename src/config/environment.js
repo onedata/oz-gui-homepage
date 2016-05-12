@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'onedata-org',
+    modulePrefix: 'oz-worker-gui',
     environment: environment,
     baseURL: '/',
     locationType: 'hash',

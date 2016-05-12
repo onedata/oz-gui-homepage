@@ -1,10 +1,25 @@
-import { safeElementId } from '../../../helpers/safe-element-id';
-import { module, test } from 'qunit';
+/* jshint expr:true */
+import { expect } from 'chai';
+import {
+  describe,
+  it
+} from 'mocha';
+import {
+  safeElementId
+} from 'oz-worker-gui/helpers/safe-element-id';
 
-module('Unit | Helper | safe element id');
+/// This is mainly a copy of safe-element-id-test utils test
+/// but checks usage of helper method
+describe('SafeElementIdHelper', function() {
+  it('preserves alphanumeric chars and dashes', function() {
+    expect(safeElementId(['hello-world'])).to.be.equal('hello-world');
+  });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
-  let result = safeElementId(42);
-  assert.ok(result);
+  it('eliminates # chars', function() {
+    expect(safeElementId(['hello#onedata'])).to.be.equal('helloonedata');
+  });
+
+  it('eliminates . chars', function() {
+    expect(safeElementId(['hello.onedata'])).to.be.equal('helloonedata');
+  });
 });

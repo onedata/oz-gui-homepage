@@ -22,8 +22,10 @@ export default Ember.Component.extend({
   }.property('session.sessionDetails'),
 
   modalFirstLogin: function () {
-    return this.get('isFirstLogin');
-  }.property('isFirstLogin'),
+    console.debug(`pro ${this.get('providers')}, pro len ${this.get('provider.length')}`);
+    return this.get('isFirstLogin') &&
+      (!this.get('providers') || this.get('providers.length') === 0);
+  }.property('isFirstLogin', 'providers', 'providers.length'),
 
   modalGetSupport: function () {
     return !this.get('providers') ||
