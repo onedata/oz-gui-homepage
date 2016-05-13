@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   menuItems: [],
   setupMenuItems: function() {
     let itemNames = [
+      // Some tabs are currently not implemented, but will be
       //'get-started',
       'documentation',
       //'community',
@@ -30,8 +31,11 @@ export default Ember.Component.extend({
       i.showAuthenticated = false;
     });
 
+    // For documentation tab, add external URL (this is done by setting the
+    // url property)
     let docItem = menuItems.find((i) => i.linkTo === 'home.documentation');
     if (docItem) {
+      // Under this path, the docker with documentation should be mounted
       docItem.url = '/docs/index.html';
     }
 
