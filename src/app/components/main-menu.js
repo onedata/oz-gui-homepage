@@ -30,11 +30,16 @@ export default Ember.Component.extend({
       i.showAuthenticated = false;
     });
 
-    menuItems.find((i) => i.linkTo === 'home.documentation', (i) => {
-      i.url = '/docs/index.html';
+    let docItem = menuItems.find((i) => i.linkTo === 'home.documentation');
+    if (docItem) {
+      docItem.url = '/docs/index.html';
+    }
+
+    menuItems.forEach((i) => {
+      console.log(i.linkTo + ' ' + i.url);
     });
 
     this.set('menuItems', menuItems);
-  }.on('init'),
+  }.on('init')
 
 });

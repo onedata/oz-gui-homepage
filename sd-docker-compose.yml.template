@@ -1,11 +1,11 @@
 gui:
-  image: docker.onedata.org/oz-gui-homepage:VFS-1825
+  image: docker.onedata.org/oz-gui-homepage:VFS-1988
   restart: always
   volumes:
     - /var/www/html
 
 docs:
-  image: docker.onedata.org/onedata-documentation:ID-6157d945ad
+  image: docker.onedata.org/onedata-documentation:ID-d4d41e8c89
   restart: always
   volumes:
     - /var/www/html/docs
