@@ -7,8 +7,14 @@ export default Ember.Component.extend({
   menuItems: [],
   setupMenuItems: function() {
     let itemNames = [
-      'get-started', 'documentation', 'community', 'download', 'support',
-      'media', 'blog', 'login'
+      //'get-started',
+      'documentation',
+      //'community',
+      //'download',
+      //'support',
+      //'media',
+      //'blog',
+      'login'
     ];
 
     let menuItems = itemNames.map((name) => {
