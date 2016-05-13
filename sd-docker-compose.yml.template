@@ -1,15 +1,23 @@
 gui:
-  image: docker.onedata.org/oz-gui-default:VFS-1825
+  image: docker.onedata.org/oz-gui-homepage:VFS-1825
   restart: always
   volumes:
     - /var/www/html
 
+docs:
+  image: docker.onedata.org/onedata-documentation:ID-6157d945ad
+  restart: always
+  volumes:
+    - /var/www/html/docs
+
 onezone:
-  image: docker.onedata.org/onezone:3.0.0.alpha3.1.g47b3bc1
+  image: docker.onedata.org/onezone:ID-c6c94128d5
   container_name: oz
   hostname: onedata.localhost.local
   restart: always
   volumes_from:
     - gui
+    - docs
   links:
     - gui
+    - docs
