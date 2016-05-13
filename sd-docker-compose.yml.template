@@ -5,7 +5,7 @@ gui:
     - /var/www/html
 
 docs:
-  image: docker.onedata.org/onedata-documentation:ID-d4d41e8c89
+  image: docker.onedata.org/onedata-documentation:ID-0258025e13
   restart: always
   volumes:
     - /var/www/html/docs
