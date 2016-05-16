@@ -4,6 +4,8 @@ $onezone-content-padding: 15px;
 
 $onezone-fog-z: 0;
 
+$onezone-sidebar-padding-h: 24px;
+
 // TODO: http://alistapart.com/article/dry-ing-out-your-sass-mixins
 // TODO: move to colors.scss
 $color-onezone-sidebar-bg: #434343;
@@ -210,7 +212,7 @@ $search-box-height: 36px;
 
   .brand {
     height: $onezone-top-bar-height;
-    padding-left: 10px;
+    padding-left: $onezone-sidebar-padding-h;
     padding-top: 25px;
     padding-bottom: 25px;
 
@@ -227,8 +229,8 @@ $search-box-height: 36px;
 
   .sidebar-row {
     display: block;
-    padding-left: 10px;
-    padding-right: 24px;
+    padding-left: $onezone-sidebar-padding-h;
+    padding-right: $onezone-sidebar-padding-h;
     color: white;
     clear: both;
 
@@ -254,8 +256,8 @@ $search-box-height: 36px;
         // TODO: elements can use sidebar-row class
         .accordion-toggle {
           display: block;
-          padding-left: 10px;
-          padding-right: 24px;
+          padding-left: $onezone-sidebar-padding-h;
+          padding-right: $onezone-sidebar-padding-h;
           color: white;
           clear: both;
 
@@ -353,7 +355,7 @@ $search-box-height: 36px;
       margin: 0;
 
       li {
-        padding: 0 10px;
+        padding: 0 $onezone-sidebar-padding-h;
         margin: 0;
       }
     }
@@ -470,8 +472,8 @@ $search-box-height: 36px;
           width: 100%;
           max-height: $onezone-secondary-accordion-heading-height;
           line-height: $onezone-secondary-accordion-heading-height;
-          padding-left: 10px;
-          padding-right: 24px;
+          padding-left: $onezone-sidebar-padding-h;
+          padding-right: $onezone-sidebar-padding-h;
           color: white;
           clear: both;
           overflow-y: hidden;
@@ -661,8 +663,7 @@ $search-box-height: 36px;
     width: 100%;
     height: $onezone-account-item-height;
     line-height: $onezone-account-item-height;
-    padding-left: 10px;
-    padding-right: 24px;
+    padding-right: $onezone-sidebar-padding-h;
     color: white;
 
     > .dropdown, > .dropdown-toggle {

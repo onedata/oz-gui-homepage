@@ -1,7 +1,3 @@
-{{#if url}}
-  <a href="{{url}}">{{t titleI18n}}</a>
-{{else}}
-  {{#link-to linkTo id=navId}}
-    {{t titleI18n}}
-  {{/link-to}}
-{{/if}}
+{{#link-to linkTo id=navId}}
+  {{t titleI18n}}
+{{/link-to}}
