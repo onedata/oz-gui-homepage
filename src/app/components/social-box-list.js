@@ -26,6 +26,10 @@ export default Ember.Component.extend({
       data.forEach((authorizerId) => {
         authorizers[authorizerId] = true;
       });
+
+      // FIXME: mocked username authorizer
+      authorizers['username'] = true;
+
       this.set('supportedAuthorizers', authorizers);
     });
   }.on('init'),
@@ -45,6 +49,10 @@ export default Ember.Component.extend({
           this.$().find(`.login-icon-box.${providerName}`).removeClass('active');
         }
       );
+    },
+
+    showLoginForm() {
+      this.set('loginFormOpened', true);
     }
   }
 });

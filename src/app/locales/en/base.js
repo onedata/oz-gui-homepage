@@ -1,7 +1,12 @@
 export default {
   common: {
     fetchingToken: 'Fetching token...',
-    loading: 'Loading...'
+    loading: 'Loading...',
+    modal: {
+      ok: 'OK',
+      cancel: 'Cancel',
+      signin: 'Sign in'
+    }
   },
   application: {
     title: 'Onezone',
@@ -15,6 +20,16 @@ export default {
     boxTitle: 'login',
     boxSubtitle: 'Login with your social account',
     unknownZoneName: 'unknown'
+  },
+  components: {
+    modals: {
+      loginForm: {
+        title: 'Login with username and password',
+        usernameLabel: 'Username:',
+        passwordLabel: 'Password:',
+        authenticationError: 'Authentication error:'
+      }
+    }
   },
   onezone: {
     title: 'Manage account',

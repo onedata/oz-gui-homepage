@@ -1,0 +1,69 @@
+{{#bs-modal open=open body=false footer=false
+    id=modalId
+    title=(t 'components.modals.loginForm.title')
+    openAction="open"
+    openedAction="opened"
+    keyboard=(not isLoading)
+    autoClose=(not isLoading)
+    backdropClose=(not isLoading)
+    closeButton=false
+  }}
+  {{#bs-modal-body}}
+    {{#bs-form action=(action "submit") model=this}}
+      <div class="row">
+        <div class="col-xs-3">
+          <label for={{concat modalId '-username-input'}}
+            class="control-label one-line">
+            {{t 'components.modals.loginForm.usernameLabel'}}
+          </label>
+        </div>
+        <div class="col-xs-9">
+          {{input id=(concat modalId '-username-input') type="text"
+            value=usernameText autofocus=true disabled=isLoading
+            class="form-control"
+            enter=(action (if isSubmitEnabled 'submit' null))}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3">
+          <label for={{concat modalId '-password-input'}}
+            class="control-label one-line">
+            {{t 'components.modals.loginForm.passwordLabel'}}
+          </label>
+        </div>
+        <div class="col-xs-9">
+          {{input id=(concat modalId '-password-input') type="password"
+            value=passwordText autofocus=true disabled=isLoading
+            class="form-control"
+            enter=(action (if isSubmitEnabled 'submit' null))}}
+        </div>
+      </div>
+    {{/bs-form}}
+
+    {{#if errorMessage}}
+      <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{t 'components.modals.loginForm.authenticationError'}}</strong>
+        &ensp;
+        {{errorMessage}}
+      </div>
+    {{/if}}
+
+  {{/bs-modal-body}}
+  {{#bs-modal-footer as |footer|}}
+    {{#spin-button-onedata buttonType="submit"
+      action=(action "submit")
+      class="btn btn-primary no-outline" spinnerColor="#fff"
+      inFlight=isLoading
+      disabled=(not isSubmitEnabled)
+    }}
+      {{t "common.modal.signin"}}
+    {{/spin-button-onedata}}
+    {{#bs-button action=(action "close" target=footer) type="default"
+      disabled=isLoading
+    }}
+      {{t "common.modal.cancel"}}
+    {{/bs-button}}
+  {{/bs-modal-footer}}
+{{/bs-modal}}
