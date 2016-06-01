@@ -22,8 +22,9 @@ export default Ember.Component.extend({
   /** Fetches list of supported authorizers from server; sets supportedAuthorizers */
   initSupportedAuthorizers: function () {
     this.get('onezoneServer').getSupportedAuthorizers().then((data) => {
+      const authorizersList = data.authorizers;
       let authorizers = {};
-      data.forEach((authorizerId) => {
+      authorizersList.forEach((authorizerId) => {
         authorizers[authorizerId] = true;
       });
 
@@ -40,8 +41,8 @@ export default Ember.Component.extend({
     authenticate(providerName) {
       this.$().find(`.login-icon-box.${providerName}`).addClass('active');
       this.get('onezoneServer').getLoginEndpoint(providerName).then(
-        (url) => {
-          window.location = url;
+        (data) => {
+          window.location = data.url;
         },
         (error) => {
           // TODO: use modal instead of window.alert

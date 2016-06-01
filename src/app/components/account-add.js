@@ -37,7 +37,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     this.promiseLoading(
       this.get('onezoneServer').getSupportedAuthorizers()
     ).then((data) => {
-      data.forEach((authorizerId) => {
+      data.authorizers.forEach((authorizerId) => {
         authProviders.push([authorizerId, allAuthProviders[authorizerId]]);
       });
       authProviders = authProviders.map((item) => {
@@ -56,8 +56,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
       this.promiseLoading(
         this.get('onezoneServer').getConnectAccountEndpoint(providerName)
       ).then(
-        (url) => {
-          window.location = url;
+        (data) => {
+          window.location = data.url;
         },
         (error) => {
           window.alert(`Error getting url to authorizer: ${error.message}`);

@@ -34,8 +34,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   /** Fetch alias from server on init - sets aliasText */
   updateAliasText: function() {
     this.promiseLoading(this.get('onezoneServer').getUserAlias()).then(
-      (alias) => {
-        this.set('aliasText', alias);
+      (data) => {
+        this.set('aliasText', data.userAlias);
       },
       (error) => {
         window.alert('Getting alias failed: ' + error);
@@ -65,11 +65,12 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
       this.set('isLoading', true);
       let setAliasPromise = this.get('onezoneServer').setUserAlias(aliasName);
       setAliasPromise.then(
-        (newAlias) => {
-          this.set('aliasText', newAlias);
+        (data) => {
+          this.set('aliasText', data.userAlias);
           console.debug('Set alias successful');
         },
         (error) => {
+          // TODO: a modal
           window.alert('Set alias failed: ' + error.message);
         }
       );
