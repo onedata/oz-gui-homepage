@@ -1,32 +1,32 @@
 <!-- @TODO automatic layout when number of providers changes -->
 {{#if supportedAuthorizers.plgrid}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-right">
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
     {{social-box type='plgrid' action='authenticate'}}
   </div>
 {{/if}}
 {{#if supportedAuthorizers.dropbox}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-left">
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
     {{social-box type='dropbox' action='authenticate'}}
   </div>
 {{/if}}
 {{#if supportedAuthorizers.github}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-right">
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
     {{social-box type='github' action='authenticate'}}
   </div>
 {{/if}}
 {{#if supportedAuthorizers.facebook}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-left">
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
     {{social-box type='facebook' action='authenticate'}}
   </div>
 {{/if}}
 {{#if supportedAuthorizers.google}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-right">
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
     {{social-box type='google' action='authenticate'}}
   </div>
 {{/if}}
 {{#if supportedAuthorizers.username}}
-  <div class="col-xs-6 col-sm-2 col-centered xs-left">
-    {{social-box type='username' action='showLoginForm' iconName='user'}}
+  <div class="col-xs-6 col-sm-2 sm-center xs-two-col-center">
+    {{social-box type='username' action='showLoginForm' iconName='key'}}
   </div>
 {{/if}}
 

@@ -195,6 +195,25 @@ html:not(.test-runner) {
   }
 }
 
+.sm-center {
+  @include respond-to(screen-sm) {
+    text-align: center !important;
+  }
+}
+
+.xs-two-col-center {
+  &:nth-child(even) {
+    @include respond-to(screen-xs) {
+      text-align: left !important;
+    }
+  }
+  &:nth-child(odd) {
+    @include respond-to(screen-xs) {
+      text-align: right !important;
+    }
+  }
+}
+
 // TODO: real style for various contexts
 input {
   font-family: 'Open Sans';
@@ -301,4 +320,8 @@ input {
     pointer-events: none;
     color: rgba(white, 0.5) !important;
   }
+}
+
+.text-center {
+  text-align: center !important;
 }

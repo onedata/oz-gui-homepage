@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from '../../mixins/promise-loading';
 
+// FIXME: jsdoc
 export default Ember.Component.extend(PromiseLoadingMixin, {
   /** @abstract */
   modalId: null,

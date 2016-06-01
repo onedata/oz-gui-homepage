@@ -9,6 +9,16 @@
     closeButton=false
   }}
   {{#bs-modal-body}}
+
+    {{#if errorMessage}}
+      <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{t 'components.modals.loginForm.authenticationError'}}</strong>
+        &ensp;
+        {{errorMessage}}
+      </div>
+    {{/if}}
+
     {{#bs-form action=(action "submit") model=this}}
       <div class="row">
         <div class="col-xs-3">
@@ -21,7 +31,7 @@
           {{input id=(concat modalId '-username-input') type="text"
             value=usernameText autofocus=true disabled=isLoading
             class="form-control"
-            enter=(action (if isSubmitEnabled 'submit' null))}}
+            enter=(if isSubmitEnabled (action 'submit') null)}}
         </div>
       </div>
 
@@ -36,19 +46,10 @@
           {{input id=(concat modalId '-password-input') type="password"
             value=passwordText autofocus=true disabled=isLoading
             class="form-control"
-            enter=(action (if isSubmitEnabled 'submit' null))}}
+            enter=(if isSubmitEnabled (action 'submit') null)}}
         </div>
       </div>
     {{/bs-form}}
-
-    {{#if errorMessage}}
-      <div class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>{{t 'components.modals.loginForm.authenticationError'}}</strong>
-        &ensp;
-        {{errorMessage}}
-      </div>
-    {{/if}}
 
   {{/bs-modal-body}}
   {{#bs-modal-footer as |footer|}}

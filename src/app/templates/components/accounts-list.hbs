@@ -1,4 +1,7 @@
 <ul class="accordion-content">
+  <li>
+    {{account-item-password}}
+  </li>
   {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
       {{account-item type=account.type label=account.email}}
