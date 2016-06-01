@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from '../../mixins/promise-loading';
-/* globals jsSHA */
-
 
 export default Ember.Component.extend(PromiseLoadingMixin, {
   /** @abstract */
