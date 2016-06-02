@@ -76,7 +76,7 @@ export default Ember.Component.extend({
       },
       // TODO: a notification for user
       copySuccess() {
-        console.log('Token copied');
+        console.debug('Token copied');
       },
       // TODO: a notification for user
       copyError() {
