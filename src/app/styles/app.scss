@@ -4,10 +4,19 @@ $container-min-padding: 10px;
 
 @mixin respond-to($media) {
   @if $media == "screen-xs" {
-    @media only screen and (max-width: $screen-xs-max) { @content; }
+    @media (min-width: $screen-xs-min) and (max-width: $screen-xs-max) { @content; }
+  }
+  @else if $media == "screen-sm" {
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) { @content; }
+  }
+  @else if $media == "screen-md" {
+    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) { @content; }
+  }
+  @else if $media == "screen-lg" {
+    @media (min-width: $screen-lg-min) { @content; }
   }
   @else {
-    @media only screen and (min-width: $screen-xs-min) { @content; }
+    @content;
   }
 }
 
@@ -175,6 +184,18 @@ html:not(.test-runner) {
     margin-right:-4px;
 }
 
+@include respond-to(screen-sm) {
+  .sm-col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+  }
+}
+
+
 // Conditional alignment
 
 .xs-left {
@@ -202,17 +223,25 @@ html:not(.test-runner) {
 }
 
 .xs-two-col-center {
-  &:nth-child(even) {
-    @include respond-to(screen-xs) {
-      text-align: left !important;
-    }
-  }
   &:nth-child(odd) {
     @include respond-to(screen-xs) {
       text-align: right !important;
     }
   }
+  &:nth-child(even) {
+    @include respond-to(screen-xs) {
+      text-align: left !important;
+    }
+  }
 }
+
+@include respond-to(screen-xs) {
+  .col-sm-last-1:last-child:nth-child(odd):nth-last-child(1) {
+    width: 100%;
+    text-align: center !important;
+  }
+}
+
 
 // TODO: real style for various contexts
 input {
@@ -324,4 +353,22 @@ input {
 
 .text-center {
   text-align: center !important;
+}
+
+@include respond-to(screen-sm) {
+  .sm-text-center {
+    text-align: center !important;
+  }
+}
+
+@include respond-to(screen-lg) {
+  .col-1-of-7-lg {
+    width: 14.285714285714285714285714285714%;
+  }
+}
+
+@include respond-to(screen-md) {
+  .col-1-of-7-md {
+    width: 14.285714285714285714285714285714%;
+  }
 }

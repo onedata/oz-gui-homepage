@@ -18,6 +18,23 @@ export default Ember.Component.extend({
    * Set by initSupportedAuthorizers
    */
   supportedAuthorizers: null,
+  supportedAuthorizersCount: function() {
+    const sa = this.get('supportedAuthorizers');
+    return sa ? Object.keys(sa).length : 0;
+  }.property('supportedAuthorizers'),
+
+  boxContainerClasses: function() {
+    const sac = this.get('supportedAuthorizersCount');
+    let classes = 'col-xs-6 col-sm-3 sm-text-center sm-col-centered xs-two-col-center col-sm-last-1';
+    if (sac > 6) {
+      classes += ' col-1-of-7-md col-1-of-7-lg';
+    } else if (sac % 6 === 0) {
+      classes += ' col-2-md';
+    } else {
+      classes += ' col-2-md col-centered';
+    }
+    return classes;
+  }.property('supportedAuthorizersCount'),
 
   /** Fetches list of supported authorizers from server; sets supportedAuthorizers */
   initSupportedAuthorizers: function () {
@@ -30,6 +47,9 @@ export default Ember.Component.extend({
 
       // FIXME: mocked username authorizer
       authorizers['username'] = true;
+
+      // FIXME: mocked indigo authorizer
+      authorizers['indigo'] = true;
 
       this.set('supportedAuthorizers', authorizers);
     });

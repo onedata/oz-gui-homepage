@@ -58,6 +58,9 @@
     line-height: inherit;
   }
 
+  &.indigo {
+    background-color: $color-login-indigo;
+  }
   &.github {
     background-color: $color-login-github;
   }
