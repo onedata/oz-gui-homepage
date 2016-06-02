@@ -101,7 +101,7 @@ export default DS.RESTAdapter.extend({
       let port = window.location.port;
 
       let url = protocol + host + (port === '' ? '' : ':' + port) + WS_ENDPOINT;
-      console.log('Connecting: ' + url);
+      console.debug('Connecting: ' + url);
 
       if (adapter.socket === null) {
         adapter.socket = new WebSocket(url);
@@ -137,13 +137,13 @@ export default DS.RESTAdapter.extend({
 
   /** Developer function - for logging/debugging */
   logToConsole(fun_name, fun_params) {
-    console.log(fun_name + '(');
+    console.debug(fun_name + '(');
     if (fun_params) {
       for (let i = 0; i < fun_params.length; i++) {
-        console.log('    ' + String(fun_params[i]));
+        console.debug('    ' + String(fun_params[i]));
       }
     }
-    console.log(')');
+    console.debug(')');
   },
 
   /** Called when ember store wants to find a record */
@@ -287,7 +287,7 @@ export default DS.RESTAdapter.extend({
         type: type,
         operation: operation
       });
-      console.log('registerPromise: ' + JSON.stringify(payload));
+      console.debug('registerPromise: ' + JSON.stringify(payload));
       adapter.send(payload);
     });
   },
@@ -384,7 +384,7 @@ export default DS.RESTAdapter.extend({
   receive(event) {
     let adapter = this;
     let promise;
-    console.log('received: ' + event.data);
+    console.debug('received: ' + event.data);
     let json = JSON.parse(event.data);
     if (json.msgType === TYPE_MODEL_RESP) {
       // Received a response to data fetch
@@ -393,31 +393,31 @@ export default DS.RESTAdapter.extend({
         // TODO VFS-1508: sometimes, the callback is undefined - debug
         let transformed_data = adapter.transformResponse(json.data,
           promise.type, promise.operation);
-        console.log('FETCH_RESP success: ' + JSON.stringify(transformed_data));
+        console.debug('FETCH_RESP success: ' + JSON.stringify(transformed_data));
 
         promise.success(transformed_data);
       } else if (json.result === RESULT_ERROR) {
-        console.log('FETCH_RESP error: ' + json.data);
+        console.debug('FETCH_RESP error: ' + json.data);
         promise.error(json.data);
       } else {
-        console.log('Unknown operation result: ' + json.result);
+        console.debug('Unknown operation result: ' + json.result);
       }
     } else if (json.msgType === TYPE_RPC_RESP) {
       // Received a response to RPC call
       promise = adapter.promises.get(json.uuid);
       if (json.result === RESULT_OK) {
-        console.log('RPC_RESP success: ' + JSON.stringify(json.data));
+        console.debug('RPC_RESP success: ' + JSON.stringify(json.data));
         promise.success(json.data);
       } else if (json.result === RESULT_ERROR) {
-        console.log('RPC_RESP error: ' + JSON.stringify(json.data));
+        console.debug('RPC_RESP error: ' + JSON.stringify(json.data));
         promise.error(json.data);
       } else {
-        console.log('Unknown operation result: ' + json.result);
+        console.debug('Unknown operation result: ' + json.result);
       }
     }
     else if (json.msgType === TYPE_MODEL_CRT_PUSH) {
       // Received a push message that something was created
-      console.log('Create:' + JSON.stringify(json));
+      console.debug('Create:' + JSON.stringify(json));
       this.get('store').push({
         data: {
           id: json.data.id,
@@ -427,7 +427,7 @@ export default DS.RESTAdapter.extend({
       });
     } else if (json.msgType === TYPE_MODEL_UPT_PUSH) {
       // Received a push message that something was updated
-      console.log('Update:' + JSON.stringify(json));
+      console.debug('Update:' + JSON.stringify(json));
       this.get('store').push({
         data: {
           id: json.data.id,
@@ -439,7 +439,7 @@ export default DS.RESTAdapter.extend({
     else if (json.msgType === TYPE_MODEL_DLT_PUSH) {
       let store = this.get('store');
       // Received a push message that something was deleted
-      console.log('Delete:' + JSON.stringify(json));
+      console.debug('Delete:' + JSON.stringify(json));
       // data field contains a list of ids to delete
       json.data.forEach(function (id) {
         store.findRecord(json.resourceType, id).then(
@@ -464,7 +464,7 @@ export default DS.RESTAdapter.extend({
     }
 
     //this.promises.forEach(function (promise) {
-    //  console.log('promise.error -> ' + promise);
+    //  console.debug('promise.error -> ' + promise);
     //  promise.error();
     //});
     //this.promises.clear();
