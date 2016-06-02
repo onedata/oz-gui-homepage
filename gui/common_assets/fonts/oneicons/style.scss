@@ -2,10 +2,11 @@
 
 @font-face {
     font-family: 'oneicons';
-    src:
-        url('#{$icomoon-font-path}/oneicons.ttf?iepkhb') format('truetype'),
-        url('#{$icomoon-font-path}/oneicons.woff?iepkhb') format('woff'),
-        url('#{$icomoon-font-path}/oneicons.svg?iepkhb#oneicons') format('svg');
+    src:    url('#{$icomoon-font-path}/oneicons.eot?k4ry8');
+    src:    url('#{$icomoon-font-path}/oneicons.eot?k4ry8#iefix') format('embedded-opentype'),
+        url('#{$icomoon-font-path}/oneicons.ttf?k4ry8') format('truetype'),
+        url('#{$icomoon-font-path}/oneicons.woff?k4ry8') format('woff'),
+        url('#{$icomoon-font-path}/oneicons.svg?k4ry8#oneicons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -25,6 +26,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.oneicon-key {
+    &:before {
+        content: $oneicon-key;
+    }
+}
 .oneicon-add {
     &:before {
         content: $oneicon-add;
@@ -198,6 +204,11 @@
 .oneicon-move-up {
     &:before {
         content: $oneicon-move-up;
+    }
+}
+.oneicon-password-change {
+    &:before {
+        content: $oneicon-password-change;
     }
 }
 .oneicon-provider-add {
