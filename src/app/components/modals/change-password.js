@@ -1,9 +1,19 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from '../../mixins/promise-loading';
+import ModalMixin from '../../mixins/components/modal';
 
-// FIXME: doc
-export default Ember.Component.extend(PromiseLoadingMixin, {
+/**
+ * A modal for chaning user password.
+ * @module components/modals/change-password
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
+export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   onezoneServer: Ember.inject.service(),
+
+  /** @implements ModalMixin */
+  i18nPrefixKey: 'components.modals.changePassword',
 
   /** @abstract */
   modalId: null,
@@ -11,11 +21,17 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   open: false,
   isLoading: false,
 
-  usernameText: null,
-  passwordText: null,
+  oldPasswordText: null,
+  newPasswordText: null,
+  retypeNewPasswordText: null,
 
-  /** Will be filled when login POST request fail */
-  errorMessage: null,
+  /** @implements ModalMixin */
+  message: null,
+
+  /**
+   * @implements ModalMixin
+   */
+  messageType: null,
 
   isSubmitEnabled: function() {
     return !this.get('isLoading') &&
@@ -26,20 +42,19 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   actions: {
     open() {
       this.setProperties({
-        usernameText: null,
-        passwordText: null,
-        errorMessage: null,
+        oldPasswordText: null,
+        newPasswordText: null,
+        retypeNewPasswordText: null,
+        message: null,
+        messageType: null,
       });
-    },
-
-    opened() {
-      // currently blank
     },
 
     submit() {
       this.setProperties({
         isLoading: true,
-        errorMessage: null
+        message: null,
+        messageType: null
       });
       const newPassword = this.get('newPasswordText');
       const oldPassword = this.get('oldPasswordText');
@@ -48,11 +63,18 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
         this.get('onezoneServer').changePassword(oldPassword, newPassword)
       ).then(
         () => {
-          this.set('open', false);
-          // TODO: notify - password changed successfully
+          this.setProperties({
+            messageType: 'success'
+          });
+          setTimeout(() => {
+            this.set('open', false);
+          }, 300);
         },
         (error) => {
-          this.set('errorMessage', error.message);
+          this.setProperties({
+            messageType: 'danger',
+            message: error.message
+          });
         }
       );
     },

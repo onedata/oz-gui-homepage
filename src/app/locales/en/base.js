@@ -27,15 +27,16 @@ export default {
         title: 'Login with username and password',
         usernameLabel: 'Username:',
         passwordLabel: 'Password:',
-        authenticationError: 'Authentication error:',
-        authenticationSuccess: 'Authenticated successfully!'
+        error: 'Authentication error:',
+        success: 'Authenticated successfully!'
       },
       changePassword: {
         title: 'Change your password',
         oldPasswordLabel: 'Current password:',
         newPasswordLabel: 'New password:',
         retypeNewPasswordLabel: 'Retype new password:',
-        changePasswordError: 'Cannot change password due to an error:'
+        error: 'Cannot change password due to an error:',
+        success: 'Password changed successfully!'
       }
     }
   },
@@ -85,7 +86,8 @@ export default {
       changePassword: 'Change your password'
     },
     accountAdd: {
-      connectNewAccount: 'Connect new account'
+      connectNewAccount: 'Connect new account',
+      connectBy: 'Connect by'
     },
     spacesAccordion: {
       createNewSpace: 'Create new space',

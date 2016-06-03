@@ -2,7 +2,6 @@
     id=modalId
     title=(t 'components.modals.loginForm.title')
     openAction="open"
-    openedAction="opened"
     keyboard=(not isLoading)
     autoClose=(not isLoading)
     backdropClose=(not isLoading)
@@ -10,20 +9,8 @@
   }}
   {{#bs-modal-body}}
 
-    {{#if (or message messagePrefix)}}
-      <div class="alert {{alertClass}}">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        {{#if messagePrefix}}
-          <strong>{{messagePrefix}}</strong>
-        {{/if}}
-        {{#if message}}
-          {{#if messagePrefix}}
-            &ensp;
-          {{/if}}
-          {{message}}
-        {{/if}}
-      </div>
-    {{/if}}
+    {{modals/elements/alert-panel message=message messagePrefix=messagePrefix
+      messageType=messageType}}
 
     {{#bs-form action=(action "submit") model=this}}
       <div class="row">

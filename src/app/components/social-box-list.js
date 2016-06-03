@@ -25,13 +25,13 @@ export default Ember.Component.extend({
 
   boxContainerClasses: function() {
     const sac = this.get('supportedAuthorizersCount');
-    let classes = 'col-xs-6 col-sm-3 sm-text-center sm-col-centered xs-two-col-center col-sm-last-1';
+    let classes = 'col-xs-6 col-sm-3 text-center sm-col-centered xs-two-col-center col-sm-last-1';
     if (sac > 6) {
       classes += ' col-1-of-7-md col-1-of-7-lg';
     } else if (sac % 6 === 0) {
-      classes += ' col-2-md';
+      classes += ' col-md-2';
     } else {
-      classes += ' col-2-md col-centered';
+      classes += ' col-md-2 col-centered';
     }
     return classes;
   }.property('supportedAuthorizersCount'),
@@ -44,12 +44,6 @@ export default Ember.Component.extend({
       authorizersList.forEach((authorizerId) => {
         authorizers[authorizerId] = true;
       });
-
-      // FIXME: mocked username authorizer
-      authorizers['username'] = true;
-
-      // FIXME: mocked indigo authorizer
-      authorizers['indigo'] = true;
 
       this.set('supportedAuthorizers', authorizers);
     });

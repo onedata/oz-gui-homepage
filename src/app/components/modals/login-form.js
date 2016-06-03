@@ -1,10 +1,15 @@
 import Ember from 'ember';
+import ModalMixin from '../../mixins/components/modal';
 import PromiseLoadingMixin from '../../mixins/promise-loading';
 
-const I18N_PREFIX_KEY = 'components.modals.loginForm';
-
-// FIXME: jsdoc
-export default Ember.Component.extend(PromiseLoadingMixin, {
+/**
+ * A form for logging in with username and password (invoked by one of login buttons)
+ * @module components/modals/login-form
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
+export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   /** @abstract */
   modalId: null,
 
@@ -14,31 +19,18 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   usernameText: null,
   passwordText: null,
 
-  /** Will be filled when login POST request resolves - see messageType */
+  /**
+   * @implements ModalMixin
+   */
+  i18nPrefixKey: 'components.modals.loginForm',
+
+  /** @implements ModalMixin */
   message: null,
 
   /**
-   * One of: success, danger to indicate type of message
-   * Use "success" for request success and "danger" for failure
+   * @implements ModalMixin
    */
   messageType: null,
-
-  /** CSS class for Bootstrap alert panel which is displayed after request complete */
-  alertClass: function() {
-    return `alert-${this.get('messageType')}`;
-  }.property('messageType'),
-
-  /** A prefix of info message displayed as alert panel - e.g. "Error: <message>" */
-  messagePrefix: function() {
-    switch (this.get('messageType')) {
-      case 'danger':
-        return this.get('i18n').t(I18N_PREFIX_KEY + '.authenticationError');
-      case 'success':
-        return this.get('i18n').t(I18N_PREFIX_KEY + '.authenticationSuccess');
-      default:
-        return null;
-    }
-  }.property('messageType'),
 
   isSubmitEnabled: function() {
     return !this.get('isLoading') && this.get('usernameText') && this.get('passwordText');
@@ -52,10 +44,6 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
         message: null,
         messageType: null,
       });
-    },
-
-    opened() {
-      // currently blank
     },
 
     submit() {

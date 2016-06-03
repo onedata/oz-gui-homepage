@@ -25,28 +25,27 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   },
 
   generateAuthProviders: function () {
-    let authProviders = [];
-    let allAuthProviders = {
+    const allAuthProviders = {
       google: 'Google+',
       facebook: 'Facebook',
       github: 'GitHub',
       dropbox: 'Dropbox',
-      plgrid: 'PLGrid OpenID'
+      plgrid: 'PLGrid OpenID',
+      indigo: 'Indigo'
     };
 
     this.promiseLoading(
       this.get('onezoneServer').getSupportedAuthorizers()
     ).then((data) => {
-      data.authorizers.forEach((authorizerId) => {
-        authProviders.push([authorizerId, allAuthProviders[authorizerId]]);
-      });
-      authProviders = authProviders.map((item) => {
-        return {
-          type: item[0],
-          // TODO: translate connect by
-          label: `Connect by ${item[1]}`
-        };
-      });
+      // show only these providers for add, which have entry in "allAuthProviders" dict
+      const authProviders = data.authorizers
+        .filter(id => allAuthProviders[id])
+        .map((id) => {
+          return {
+            type: id,
+            label: `${this.get('i18n').t('onezone.accountAdd.connectBy')} ${allAuthProviders[id]}`
+          };
+        });
       this.set('authProviders', authProviders);
     });
   }.on('init'),
@@ -60,6 +59,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           window.location = data.url;
         },
         (error) => {
+          // TODO: do not use window.alert
           window.alert(`Error getting url to authorizer: ${error.message}`);
         }
       );
