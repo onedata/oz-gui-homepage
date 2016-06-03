@@ -27,7 +27,8 @@ export default {
         title: 'Login with username and password',
         usernameLabel: 'Username:',
         passwordLabel: 'Password:',
-        authenticationError: 'Authentication error:'
+        authenticationError: 'Authentication error:',
+        authenticationSuccess: 'Authenticated successfully!'
       },
       changePassword: {
         title: 'Change your password',

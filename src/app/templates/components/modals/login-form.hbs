@@ -10,12 +10,18 @@
   }}
   {{#bs-modal-body}}
 
-    {{#if errorMessage}}
-      <div class="alert alert-danger">
+    {{#if (or message messagePrefix)}}
+      <div class="alert {{alertClass}}">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>{{t 'components.modals.loginForm.authenticationError'}}</strong>
-        &ensp;
-        {{errorMessage}}
+        {{#if messagePrefix}}
+          <strong>{{messagePrefix}}</strong>
+        {{/if}}
+        {{#if message}}
+          {{#if messagePrefix}}
+            &ensp;
+          {{/if}}
+          {{message}}
+        {{/if}}
       </div>
     {{/if}}
 

@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from '../../mixins/promise-loading';
 
+const I18N_PREFIX_KEY = 'components.modals.loginForm';
+
 // FIXME: jsdoc
 export default Ember.Component.extend(PromiseLoadingMixin, {
   /** @abstract */
@@ -12,8 +14,31 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   usernameText: null,
   passwordText: null,
 
-  /** Will be filled when login POST request fail */
-  errorMessage: null,
+  /** Will be filled when login POST request resolves - see messageType */
+  message: null,
+
+  /**
+   * One of: success, danger to indicate type of message
+   * Use "success" for request success and "danger" for failure
+   */
+  messageType: null,
+
+  /** CSS class for Bootstrap alert panel which is displayed after request complete */
+  alertClass: function() {
+    return `alert-${this.get('messageType')}`;
+  }.property('messageType'),
+
+  /** A prefix of info message displayed as alert panel - e.g. "Error: <message>" */
+  messagePrefix: function() {
+    switch (this.get('messageType')) {
+      case 'danger':
+        return this.get('i18n').t(I18N_PREFIX_KEY + '.authenticationError');
+      case 'success':
+        return this.get('i18n').t(I18N_PREFIX_KEY + '.authenticationSuccess');
+      default:
+        return null;
+    }
+  }.property('messageType'),
 
   isSubmitEnabled: function() {
     return !this.get('isLoading') && this.get('usernameText') && this.get('passwordText');
@@ -24,7 +49,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
       this.setProperties({
         usernameText: null,
         passwordText: null,
-        errorMessage: null,
+        message: null,
+        messageType: null,
       });
     },
 
@@ -35,7 +61,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     submit() {
       this.setProperties({
         isLoading: true,
-        errorMessage: null
+        message: null,
+        messageType: null,
       });
       const username = this.get('usernameText');
       const password = this.get('passwordText');
@@ -54,7 +81,14 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
             textStatus: ${textStatus},
             jqXHR.reponseText: ${jqXHR.responseText}`
           );
-          window.location.reload();
+          component.setProperties({
+            isLoading: false,
+            messageType: 'success'
+          });
+          // timeout set to display a success message for a while
+          setTimeout(function () {
+            window.location.reload();
+          }, 300);
         },
         error: (jqXHR, textStatus, errorThrown) => {
           console.warn(`Authentication with login/password failed:
@@ -64,7 +98,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           );
           component.setProperties({
             isLoading: false,
-            errorMessage: jqXHR.statusText + (jqXHR.reponseText ? `: ${jqXHR.reponseText}` : '')
+            message: jqXHR.statusText + (jqXHR.reponseText ? `: ${jqXHR.reponseText}` : ''),
+            messageType: 'danger'
           });
         }
       });
