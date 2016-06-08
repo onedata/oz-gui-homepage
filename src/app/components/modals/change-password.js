@@ -68,7 +68,7 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
           });
           setTimeout(() => {
             this.set('open', false);
-          }, 300);
+          }, 800);
         },
         (error) => {
           this.setProperties({

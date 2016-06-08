@@ -76,7 +76,7 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
           // timeout set to display a success message for a while
           setTimeout(function () {
             window.location.reload();
-          }, 300);
+          }, 500);
         },
         error: (jqXHR, textStatus, errorThrown) => {
           console.warn(`Authentication with login/password failed:
