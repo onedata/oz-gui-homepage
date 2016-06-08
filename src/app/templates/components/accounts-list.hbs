@@ -1,7 +1,9 @@
 <ul class="accordion-content">
+  {{#if session.sessionDetails.basicAuthEnabled}}
   <li>
     {{account-item-password}}
   </li>
+  {{/if}}
   {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
       {{account-item type=account.type label=account.email}}
