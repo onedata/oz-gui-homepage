@@ -30,5 +30,7 @@ module.exports = function(defaults) {
   app.import("bower_components/jquery-mousewheel/jquery.mousewheel.min.js");
   app.import("bower_components/jquery-searchable/dist/jquery.searchable-1.1.0.min.js");
 
+  app.import(app.bowerDirectory + '/spin.js/spin.js');
+
   return app.toTree();
 };

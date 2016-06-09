@@ -20,7 +20,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     // and transition to proper page on promise resolve.
     this.get('session').initSession().then(
       () => {
-        console.log('initSession resolved');
+        console.debug('initSession resolved');
       },
       // TODO: do not use window.alert
       () => {
