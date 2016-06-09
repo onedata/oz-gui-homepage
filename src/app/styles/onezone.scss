@@ -707,6 +707,12 @@ $search-box-height: 36px;
         &.facebook {
           background-color: $color-login-facebook !important;
         }
+        &.github {
+          background-color: $color-login-github !important;
+        }
+        &.indigo {
+          background-color: $color-login-indigo !important;
+        }
       }
       .icon {
         position: absolute;
