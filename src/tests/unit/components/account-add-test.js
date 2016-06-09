@@ -38,7 +38,7 @@ describeComponent(
       let ServerCls = Ember.Object.extend({
         getSupportedAuthorizers() {
           let promise = new Ember.RSVP.Promise((resolve/*, reject*/) => {
-            resolve([]);
+            resolve({authorizers: []});
           });
           promise.finally(() => {
             isServerResolved = true;
