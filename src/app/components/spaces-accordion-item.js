@@ -47,11 +47,13 @@ export default Ember.Component.extend({
         let space = this.get('space');
         this.set('supportToken', null);
         if (space) {
-          this.get('onezoneServer').getSupportToken(space.get('id')).then((token) => {
-            // TODO: only debug, should be removed in future
-            console.debug('Fetched new support token: ' + token);
-            this.set('supportToken', token);
-          });
+          this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
+            .then((data) => {
+              const token = data.token;
+              // TODO: only debug, should be removed in future
+              console.debug('Fetched new support token: ' + token);
+              this.set('supportToken', token);
+            });
         } else {
           console.warn('Tried to get new support token, but no space is assigned to item');
         }
@@ -74,7 +76,7 @@ export default Ember.Component.extend({
       },
       // TODO: a notification for user
       copySuccess() {
-        console.log('Token copied');
+        console.debug('Token copied');
       },
       // TODO: a notification for user
       copyError() {

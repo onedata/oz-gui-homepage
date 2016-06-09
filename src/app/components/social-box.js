@@ -28,7 +28,7 @@ export default Ember.Component.extend({
   }.property('link'),
 
   actions: {
-    authenticate() {
+    clicked() {
       this.sendAction('action', this.get('type'));
     }
   }

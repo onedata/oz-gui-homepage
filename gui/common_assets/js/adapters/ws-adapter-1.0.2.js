@@ -106,7 +106,7 @@ export default DS.RESTAdapter.extend({
       let port = window.location.port;
 
       let url = protocol + host + (port === '' ? '' : ':' + port) + WS_ENDPOINT;
-      console.log('Connecting: ' + url);
+      console.debug('Connecting: ' + url);
 
       if (adapter.socket === null) {
         adapter.socket = new WebSocket(url);
@@ -142,13 +142,13 @@ export default DS.RESTAdapter.extend({
 
   /** Developer function - for logging/debugging */
   logToConsole(fun_name, fun_params) {
-    console.log(fun_name + '(');
+    console.debug(fun_name + '(');
     if (fun_params) {
       for (let i = 0; i < fun_params.length; i++) {
-        console.log('    ' + String(fun_params[i]));
+        console.debug('    ' + String(fun_params[i]));
       }
     }
-    console.log(')');
+    console.debug(')');
   },
 
   /** Called when ember store wants to find a record */
@@ -297,7 +297,7 @@ export default DS.RESTAdapter.extend({
         type: type,
         operation: operation
       });
-      console.log('registerPromise: ' + JSON.stringify(payload));
+      console.debug('registerPromise: ' + JSON.stringify(payload));
       adapter.send(payload);
     });
   },
@@ -386,7 +386,7 @@ export default DS.RESTAdapter.extend({
    * If the WS is not established yet, it will wait in the buffer until
    * the connection is on. */
   flushMessageBuffer() {
-    console.log('flush' + this);
+    console.debug('flush' + this);
     let adapter = this;
     if (this.socket.readyState === 1) {
       if (adapter.messageBuffer.length > 0) {
@@ -429,53 +429,53 @@ export default DS.RESTAdapter.extend({
         this.processMessage(message);
       }
     } else {
-      console.log('Warning: dropping message: ' + JSON.stringify(json));
+      console.debug('Warning: dropping message: ' + JSON.stringify(json));
     }
   },
 
   processMessage(message) {
     let adapter = this;
     let promise;
-    console.log('received: ' + JSON.stringify(message.data));
+    console.debug('received: ' + JSON.stringify(message.data));
     if (message.msgType === TYPE_MODEL_RESP) {
       // Received a response to data fetch
       promise = adapter.promises.get(message.uuid);
       if (message.result === RESULT_OK) {
         let transformed_data = adapter.transformResponse(message.data,
             promise.type, promise.operation);
-        console.log('FETCH_RESP success: ' + JSON.stringify(transformed_data));
+        console.debug('FETCH_RESP success: ' + JSON.stringify(transformed_data));
 
         promise.success(transformed_data);
       } else if (message.result === RESULT_ERROR) {
-        console.log('FETCH_RESP error: ' + JSON.stringify(message.data));
+        console.debug('FETCH_RESP error: ' + JSON.stringify(message.data));
         promise.error(message.data);
       } else {
-        console.log('Unknown operation result: ' + message.result);
+        console.debug('Unknown operation result: ' + message.result);
       }
     } else if (message.msgType === TYPE_RPC_RESP) {
       // Received a response to RPC call
       promise = adapter.promises.get(message.uuid);
       if (message.result === RESULT_OK) {
-        console.log('RPC_RESP success: ' + JSON.stringify(message.data));
+        console.debug('RPC_RESP success: ' + JSON.stringify(message.data));
         promise.success(message.data);
       } else if (message.result === RESULT_ERROR) {
-        console.log('RPC_RESP error: ' + JSON.stringify(message.data));
+        console.debug('RPC_RESP error: ' + JSON.stringify(message.data));
         promise.error(message.data);
       } else {
-        console.log('Unknown operation result: ' + message.result);
+        console.debug('Unknown operation result: ' + message.result);
       }
     }
     else if (message.msgType === TYPE_MODEL_CRT_PUSH ||
         message.msgType === TYPE_MODEL_UPT_PUSH) {
       // Received a push message that something was created
-      console.log(message.msgType + ': ' + JSON.stringify(message));
+      console.debug(message.msgType + ': ' + JSON.stringify(message));
       let payload = {};
       payload[message.resourceType] = message.data;
       this.get('store').pushPayload(payload);
     } else if (message.msgType === TYPE_MODEL_DLT_PUSH) {
       let store = this.get('store');
       // Received a push message that something was deleted
-      console.log('Delete:' + JSON.stringify(message));
+      console.debug('Delete:' + JSON.stringify(message));
       // data field contains a list of ids to delete
       message.data.forEach(function (id) {
         store.findRecord(message.resourceType, id).then(
