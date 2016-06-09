@@ -4,10 +4,19 @@ $container-min-padding: 10px;
 
 @mixin respond-to($media) {
   @if $media == "screen-xs" {
-    @media only screen and (max-width: $screen-xs-max) { @content; }
+    @media (min-width: $screen-xs-min) and (max-width: $screen-xs-max) { @content; }
+  }
+  @else if $media == "screen-sm" {
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) { @content; }
+  }
+  @else if $media == "screen-md" {
+    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) { @content; }
+  }
+  @else if $media == "screen-lg" {
+    @media (min-width: $screen-lg-min) { @content; }
   }
   @else {
-    @media only screen and (min-width: $screen-xs-min) { @content; }
+    @content;
   }
 }
 
@@ -46,6 +55,9 @@ $icomoon-font-path: "fonts/oneicons";
 @import "provider-place-drop";
 @import "dropdowns";
 @import "common-loader";
+@import "modal";
+@import "button";
+@import "spin-button-base";
 
 html, body {
   height: 100%;
@@ -172,6 +184,18 @@ html:not(.test-runner) {
     margin-right:-4px;
 }
 
+@include respond-to(screen-sm) {
+  .sm-col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+  }
+}
+
+
 // Conditional alignment
 
 .xs-left {
@@ -192,54 +216,32 @@ html:not(.test-runner) {
   }
 }
 
-// Buttons
-
-.btn {
-  font-size: inherit !important;
+.sm-center {
+  @include respond-to(screen-sm) {
+    text-align: center !important;
+  }
 }
 
-.btn-large {
-  padding: 15px 30px;
-  text-transform: uppercase;
-  font-size: 0.7em !important;
+.xs-two-col-center {
+  &:nth-child(odd) {
+    @include respond-to(screen-xs) {
+      text-align: right !important;
+    }
+  }
+  &:nth-child(even) {
+    @include respond-to(screen-xs) {
+      text-align: left !important;
+    }
+  }
 }
 
-.btn-small {
-  padding-top: 4px;
-  padding-bottom: 4px;
+@include respond-to(screen-xs) {
+  .col-sm-last-1:last-child:nth-child(odd):nth-last-child(1) {
+    width: 100%;
+    text-align: center !important;
+  }
 }
 
-.btn-blue {
-  color: white !important;
-  border-color: transparent !important;
-  background-color: $color-button;
-}
-
-.btn-pale-green {
-  color: white !important;
-  border-color: transparent !important;
-  background-color: $color-pale-green;
-}
-
-.btn-index {
-  padding: 25px 55px;
-  text-transform: uppercase;
-  font-size: 1em !important;
-  letter-spacing: 0.15em;
-  color: white !important;
-  border-color: transparent !important;
-  background-color: #EF3C40;
-}
-
-.btn-right {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.btn-left {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
 
 // TODO: real style for various contexts
 input {
@@ -346,5 +348,27 @@ input {
   * {
     pointer-events: none;
     color: rgba(white, 0.5) !important;
+  }
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+@include respond-to(screen-sm) {
+  .sm-text-center {
+    text-align: center !important;
+  }
+}
+
+@include respond-to(screen-lg) {
+  .col-1-of-7-lg {
+    width: 14.285714285714285714285714285714%;
+  }
+}
+
+@include respond-to(screen-md) {
+  .col-1-of-7-md {
+    width: 14.285714285714285714285714285714%;
   }
 }

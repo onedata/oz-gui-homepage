@@ -1,7 +1,12 @@
 export default {
   common: {
     fetchingToken: 'Fetching token...',
-    loading: 'Loading...'
+    loading: 'Loading...',
+    modal: {
+      ok: 'OK',
+      cancel: 'Cancel',
+      signin: 'Sign in'
+    }
   },
   application: {
     title: 'Onezone',
@@ -13,8 +18,28 @@ export default {
     title: 'Login',
 
     boxTitle: 'login',
-    boxSubtitle: 'Login with your social account',
+    boxSubtitle: 'A new account will be created automatically on first login',
     unknownZoneName: 'unknown'
+  },
+  components: {
+    modals: {
+      loginForm: {
+        title: 'Login with username and password',
+        usernameLabel: 'Username:',
+        passwordLabel: 'Password:',
+        error: 'Authentication error:',
+        success: 'Authenticated successfully!'
+      },
+      changePassword: {
+        title: 'Change your password',
+        oldPasswordLabel: 'Current password:',
+        newPasswordLabel: 'New password:',
+        retypeNewPasswordLabel: 'Retype new password:',
+        error: 'Cannot change password due to an error:',
+        success: 'Password changed successfully!',
+        passwordMatchError: 'New passwords do not match'
+      }
+    }
   },
   onezone: {
     title: 'Manage account',
@@ -47,19 +72,23 @@ export default {
       }
     },
     sidebar: {
-      connectHead: 'connect your accounts',
-      manageSpacesHead: 'manage data spaces',
+      connectHead: 'authentication settings',
+      manageSpacesHead: 'data space management',
       filesHead: 'go to your files',
-      tokensHead: 'manage client tokens',
-      aliasHead: 'set user alias'
+      tokensHead: 'client tokens',
+      aliasHead: 'user alias'
     },
     topBar: {
       manageProviders: 'manage account',
       enableHints: 'enable hints'
     },
     accountsList: {},
+    accountItemPassword: {
+      changePassword: 'Change your password'
+    },
     accountAdd: {
-      connectNewAccount: 'Connect new account'
+      connectNewAccount: 'Connect new account',
+      connectBy: 'Connect by'
     },
     spacesAccordion: {
       createNewSpace: 'Create new space',

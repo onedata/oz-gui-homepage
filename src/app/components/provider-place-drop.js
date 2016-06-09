@@ -65,8 +65,8 @@ export default Ember.Component.extend({
 
   actions: {
     goToFiles() {
-      this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id')).then((url) => {
-        window.location = url;
+      this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id')).then((data) => {
+        window.location = data.url;
       });
     }
   }
