@@ -36,7 +36,7 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   isSubmitEnabled: function() {
     return !this.get('isLoading') &&
       this.get('oldPasswordText') && this.get('newPasswordText') &&
-      this.get('newPasswordText') === this.get('retypeNewPasswordText');
+      this.get('retypeNewPasswordText');
   }.property('isLoading', 'oldPasswordText', 'newPasswordText', 'retypeNewPasswordText'),
 
   actions: {
@@ -51,13 +51,25 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
     },
 
     submit() {
+      const oldPassword = this.get('oldPasswordText');
+      const newPassword = this.get('newPasswordText');
+      const retypeNewPassword = this.get('retypeNewPasswordText');
+
+      if (newPassword !== retypeNewPassword) {
+        this.setProperties({
+          isLoading: false,
+          message: this.get('i18n').t('components.modals.changePassword.passwordMatchError'),
+          messageType: 'danger'
+        });
+        return;
+      }
+
       this.setProperties({
         isLoading: true,
         message: null,
         messageType: null
       });
-      const newPassword = this.get('newPasswordText');
-      const oldPassword = this.get('oldPasswordText');
+
 
       this.promiseLoading(
         this.get('onezoneServer').changePassword(oldPassword, newPassword)

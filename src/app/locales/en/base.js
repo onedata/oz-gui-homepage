@@ -36,7 +36,8 @@ export default {
         newPasswordLabel: 'New password:',
         retypeNewPasswordLabel: 'Retype new password:',
         error: 'Cannot change password due to an error:',
-        success: 'Password changed successfully!'
+        success: 'Password changed successfully!',
+        passwordMatchError: 'New passwords do not match'
       }
     }
   },
