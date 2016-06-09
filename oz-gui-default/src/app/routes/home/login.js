@@ -26,9 +26,9 @@ export default LoginRoute.extend({
   model() {
     return new Ember.RSVP.Promise((resolve/*, reject*/) => {
       this.get('onezoneServer').getZoneName().then(
-        (zoneName) => {
+        (data) => {
           resolve({
-            zoneName: zoneName
+            zoneName: data.zoneName
           });
         },
         () => {

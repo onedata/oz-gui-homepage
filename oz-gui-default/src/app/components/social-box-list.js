@@ -18,14 +18,33 @@ export default Ember.Component.extend({
    * Set by initSupportedAuthorizers
    */
   supportedAuthorizers: null,
+  supportedAuthorizersCount: function() {
+    const sa = this.get('supportedAuthorizers');
+    return sa ? Object.keys(sa).length : 0;
+  }.property('supportedAuthorizers'),
+
+  boxContainerClasses: function() {
+    const sac = this.get('supportedAuthorizersCount');
+    let classes = 'col-xs-6 col-sm-3 text-center sm-col-centered xs-two-col-center col-sm-last-1';
+    if (sac > 6) {
+      classes += ' col-1-of-7-md col-1-of-7-lg';
+    } else if (sac % 6 === 0) {
+      classes += ' col-md-2';
+    } else {
+      classes += ' col-md-2 col-centered';
+    }
+    return classes;
+  }.property('supportedAuthorizersCount'),
 
   /** Fetches list of supported authorizers from server; sets supportedAuthorizers */
   initSupportedAuthorizers: function () {
     this.get('onezoneServer').getSupportedAuthorizers().then((data) => {
+      const authorizersList = data.authorizers;
       let authorizers = {};
-      data.forEach((authorizerId) => {
+      authorizersList.forEach((authorizerId) => {
         authorizers[authorizerId] = true;
       });
+
       this.set('supportedAuthorizers', authorizers);
     });
   }.on('init'),
@@ -36,8 +55,8 @@ export default Ember.Component.extend({
     authenticate(providerName) {
       this.$().find(`.login-icon-box.${providerName}`).addClass('active');
       this.get('onezoneServer').getLoginEndpoint(providerName).then(
-        (url) => {
-          window.location = url;
+        (data) => {
+          window.location = data.url;
         },
         (error) => {
           // TODO: use modal instead of window.alert
@@ -45,6 +64,10 @@ export default Ember.Component.extend({
           this.$().find(`.login-icon-box.${providerName}`).removeClass('active');
         }
       );
+    },
+
+    showLoginForm() {
+      this.set('loginFormOpened', true);
     }
   }
 });
