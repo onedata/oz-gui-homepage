@@ -58,6 +58,9 @@
     line-height: inherit;
   }
 
+  &.indigo {
+    background-color: $color-login-indigo;
+  }
   &.github {
     background-color: $color-login-github;
   }
@@ -72,6 +75,9 @@
   }
   &.facebook {
     background-color: $color-login-facebook;
+  }
+  &.username {
+    background-color: $color-login-username;
   }
 }
 
@@ -98,6 +104,8 @@
     text-align: center;
     margin-top: 50px;
     margin-bottom: 100px;
+    margin-right: 20px;
+    margin-left: 20px;
   }
 }
 
