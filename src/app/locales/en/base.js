@@ -8,6 +8,22 @@ export default {
       signin: 'Sign in'
     }
   },
+  services: {
+    session: {
+      connectionClosed: {
+        title: 'WebSocket connection error',
+        message: 'WebSocket connection has been closed',
+        reconnectWait: 'Will try to reconnect in {{secs}} seconds...',
+        reconnecting: 'Reconnecting...',
+        reasons: {
+          // code: 1006
+          abnormal: 'closed unexpectedly, please try refreshing browser page',
+          // all other codes
+          unknown: 'unhandled error, see browser logs for details'
+        }
+      }
+    }
+  },
   application: {
     title: 'Onezone',
 

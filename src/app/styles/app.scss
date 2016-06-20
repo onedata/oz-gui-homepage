@@ -58,6 +58,7 @@ $icomoon-font-path: "fonts/oneicons";
 @import "modal";
 @import "button";
 @import "spin-button-base";
+@import "modal-types";
 
 html, body {
   height: 100%;
@@ -370,5 +371,20 @@ input {
 @include respond-to(screen-md) {
   .col-1-of-7-md {
     width: 14.285714285714285714285714285714%;
+  }
+}
+
+
+// FIXME: move to common for message-boxes
+
+
+
+// FIXME: a common style?
+.spinner-container {
+  position: relative;
+
+  &.spinner-64 {
+    width: 64px;
+    height: 64px;
   }
 }
