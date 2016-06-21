@@ -9,6 +9,7 @@ import Ember from 'ember';
  */
 export default Ember.Component.extend({
   onezoneServer: Ember.inject.service(),
+  messageBox: Ember.inject.service(),
 
   /**
    * Object with support mapping, eg. ``{plgrid: true, facebook: false}``
@@ -52,16 +53,21 @@ export default Ember.Component.extend({
   actions: {
     // TODO: what if there is server error?
     /** Get a login endpoint URL from server and go to it */
-    authenticate(providerName) {
-      this.$().find(`.login-icon-box.${providerName}`).addClass('active');
+    authenticate(socialBox) {
+      const providerName = socialBox.get('type');
+      socialBox.set('active', true);
       this.get('onezoneServer').getLoginEndpoint(providerName).then(
         (data) => {
           window.location = data.url;
         },
         (error) => {
-          // TODO: use modal instead of window.alert
-          window.alert('Getting authentication endpoint failed: ' + error);
-          this.$().find(`.login-icon-box.${providerName}`).removeClass('active');
+          this.get('messageBox').open({
+            title: this.get('i18n').t('components.socialBoxList.error.title'),
+            message: this.get('i18n').t('components.socialBoxList.error.message') +
+              (error.message ? ': ' + error.message : ''),
+            type: 'error'
+          });
+          socialBox.set('active', false);
         }
       );
     },

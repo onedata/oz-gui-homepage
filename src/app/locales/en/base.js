@@ -55,6 +55,12 @@ export default {
         success: 'Password changed successfully!',
         passwordMatchError: 'New passwords do not match'
       }
+    },
+    socialBoxList: {
+      error: {
+        title: 'Server error',
+        message: 'Getting authentication endpoint failed'
+      }
     }
   },
   onezone: {

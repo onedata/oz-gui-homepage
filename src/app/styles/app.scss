@@ -388,3 +388,23 @@ input {
     height: 64px;
   }
 }
+
+.fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(50%) translateY(50%);
+}
+
+// FIXME: common styles
+
+.v-center-parent {
+  position: relative;
+}
+
+.v-center-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(50%) translateY(50%);
+}

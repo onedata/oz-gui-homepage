@@ -10,11 +10,25 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
  */
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model() {
-    return {
-      providers: this.store.findAll('provider'),
-      spaces: this.store.findAll('space'),
-      authorizers: this.store.findAll('authorizer'),
-      clienttokens: this.store.findAll('clienttoken')
-    };
+    const promises = [
+      this.store.findAll('provider'),
+      this.store.findAll('space'),
+      this.store.findAll('authorizer'),
+      this.store.findAll('clienttoken')
+    ];
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      Ember.RSVP.Promise.all(promises).then(
+        (values) => {
+          resolve({
+            providers: values[0],
+            spaces: values[1],
+            authorizers: values[2],
+            clienttokens: values[3]
+          });
+        },
+        () => {
+          reject();
+        });
+    });
   }
 });

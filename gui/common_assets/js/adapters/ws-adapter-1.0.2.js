@@ -419,7 +419,7 @@ export default DS.RESTAdapter.extend({
   flushMessageBuffer() {
     console.debug('flush' + this);
     const adapter = this;
-    if (adapter.messageBuffer.length > 0) {
+    if (adapter.messageBuffer.length > 0 && this.socket) {
       if (this.socket.readyState === 1) {
         let batch = {batch: []};
         adapter.messageBuffer.forEach(function (payload) {

@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
   actions: {
     clicked() {
-      this.sendAction('action', this.get('type'));
+      this.sendAction('action', this);
     }
   }
 });
