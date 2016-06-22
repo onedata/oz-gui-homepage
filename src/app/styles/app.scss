@@ -374,6 +374,15 @@ input {
   }
 }
 
+.application-error {
+  text-align: center;
+
+  .application-error-icon {
+    font-size: 256px;
+  }
+}
+
+
 
 // FIXME: move to common for message-boxes
 
@@ -393,7 +402,7 @@ input {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translateX(50%) translateY(50%);
+  transform: translateX(-50%) translateY(-50%);
 }
 
 // FIXME: common styles

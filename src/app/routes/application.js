@@ -26,9 +26,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   // },
 
   initSession: function () {
-    // @todo This returns a promise. We should display a loading page here
-    // and transition to proper page on promise resolve.
-    this.get('session').initSession().then(
+    let p = this.get('session').initSession();
+
+    p.then(
       () => {
         console.debug('initSession resolved');
       },
@@ -42,5 +42,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
       }
     );
-  }.on('init')
+
+    return p;
+  },
+
+  model() {
+    return this.initSession();
+  },
+
 });

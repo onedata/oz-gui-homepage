@@ -6,7 +6,9 @@ export default {
       ok: 'OK',
       cancel: 'Cancel',
       signin: 'Sign in'
-    }
+    },
+    serverError: 'Server error',
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
   },
   services: {
     session: {
@@ -61,6 +63,10 @@ export default {
         title: 'Server error',
         message: 'Getting authentication endpoint failed'
       }
+    },
+    aliasPanel: {
+      getAliasFailed: 'Getting alias failed',
+      setAliasFailed: 'Setting alias failed'
     }
   },
   onezone: {
