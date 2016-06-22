@@ -67,7 +67,13 @@ export default {
     aliasPanel: {
       getAliasFailed: 'Getting alias failed',
       setAliasFailed: 'Setting alias failed'
+    },
+    accountAdd: {
+      errorGettingUrl: 'Error getting url to authorizer'
     }
+  },
+  logout: {
+    failed: 'Session invalidation failed - cannot logout'
   },
   onezone: {
     title: 'Manage account',

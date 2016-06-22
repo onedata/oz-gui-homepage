@@ -11,6 +11,8 @@ import PromiseLoadingMixin from '../mixins/promise-loading';
 export default Ember.Component.extend(PromiseLoadingMixin, {
   store: Ember.inject.service(),
   onezoneServer: Ember.inject.service(),
+  messageBox: Ember.inject.service(),
+  i18n: Ember.inject.service(),
 
   classNames: ['secondary-accordion', 'alias-panel', 'accordion-content'],
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
@@ -38,7 +40,13 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
         this.set('aliasText', data.userAlias);
       },
       (error) => {
-        window.alert('Getting alias failed: ' + error);
+        // TODO: this should be a non-blocking notify
+        this.get('messageBox').open({
+          title: this.get('i18n').t('common.serverError'),
+          message: this.get('i18n').t('components.aliasPanel.getAliasFailed') +
+            (error.message ? ': ' + error.message : ''),
+          type: 'warning'
+        });
       }
     );
   }.on('init'),
@@ -70,8 +78,12 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           console.debug('Set alias successful');
         },
         (error) => {
-          // TODO: a modal
-          window.alert('Set alias failed: ' + error.message);
+          this.get('messageBox').open({
+            title: this.get('i18n').t('common.serverError'),
+            message: this.get('i18n').t('components.aliasPanel.setAliasFailed') +
+              (error.message ? ': ' + error.message : ''),
+            type: 'warning'
+          });
         }
       );
       setAliasPromise.finally(() => {

@@ -13,6 +13,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   onezoneServer: Ember.inject.service('onezoneServer'),
   classNames: ['account-add', 'account-item'],
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
+  messageBox: Ember.inject.service(),
 
   isLoading: false,
   authProviders: null,
@@ -59,8 +60,12 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           window.location = data.url;
         },
         (error) => {
-          // TODO: do not use window.alert
-          window.alert(`Error getting url to authorizer: ${error.message}`);
+          this.get('messageBox').open({
+            title: this.get('i18n').t('common.serverError'),
+            message: this.get('i18n').t('components.accountAdd.errorGettingUrl') +
+              (error.message ? ': ' + error.message : ''),
+            type: 'warning'
+          });
         }
       );
     }
