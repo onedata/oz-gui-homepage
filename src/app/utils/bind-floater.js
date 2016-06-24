@@ -1,3 +1,5 @@
+// FIXME: update gui bind-floater with this code and document alignment options
+
 /**
   Makes an element fixed positioned, with coordinates (left, top) of its parent.
 
@@ -24,22 +26,22 @@ export default function bindFloater(element, parent, options) {
       left = `${parseInt(offset.left) + parent.width()}px`;
     } else if (options.posX === 'left') {
       left = `${parseInt(offset.left) - element.width()}px`;
+    } else if (options.posX === 'center') {
+      left = `${parseInt(offset.left) + parent.width()/2 - element.width()/2}px`;
     }
     let top;
     if (options.posY === 'top') {
       top = offset.top;
     } else if (options.posY === 'middle') {
       top = `${parseInt(offset.top) - element.height()/2}px`;
+    } else if (options.posY === 'middle-middle') {
+      top = `${parseInt(offset.top) + parent.height()/2 - element.height()/2}px`;
     }
 
     element.css({
       left: `${parseInt(left) + options.offsetX - $(window).scrollLeft()}px`,
       top: `${parseInt(top) + options.offsetY + $(window).scrollTop()}px`
     });
-    // element.css({
-    //   left: left,
-    //   top: top
-    // });
   };
 
   changePos();

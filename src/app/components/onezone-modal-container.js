@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import bindFloater from '../utils/bind-floater';
 
 // TODO: tests please, because it was a draft; integrate with atlas
 /**
@@ -16,13 +17,32 @@ export default Ember.Component.extend({
   /** Should be injected */
   providers: null,
 
+  isLoading: function() {
+    return this.get('providers.isUpdating') || !this.get('providers').any(p => p.get('isLoaded'));
+  }.property('providers', 'providers.isUpdating', 'providers.@each.isLoading'),
+
+  isLoadingChanged: function() {
+    if (this.get('isLoading')) {
+      const updater = bindFloater($('.onezone-modal-container .spinner-container'), $('.onezone-atlas'), {
+        posX: 'center',
+        posY: 'middle-middle'
+      });
+      $('.onezone-atlas').on('mouseover', updater);
+      $('.onezone-atlas').on('scroll', updater);
+
+      // a HACK to update loader position after atlas resize...
+      setTimeout(function () {
+        updater();
+      }, 100);
+    }
+  }.observes('isLoading'),
+
   isFirstLogin: function () {
     let sessionDetails = this.get('session').get('sessionDetails');
     return sessionDetails && sessionDetails.firstLogin;
   }.property('session.sessionDetails'),
 
   modalFirstLogin: function () {
-    console.debug(`pro ${this.get('providers')}, pro len ${this.get('provider.length')}`);
     return this.get('isFirstLogin') &&
       (!this.get('providers') || this.get('providers.length') === 0);
   }.property('isFirstLogin', 'providers', 'providers.length'),
@@ -37,5 +57,9 @@ export default Ember.Component.extend({
     return this.get('providers.length') > 0 &&
       this.get('providers').filterBy('isWorking', true).length === 0;
   }.property('providers.@each.isWorking'),
+
+  didInsertElement() {
+    this.isLoadingChanged();
+  }
 
 });
