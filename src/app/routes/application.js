@@ -44,10 +44,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     );
 
     return p;
-  },
+  }.on('init'),
 
-  model() {
-    return this.initSession();
-  },
+  // TODO: initialization of initSession in model causes the application to hang...
+  // model() {
+  //   return this.initSession();
+  // },
 
 });
