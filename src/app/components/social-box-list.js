@@ -39,7 +39,9 @@ export default Ember.Component.extend({
 
   /** Fetches list of supported authorizers from server; sets supportedAuthorizers */
   initSupportedAuthorizers: function () {
-    this.get('onezoneServer').getSupportedAuthorizers().then((data) => {
+    this.set('isLoading', true);
+    const p = this.get('onezoneServer').getSupportedAuthorizers();
+    p.then((data) => {
       const authorizersList = data.authorizers;
       let authorizers = {};
       authorizersList.forEach((authorizerId) => {
@@ -48,6 +50,7 @@ export default Ember.Component.extend({
 
       this.set('supportedAuthorizers', authorizers);
     });
+    p.finally(() => this.set('isLoading', false));
   }.on('init'),
 
   actions: {
