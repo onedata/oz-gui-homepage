@@ -149,7 +149,8 @@ export default {
     providerPlaceDrop: {
       operable: 'Operable',
       inoperable: 'Inoperable',
-      goToFiles: 'Go to your files'
+      goToFiles: 'Go to your files',
+      goToFilesErrorMessage: 'Could not fetch URL of selected provider'
     },
     aliasPanel: {
       noAlias: 'You have no alias'
