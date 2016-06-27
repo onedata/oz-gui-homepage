@@ -118,7 +118,9 @@ export default {
       manageProviders: 'manage account',
       enableHints: 'enable hints'
     },
-    accountsList: {},
+    accountsList: {
+      loading: 'Loading accounts info...'
+    },
     accountItemPassword: {
       changePassword: 'Change your password'
     },

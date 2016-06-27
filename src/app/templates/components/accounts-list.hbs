@@ -4,17 +4,13 @@
     {{account-item-password}}
   </li>
   {{/if}}
-  {{#if true}}
-    <div class="account-icon">
-      <div class="circle {{type}}"></div>
-      <div class="icon">
-        {{spin-spinner scale=0.25 lines=12 length=20 width=10}}
+  {{#if isLoading}}
+    <li class="non-hoverable">
+      {{!-- TODO: add spinner (there is some problems with positioning) --}}
+      <div class="account-label">
+        Loading accounts info...
       </div>
-    </div>
-    <div class="account-label">
-      {{!-- TODO: translate --}}
-      Loading accounts info...
-    </div>
+    </li>
   {{else}}
     {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
