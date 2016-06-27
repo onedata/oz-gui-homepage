@@ -49,8 +49,8 @@ export default Ember.Component.extend({
     let popup = this.$();
     let updater = bindFloater(popup, null, {
       posX: (this.get('dropSideLeft') ? 'left' : 'right'),
-      posY: 'middle',
-      offsetY: 12,
+      posY: 'middle-middle',
+      // a margin
       offsetX: 16 * (this.get('dropSideLeft') ? -1 : 1),
     });
     this.$().on('mouseover', updater);
