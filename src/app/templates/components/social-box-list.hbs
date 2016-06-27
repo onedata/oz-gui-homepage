@@ -6,44 +6,47 @@
 
 {{else}}
 
-<!-- @TODO automatic layout when number of providers changes -->
-<div>
-  {{#if supportedAuthorizers.indigo}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='indigo' action='authenticate'}}
-    </div>
+  {{#if errorMessage}}
+    {{t 'components.socialBoxList.fetchProvidersFailed'}}: {{errorMessage}}
+  {{else}}
+  <div>
+    {{#if supportedAuthorizers.indigo}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='indigo' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.plgrid}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='plgrid' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.dropbox}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='dropbox' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.github}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='github' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.facebook}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='facebook' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.google}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='google' action='authenticate'}}
+      </div>
+    {{/if}}
+    {{#if supportedAuthorizers.basicAuth}}
+      <div class="{{boxContainerClasses}}">
+        {{social-box type='username' action='showLoginForm' iconName='key'}}
+      </div>
+    {{/if}}
+  </div>
   {{/if}}
-  {{#if supportedAuthorizers.plgrid}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='plgrid' action='authenticate'}}
-    </div>
-  {{/if}}
-  {{#if supportedAuthorizers.dropbox}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='dropbox' action='authenticate'}}
-    </div>
-  {{/if}}
-  {{#if supportedAuthorizers.github}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='github' action='authenticate'}}
-    </div>
-  {{/if}}
-  {{#if supportedAuthorizers.facebook}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='facebook' action='authenticate'}}
-    </div>
-  {{/if}}
-  {{#if supportedAuthorizers.google}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='google' action='authenticate'}}
-    </div>
-  {{/if}}
-  {{#if supportedAuthorizers.basicAuth}}
-    <div class="{{boxContainerClasses}}">
-      {{social-box type='username' action='showLoginForm' iconName='key'}}
-    </div>
-  {{/if}}
-</div>
 
 {{modals/login-form modalId="login-form" open=loginFormOpened}}
 

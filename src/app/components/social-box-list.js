@@ -50,6 +50,12 @@ export default Ember.Component.extend({
 
       this.set('supportedAuthorizers', authorizers);
     });
+
+    p.catch(error => {
+      const msg = error && error.message || this.get('i18n').t('components.socialBoxList.fetchProvidersFailedUnknown');
+      this.set('errorMessage', msg);
+    });
+
     p.finally(() => this.set('isLoading', false));
   }.on('init'),
 

@@ -62,7 +62,9 @@ export default {
       error: {
         title: 'Server error',
         message: 'Getting authentication endpoint failed'
-      }
+      },
+      fetchProvidersFailed: 'Server error - fetching login providers failed',
+      fetchProvidersFailedUnknown: 'unknown reason'
     },
     aliasPanel: {
       getAliasFailed: 'Getting alias failed',
