@@ -546,7 +546,8 @@ export default DS.RESTAdapter.extend({
 
   /** WebSocket onclose callback */
   close(event) {
-    console.error(`WebSocket connection closed, event: ` + JSON.stringify(event));
+    console.error(`WebSocket connection closed, event: ` +
+      `code: ${event.code}, reason: ${event.reason}, wasClean: ${event.wasClean}`);
 
     const onClose = this.get('onCloseCallback');
     if (onClose) {
