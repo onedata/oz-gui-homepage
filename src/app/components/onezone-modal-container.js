@@ -17,9 +17,7 @@ export default Ember.Component.extend({
   /** Should be injected */
   providers: null,
 
-  isLoading: function() {
-    return this.get('providers.isUpdating') || !this.get('providers').any(p => p.get('isLoaded'));
-  }.property('providers', 'providers.isUpdating', 'providers.@each.isLoading'),
+  isLoading: Ember.computed.alias('providers.isUpdating'),
 
   isLoadingChanged: function() {
     if (this.get('isLoading')) {

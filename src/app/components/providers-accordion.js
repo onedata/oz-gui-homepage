@@ -15,9 +15,7 @@ export default Ember.Component.extend({
   providersSorting: ['isDefault:desc', 'name'],
   providersSorted: Ember.computed.sort('providers', 'providersSorting'),
 
-  isLoading: function() {
-    return this.get('providers.isUpdating') || !this.get('providers').any(p => p.get('isLoaded'));
-  }.property('providers.isUpdating', 'providers.@each.isLoaded'),
+  isLoading: Ember.computed.alias('providers.isUpdating'),
 
   noProviders: function() {
     let providers = this.get('providers');
