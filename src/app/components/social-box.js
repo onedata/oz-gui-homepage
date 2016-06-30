@@ -29,7 +29,11 @@ export default Ember.Component.extend({
 
   actions: {
     clicked() {
-      this.sendAction('action', this);
+      if (this.get('hasLink')) {
+        window.location = this.get('link');
+      } else {
+        this.sendAction('action', this);
+      }
     }
   }
 });

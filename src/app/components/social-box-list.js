@@ -65,7 +65,8 @@ export default Ember.Component.extend({
     authenticate(socialBox) {
       const providerName = socialBox.get('type');
       socialBox.set('active', true);
-      this.get('onezoneServer').getLoginEndpoint(providerName).then(
+      const p = this.get('onezoneServer').getLoginEndpoint(providerName);
+      p.then(
         (data) => {
           window.location = data.url;
         },
@@ -76,9 +77,11 @@ export default Ember.Component.extend({
               (error.message ? ': ' + error.message : ''),
             type: 'error'
           });
-          socialBox.set('active', false);
         }
       );
+      p.finally(() => {
+        socialBox.set('active', false);
+      });
     },
 
     showLoginForm() {
