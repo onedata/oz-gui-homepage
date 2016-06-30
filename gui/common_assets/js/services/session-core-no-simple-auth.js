@@ -65,7 +65,10 @@ export default Ember.Service.extend({
       // Ask the server for session details when the WebSocket connection
       // is established
       return (/*event*/) => {
-        this.set('websocketWasOpened', true);
+        this.setProperties({
+          websocketWasOpened: true,
+          websocketOpen: true
+        });
         this.resolveSession();
       };
     }.property(),
@@ -134,7 +137,11 @@ export default Ember.Service.extend({
         this.set('sessionDetails', data.sessionDetails);
       }
       let resolveFunction = this.get('sessionInitResolve');
-      resolveFunction();
+      // the resoleFunction can be undefined/null only if we (re)open WebSocket
+      // only, without reinitializing session 
+      if (resolveFunction) {
+        resolveFunction();
+      }
       this.set('sessionInitResolve', null);
       this.set('sessionInitReject', null);
     });
