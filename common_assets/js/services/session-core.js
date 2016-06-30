@@ -3,7 +3,7 @@
 /**
  * Provides a session abstraction using ember-simple-auth. The session validity
  * is resolved via WebSocket.
- * @module services/server
+ * @module services/session
  * @author Lukasz Opiola
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
@@ -52,6 +52,8 @@ export default SessionService.extend({
    */
   sessionDetails: null,
 
+  websocketWasOpened: false,
+
   /**
    * Returns a function that shout be bound to websocket onopen event.
    */
@@ -59,6 +61,7 @@ export default SessionService.extend({
     // Ask the server for session details when the WebSocket connection
     // is established
     return (/*event*/) => {
+      this.set('websocketWasOpened', true);
       this.resolveSession();
     };
   }.property(),
