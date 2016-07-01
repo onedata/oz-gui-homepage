@@ -62,6 +62,7 @@ export default SessionCore.extend({
   onWebSocketClose: function() {
     return (event) => {
       this.set('websocketOpen', false);
+      let ignore = false;
       let automaticReconnect = true;
       let message;
 
@@ -72,24 +73,34 @@ export default SessionCore.extend({
           message += ': ' + this.get('i18n').t('services.session.connectionClosed.reasons.safariCert');
         }
       } else {
+        // WebSocket.CLOSE_GOING_AWAY - used when user leaves current page
+        if (event.code === 1001) {
+          console.warn(`WebSocket has been closed because of WebSocket.CLOSE_GOING_AWAY`);
+          ignore = true;
+        }
         message = this.get('i18n').t('services.session.connectionClosed.message');
         message += ': ' + this.wsCloseMessage(event);
       }
 
-      this.get('messageBox').open({
-        metadata: {isReconnector: true},
-        title: this.get('i18n').t('services.session.connectionClosed.title'),
-        type: 'error',
-        allowClose: false,
-        message: message
-      });
+      if (!ignore) {
+        this.openConnectionClosedModal(message);
 
-      if (automaticReconnect) {
-        // Wait 5 seconds before starting reconnect modal
-        setTimeout(() => this.startWebSocketReconnector(), 5*1000);
+        if (automaticReconnect) {
+          // Wait 5 seconds before starting reconnect modal
+          setTimeout(() => this.startWebSocketReconnector(), 5*1000);
+        }
       }
     };
   }.property(),
+
+  openConnectionClosedModal(message) {
+    this.get('messageBox').open({
+      title: this.get('i18n').t('services.session.connectionClosed.title'),
+      type: 'error',
+      allowClose: false,
+      message: message
+    });
+  },
 
   timeToReconnect: null,
 
