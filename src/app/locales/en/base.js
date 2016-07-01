@@ -1,3 +1,5 @@
+import sessionLocales from './session';
+
 export default {
   common: {
     fetchingToken: 'Fetching token...',
@@ -6,7 +8,12 @@ export default {
       ok: 'OK',
       cancel: 'Cancel',
       signin: 'Sign in'
-    }
+    },
+    serverError: 'Server error',
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
+  },
+  services: {
+    session: sessionLocales
   },
   application: {
     title: 'Onezone',
@@ -39,7 +46,25 @@ export default {
         success: 'Password changed successfully!',
         passwordMatchError: 'New passwords do not match'
       }
+    },
+    socialBoxList: {
+      error: {
+        title: 'Server error',
+        message: 'Getting authentication endpoint failed'
+      },
+      fetchProvidersFailed: 'Server error - fetching login providers failed',
+      fetchProvidersFailedUnknown: 'unknown reason'
+    },
+    aliasPanel: {
+      getAliasFailed: 'Getting alias failed',
+      setAliasFailed: 'Setting alias failed'
+    },
+    accountAdd: {
+      errorGettingUrl: 'Error getting url to authorizer'
     }
+  },
+  logout: {
+    failed: 'Session invalidation failed - cannot logout'
   },
   onezone: {
     title: 'Manage account',
@@ -82,7 +107,9 @@ export default {
       manageProviders: 'manage account',
       enableHints: 'enable hints'
     },
-    accountsList: {},
+    accountsList: {
+      loading: 'Loading accounts info...'
+    },
     accountItemPassword: {
       changePassword: 'Change your password'
     },
@@ -111,7 +138,8 @@ export default {
     providerPlaceDrop: {
       operable: 'Operable',
       inoperable: 'Inoperable',
-      goToFiles: 'Go to your files'
+      goToFiles: 'Go to your files',
+      goToFilesErrorMessage: 'Could not fetch URL of selected provider'
     },
     aliasPanel: {
       noAlias: 'You have no alias'
