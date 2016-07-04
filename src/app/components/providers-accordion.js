@@ -15,6 +15,8 @@ export default Ember.Component.extend({
   providersSorting: ['isDefault:desc', 'name'],
   providersSorted: Ember.computed.sort('providers', 'providersSorting'),
 
+  isLoading: Ember.computed.alias('providers.isUpdating'),
+
   noProviders: function() {
     let providers = this.get('providers');
     return providers.get('length') === 0;
