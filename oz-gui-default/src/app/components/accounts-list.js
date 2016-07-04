@@ -15,6 +15,8 @@ export default Ember.Component.extend({
   /** List of authorizers objects for account-items, Objects with: type, email */
   authorizers: null,
 
+  isLoading: Ember.computed.alias('authorizers.isUpdating'),
+
   authorizersSorting: ['type', 'email'],
   authorizersSorted: Ember.computed.sort('authorizers', 'authorizersSorting'),
 

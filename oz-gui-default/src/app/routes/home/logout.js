@@ -11,6 +11,8 @@ let LogoutRoute = Ember.Route.extend(AuthenticatedRouteMixin);
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default LogoutRoute.extend({
+  messageBox: Ember.inject.service(),
+
   activate() {
     console.debug('logout activate ');
     // TODO: real error handling
@@ -20,8 +22,11 @@ export default LogoutRoute.extend({
         window.location = '/do_logout';
       },
       () => {
-        // TODO: do not use window.alert - use modal instead
-        window.alert('Session invalidation failed - cannot logout');
+        this.get('messageBox').open({
+          title: this.get('i18n').t('common.serverError'),
+          message: this.get('i18n').t('logount.failed'),
+          type: 'warning'
+        });
       }
     );
   }

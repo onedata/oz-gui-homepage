@@ -18,6 +18,8 @@ export default Ember.Component.extend({
     spacesSorting: ['isDefault:desc', 'name'],
     spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
 
+    isLoading: Ember.computed.alias('spaces.isUpdating'),
+
     actions: {
       startCreateNewSpace: function() {
         this.set('createNewSpaceName', null);

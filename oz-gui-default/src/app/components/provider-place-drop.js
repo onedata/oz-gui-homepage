@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   onezoneServer: Ember.inject.service('onezone-server'),
   classNames: ['provider-place-drop'],
   classNameBindings: ['isWorking', 'dropSide'],
+  messageBox: Ember.inject.service(),
 
   isWorking: function() {
     return this.get('provider.isWorking') ? 'working' : '';
@@ -48,8 +49,8 @@ export default Ember.Component.extend({
     let popup = this.$();
     let updater = bindFloater(popup, null, {
       posX: (this.get('dropSideLeft') ? 'left' : 'right'),
-      posY: 'middle',
-      offsetY: 12,
+      posY: 'middle-middle',
+      // a margin
       offsetX: 16 * (this.get('dropSideLeft') ? -1 : 1),
     });
     this.$().on('mouseover', updater);
@@ -65,9 +66,22 @@ export default Ember.Component.extend({
 
   actions: {
     goToFiles() {
-      this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id')).then((data) => {
-        window.location = data.url;
-      });
+      const p = this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id'));
+      p.then(
+        (data) => {
+          window.location = data.url;
+        },
+        (error) => {
+          this.get('messageBox').open({
+            title: this.get('i18n').t('common.serverError'),
+            message: this.get('i18n').t('onezone.providerPlaceDrop.goToFilesErrorMessage') +
+              ((error && error.message) ? (': ' + error.message) : ''),
+            type: 'error'
+          });
+        }
+      );
+
+      p.finally(() => this.set('goToIsLoading', false));
     }
   }
 });

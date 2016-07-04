@@ -31,9 +31,14 @@
     </ul>
     {{#if provider.isWorking}}
       <hr>
-      <a href="#" class="btn btn-small btn-pale-green" {{action 'goToFiles'}}>
+      {{#spin-button-onedata buttonType="submit"
+        action=(action "goToFiles")
+        class="btn btn-small btn-pale-green no-outline" spinnerColor="#fff"
+        inFlight=goToIsLoading
+        disabled=goToIsLoading
+      }}
         {{t "onezone.providerPlaceDrop.goToFiles"}}
-      </a>
+      {{/spin-button-onedata}}
     {{/if}}
   </div>
 </div>
