@@ -17,6 +17,10 @@ export default Ember.Component.extend({
 
   classNames: ['tokens-list-item'],
 
+  isLoading: function() {
+    return !this.get('token') || !this.get('token.isLoaded') || !this.get('token.id');
+  }.property('token', 'token.isLoaded'),
+
   clipboardTarget: function() {
     return `#${this.get('inputContainerId')} input`;
   }.property('inputContainerId'),

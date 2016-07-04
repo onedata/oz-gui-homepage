@@ -5,6 +5,7 @@
  * using a websocket connection.
  * @module adapters/application
  * @author Łukasz Opioła
+ * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
@@ -70,9 +71,27 @@ export default DS.RESTAdapter.extend({
   initialized: false,
   onOpenCallback: null,
   onErrorCallback: null,
+  onCloseCallback: null,
 
-  // Promises that will be resolved when response comes
+  //
+  /**
+   * Map of promises that will be resolved when response for message with
+   * specified uuid comes.
+   * Adding of values to this map is done in ``sendAndRegisterPromise``.
+   * The handling of responses is done in ``processMessage``.
+   *
+   * Maps ``uuid -> PromiseSpec``
+   * where PromiseSpec is an object with properties:
+   *
+   * - ``success``: a function that will be executed on receive of message with the uuid
+   *   and success result (see processMessage)
+   * - ``error``: a function that will be executed on receive of message with the uuid
+   *   and error result (see processMessage)
+   * - ``type``: a string indicating message type - see TYPE_* constants in this file
+   * - ``operation``: a string indicating model operation type - see OP_* constants
+   */
   promises: new Map(),
+
   // The WebSocket
   socket: null,
   // Queue of messages. They are accumulated if requests from store come
@@ -80,22 +99,20 @@ export default DS.RESTAdapter.extend({
   messageBuffer: [],
 
   /** -------------------------------------------------------------------
-   * WebSocket initialization
+   * WebSocket operations
    * ------------------------------------------------------------------- */
 
-  /** Called automatically on adapter init. */
-  init() {
-    this.initWebSocket();
-  },
-
   /** Initializes the WebSocket */
-  initWebSocket(onOpen, onError) {
+  initWebSocket(onOpen, onError, onClose) {
     // Register callbacks even if WebSocket is already being initialized.
     if (onOpen) {
       this.set('onOpenCallback', onOpen);
     }
     if (onError) {
       this.set('onErrorCallback', onError);
+    }
+    if (onClose) {
+      this.set('onCloseCallback', onClose);
     }
     if (this.get('initialized') === false) {
       this.set('initialized', true);
@@ -109,18 +126,42 @@ export default DS.RESTAdapter.extend({
       console.debug('Connecting: ' + url);
 
       if (adapter.socket === null) {
-        adapter.socket = new WebSocket(url);
-        adapter.socket.onopen = function (event) {
-          adapter.open.apply(adapter, [event]);
-        };
-        adapter.socket.onmessage = function (event) {
-          adapter.receive.apply(adapter, [event]);
-        };
-        adapter.socket.onerror = function (event) {
-          adapter.error.apply(adapter, [event]);
-        };
+        try {
+          adapter.socket = new WebSocket(url);
+          adapter.socket.onopen = function (event) {
+            adapter.open.apply(adapter, [event]);
+          };
+          adapter.socket.onmessage = function (event) {
+            adapter.receive.apply(adapter, [event]);
+          };
+          adapter.socket.onerror = function (event) {
+            adapter.error.apply(adapter, [event]);
+          };
+          adapter.socket.onclose = function (event) {
+            adapter.close.apply(adapter, [event]);
+          };
+        } catch (error) {
+          console.error(`WebSocket initializtion exception: ${error}`);
+          // invoke provided handler, it should idicate error to user
+          onClose();
+          throw error;
+        }
       }
     }
+  },
+
+  closeWebsocket() {
+    if (this.socket) {
+      this.socket.close();
+    }
+  },
+
+  clearWebsocket() {
+    this.closeWebsocket();
+    this.setProperties({
+      socket: null,
+      initialized: false
+    });
   },
 
   /** -------------------------------------------------------------------
@@ -277,6 +318,8 @@ export default DS.RESTAdapter.extend({
    * Sends a payload (JSON) via WebSocket, previously adding a randomly
    * generated UUID to it and registers a promise
    * (which can later be retrieved by the UUID).
+   *
+   * TODO: document type of "payload" (Message without uuid?)
    */
   sendAndRegisterPromise(operation, type, payload) {
     // Add UUID to payload so we can later connect the response with a promise
@@ -366,10 +409,10 @@ export default DS.RESTAdapter.extend({
   },
 
   /** WebSocket onopen callback */
-  open() {
-    let onOpen = this.get('onOpenCallback');
+  open(event) {
+    const onOpen = this.get('onOpenCallback');
     if (onOpen) {
-      onOpen();
+      onOpen(event);
     }
     // Flush messages waiting for connection open
     this.debounce(this.flushMessageBuffer, FLUSH_TIMEOUT)();
@@ -387,15 +430,23 @@ export default DS.RESTAdapter.extend({
    * the connection is on. */
   flushMessageBuffer() {
     console.debug('flush' + this);
-    let adapter = this;
-    if (this.socket.readyState === 1) {
-      if (adapter.messageBuffer.length > 0) {
+    const adapter = this;
+    if (adapter.messageBuffer.length > 0 && this.socket) {
+      if (this.socket.readyState === 1) {
         let batch = {batch: []};
         adapter.messageBuffer.forEach(function (payload) {
           batch.batch.push(payload);
         });
         adapter.messageBuffer = [];
         adapter.socket.send(JSON.stringify(batch));
+
+      // readyState > 1 means that WS is closing/closed, so we reject promises
+      // to avoid indefinitely wait for WS to be opened again (maybe TODO)
+      } if (this.socket.readyState > 1) {
+        adapter.messageBuffer.forEach((message) => {
+          const promise_spec = adapter.promises.get(message.uuid);
+          promise_spec.error({message: 'Cannot send message - WebSocket closed'});
+        });
       }
     }
   },
@@ -424,15 +475,17 @@ export default DS.RESTAdapter.extend({
   /** WebSocket onmessage callback, resolves promises with received replies. */
   receive(event) {
     let json = JSON.parse(event.data);
-    if (json.batch) {
+    if (Array.isArray(json.batch)) {
       for (let message of json.batch) {
         this.processMessage(message);
       }
     } else {
+      console.warn('A json.batch message was dropped because is not an Array, see debug logs for details');
       console.debug('Warning: dropping message: ' + JSON.stringify(json));
     }
   },
 
+  // TODO: document message object: data, uuid, result
   processMessage(message) {
     let adapter = this;
     let promise;
@@ -443,26 +496,28 @@ export default DS.RESTAdapter.extend({
       if (message.result === RESULT_OK) {
         let transformed_data = adapter.transformResponse(message.data,
             promise.type, promise.operation);
-        console.debug('FETCH_RESP success: ' + JSON.stringify(transformed_data));
+        console.debug(`FETCH_RESP success, (uuid=${message.uuid}): ${JSON.stringify(transformed_data)}`);
 
         promise.success(transformed_data);
       } else if (message.result === RESULT_ERROR) {
-        console.debug('FETCH_RESP error: ' + JSON.stringify(message.data));
+        console.debug(`FETCH_RESP error, (uuid=${message.uuid}): ${JSON.stringify(message.data)}`);
         promise.error(message.data);
       } else {
-        console.debug('Unknown operation result: ' + message.result);
+        console.warn(`Received model response (uuid=${message.uuid}) with unknown result: ${message.result}`);
+        promise.error(message.data);
       }
     } else if (message.msgType === TYPE_RPC_RESP) {
       // Received a response to RPC call
       promise = adapter.promises.get(message.uuid);
       if (message.result === RESULT_OK) {
-        console.debug('RPC_RESP success: ' + JSON.stringify(message.data));
+        console.debug(`RPC_RESP success, (uuid=${message.uuid}): ${JSON.stringify(message.data)}`);
         promise.success(message.data);
       } else if (message.result === RESULT_ERROR) {
-        console.debug('RPC_RESP error: ' + JSON.stringify(message.data));
+        console.debug(`RPC_RESP error, (uuid=${message.uuid}): ${JSON.stringify(message.data)}`);
         promise.error(message.data);
       } else {
-        console.debug('Unknown operation result: ' + message.result);
+        console.warn(`Received RPC response (uuid=${message.uuid}) with unknown result: ${message.result}`);
+        promise.error(message.data);
       }
     }
     else if (message.msgType === TYPE_MODEL_CRT_PUSH ||
@@ -492,11 +547,22 @@ export default DS.RESTAdapter.extend({
   /** WebSocket onerror callback */
   error(event) {
     // TODO @todo better error handling, maybe reconnection attempts?
-    console.error(`WebSocket connection error, event data: ` + event.data);
+    console.error(`WebSocket connection error, event: ` + JSON.stringify(event));
 
-    let onError = this.get('onErrorCallback');
+    const onError = this.get('onErrorCallback');
     if (onError) {
-      onError();
+      onError(event);
+    }
+  },
+
+  /** WebSocket onclose callback */
+  close(event) {
+    console.error(`WebSocket connection closed, event: ` +
+      `code: ${event.code}, reason: ${event.reason}, wasClean: ${event.wasClean}`);
+
+    const onClose = this.get('onCloseCallback');
+    if (onClose) {
+      onClose(event);
     }
   }
 });

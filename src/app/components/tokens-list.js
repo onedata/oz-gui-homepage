@@ -11,6 +11,8 @@ export default Ember.Component.extend({
   store: Ember.inject.service('store'),
   classNames: ['secondary-accordion', 'tokens-accordion', 'accordion-content'],
 
+  isLoading: Ember.computed.alias('tokens.isUpdating'),
+
   actions: {
     /** Creates new clienttoken record on server - its id will be a token to display */
     createNewToken: function() {

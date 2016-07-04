@@ -4,11 +4,20 @@
     {{account-item-password}}
   </li>
   {{/if}}
-  {{#each authorizersSorted as |account|}}
+  {{#if isLoading}}
+    <li class="non-hoverable">
+      {{!-- TODO: add spinner (there is some problems with positioning) --}}
+      <div class="account-label">
+        Loading accounts info...
+      </div>
+    </li>
+  {{else}}
+    {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
       {{account-item type=account.type label=account.email}}
     </li>
-  {{/each}}
+    {{/each}}
+  {{/if}}
   <li>
     {{account-add}}
   </li>

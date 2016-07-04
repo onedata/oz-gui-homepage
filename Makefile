@@ -1,5 +1,6 @@
 SRC_DIR	 ?= src
 REL_DIR	 ?= rel
+DOC_DIR  ?= doc
 
 .PHONY: deps build_dev build_prod doc clean test
 
@@ -18,7 +19,7 @@ build_prod: deps
 	cd $(SRC_DIR) && ember build -prod --output-path=../$(REL_DIR)
 
 doc:
-	jsdoc -c $(SRC_DIR)/.jsdoc.conf $(SRC_DIR)/app
+	cd $(SRC_DIR) && jsdoc -c .jsdoc.conf -d ../$(DOC_DIR)
 
 clean:
 	cd $(SRC_DIR) && rm -rf node_modules bower_components dist tmp

@@ -1,6 +1,8 @@
 // this style is mainly cloned style of OP modals
 // we do not make common styles, because styles for OZ modals are not designed yet
 
+$modal-top-border-radius: 4px;
+
 .modal {
   font-size: 14px;
   color: #333333;
@@ -20,16 +22,18 @@
   .modal-dialog {
     .modal-content {
       border: none;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
+      // this is hack to prevent modal content border to "stick out" above
+      // header border
+      border-top-left-radius: $modal-top-border-radius + 2px;
+      border-top-right-radius: $modal-top-border-radius + 2px;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
 
       .modal-header {
         padding-left: 30px;
         padding-right: 30px;
-        border-top-left-radius: inherit;
-        border-top-right-radius: inherit;
+        border-top-left-radius: $modal-top-border-radius;
+        border-top-right-radius: $modal-top-border-radius;
         // TODO: use h1?
         font-size: 1.6em;
         color: white;
@@ -144,4 +148,23 @@
     border-bottom-right-radius: 0px;
   }
 
+}
+
+// make all modals cenetered
+.modal {
+  height: 100%;
+
+  .modal-dialog {
+    top: 50% !important;
+    margin-top:0;
+    margin-bottom:0;
+  }
+
+  //keep proper transitions on fade in
+  &.fade .modal-dialog {
+    transform: translateY(-100%) !important;
+  }
+  &.in .modal-dialog {
+    transform: translateY(-50%) !important;
+  }
 }

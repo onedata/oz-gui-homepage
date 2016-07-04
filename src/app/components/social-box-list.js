@@ -9,6 +9,7 @@ import Ember from 'ember';
  */
 export default Ember.Component.extend({
   onezoneServer: Ember.inject.service(),
+  messageBox: Ember.inject.service(),
 
   /**
    * Object with support mapping, eg. ``{plgrid: true, facebook: false}``
@@ -38,7 +39,9 @@ export default Ember.Component.extend({
 
   /** Fetches list of supported authorizers from server; sets supportedAuthorizers */
   initSupportedAuthorizers: function () {
-    this.get('onezoneServer').getSupportedAuthorizers().then((data) => {
+    this.set('isLoading', true);
+    const p = this.get('onezoneServer').getSupportedAuthorizers();
+    p.then((data) => {
       const authorizersList = data.authorizers;
       let authorizers = {};
       authorizersList.forEach((authorizerId) => {
@@ -47,23 +50,38 @@ export default Ember.Component.extend({
 
       this.set('supportedAuthorizers', authorizers);
     });
+
+    p.catch(error => {
+      const msg = error && error.message || this.get('i18n').t('components.socialBoxList.fetchProvidersFailedUnknown');
+      this.set('errorMessage', msg);
+    });
+
+    p.finally(() => this.set('isLoading', false));
   }.on('init'),
 
   actions: {
     // TODO: what if there is server error?
     /** Get a login endpoint URL from server and go to it */
-    authenticate(providerName) {
-      this.$().find(`.login-icon-box.${providerName}`).addClass('active');
-      this.get('onezoneServer').getLoginEndpoint(providerName).then(
+    authenticate(socialBox) {
+      const providerName = socialBox.get('type');
+      socialBox.set('active', true);
+      const p = this.get('onezoneServer').getLoginEndpoint(providerName);
+      p.then(
         (data) => {
           window.location = data.url;
         },
         (error) => {
-          // TODO: use modal instead of window.alert
-          window.alert('Getting authentication endpoint failed: ' + error);
-          this.$().find(`.login-icon-box.${providerName}`).removeClass('active');
+          this.get('messageBox').open({
+            title: this.get('i18n').t('components.socialBoxList.error.title'),
+            message: this.get('i18n').t('components.socialBoxList.error.message') +
+              (error.message ? ': ' + error.message : ''),
+            type: 'error'
+          });
         }
       );
+      p.finally(() => {
+        socialBox.set('active', false);
+      });
     },
 
     showLoginForm() {
