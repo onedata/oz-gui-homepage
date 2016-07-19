@@ -17,6 +17,8 @@
       </div>
     </div>
   {{else}}
+    <div class="sidebar-row space-add-text-row">{{t 'onezone.tokensAccordion.info'}}</div>
+
     {{#each tokens as |t|}}
       {{tokens-list-item token=t}}
     {{/each}}

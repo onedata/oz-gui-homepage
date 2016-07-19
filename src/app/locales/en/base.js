@@ -100,7 +100,7 @@ export default {
       connectHead: 'authentication settings',
       manageSpacesHead: 'data space management',
       filesHead: 'go to your files',
-      tokensHead: 'client tokens',
+      tokensHead: 'access tokens',
       aliasHead: 'user alias'
     },
     topBar: {
@@ -132,7 +132,8 @@ export default {
     },
     providersAccordionItem: {},
     tokensAccordion: {
-      createNewToken: 'Create new client token'
+      createNewToken: 'Create new access token',
+      info: 'Generate new token to get access to Onedata using command line client or REST API'
     },
     tokensAccordionItem: {},
     providerPlaceDrop: {

@@ -10,7 +10,7 @@ describeComponent(
   'AccountAddComponent',
   {
     // Specify the other units that are required for this test
-    // needs: ['component:foo', 'helper:bar'],
+    needs: ['component:status-panel'],
     unit: true
   },
   function() {

@@ -10,7 +10,8 @@ describeComponent(
   'ModalsMessageBoxComponent',
   {
     // Specify the other units that are required for this test
-    needs: ['component:bs-modal', 'component:bs-modal-body', 'helper:eq'],
+    needs: ['component:bs-modal', 'component:bs-modal-body', 'helper:eq',
+      'component:status-panel'],
     unit: true
   },
   function() {
