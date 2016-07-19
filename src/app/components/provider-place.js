@@ -19,8 +19,15 @@ export default Ember.Component.extend({
   provider: null,
 
   // TODO: map to provider props
-  latitude: Ember.computed.alias('provider.latitude'),
-  longitude: Ember.computed.alias('provider.longitude'),
+  latitude: Ember.computed('provider.latitude', function() {
+    const lat = this.get('provider.latitude');
+    return lat >= -90 && lat <= 90 ? lat : 0;
+  }),
+
+  longitude: Ember.computed('provider.longitude', function() {
+    const lon = this.get('provider.longitude');
+    return lon >= -180 && lon <= 180 ? lon : 0;
+  }),
 
   width: function() {
     return this.get('atlas.width')*0.02;
@@ -44,7 +51,7 @@ export default Ember.Component.extend({
 
     let y = 1.25 * Math.log(Math.tan(Math.PI / 4 + 0.4 * ltr));
     let yp = this.get('atlas.centerY') - (h/2) * y * (1/2.303412543) - this.get('height')/2;
-    console.debug(`lat ${ltr} -> y ${y} -> y' ${yp}`);
+    // console.debug(`lat ${ltr} -> y ${y} -> y' ${yp}`);
     return yp;
   }.property('latitude', 'atlas.centerY', 'height'),
 
