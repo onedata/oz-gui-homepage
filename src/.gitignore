@@ -55,6 +55,7 @@ app/components/social-box.js
 app/components/spaces-accordion-item.js
 app/components/spaces-accordion.js
 app/components/spin-button-onedata.js
+app/components/status-panel.js
 app/components/tokens-list-item.js
 app/components/tokens-list.js
 app/components/top-bar.js
@@ -143,6 +144,7 @@ app/templates/components/social-box.hbs
 app/templates/components/spaces-accordion-item.hbs
 app/templates/components/spaces-accordion.hbs
 app/templates/components/spin-button-onedata.hbs
+app/templates/components/status-panel.hbs
 app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
 app/templates/home.hbs
