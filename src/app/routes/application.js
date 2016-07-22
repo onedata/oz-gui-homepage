@@ -46,6 +46,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     return p;
   }.on('init'),
 
+  resetController(controller, isExiting/*, transition*/) {
+    if (isExiting) {
+      controller.resetQueryParams();
+    }
+  },
+
   // TODO: initialization of initSession in model causes the application to hang...
   // model() {
   //   return this.initSession();

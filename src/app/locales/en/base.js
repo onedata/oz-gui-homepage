@@ -19,7 +19,24 @@ export default {
     title: 'Onezone',
 
     login: 'login',
-    logout: 'logout'
+    logout: 'logout',
+
+    openidErrors: {
+      title: 'Cannot connect account',
+      openidInvalidRequest: "Request to OpenID was invalid",
+      newAccountEmailOccupied:
+        "One or more e-mail addresses returned by the OpenID provider are already " +
+        "occupied. The system requires that emails are unique and connected to one " +
+        "user. To add this OpenID account to your existing account, login on the " +
+        "existing account and use the option 'Connect new account' in Authentication Settings.",
+      connectAccountEmailOccupied:
+        "One or more e-mail addresses returned by the OpenID provider are already " +
+        "connected to another account. The system requires that emails are unique " +
+        "and connected to one user, unfortunately two different accounts cannot be merged.",
+      connectAccountAlreadyConnected:
+        "This OpenID account is already connected to another user account. " +
+        "Unfortunately two different accounts cannot be merged."
+    }
   },
   login: {
     title: 'Login',
@@ -100,7 +117,7 @@ export default {
       connectHead: 'authentication settings',
       manageSpacesHead: 'data space management',
       filesHead: 'go to your files',
-      tokensHead: 'client tokens',
+      tokensHead: 'access tokens',
       aliasHead: 'user alias'
     },
     topBar: {
@@ -132,7 +149,8 @@ export default {
     },
     providersAccordionItem: {},
     tokensAccordion: {
-      createNewToken: 'Create new client token'
+      createNewToken: 'Create new access token',
+      info: 'Generate new token to get access to Onedata using command line client or REST API'
     },
     tokensAccordionItem: {},
     providerPlaceDrop: {
