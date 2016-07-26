@@ -148,7 +148,6 @@ app/templates/components/spin-button-onedata.hbs
 app/templates/components/status-panel.hbs
 app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
-app/templates/home.hbs
 app/templates/home/login.hbs
 app/templates/home/logout.hbs
 app/templates/onezone.hbs
