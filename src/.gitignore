@@ -106,6 +106,7 @@ app/styles/dropdowns.scss
 app/styles/fonts.scss
 app/styles/login.scss
 app/styles/main-menu.scss
+app/styles/message-box-modal.scss
 app/styles/modal-types.scss
 app/styles/modal.scss
 app/styles/onedata-common.scss
@@ -147,7 +148,6 @@ app/templates/components/spin-button-onedata.hbs
 app/templates/components/status-panel.hbs
 app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
-app/templates/home.hbs
 app/templates/home/login.hbs
 app/templates/home/logout.hbs
 app/templates/onezone.hbs
