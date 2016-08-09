@@ -77,7 +77,7 @@ export default {
 
         bodySureQuestion: 'Are you sure you want to proceed?',
 
-        confirmCheckbox: 'I understand that by confirming, all data from space "{{spaceName}}" stored on provider "{{providerName}}" will be lost',
+        confirmCheckbox: 'I understand the risk of data loss',
 
         unsupportSpaceSuccess: 'Space "{{spaceName}}" unsupported successfully',
         unsupportSpaceFailed: 'Cannot unsupport space:'
