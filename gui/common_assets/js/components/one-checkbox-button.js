@@ -31,7 +31,6 @@ import Ember from 'ember';
  */
 export default Ember.Component.extend({
   classNames: ['one-option-button'],
-  classNameBindings: ['colClass'],
 
   /**
    * Binding to object with properties, whose will be toggled
