@@ -34,12 +34,17 @@
     <div class="accordion-inner">
       <ul>
         {{#each providersSorted as |p|}}
-          <li {{action "goToProvider" p}} class="clickable">
-            <div class="icon">
-              {{one-icon icon=(if p.isDefault "provider-home" "provider")}}
+          <li class="hover-parent">
+            <div {{action "goToProvider" p}} class="clickable">
+              <div class="icon">
+                {{one-icon icon=(if p.isDefault "provider-home" "provider")}}
+              </div>
+              <div class="label">
+                {{trim-string p.name 24}}
+              </div>
             </div>
-            <div class="label">
-              {{trim-string p.name 24}}
+            <div class="icon clickable visible-on-parent-hover" {{action "showUnsupportSpaceModal" p}}>
+              {{one-icon icon="leave-space"}}
             </div>
           </li>
         {{/each}}

@@ -7,6 +7,8 @@ export default {
     modal: {
       ok: 'OK',
       cancel: 'Cancel',
+      yes: 'Yes',
+      no: 'No',
       signin: 'Sign in'
     },
     serverError: 'Server error',
@@ -62,6 +64,23 @@ export default {
         error: 'Cannot change password due to an error:',
         success: 'Password changed successfully!',
         passwordMatchError: 'New passwords do not match'
+      },
+      unsupportSpace: {
+        title: 'Unsupport space',
+        bodyQuestion: 'Are you sure you want to cease support of ' +
+        'provider "{{providerName}}" for space "{{spaceName}}"?',
+
+        bodyInfo: 'This operation can cause irreversible loss of your data. ' +
+        'To prevent data loss, make sure all the data in the space is ' +
+        'replicated to other providers of the space. If this is the only ' +
+        'provider for this space, all data will be lost. ',
+
+        bodySureQuestion: 'Are you sure you want to proceed?',
+
+        confirmCheckbox: 'I understand that by confirming, all data from space "{{spaceName}}" stored on provider "{{providerName}}" will be lost',
+
+        unsupportSpaceSuccess: 'Space "{{spaceName}}" unsupported successfully',
+        unsupportSpaceFailed: 'Cannot unsupport space:'
       }
     },
     socialBoxList: {
