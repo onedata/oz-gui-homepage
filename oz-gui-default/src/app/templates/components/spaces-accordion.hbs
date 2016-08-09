@@ -16,7 +16,7 @@
       </div>
   {{else}}
     {{#each spacesSorted as |s|}}
-      {{spaces-accordion-item space=s}}
+      {{spaces-accordion-item space=s showUnsupportSpaceModal="showUnsupportSpaceModal"}}
     {{/each}}
   {{/if}}
 
@@ -59,3 +59,6 @@
     </a>
   </div> --}}
 </div>
+
+{{modals/unsupport-space open=isUnsupportModalOpened
+space=unsupportSpaceSpace provider=unsupportSpaceProvider}}
