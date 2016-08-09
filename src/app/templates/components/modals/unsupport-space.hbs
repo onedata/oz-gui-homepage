@@ -1,0 +1,47 @@
+{{#bs-modal open=open body=false footer=false
+    id=modalId
+    title=(t 'components.modals.unsupportSpace.title')
+    openAction="open"
+    keyboard=(not isLoading)
+    autoClose=(not isLoading)
+    backdropClose=(not isLoading)
+    closeButton=false}}
+  {{#bs-modal-body}}
+    {{modals/elements/alert-panel message=message messagePrefix=messagePrefix
+      messageType=messageType closeButton=false}}
+
+    <p class="danger-message">
+      {{t 'components.modals.unsupportSpace.bodyQuestion'
+        spaceName=space.name providerName=provider.name}}
+    </p>
+    <p>
+      {{t 'components.modals.unsupportSpace.bodyInfo'}}
+    </p>
+    <p>
+      {{t 'components.modals.unsupportSpace.bodySureQuestion'}}
+    </p>
+
+    <div class="row">
+      {{one-checkbox-button checked=confirmChecked value='confirmed'
+        class="warning col-xs-12"
+        label=(t 'components.modals.unsupportSpace.confirmCheckbox' spaceName=space.name providerName=provider.name)}}
+    </div>
+
+  {{/bs-modal-body}}
+  {{#bs-modal-footer as |footer|}}
+    <div class="row">
+      {{#spin-button-onedata
+        action=(if isSubmitEnabled "submit")
+        class="btn btn-danger no-outline" spinnerColor="#fff"
+        inFlight=isLoading
+        disabled=(not isSubmitEnabled)
+      }}
+        {{t "common.modal.yes"}}
+      {{/spin-button-onedata}}
+
+      {{#bs-button action=(action "close" target=footer) type="default"}}
+        {{t "common.modal.no"}}
+      {{/bs-button}}
+    </div>
+  {{/bs-modal-footer}}
+{{/bs-modal}}
