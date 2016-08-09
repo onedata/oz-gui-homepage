@@ -85,6 +85,10 @@ export default Ember.Component.extend({
       goToProvider(provider) {
         this.get('space.providers').forEach((p) => p.set('isSelected', false));
         provider.set('isSelected', true);
+      },
+
+      showUnsupportSpaceModal(provider) {
+        this.sendAction('showUnsupportSpaceModal', this.get('space'), provider);
       }
   }
 });
