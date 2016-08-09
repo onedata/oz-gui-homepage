@@ -30,6 +30,19 @@
       transform: translateY(-50%);
     }
   }
+
+  &.warning {
+    .one-option-button-container {
+      &:hover {
+        color: #D9534F;
+      }
+
+      .option-icon {
+        color: #D9534F;
+      }
+    }
+
+  }
 }
 
 .one-option-button-line {
