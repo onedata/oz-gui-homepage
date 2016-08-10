@@ -45,8 +45,8 @@ $body-font: 'Open Sans';
 $icomoon-font-path: "fonts/oneicons";
 @import "oneicons/style.scss";
 
-@import "onedata-common";
 @import "colors-common";
+@import "onedata-common";
 @import "colors";
 @import "fonts";
 @import "main-menu";
