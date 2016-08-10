@@ -140,5 +140,21 @@ export default Ember.Service.extend({
       oldPassword: oldPassword,
       newPassword: newPassword
     });
+  },
+
+  /**
+   * Cease support of provider for space.
+   *
+   * @param {String} spaceId ID od Space, which will lost support
+   * @param {String} providerId ID of Provider whose support will be ceased
+   * @returns {RSVP.Promise} A backend operation completion:
+   * - ``resolve()`` when successfully ceased the support
+   * - ``reject(object: error)`` on failure
+   */
+  unsupportSpace(spaceId, providerId) {
+    return this.get('server').privateRPC('unsupportSpace', {
+      spaceId: spaceId,
+      providerId: providerId
+    });
   }
 });
