@@ -39,8 +39,13 @@ app/components/main-menu-item.js
 app/components/modals/change-password.js
 app/components/modals/login-form.js
 app/components/modals/message-box.js
+app/components/modals/unsupport-space.js
 app/components/navbar-toggle.js
+app/components/one-checkbox-button.js
+app/components/one-checkbox-group.js
 app/components/one-icon.js
+app/components/one-radio-button.js
+app/components/one-radio-group.js
 app/components/onezone-atlas.js
 app/components/onezone-modal-container.js
 app/components/onezone-sidebar.js
@@ -63,6 +68,7 @@ app/controllers/.gitkeep
 app/controllers/application.js
 app/controllers/onezone.js
 app/helpers/.gitkeep
+app/helpers/icon.js
 app/helpers/safe-element-id.js
 app/helpers/trim-string.js
 app/index.html
@@ -73,7 +79,6 @@ app/instance-initializers/session-events.js
 app/locales/en/base.js
 app/locales/en/config.js
 app/locales/en/session.js
-app/mixins/components/modal.js
 app/mixins/promise-loading.js
 app/models/.gitkeep
 app/models/authorizer.js
@@ -109,6 +114,7 @@ app/styles/main-menu.scss
 app/styles/message-box-modal.scss
 app/styles/modal-types.scss
 app/styles/modal.scss
+app/styles/one-option-button.scss
 app/styles/onedata-common.scss
 app/styles/oneicons/style.scss
 app/styles/oneicons/variables.scss
@@ -130,8 +136,13 @@ app/templates/components/main-menu-item.hbs
 app/templates/components/modals/change-password.hbs
 app/templates/components/modals/login-form.hbs
 app/templates/components/modals/message-box.hbs
+app/templates/components/modals/unsupport-space.hbs
 app/templates/components/navbar-toggle.hbs
+app/templates/components/one-checkbox-button.hbs
+app/templates/components/one-checkbox-group.hbs
 app/templates/components/one-icon.hbs
+app/templates/components/one-radio-button.hbs
+app/templates/components/one-radio-group.hbs
 app/templates/components/onezone-atlas.hbs
 app/templates/components/onezone-modal-container.hbs
 app/templates/components/onezone-sidebar.hbs
@@ -201,6 +212,10 @@ tests/test-helper.js
 tests/unit/.gitkeep
 tests/unit/components/account-add-test.js
 tests/unit/components/modals/message-box-test.js
+tests/unit/components/one-checkbox-button-test.js
+tests/unit/components/one-checkbox-group-test.js
+tests/unit/components/one-radio-button-test.js
+tests/unit/components/one-radio-group-test.js
 tests/unit/helpers/safe-element-id-test.js
 tests/unit/services/message-box-test.js
 tests/unit/utils/safe-element-id-test.js
