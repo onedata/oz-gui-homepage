@@ -98,47 +98,6 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
         });
       });
     },
-
-    // submit() {
-    //   const oldPassword = this.get('oldPasswordText');
-    //   const newPassword = this.get('newPasswordText');
-    //   const retypeNewPassword = this.get('retypeNewPasswordText');
-    //
-    //   if (newPassword !== retypeNewPassword) {
-    //     this.setProperties({
-    //       isLoading: false,
-    //       message: this.get('i18n').t('components.modals.changePassword.passwordMatchError'),
-    //       messageType: 'danger'
-    //     });
-    //     return;
-    //   }
-    //
-    //   this.setProperties({
-    //     isLoading: true,
-    //     message: null,
-    //     messageType: null
-    //   });
-    //
-    //
-    //   this.promiseLoading(
-    //     this.get('onezoneServer').changePassword(oldPassword, newPassword)
-    //   ).then(
-    //     () => {
-    //       this.setProperties({
-    //         messageType: 'success'
-    //       });
-    //       setTimeout(() => {
-    //         this.set('open', false);
-    //       }, 800);
-    //     },
-    //     (error) => {
-    //       this.setProperties({
-    //         messageType: 'danger',
-    //         message: error.message
-    //       });
-    //     }
-    //   );
-    // },
   }
 
 

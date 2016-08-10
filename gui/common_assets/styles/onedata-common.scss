@@ -1,3 +1,5 @@
+/// Required stylesheets: colors-common
+
 /// Import OpenSans Regular
 @font-face {
     font-family: 'Open Sans';
@@ -136,7 +138,7 @@ $icomoon-font-path: 'fonts/oneicons';
 
 .danger-message {
   font-weight: bold;
-  color: #D9534F;
+  color: $color-danger;
 }
 
 // Bootstrap extensions
