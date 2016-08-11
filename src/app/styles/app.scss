@@ -380,3 +380,7 @@ input {
     font-size: 256px;
   }
 }
+
+.container-home > .container:first-child, .container-home > .container-index {
+  margin-top: 50px;
+}
