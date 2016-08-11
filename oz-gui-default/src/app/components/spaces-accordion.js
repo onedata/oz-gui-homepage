@@ -20,6 +20,10 @@ export default Ember.Component.extend({
 
     isLoading: Ember.computed.alias('spaces.isUpdating'),
 
+    unsupportSpaceSpacet: null,
+    unsupportSpaceProvider: null,
+    isUnsupportModalOpened: false,
+
     actions: {
       startCreateNewSpace: function() {
         this.set('createNewSpaceName', null);
@@ -51,6 +55,15 @@ export default Ember.Component.extend({
         } finally {
           this.set('createNewSpaceEditing', false);
         }
-      }
-    }
+      },
+
+      showUnsupportSpaceModal(space, provider) {
+        this.setProperties({
+          isUnsupportModalOpened: true,
+          unsupportSpaceSpace: space,
+          unsupportSpaceProvider: provider
+        });
+      },
+    },
+
 });

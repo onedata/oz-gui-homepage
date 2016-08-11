@@ -45,6 +45,7 @@ $body-font: 'Open Sans';
 $icomoon-font-path: "fonts/oneicons";
 @import "oneicons/style.scss";
 
+@import "colors-common";
 @import "onedata-common";
 @import "colors";
 @import "fonts";
@@ -60,6 +61,7 @@ $icomoon-font-path: "fonts/oneicons";
 @import "spin-button-base";
 @import "modal-types";
 @import "message-box-modal";
+@import "one-option-button";
 
 html, body {
   height: 100%;
@@ -160,10 +162,6 @@ html:not(.test-runner) {
       font-weight: normal;
     }
   }
-}
-
-.container-application {
-  padding-top: $body-padding;
 }
 
 .conainter-content {
@@ -381,4 +379,8 @@ input {
   .application-error-icon {
     font-size: 256px;
   }
+}
+
+.container-home > .container:first-child, .container-home > .container-index {
+  margin-top: 50px;
 }

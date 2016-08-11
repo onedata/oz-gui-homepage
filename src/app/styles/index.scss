@@ -22,6 +22,10 @@
 
         .row-get-started-button {
           margin-top: 40px;
+
+          a {
+            color: white !important;
+          }
         }
       }
       .onedata-atlas {
@@ -42,21 +46,21 @@
       h1 {
         margin-bottom: 40px;
         text-align: right;
-        color: $color-red-1;
+        color: $color-homepage-header-red;
       }
 
       p {
         text-align: right;
         line-height: 2.25;
-        color: #898989;
+        color: $color-homepage-text-light-gray;
       }
     }
 
     &.row-why {
-      background: #F6F7F8;
+      background: $color-homepage-background-light-gray;
 
       h1 {
-        color: $color-red-1;
+        color: $color-homepage-header-red;
         text-align: center;
       }
 
@@ -83,13 +87,13 @@
         }
 
         h2 {
-          color: #3F3F3F;
+          color: $color-homepage-h2-gray;
           text-transform: uppercase;
           margin-bottom: 36px;
         }
 
         p {
-          color: #898989;
+          color: $color-homepage-text-light-gray;
         }
       }
     }
@@ -101,7 +105,7 @@
 
       h1 {
         margin-bottom: 80px;
-        color: $color-red-1;
+        color: $color-homepage-header-red;
       }
 
       h2 {
@@ -109,29 +113,29 @@
         margin-bottom: 26px;
         font-size: $body-font-size * 1.2;
         text-transform: uppercase;
-        color: #949494;
+        color: $color-homepage-h2-light-gray;
       }
 
       p {
         line-height: 2.2;
-        color: #949494;
+        color: $color-homepage-h2-light-gray;
       }
     }
 
     &.row-for-researchers {
-      background: #F6F7F8;
+      background: $color-homepage-background-light-gray;
       padding-top: 250px;
       padding-bottom: 130px;
 
       h1 {
         margin-top: 0;
         margin-bottom: 40px;
-        color: $color-red-1;
+        color: $color-homepage-header-red;
       }
 
       p {
         line-height: 2.2;
-        color: #949494;
+        color: $color-homepage-h2-light-gray;
         // for bottom margin on stacked design
         margin-bottom: 50px;
       }
@@ -144,12 +148,12 @@
       h1 {
         margin-bottom: 100px;
         text-align: center;
-        color: #3F3F3F;
+        color: $color-homepage-h2-gray;
       }
     }
 
     &.row-know-more {
-      background: #3F3F3F;
+      background: $color-homepage-h2-gray;
       padding-top: 90px;
       padding-bottom: 70px;
 

@@ -79,4 +79,30 @@ export default {
       copyright: '&copy; 2016 Onedata.org'
     }
   },
+  support: {
+    supportAreaTitle: 'Support area',
+    bugReport: {
+      title: 'Bug report',
+      text: 'onedata uses the Attlasian JIRA for development and bug tracking',
+      reportProblemLink: 'report a problem in onedata'
+    },
+    hipchat: {
+      title: 'Hip Chat',
+      textIntro: 'You can use HipChat for getting support from our experts, developers ' +
+        'or users.',
+      textEnter: 'Enter',
+      textChatLink: 'our support chat room',
+      textDiscuss: 'to discuss onedata issues.'
+    },
+    dedicatedSupport: {
+      title: 'Dedicated support',
+      introMayApply: 'Organizations using onedata may apply for a dedicated support including',
+      bulletConfiguring: 'configuring and performance tuning by out experts',
+      bulletImplementing: 'implementing additional functionalities',
+      bulletAdopting: 'adopting to organization\'s needs',
+      bulletSolving: 'solving problems',
+      contactUs: 'Contact us',
+      contactForMore: '{{link}} for more information'
+    }
+  }
 };

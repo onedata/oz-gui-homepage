@@ -1,1 +1,92 @@
-{{outlet}}
+<div class="container-index container-support">
+  <div class="row-index row-support-area">
+    <div class="container">
+      <div class="col-xs-12">
+        <div class="row">
+          <h1>{{t 'support.supportAreaTitle'}}</h1>
+        </div>
+
+        <div class="row row-support">
+          <div class="image-box bug-report"></div>
+          <div class="support-header">
+            <h2>{{t 'support.bugReport.title'}}</h2>
+          </div>
+          <div class="support-content">
+            {{t 'support.bugReport.text'}}:
+            <a id="jira-bug-report" href="javascript:void(0);">
+              {{t 'support.bugReport.reportProblemLink'}}
+            </a>
+          </div>
+        </div>
+
+        <div class="row row-support">
+          <div class="image-box hipchat"></div>
+          <div class="support-header">
+            <h2>{{t 'support.hipchat.title'}}</h2>
+          </div>
+          <div class="support-content">
+            {{t 'support.hipchat.textIntro'}}
+            {{t 'support.hipchat.textEnter'}}
+            <a href="https://www.hipchat.com/g3ST0Aaci">{{t 'support.hipchat.textChatLink'}}</a>
+            {{t 'support.hipchat.textDiscuss'}}
+          </div>
+        </div>
+
+        <div class="row row-support">
+          <div class="image-box dedicated-support"></div>
+          <div class="support-header">
+            <h2>{{t 'support.dedicatedSupport.title'}}</h2>
+          </div>
+          <div class="support-content">
+            {{t 'support.dedicatedSupport.introMayApply'}}:
+            <ul>
+              <li>{{t 'support.dedicatedSupport.bulletConfiguring'}},</li>
+              <li>{{t 'support.dedicatedSupport.bulletImplementing'}},</li>
+              <li>{{t 'support.dedicatedSupport.bulletAdopting'}},</li>
+              <li>{{t 'support.dedicatedSupport.bulletSolving'}}.</li>
+            </ul>
+            <a href="mailto:info@onedata.org">{{t 'support.dedicatedSupport.contactUs'}}</a> {{t 'support.dedicatedSupport.contactForMore'}}.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-index row-know-more">
+    <div class="container">
+      <h1>{{t 'index.knowMore.title'}}</h1>
+      <div class="container-fluid login-buttons-container">
+        <div class="row row-centered">
+          <div class="col-xs-6 text-right">
+            {{social-box type='github' link='https://github.com/onedata'}}
+          </div>
+          <div class="col-xs-6 text-left">
+            {{social-box type='facebook' link='https://www.facebook.com/onedataorg/'}}
+          </div>
+        </div>
+      </div>
+      <p>
+        {{t 'index.knowMore.privacy'}}
+        <span class="dot-separator"></span>
+        {{t 'index.knowMore.tos'}}
+        <span class="dot-separator"></span>
+        {{t 'index.knowMore.copyright'}}
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- JIRA Bug reporting -->
+<script type="text/javascript"
+        src="https://jira.plgrid.pl/jira/s/1a52d611a131f89f42a610f8a8d44881-T/en_USw8oy4d/6343/3/1.4.16/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=9d8100e8">
+</script>
+<script type="text/javascript">
+    window.ATL_JQ_PAGE_PROPS = {
+        "triggerFunction": function (showCollectorDialog) {
+            //Requires that jQuery is available!
+            jQuery("#jira-bug-report").click(function (e) {
+                e.preventDefault();
+                showCollectorDialog();
+            });
+        }};
+</script>

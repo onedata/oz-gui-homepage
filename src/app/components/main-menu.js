@@ -12,7 +12,7 @@ export default Ember.Component.extend({
       'documentation',
       //'community',
       //'download',
-      //'support',
+      'support',
       //'media',
       //'blog',
       'login'
