@@ -88,7 +88,7 @@ export default {
     },
     hipchat: {
       title: 'Hip Chat',
-      textIntro: 'You can use HipChat for getting support from out experts, developers ' +
+      textIntro: 'You can use HipChat for getting support from our experts, developers ' +
         'or users.',
       textEnter: 'Enter',
       textChatLink: 'our support chat room',
