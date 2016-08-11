@@ -105,6 +105,7 @@ app/services/top-menu.js
 app/session-stores/application.js
 app/styles/bootstrap-config.scss
 app/styles/button.scss
+app/styles/colors-common.scss
 app/styles/colors.scss
 app/styles/common-loader.scss
 app/styles/dropdowns.scss
