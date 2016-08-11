@@ -10,6 +10,7 @@
   }
 
   .navbar-brand {
+    z-index: 1000;
     position: absolute;
     padding: 0;
     padding-left: $panel-body-padding !important;
