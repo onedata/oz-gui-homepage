@@ -164,10 +164,6 @@ html:not(.test-runner) {
   }
 }
 
-.container-application {
-  padding-top: $body-padding;
-}
-
 .conainter-content {
   padding: $body-padding;
 }
@@ -383,4 +379,8 @@ input {
   .application-error-icon {
     font-size: 256px;
   }
+}
+
+.container-home > .container:first-child, .container-home > .container-index {
+  margin-top: 50px;
 }
