@@ -99,7 +99,7 @@ export default {
       introMayApply: 'Organizations using onedata may apply for a dedicated support including',
       bulletConfiguring: 'configuring and performance tuning by out experts',
       bulletImplementing: 'implementing additional functionalities',
-      bulletAdopting: 'adop ting to organization\'s needs',
+      bulletAdopting: 'adopting to organization\'s needs',
       bulletSolving: 'solving problems',
       contactUs: 'Contact us',
       contactForMore: '{{link}} for more information'
