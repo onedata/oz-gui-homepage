@@ -13,7 +13,9 @@
           </div>
           <div class="support-content">
             {{t 'support.bugReport.text'}}:
-            <a href="#">{{t 'support.bugReport.reportProblemLink'}}</a>
+            <a id="jira-bug-report" href="javascript:void(0);">
+              {{t 'support.bugReport.reportProblemLink'}}
+            </a>
           </div>
         </div>
 
@@ -25,7 +27,7 @@
           <div class="support-content">
             {{t 'support.hipchat.textIntro'}}
             {{t 'support.hipchat.textEnter'}}
-            <a href="#">{{t 'support.hipchat.textChatLink'}}</a>
+            <a href="https://www.hipchat.com/g3ST0Aaci">{{t 'support.hipchat.textChatLink'}}</a>
             {{t 'support.hipchat.textDiscuss'}}
           </div>
         </div>
@@ -43,7 +45,7 @@
               <li>{{t 'support.dedicatedSupport.bulletAdopting'}},</li>
               <li>{{t 'support.dedicatedSupport.bulletSolving'}}.</li>
             </ul>
-            <a href="#">{{t 'support.dedicatedSupport.contactUs'}}</a> {{t 'support.dedicatedSupport.contactForMore'}}.
+            <a href="mailto:info@onedata.org">{{t 'support.dedicatedSupport.contactUs'}}</a> {{t 'support.dedicatedSupport.contactForMore'}}.
           </div>
         </div>
       </div>
@@ -73,3 +75,18 @@
     </div>
   </div>
 </div>
+
+<!-- JIRA Bug reporting -->
+<script type="text/javascript"
+        src="https://jira.plgrid.pl/jira/s/1a52d611a131f89f42a610f8a8d44881-T/en_USw8oy4d/6343/3/1.4.16/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=9d8100e8">
+</script>
+<script type="text/javascript">
+    window.ATL_JQ_PAGE_PROPS = {
+        "triggerFunction": function (showCollectorDialog) {
+            //Requires that jQuery is available!
+            jQuery("#jira-bug-report").click(function (e) {
+                e.preventDefault();
+                showCollectorDialog();
+            });
+        }};
+</script>
