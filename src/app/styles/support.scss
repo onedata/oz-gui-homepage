@@ -8,7 +8,7 @@
   padding-top: 140px;
   padding-bottom: 140px;
 
-  color: #3F3F3F;
+  color: $color-homepage-text-dark-gray;
 
   $row-support-secondary-height: 60px;
   $support-image-area-width: 64px;
@@ -35,9 +35,9 @@
   h1 {
     padding-bottom: 10px;
     margin-bottom: 30px;
-    border-bottom: #898989 solid 1px;
+    border-bottom: $color-homepage-header-bottom-line solid 1px;
     text-align: left;
-    color: #EF3C40;
+    color: $color-homepage-header-red;
   }
 
   .support-header {
