@@ -3,12 +3,14 @@
   background: none;
   border-bottom: 2px solid rgba(100%, 100%, 100%, 0.1);
   height: $top-height-collapsed;
+  margin-bottom: 0;
 
   &.navbar-onezone {
     border-bottom: none;
   }
 
   .navbar-brand {
+    z-index: 1000;
     position: absolute;
     padding: 0;
     padding-left: $panel-body-padding !important;
