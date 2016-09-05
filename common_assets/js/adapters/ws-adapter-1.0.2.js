@@ -39,7 +39,7 @@ let FLUSH_TIMEOUT = 20;
 // {
 //   uuid (opt, not used in push messages)
 //   msgType
-//   result
+//   result (opt, not used in push messages)
 //   data (opt)
 // }
 
@@ -51,6 +51,7 @@ let TYPE_MODEL_UPT_PUSH = 'modelPushUpdated';
 let TYPE_MODEL_DLT_PUSH = 'modelPushDeleted';
 let TYPE_RPC_REQ = 'RPCReq';
 let TYPE_RPC_RESP = 'RPCResp';
+let TYPE_PUSH_MESSAGE = 'pushMessage';
 // Operations on model, identified by `operation` key
 let OP_FIND = 'find';
 let OP_FIND_ALL = 'findAll';
@@ -67,6 +68,7 @@ let RESULT_ERROR = 'error';
 
 export default DS.RESTAdapter.extend({
   store: Ember.inject.service('store'),
+  serverMessagesHandler: Ember.inject.service(),
 
   initialized: false,
   onOpenCallback: null,
@@ -168,19 +170,6 @@ export default DS.RESTAdapter.extend({
    * Adapter API
    * ------------------------------------------------------------------- */
 
-  /** This method is used by the store to determine if the store should reload
-   * all records from the adapter when records are requested by store.findAll.
-   * */
-  shouldReloadAll() {
-    return false;
-  },
-
-  /** This method is used by the store to determine if the store should reload
-   * a record after the store.findRecord method resolves a cached record. */
-  shouldBackgroundReloadRecord() {
-    return false;
-  },
-
   /** Developer function - for logging/debugging */
   logToConsole(fun_name, fun_params) {
     console.debug(fun_name + '(');
@@ -205,7 +194,7 @@ export default DS.RESTAdapter.extend({
   },
 
   /** Called when ember store wants to find all records that match a query */
-  findQuery(store, type, query) {
+  query(store, type, query) {
     this.logToConsole(OP_FIND_QUERY, [store, type, query]);
     return this.asyncRequest(OP_FIND_QUERY, type.modelName, null, query);
   },
@@ -538,6 +527,14 @@ export default DS.RESTAdapter.extend({
               store.unloadRecord(record);
             });
       });
+    }
+    else if (message.msgType === TYPE_PUSH_MESSAGE) {
+      this.get('serverMessagesHandler').triggerEvent(
+        message.data.operation,
+        message.data.arguments
+      );
+    } else {
+      console.warn(`Server message with unknown type received: ${message.msgType}`);
     }
     if (message.uuid) {
       adapter.promises.delete(message.uuid);
