@@ -16,6 +16,13 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   isLoading: false,
   authProviders: null,
 
+  init() {
+    this._super(...arguments);
+    this.setProperties({
+      modalOpened: false,
+    });
+  },
+
   click() {
     this.set('modalOpened', true);
   }

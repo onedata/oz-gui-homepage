@@ -8,9 +8,9 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
- import DS from 'ember-data';
+import LSAdapter from 'ember-localstorage-adapter';
 
- export default DS.LSAdapter.extend({
+export default LSAdapter.extend({
   /** Called automatically on adapter init. */
   init() {},
 
