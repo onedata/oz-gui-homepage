@@ -33,6 +33,13 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
    */
   messageType: null,
 
+  init() {
+    this._super(...arguments);
+    this.setProperties({
+      open: false
+    });
+  },
+
   isSubmitEnabled: function() {
     return !this.get('isLoading') &&
       this.get('oldPasswordText') && this.get('newPasswordText') &&

@@ -11,7 +11,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['accounts-list', 'accordion-content', 'sidebar-list'],
 
-  // TODO: set order of login providers
   /** List of authorizers objects for account-items, Objects with: type, email */
   authorizers: null,
 

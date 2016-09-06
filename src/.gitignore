@@ -71,7 +71,6 @@ app/helpers/.gitkeep
 app/helpers/icon.js
 app/helpers/safe-element-id.js
 app/helpers/trim-string.js
-app/index.html
 app/initializers/i18n.js
 app/initializers/inject-session.js
 app/instance-initializers/global-app.js
@@ -98,6 +97,7 @@ app/services/common-loader.js
 app/services/message-box.js
 app/services/onezone-server.js
 app/services/page-title-list.js
+app/services/server-messages-handler.js
 app/services/server.js
 app/services/session-core.js
 app/services/session.js
@@ -212,7 +212,6 @@ tests/integration/.gitkeep
 tests/test-helper.js
 tests/unit/.gitkeep
 tests/unit/components/account-add-test.js
-tests/unit/components/modals/message-box-test.js
 tests/unit/components/one-checkbox-button-test.js
 tests/unit/components/one-checkbox-group-test.js
 tests/unit/components/one-radio-button-test.js
