@@ -37,6 +37,7 @@ app/components/alias-panel.js
 app/components/common-loader.js
 app/components/main-menu-item.js
 app/components/modals/change-password.js
+app/components/modals/join-space.js
 app/components/modals/login-form.js
 app/components/modals/message-box.js
 app/components/modals/unsupport-space.js
@@ -135,6 +136,7 @@ app/templates/components/alias-panel.hbs
 app/templates/components/common-loader.hbs
 app/templates/components/main-menu-item.hbs
 app/templates/components/modals/change-password.hbs
+app/templates/components/modals/join-space.hbs
 app/templates/components/modals/login-form.hbs
 app/templates/components/modals/message-box.hbs
 app/templates/components/modals/unsupport-space.hbs
