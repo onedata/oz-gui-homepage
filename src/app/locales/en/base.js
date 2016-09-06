@@ -9,7 +9,8 @@ export default {
       cancel: 'Cancel',
       yes: 'Yes',
       no: 'No',
-      signin: 'Sign in'
+      signin: 'Sign in',
+      join: 'Join'
     },
     serverError: 'Server error',
     fatalApplicationErrorResources: "A fatal error occured loading application's resources"
@@ -81,6 +82,12 @@ export default {
 
         unsupportSpaceSuccess: 'Space "{{spaceName}}" unsupported successfully',
         unsupportSpaceFailed: 'Cannot unsupport space:'
+      },
+      joinSpace: {
+        title: 'Join a space',
+        label: 'Enter a token of a space to join:',
+        joinSuccess: 'Successfully joined space "{{spaceName}}"',
+        joinFailed: 'Cannot join space: "{{errorDetails}}"',
       }
     },
     socialBoxList: {
@@ -157,6 +164,7 @@ export default {
       createNewSpace: 'Create new space',
       createNewSpaceText: 'You can also become a provider yourself and support ' +
       'your own space.',
+      joinSpace: 'Join a space',
       readMore: 'Read more'
     },
     spacesAccordionItem: {
