@@ -489,8 +489,9 @@ $search-box-height: 36px;
           }
 
           &.create-new {
-            margin-top: 20px;
-            //margin-bottom: 20px;
+            &.first-create-new {
+              margin-top: 20px;
+            }
             background-color: transparent;
           }
 
