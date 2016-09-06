@@ -21,5 +21,8 @@
     "chai": "^3.5.0",
     "ember-mocha-adapter": "^0.3.1",
     "spin.js": "^2.3.2"
+  },
+  "resolutions": {
+    "ember": "^2.7.1"
   }
 }

@@ -13,9 +13,9 @@
           </div>
           <div class="support-content">
             {{t 'support.bugReport.text'}}:
-            <a id="jira-bug-report" href="javascript:void(0);">
+            {{#jira-bug-report id="jira-bug-report"}}
               {{t 'support.bugReport.reportProblemLink'}}
-            </a>
+            {{/jira-bug-report}}
           </div>
         </div>
 
@@ -75,5 +75,3 @@
     </div>
   </div>
 </div>
-
-{{jira-bug-report}}
