@@ -23,6 +23,7 @@ export default Ember.Component.extend({
     unsupportSpaceSpacet: null,
     unsupportSpaceProvider: null,
     isUnsupportModalOpened: false,
+    isJoinSpaceModalOpened: false,
 
     actions: {
       startCreateNewSpace: function() {
@@ -55,6 +56,10 @@ export default Ember.Component.extend({
         } finally {
           this.set('createNewSpaceEditing', false);
         }
+      },
+
+      startJoinSpace() {
+        this.set('isJoinSpaceModalOpened', true);
       },
 
       showUnsupportSpaceModal(space, provider) {
