@@ -18,7 +18,4 @@ export default Ember.Component.extend({
 
   authorizersSorting: ['type', 'email'],
   authorizersSorted: Ember.computed.sort('authorizers', 'authorizersSorting'),
-
-  initAuth: function() {
-  }.observes('authorizers')
 });
