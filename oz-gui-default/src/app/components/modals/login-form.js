@@ -82,7 +82,12 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
           });
           // timeout set to display a success message for a while
           setTimeout(function () {
-            window.location.reload();
+            if (data.url) {
+              window.location = data.url;
+            } else {
+              console.error("URL after basic auth login was not sent! Reloading location.");
+              window.location.reload();
+            }
           }, 500);
         },
         error: (jqXHR, textStatus, errorThrown) => {
