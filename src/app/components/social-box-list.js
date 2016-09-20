@@ -42,13 +42,7 @@ export default Ember.Component.extend({
     this.set('isLoading', true);
     const p = this.get('onezoneServer').getSupportedAuthorizers();
     p.then((data) => {
-      const authorizersList = data.authorizers;
-      let authorizers = {};
-      authorizersList.forEach((authorizerId) => {
-        authorizers[authorizerId] = true;
-      });
-
-      this.set('supportedAuthorizers', authorizers);
+      this.set('supportedAuthorizers', data.authorizers);
     });
 
     p.catch(error => {

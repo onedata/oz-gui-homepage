@@ -10,41 +10,16 @@
     {{t 'components.socialBoxList.fetchProvidersFailed'}}: {{errorMessage}}
   {{else}}
   <div>
-    {{#if supportedAuthorizers.indigo}}
+    {{#each supportedAuthorizers as |authorizerName|}}
       <div class="{{boxContainerClasses}}">
-        {{social-box type='indigo' action='authenticate'}}
+        {{!-- basicAuth is a special case --}}
+        {{#if (eq authorizerName 'basicAuth')}}
+          {{social-box type='username' action='showLoginForm' iconName='key'}}
+        {{else}}
+          {{social-box type=authorizerName action='authenticate'}}
+        {{/if}}
       </div>
-    {{/if}}
-    {{#if supportedAuthorizers.plgrid}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='plgrid' action='authenticate'}}
-      </div>
-    {{/if}}
-    {{#if supportedAuthorizers.dropbox}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='dropbox' action='authenticate'}}
-      </div>
-    {{/if}}
-    {{#if supportedAuthorizers.github}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='github' action='authenticate'}}
-      </div>
-    {{/if}}
-    {{#if supportedAuthorizers.facebook}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='facebook' action='authenticate'}}
-      </div>
-    {{/if}}
-    {{#if supportedAuthorizers.google}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='google' action='authenticate'}}
-      </div>
-    {{/if}}
-    {{#if supportedAuthorizers.basicAuth}}
-      <div class="{{boxContainerClasses}}">
-        {{social-box type='username' action='showLoginForm' iconName='key'}}
-      </div>
-    {{/if}}
+    {{/each}}
   </div>
   {{/if}}
 
