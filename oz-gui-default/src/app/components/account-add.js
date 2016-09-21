@@ -32,7 +32,8 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
       github: 'GitHub',
       dropbox: 'Dropbox',
       plgrid: 'PLGrid OpenID',
-      indigo: 'Indigo'
+      indigo: 'Indigo',
+      egi: 'EGI',
     };
 
     this.promiseLoading(

@@ -24,11 +24,31 @@ export default Ember.Component.extend({
     return sa ? Object.keys(sa).length : 0;
   }.property('supportedAuthorizers'),
 
+  /**
+   * Class of the column containing all login buttons.
+   * It should limit boxes, to not allow them to be spaced too much.
+   */
+  containerClass: Ember.computed('supportedAuthorizersCount', function() {
+    const sac = this.get('supportedAuthorizersCount');
+    let classes = 'col-xs-11 col-sm-7 col-centered';
+    if (sac >= 8 ) {
+      classes += ' col-md-7 col-lg-7';
+    } else {
+      classes += ' col-md-11 col-lg-11';
+    }
+    return classes;
+  }),
+
   boxContainerClasses: function() {
     const sac = this.get('supportedAuthorizersCount');
     let classes = 'col-xs-6 col-sm-3 text-center sm-col-centered xs-two-col-center col-sm-last-1';
-    if (sac > 6) {
+    if (sac === 7) {
       classes += ' col-1-of-7-md col-1-of-7-lg';
+    } else if (sac >= 8) {
+      classes += ' col-md-3';
+      if (sac % 4 !== 0) {
+        classes += ' col-centered';
+      }
     } else if (sac % 6 === 0) {
       classes += ' col-md-2';
     } else {
@@ -42,13 +62,7 @@ export default Ember.Component.extend({
     this.set('isLoading', true);
     const p = this.get('onezoneServer').getSupportedAuthorizers();
     p.then((data) => {
-      const authorizersList = data.authorizers;
-      let authorizers = {};
-      authorizersList.forEach((authorizerId) => {
-        authorizers[authorizerId] = true;
-      });
-
-      this.set('supportedAuthorizers', authorizers);
+      this.set('supportedAuthorizers', data.authorizers);
     });
 
     p.catch(error => {
