@@ -79,6 +79,9 @@
     &.username {
       background-color: $color-login-username;
     }
+    &.egi {
+      background-color: $color-login-egi;
+    }
   }
 
   .login-box-container {
