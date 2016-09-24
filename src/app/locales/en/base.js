@@ -165,7 +165,8 @@ export default {
       createNewSpaceText: 'You can also become a provider yourself and support ' +
       'your own space.',
       joinSpace: 'Join a space',
-      readMore: 'Read more'
+      readMore: 'Read more',
+      noViewPermissions: 'You do not have privileges to view the space details.',
     },
     spacesAccordionItem: {
       getSupport: 'Get support'
