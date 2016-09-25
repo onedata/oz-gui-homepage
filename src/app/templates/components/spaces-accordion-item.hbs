@@ -18,6 +18,9 @@
           </div>
         {{/if}}
       </div>
+
+      {{#if showProviders}}
+
       <div class="providers-count clickable" data-toggle="collapse"
         href="#collapse-space-{{space.id}}">
         <div class="icon">
@@ -27,11 +30,18 @@
           {{providers.length}}
         </div>
       </div>
+
+      {{/if}}
+
     </a>
   </div>
+
   <div id="collapse-space-{{space.id}}"
     class="accordion-body secondary-accordion-body spaces-accordion-body sidebar-list collapse">
     <div class="accordion-inner">
+
+      {{#if showProviders}}
+
       <ul>
         {{#each providersSorted as |p|}}
           <li class="hover-parent">
@@ -85,6 +95,15 @@
           </div>
         </li>
       </ul>
+
+      {{else}}
+
+        <div class="sidebar-row sidebar-row-info-text">
+          {{t 'onezone.spacesAccordion.noViewPermissions'}}
+        </div>
+
+      {{/if}}
+
     </div>
   </div>
 </div>

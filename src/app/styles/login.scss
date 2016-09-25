@@ -121,6 +121,7 @@
     font-family: 'Myriad Pro Bold', 'Open Sans', sans-serif;
 
     .zone-image {
+      position: relative;
       height: 170px;
       background-size: contain;
       background-image: url(/assets/images/login/zone.svg);
@@ -141,16 +142,25 @@
         max-width: 100px;
       }
 
-      .logo {
-        text-transform: uppercase;
+      .brand-logo {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-size: contain;
+        background-image: url(/assets/images/brand-logo.svg);
+        background-repeat: no-repeat;
+        background-position: center center;
       }
 
-      .isolated {
-        // pull up
-        margin-top: -3px;
-        font-family: 'Myriad Pro Semibold', 'Open Sans', sans-serif;
-        font-size: 0.8em
-      }
+      // .isolated {
+      //   // pull up
+      //   margin-top: -3px;
+      //   font-family: 'Myriad Pro Semibold', 'Open Sans', sans-serif;
+      //   font-size: 0.8em
+      // }
     }
     .zone-arrow {
       height: 170px;
