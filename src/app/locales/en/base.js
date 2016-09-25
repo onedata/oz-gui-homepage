@@ -166,7 +166,7 @@ export default {
       'your own space.',
       joinSpace: 'Join a space',
       readMore: 'Read more',
-      noViewPermissions: 'You do not have privileges to view the space details.',
+      noViewPermissions: 'You do not have privileges to view details of this space.',
     },
     spacesAccordionItem: {
       getSupport: 'Get support'
