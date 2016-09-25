@@ -14,5 +14,11 @@ export default DS.Model.extend({
   isDefault: DS.attr('boolean', {defaultValue: false}),
 
   /** List of models of providers that support this space */
-  providers: DS.hasMany('provider', {async: true})
+  providers: DS.hasMany('provider', {async: true}),
+
+  /**
+   * If true, user can view list of providers that support this space.
+   * @type {Boolean}
+   */
+  hasViewPrivilege: DS.attr('boolean'),
 });
