@@ -15,8 +15,14 @@ export default Ember.Component.extend({
   /** Space model - should be injected */
   space: null,
 
-  providers: Ember.computed('space.providers', function() {
-    return this.get('space.providers');
+  showProviders: Ember.computed.alias('space.hasViewPrivilege'),
+
+  providers: Ember.computed('showProviders', 'space.providers', function() {
+    if (this.get('space.hasViewPrivilege')) {
+      return this.get('space.providers');
+    } else {
+      return Ember.A();
+    }
   }),
 
   providersSorting: ['isDefault:desc', 'name'],
