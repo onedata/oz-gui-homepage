@@ -15,7 +15,8 @@ export default Ember.Component.extend({
   /** Space model - should be injected */
   space: null,
 
-  showProviders: Ember.computed.alias('space.hasViewPrivilege'),
+  hasViewPrivilege: Ember.computed.alias('space.hasViewPrivilege'),
+  showProviders: Ember.computed.alias('hasViewPrivilege'),
 
   providers: Ember.computed('showProviders', 'space.providers', function() {
     if (this.get('space.hasViewPrivilege')) {
@@ -32,7 +33,19 @@ export default Ember.Component.extend({
 
   supportToken: null,
 
-  didInsertElement() {
+  init() {
+    this._super(...arguments);
+  },
+
+  watchPrivilegesChanged: Ember.on('didInsertElement', Ember.observer('hasViewPrivilege', function() {
+    Ember.run.schedule('afterRender',this,function() {
+      if (this.get('hasViewPrivilege')) {
+        this.prepareGetSupportTokenFloaters();
+      }
+    });
+  })),
+
+  prepareGetSupportTokenFloaters() {
     this.$().find('.floater').each(function() {
       let ft = $(this);
       let updatePosition = bindFloater(ft);
