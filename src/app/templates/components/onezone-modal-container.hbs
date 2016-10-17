@@ -15,7 +15,9 @@
 
   {{#if modalGetSupport}}
     {{#panel-onezone title="onezone.messages.getSupport.title" useI18n=true}}
-      {{t 'onezone.messages.getSupport.text'}}
+      {{t 'onezone.messages.getSupport.text'
+        manageDataSpacesTitle=(t 'onezone.sidebar.manageSpacesHead')
+      }}
     {{/panel-onezone}}
   {{/if}}
 
