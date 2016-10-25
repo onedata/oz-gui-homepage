@@ -126,7 +126,7 @@ export default {
         title: 'Get support',
         text: 'Currently, none of your spaces is supported by any provider. ' +
         'You need support from at least one provider to store data in ' +
-        'a space. To get support, go to "Manage Data Spaces" menu, get a ' +
+        'a space. To get support, go to "{{manageDataSpacesTitle}}" menu, get a ' +
         'support token for chosen space and pass it to a provider of your choice.'
       },
       firstLogin: {
