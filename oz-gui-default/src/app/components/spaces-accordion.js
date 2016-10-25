@@ -43,18 +43,20 @@ export default Ember.Component.extend({
       },
 
       endCreateNewSpace: function(spaceName) {
-        try {
-          let store = this.get('store');
-          let space = store.createRecord('space', {
-            name: spaceName,
-          });
-          // TODO: handle errors
-          space.save().then(() => {
-            // TODO: some animation on new space entry?
-            // logger.debug(`Space ${spaceName} created successfully`);
-          });
-        } finally {
-          this.set('createNewSpaceEditing', false);
+        if (spaceName) {
+          try {
+            let store = this.get('store');
+            let space = store.createRecord('space', {
+              name: spaceName,
+            });
+            // TODO: handle errors
+            space.save().then(() => {
+              // TODO: some animation on new space entry?
+              // logger.debug(`Space ${spaceName} created successfully`);
+            });
+          } finally {
+            this.set('createNewSpaceEditing', false);
+          }
         }
       },
 
