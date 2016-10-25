@@ -16,6 +16,7 @@
 -include_lib("ctool/include/logging.hrl").
 %% API
 -export([spawn/2, kill_async_processes/0]).
+-export([get_ws_process/0]).
 -export([send/1, send/2]).
 -export([push_message/1, push_message/2]).
 -export([push_created/2, push_created/3]).
@@ -66,6 +67,17 @@ kill_async_processes() ->
             exit(Pid, kill)
         end, get_async_processes()),
     ok.
+
+
+%%--------------------------------------------------------------------
+%% @doc
+%% Returns the parent websocket process for calling process or
+%% undefined if this is not a gui async process.
+%% @end
+%%--------------------------------------------------------------------
+-spec get_ws_process() -> pid() | undefined.
+get_ws_process() ->
+    get(?WEBSOCKET_PROCESS_KEY).
 
 
 %%--------------------------------------------------------------------

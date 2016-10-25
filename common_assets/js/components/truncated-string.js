@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  eventsBus: Ember.inject.service(),
-
   tagName: 'div',
   classNames: ['truncated-string'],
 
@@ -16,7 +14,6 @@ export default Ember.Component.extend({
   */
   showTooltip: false,
 
-  // FIXME: should register and deregister window resize event
   didInsertElement() {
     let parentSelector = this.get('parentSelector');
     let parent = parentSelector ? this.$().closest(parentSelector) : this.$().parent();
@@ -29,9 +26,6 @@ export default Ember.Component.extend({
       });
     };
     $(window).resize(changeMaxWidth);
-    // FIXME: should register and deregister sidebar resize event
-    this.get('eventsBus').on('secondarySidebar:resized', changeMaxWidth);
-
     changeMaxWidth();
 
     this.updateTooltipText();
