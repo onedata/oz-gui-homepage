@@ -9,8 +9,9 @@ import bindFloater from '../utils/bind-floater';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  store: Ember.inject.service('store'),
-  onezoneServer: Ember.inject.service('onezoneServer'),
+  store: Ember.inject.service(),
+  onezoneServer: Ember.inject.service(),
+  notify: Ember.inject.service(),
 
   /** Space model - should be injected */
   space: null,
@@ -60,6 +61,12 @@ export default Ember.Component.extend({
     });
   },
 
+  selectTokenText() {
+    let input = this.$().find('input')[0];
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
+  },
+
   actions: {
       // TODO: this action should not be invoked when there is currently opened other token
       getNewSupportToken: function() {
@@ -95,11 +102,13 @@ export default Ember.Component.extend({
       },
       // TODO: a notification for user
       copySuccess() {
-        console.debug('Token copied');
+        this.selectTokenText();
+        this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
       },
       // TODO: a notification for user
       copyError() {
-        console.warn('Token not copied');
+        this.selectTokenText();
+        this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
       },
       goToProvider(provider) {
         this.get('space.providers').forEach((p) => p.set('isSelected', false));
