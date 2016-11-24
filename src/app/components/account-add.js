@@ -2,6 +2,16 @@ import Ember from 'ember';
 import PromiseLoadingMixin from '../mixins/promise-loading';
 import bindFloater from '../utils/bind-floater';
 
+const AUTH_PROVIDERS_NAMES = {
+  google: 'Google+',
+  facebook: 'Facebook',
+  github: 'GitHub',
+  dropbox: 'Dropbox',
+  plgrid: 'PLGrid OpenID',
+  indigo: 'Indigo',
+  egi: 'EGI',
+};
+
 /**
  * An add account button, which shows popup with authorization providers.
  * @module components/account-add
@@ -15,8 +25,14 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
   messageBox: Ember.inject.service(),
 
+  /**
+   * To inject.
+   * @required
+   * @type {Array<String>}
+   */
+  supportedAuthorizers: null,
+
   isLoading: false,
-  authProviders: null,
 
   didInsertElement() {
     let popup = this.$().find('.account-add-popup');
@@ -25,32 +41,23 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     $('.accordion-container').on('scroll', updater);
   },
 
-  generateAuthProviders: function () {
-    const allAuthProviders = {
-      google: 'Google+',
-      facebook: 'Facebook',
-      github: 'GitHub',
-      dropbox: 'Dropbox',
-      plgrid: 'PLGrid OpenID',
-      indigo: 'Indigo',
-      egi: 'EGI',
-    };
-
-    this.promiseLoading(
-      this.get('onezoneServer').getSupportedAuthorizers()
-    ).then((data) => {
+  authProviders: Ember.computed('supportedAuthorizers.[]', function() {
+    let supportedAuthorizers = this.get('supportedAuthorizers');
+    if (supportedAuthorizers && supportedAuthorizers.length > 0) {
       // show only these providers for add, which have entry in "allAuthProviders" dict
-      const authProviders = data.authorizers
-        .filter(id => allAuthProviders[id])
+      const authProviders = supportedAuthorizers
+        .filter(id => AUTH_PROVIDERS_NAMES[id])
         .map((id) => {
           return {
             type: id,
-            label: `${this.get('i18n').t('onezone.accountAdd.connectBy')} ${allAuthProviders[id]}`
+            label: `${this.get('i18n').t('onezone.accountAdd.connectBy')} ${AUTH_PROVIDERS_NAMES[id]}`
           };
         });
-      this.set('authProviders', authProviders);
-    });
-  }.on('init'),
+      return authProviders;
+    } else {
+      return [];
+    }
+  }),
 
   actions: {
     connectNewAccount(providerName) {

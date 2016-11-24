@@ -104,6 +104,10 @@ export default {
     },
     accountAdd: {
       errorGettingUrl: 'Error getting url to authorizer'
+    },
+    accountsList: {
+      loadingAccounts: 'Loading accounts info...',
+      loadingSupportedAuthorizers: 'Loading supported authorizers...',
     }
   },
   logout: {
