@@ -29,7 +29,8 @@ export default Ember.Component.extend({
 
   noSupportedAuthorizers: Ember.computed('supportedAuthorizers.[]', function() {
     let supportedAuthorizers = this.get('supportedAuthorizers');
-    return !supportedAuthorizers || supportedAuthorizers.length <= 0;
+    return !supportedAuthorizers || supportedAuthorizers.length <= 0 ||
+      supportedAuthorizers.length === 1 && supportedAuthorizers[0] === 'basicAuth';
   }),
 
   passwordConfigEnabled: Ember.computed('session.sessionDetails.basicAuthEnabled', function() {
