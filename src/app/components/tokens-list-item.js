@@ -9,8 +9,9 @@ import safeElementId from '../utils/safe-element-id';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  store: Ember.inject.service('store'),
-  onezoneServer: Ember.inject.service('onezoneServer'),
+  store: Ember.inject.service(),
+  onezoneServer: Ember.inject.service(),
+  notify: Ember.inject.service(),
 
   /** Should be injected */
   token: null,
@@ -21,34 +22,37 @@ export default Ember.Component.extend({
     return !this.get('token') || !this.get('token.isLoaded') || !this.get('token.id');
   }.property('token', 'token.isLoaded'),
 
-  clipboardTarget: function() {
-    return `#${this.get('inputContainerId')} input`;
-  }.property('inputContainerId'),
+  clipboardTarget: Ember.computed('elementId', 'inputContainerId', function() {
+    let {elementId, inputContainerId} = this.getProperties('elementId', 'inputContainerId');
+    return `#${elementId} #${inputContainerId} input[type=text]`;
+  }),
 
-  inputContainerId: function() {
+  inputContainerId: Ember.computed('token', 'token.id', function() {
     if (this.get('token.id')) {
       return safeElementId(`clienttoken-input-${this.get('token.id')}`);
     } else {
       return null;
     }
-  }.property('token', 'token.id'),
+  }),
+
+  selectTokenText() {
+    let input = this.$().find('input')[0];
+    input.setSelectionRange(0, input.value.length);
+  },
 
   actions: {
     remove() {
       this.get('token').destroyRecord();
     },
 
-    selectTokenText() {
-      let input = this.$().find('input')[0];
-      input.setSelectionRange(0, input.value.length);
-    },
-
     copySuccess() {
-      console.debug('Token copied successfully');
+      this.selectTokenText();
+      this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
     },
 
     copyError() {
-      console.error('Token copy error');
-    }
+      this.selectTokenText();
+      this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
+    },
   }
 });
