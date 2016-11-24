@@ -16,7 +16,20 @@ export default Ember.Component.extend({
   /** Should be injected */
   token: null,
 
+  /**
+   * Public, to inject and to change.
+   * @type {Boolean}
+   */
+  active: false,
+
   classNames: ['tokens-list-item'],
+
+  fullToken: Ember.computed.readOnly('token.id'),
+
+  shortToken: Ember.computed('fullToken', function() {
+    let fullToken = this.get('fullToken');
+    return fullToken.slice(0, 3) + "..." + fullToken.slice(fullToken.length-14, fullToken.length);
+  }),
 
   isLoading: function() {
     return !this.get('token') || !this.get('token.isLoaded') || !this.get('token.id');
@@ -37,10 +50,19 @@ export default Ember.Component.extend({
 
   selectTokenText() {
     let input = this.$().find('input')[0];
+    input.focus();
     input.setSelectionRange(0, input.value.length);
   },
 
   actions: {
+    activate() {
+      if (!this.get('active')) {
+        this.sendAction('deactivateAllTokens');
+        this.set('active', true);
+      }
+      Ember.run.scheduleOnce('afterRender', this.selectTokenText.bind(this));
+    },
+
     remove() {
       this.get('token').destroyRecord();
     },
