@@ -31,9 +31,9 @@ export default Ember.Component.extend({
     return fullToken.slice(0, 3) + "..." + fullToken.slice(fullToken.length-14, fullToken.length);
   }),
 
-  isLoading: function() {
+  isLoading: Ember.computed('token', 'token.isLoaded', function() {
     return !this.get('token') || !this.get('token.isLoaded') || !this.get('token.id');
-  }.property('token', 'token.isLoaded'),
+  }),
 
   clipboardTarget: Ember.computed('elementId', 'inputContainerId', function() {
     let {elementId, inputContainerId} = this.getProperties('elementId', 'inputContainerId');
@@ -47,6 +47,19 @@ export default Ember.Component.extend({
       return null;
     }
   }),
+
+  deactivate() {
+    this.set('active', false);
+  },
+
+  didInsertElement() {
+    let __deactivateFun = this.set('__deactivateFun', () => this.set('active', false));
+    this.$().find('input').on('blur.tokensListItem', __deactivateFun);
+  },
+
+  willDestroyElement() {
+    this.$().find('input').off('.tokensListItem');
+  },
 
   selectTokenText() {
     let input = this.$().find('input')[0];
