@@ -8,11 +8,23 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('home', function() {
     [
-      'get-started', 'documentation', 'community',
-      'download', 'support', 'media', 'blog',
-      'login', 'account', 'logout'
+      'get-started',
+      'documentation',
+      // 'community',
+      // 'download',
+      'support',
+      // 'media',
+      // 'blog',
+      'login',
+      'logout'
     ].forEach((homepagePage) => {
       this.route(homepagePage);
+    });
+
+    this.route('api', function() {
+      this.route('component', {path: ':component_id'}, function() {
+        this.route('version', {path: ':version'});
+      });
     });
   });
 

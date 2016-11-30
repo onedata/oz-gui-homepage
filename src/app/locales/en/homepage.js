@@ -10,6 +10,7 @@ export default {
     support: 'support',
     media: 'media',
     blog: 'blog',
+    api: 'API',
   },
   index: {
     atlas: {
@@ -104,5 +105,8 @@ export default {
       contactUs: 'Contact us',
       contactForMore: '{{link}} for more information'
     }
+  },
+  api: {
+    title: 'API'
   }
 };
