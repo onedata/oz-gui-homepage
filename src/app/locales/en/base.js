@@ -12,6 +12,10 @@ export default {
       signin: 'Sign in',
       join: 'Join'
     },
+    notify: {
+      clipboardSuccess: 'Text has been copied to clipboard.',
+      clipboardFailue: 'Text cannot be copied to clipboard - please copy it manually'
+    },
     serverError: 'Server error',
     fatalApplicationErrorResources: "A fatal error occured loading application's resources"
   },
