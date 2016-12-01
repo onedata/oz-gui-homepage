@@ -19,9 +19,10 @@ export default Ember.Component.extend({
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="/assets/redoc.css">
   </head>
   <body>
-    <redoc spec-url="/swagger/${version}/${component}/swagger.json"></redoc>
+    <redoc spec-url="/swagger/${version}/${component}/swagger.json" hide-hostname=true></redoc>
     <script src="/assets/redoc.min.js"></script>
     <!-- <script src="/assets/iframeResizer.contentWindow.min.js"></script> -->
   </body>
@@ -31,11 +32,18 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     let $navbar = $('.navbar-onedata');
-    let $container = this.$().closest('.container-redoc');
+    let $container = this.$().parent();
+    $container.css({
+      position: 'fixed',
+      left: 0,
+      right: 0,
+      bottom: 0
+    });
     let __resizeFun = () => {
       $container.css('top', ($navbar.height() + 3) + 'px');
     };
     $(window).on('resize.redocIframe', __resizeFun);
+    __resizeFun();
   },
 
   willRemoveElement() {
