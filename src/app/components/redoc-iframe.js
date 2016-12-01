@@ -4,7 +4,7 @@ import Ember from 'ember';
 // FIXME: use https://github.com/jugglinmike/srcdoc-polyfill for IE/Edge
 export default Ember.Component.extend({
   tagName: 'iframe',
-  attributeBindings: ['srcdoc', 'onload'],
+  attributeBindings: ['srcdoc'],
   classNames: ['redoc-iframe'],
 
   // FIXME: to inject
@@ -22,13 +22,23 @@ export default Ember.Component.extend({
   </head>
   <body>
     <redoc spec-url="/swagger/${version}/${component}/swagger.json"></redoc>
-    <script src="/assets/redoc.js"></script>
+    <script src="/assets/redoc.min.js"></script>
+    <!-- <script src="/assets/iframeResizer.contentWindow.min.js"></script> -->
   </body>
 </html>
 `;
   }),
 
-  onload: Ember.computed(function() {
-    return `this.style.height = this.contentWindow.document.body.scrollHeight + 'px';`;
-  }),
+  didInsertElement() {
+    let $navbar = $('.navbar-onedata');
+    let $container = this.$().closest('.container-redoc');
+    let __resizeFun = () => {
+      $container.css('top', ($navbar.height() + 3) + 'px');
+    };
+    $(window).on('resize.redocIframe', __resizeFun);
+  },
+
+  willRemoveElement() {
+    $(window).off('.redocIframe');
+  }
 });

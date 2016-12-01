@@ -1,6 +1,7 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var Funnel = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
@@ -34,10 +35,17 @@ module.exports = function(defaults) {
     'bind-first/release/jquery.bind-first-0.2.3.min.js',
     'jquery-mousewheel/jquery.mousewheel.min.js',
     'jquery-searchable/dist/jquery.searchable-1.1.0.min.js',
-    '/spin.js/spin.js'
+    'spin.js/spin.js'
   ];
 
   BOWER_ASSETS.forEach(path => app.import(app.bowerDirectory + '/' + path));
 
-  return app.toTree();
+  // copy assets for libraries that will be used as separate files (not concatenated into vendor)
+  var redocAssets = new Funnel('bower_components/redoc', {
+    srcDir: '/dist',
+    include: ['redoc.min.js'],
+    destDir: '/assets'
+  });
+
+  return app.toTree([redocAssets]);
 };
