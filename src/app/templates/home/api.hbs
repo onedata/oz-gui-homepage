@@ -1,25 +1,16 @@
 {{page-title (t 'api.title')}}
 
+{{!-- FIXME: components menu --}}
+{{!-- FIXME: versions selector --}}
+
 {{!--<div class="api-components-menu">
   <ul>
     {{#each components as |comp|}}
-      {{#link-to "home.api.component" (query-params component_id=comp.id) tagName="li"}}
+      {{#link-to "home.api.component" (query-params component=comp.id) tagName="li"}}
         comp.name
       {{/link-to}}
     {{/each}}
   </ul>
 </div>--}}
 
-{{!-- FIXME: use version component from controller --}}
-
-<div class="container-index container-redoc">
-  <div class="row-index row-redoc">
-    {{redoc-iframe version="3.0.0-rc11" component="onezone"}}
-  </div>
-</div>
-
-{{!-- FIXME remove onedata-redoc --}}
-{{!--{{onedata-redoc specUrl="/swagger/3.0.0-rc11/onezone/swagger.json"}}--}}
-
-
-{{!-- FIXME: use swaggerJsonUrl property from controller --}}
+{{outlet}}

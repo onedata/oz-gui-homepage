@@ -7,14 +7,31 @@ export default Ember.Component.extend({
   attributeBindings: ['srcdoc'],
   classNames: ['redoc-iframe'],
 
-  // FIXME: to inject
-  version: '3.0.0-rc11',
-  component: 'onezone',
+  /**
+   * To inject.
+   * Onedata component version string.
+   * Eg. "3.0.0-rc11"
+   * @type {String}
+   * @required
+   */
+  version: null,
 
-  // FIXME: consider management of redoc.js with npm (copy to assets on build)
-  // FIXME: use redoc.min.js
-  srcdoc: Ember.computed(function() {
+  /**
+   * To inject.
+   * Onedata component id.
+   * Examples: onezone, oneprovider, onepanel, luma
+   * @type {String}
+   * @required
+   */
+  component: null,
+
+  swaggerJsonPath: Ember.computed('version', 'component', function() {
     let {version, component} = this.getProperties('version', 'component');
+    return `/swagger/${version}/${component}/swagger.json`;
+  }),
+
+  srcdoc: Ember.computed('swaggerJsonPath', function() {
+    let swaggerJsonPath = this.get('swaggerJsonPath');
     return `
 <!DOCTYPE html>
 <html>
@@ -22,9 +39,8 @@ export default Ember.Component.extend({
     <link rel="stylesheet" type="text/css" href="/assets/redoc.css">
   </head>
   <body>
-    <redoc spec-url="/swagger/${version}/${component}/swagger.json" hide-hostname=true></redoc>
+    <redoc spec-url="${swaggerJsonPath}" hide-hostname=true></redoc>
     <script src="/assets/redoc.min.js"></script>
-    <!-- <script src="/assets/iframeResizer.contentWindow.min.js"></script> -->
   </body>
 </html>
 `;

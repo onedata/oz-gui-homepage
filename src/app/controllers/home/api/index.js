@@ -8,16 +8,6 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Controller.extend({
-  /**
-   * @type {String}
-   */
-  version: null,
-
-  /**
-   * @type {String}
-   */
-  component: null, 
-
   components: Ember.computed('model.components.[]', function() {
     let versions = this.get('model');
     return versions.components.map(c => Ember.Object.create({
