@@ -16,7 +16,14 @@ export default Ember.Controller.extend({
    * @type {{id: String, name: String}[]}}
    */
   apiComponents: Ember.computed('model.components.[]', function() {
-    let versions = this.get('model');
-    return versions.components.map(({id, name}) => ({id, name}));
+    let model = this.get('model');
+    return model.components.map(({id, name}) => ({id, name}));
+  }),
+
+  /**
+   * @type {String[]}
+   */
+  apiVersions: Ember.computed('model.order.[]', function() {
+    return this.get('model.order');
   }),
 });

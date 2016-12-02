@@ -1,8 +1,5 @@
 {{page-title (t 'api.title')}}
 
-{{!-- FIXME: components menu --}}
-{{!-- FIXME: versions selector --}}
-
 <div class="api-components-menu">
   <ul>
     {{#each apiComponents as |ac|}}
@@ -13,6 +10,32 @@
       {{/link-to}}
     {{/each}}
   </ul>
+
+  <div class="dropdown api-versions-dropdown">
+    <a href="#" class="dropdown-toggle side-dropdown-toggle full-width clickable"
+      data-toggle="dropdown" role="button" aria-haspopup="true"
+      aria-expanded="false" id="api-versions-dropdown">
+      <span class="dropdown-toggle-label">
+        {{apiVersion}}
+      </span>
+      <span class="dropdown-toggle-button">
+        <div class="triangle-down"></div>  
+      </span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-api-versions" aria-labelledby="api-versions-dropdown">
+      {{#each apiVersions as |version|}}
+        {{#link-to "home.api.show-api" version apiComponent
+          tagName="li"
+          class="clickable"
+        }}
+          {{version}}
+        {{/link-to}}
+      {{/each}}
+    </ul>
+  </div>
+
 </div>
+
 
 {{outlet}}

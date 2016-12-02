@@ -21,6 +21,7 @@
 
 // FIXME: api components styles
 .api-components-menu {
+  position: relative;
   height: 50px;
   line-height: 50px;
   background-color: $color-api-components-background;
@@ -38,6 +39,88 @@
       }
       &:hover {
         color: $color-api-components-text-hover;
+      }
+    }
+  }
+}
+
+.api-versions-dropdown {
+  position: absolute;
+  right: 30px;
+  // unfortunately we can't use top: 50% and translateY(-50%)
+  // because of bug in Chrome (children can't be then fixed)
+  // so we use arbitrary top size
+  top: 9px;
+  font-size: 10pt;
+  line-height: 10pt;
+  border: 1px solid $color-api-components-version-border;
+  background-color: $color-api-components-version-background;
+  color: $color-api-components-version-text !important;
+
+  .dropdown-menu {
+    min-width: 100%;
+    width: inherit;
+    color: inherit;
+    background-color: inherit;
+    border-radius: 0 !important;
+    font-size: inherit;
+
+    // FIXME: a class as in dropdown-toggle a?
+    li {
+      padding: 8px 12px;
+      border-bottom: 1px $color-api-components-version-border solid;
+      font-size: inherit;
+
+      &:hover {
+        color: $color-api-components-text-active;
+      }
+    }
+  }
+
+  .dropdown-toggle {
+    position: relative;
+    width: 120px;
+    padding: 8px 12px;
+    color: inherit !important;
+    text-decoration: none;
+
+    &:hover {
+      .dropdown-toggle-button {
+        .triangle-down {
+          border-top-color: $color-api-components-text-active;
+        } 
+      }
+      
+      .dropdown-toggle-label {
+        color: $color-api-components-text-active !important;
+      }
+    }
+
+    .dropdown-toggle-label {
+      width: 80px;
+      max-width: 80px;
+      text-overflow: ellipsis;
+    }
+    .dropdown-toggle-button {
+      position: absolute;
+      border-left: 1px solid $color-api-components-version-border;
+      right: 0;
+      top: 50%;
+      height: 50%;
+      transform: translateY(-50%);
+
+      .triangle-down {
+        width: 0;
+        height: 0;
+        position: relative;
+        border-top: solid 6px $color-api-components-version-border;
+        border-bottom: solid 6px transparent;
+        border-left: solid 4px transparent;
+        border-right: solid 4px transparent;
+        top: 50%;
+        transform: translateY(-50%) translateY(3px);
+        margin-left: 12px;
+        margin-right: 12px;
       }
     }
   }
