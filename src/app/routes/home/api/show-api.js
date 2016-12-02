@@ -16,7 +16,8 @@ export default Ember.Route.extend({
    */
   model({api_component, api_version}) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      // FIXME: check presence of swagger json before redoc load
+      // if want to implement json-not-found error handler
+      // do it here by checking if json is present by GET
       if (api_component && api_version) {
         resolve(Ember.Object.create({
           apiComponent: api_component,
@@ -27,4 +28,11 @@ export default Ember.Route.extend({
       }
     });
   },
+
+  serialize({apiVersion, apiComponent}) {
+    return {
+      api_version: apiVersion,
+      api_component: apiComponent,
+    }
+  }
 });

@@ -14,8 +14,8 @@ export default PageBase.extend({
     let defaultVersion = model.default;
     let defaultComponent = model.components[0].id;
     this.transitionTo('home.api.show-api', Ember.Object.create({
-      api_component: defaultComponent,
-      api_version: defaultVersion
+      apiComponent: defaultComponent,
+      apiVersion: defaultVersion
     }));
   },
 });

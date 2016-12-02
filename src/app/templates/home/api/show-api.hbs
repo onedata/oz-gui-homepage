@@ -1,6 +1,8 @@
 <div class="container-index container-redoc">
   <div class="row-index row-redoc">
-    {{redoc-iframe apiVersion=apiVersion apiComponent=apiComponent
+    {{#if (and apiVersion apiComponent)}}
+      {{redoc-iframe apiVersion=apiVersion apiComponent=apiComponent
       aboveElementSelector=".api-components-menu"}}
+    {{/if}}
   </div>
 </div>
