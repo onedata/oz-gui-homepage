@@ -33,6 +33,6 @@ export default Ember.Route.extend({
     return {
       api_version: apiVersion,
       api_component: apiComponent,
-    }
+    };
   }
 });

@@ -27,7 +27,7 @@
       {{#each apiVersions as |version|}}
         {{#link-to "home.api.show-api" version apiComponent
           tagName="li"
-          class="clickable"
+          class=(concat "clickable " (if (eq version model.default) " default-version"))
         }}
           {{version}}
         {{/link-to}}

@@ -70,9 +70,13 @@
       padding: 8px 12px;
       border-bottom: 1px $color-api-components-version-border solid;
       font-size: inherit;
-
+      
       &:hover {
         color: $color-api-components-text-active;
+      }
+
+      &.default-version {
+        font-weight: bold;
       }
     }
   }
