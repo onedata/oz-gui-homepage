@@ -22,7 +22,7 @@ Router.map(function() {
     });
 
     this.route('api', function() {
-      this.route('show-api', {path: ':component/:version'});
+      this.route('show-api', {path: ':api_version/:api_component'});
     });
   });
 

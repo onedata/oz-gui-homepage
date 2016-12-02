@@ -1,20 +1,12 @@
 import PageBase from '../_page-base';
-import Ember from 'ember'; 
-
-const VERSIONS_PATH = '/swagger/versions.json'; 
+import Ember from 'ember';
 
 export default PageBase.extend({
-  name: 'api',
-
+  /**
+   * See model of ``routes/home/api``
+   */
   model() {
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      $.ajax({
-        url: VERSIONS_PATH,
-        dataType: 'json',
-        success: (data) => resolve(data),
-        error: () => reject()
-      });
-    });
+    return this.modelFor('home.api');
   },
 
   redirect(model) {
@@ -22,8 +14,8 @@ export default PageBase.extend({
     let defaultVersion = model.default;
     let defaultComponent = model.components[0].id;
     this.transitionTo('home.api.show-api', Ember.Object.create({
-      component: defaultComponent,
-      version: defaultVersion
+      api_component: defaultComponent,
+      api_version: defaultVersion
     }));
   },
 });

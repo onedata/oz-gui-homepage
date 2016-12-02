@@ -3,14 +3,16 @@
 {{!-- FIXME: components menu --}}
 {{!-- FIXME: versions selector --}}
 
-{{!--<div class="api-components-menu">
+<div class="api-components-menu">
   <ul>
-    {{#each components as |comp|}}
-      {{#link-to "home.api.component" (query-params component=comp.id) tagName="li"}}
-        comp.name
+    {{#each apiComponents as |ac|}}
+      {{#link-to "home.api.show-api" apiVersion ac.id
+        tagName="li"
+        class=(concat "api-components-menu-item clickable " (if (eq ac.id apiComponent) "active"))}}
+        {{ac.name}}
       {{/link-to}}
     {{/each}}
   </ul>
-</div>--}}
+</div>
 
 {{outlet}}

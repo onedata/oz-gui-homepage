@@ -1,7 +1,13 @@
 import Ember from 'ember';
 
-// FIXME: use https://github.com/davidjbradshaw/iframe-resizer
 // FIXME: use https://github.com/jugglinmike/srcdoc-polyfill for IE/Edge
+/**
+ * FIXME: jsdoc
+ * @module components/redoc-iframe
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
 export default Ember.Component.extend({
   tagName: 'iframe',
   attributeBindings: ['srcdoc'],
@@ -9,27 +15,43 @@ export default Ember.Component.extend({
 
   /**
    * To inject.
-   * Onedata component version string.
+   * Onedata apiComponent apiVersion string.
    * Eg. "3.0.0-rc11"
    * @type {String}
    * @required
    */
-  version: null,
+  apiVersion: null,
 
   /**
    * To inject.
-   * Onedata component id.
+   * Onedata apiComponent id.
    * Examples: onezone, oneprovider, onepanel, luma
    * @type {String}
    * @required
    */
-  component: null,
+  apiComponent: null,
 
-  swaggerJsonPath: Ember.computed('version', 'component', function() {
-    let {version, component} = this.getProperties('version', 'component');
-    return `/swagger/${version}/${component}/swagger.json`;
+  /**
+   * Optional inject.
+   * A jQuery selector to find a element that will be above redoc-iframe.
+   * @type {String}
+   */
+  aboveElementSelector: '.api-components-menu',
+
+  /**
+   * Generate HTTP resource path to Swagger JSON.
+   * @type {String}
+   */
+  swaggerJsonPath: Ember.computed('apiVersion', 'apiComponent', function() {
+    let {apiVersion, apiComponent} = this.getProperties('apiVersion', 'apiComponent');
+    return `/swagger/${apiVersion}/${apiComponent}/swagger.json`;
   }),
 
+  /**
+   * Generates a HTML for iframe with API documentation.
+   * It renders redoc using redoc tag and importing redoc JS.
+   * @type {String}
+   */
   srcdoc: Ember.computed('swaggerJsonPath', function() {
     let swaggerJsonPath = this.get('swaggerJsonPath');
     return `
@@ -46,8 +68,14 @@ export default Ember.Component.extend({
 `;
   }),
 
+  /**
+   * Will bind to ``window.resize`` event to change top fixed position of
+   * its parent. This is done because of problems with positioning content
+   * below a top bar.
+   */
   didInsertElement() {
-    let $navbar = $('.navbar-onedata');
+    let $aboveElement = $(this.get('aboveElementSelector'));
+    Ember.assert($aboveElement.length === 1, 'above element should exist');
     let $container = this.$().parent();
     $container.css({
       position: 'fixed',
@@ -56,7 +84,7 @@ export default Ember.Component.extend({
       bottom: 0
     });
     let __resizeFun = () => {
-      $container.css('top', ($navbar.height() + 3) + 'px');
+      $container.css('top', ($aboveElement.offset().top + $aboveElement.height()) + 'px');
     };
     $(window).on('resize.redocIframe', __resizeFun);
     __resizeFun();

@@ -18,3 +18,27 @@
   width: 100%;
   height: 100%;
 }
+
+// FIXME: api components styles
+.api-components-menu {
+  height: 50px;
+  line-height: 50px;
+  background-color: $color-api-components-background;
+  ul {
+    text-align: center;
+    font-size: 11pt;
+    padding: 0;
+    .api-components-menu-item {
+      display: inline;
+      padding-left: 15px;
+      padding-right: 15px;
+      color: $color-api-components-text;
+      &.active {
+        color: $color-api-components-text-active;
+      }
+      &:hover {
+        color: $color-api-components-text-hover;
+      }
+    }
+  }
+}
