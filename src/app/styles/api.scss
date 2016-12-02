@@ -44,9 +44,36 @@
   }
 }
 
-.api-versions-dropdown {
-  position: absolute;
+.api-dropdown-versions {
+  left: auto;
   right: 30px;
+
+  .dropdown-toggle {
+    width: 120px;
+
+    .dropdown-toggle-label {
+      width: 80px;
+      max-width: 80px;
+    }
+  }
+}
+
+.api-dropdown-components {
+  left: 30px;
+  right: auto;
+
+  .dropdown-toggle {
+    width: 160px;
+
+    .dropdown-toggle-label {
+      width: 120px;
+      max-width: 120px;
+    }
+  }
+}
+
+.api-dropdown {
+  position: absolute;
   // unfortunately we can't use top: 50% and translateY(-50%)
   // because of bug in Chrome (children can't be then fixed)
   // so we use arbitrary top size
@@ -83,7 +110,6 @@
 
   .dropdown-toggle {
     position: relative;
-    width: 120px;
     padding: 8px 12px;
     color: inherit !important;
     text-decoration: none;
@@ -101,8 +127,6 @@
     }
 
     .dropdown-toggle-label {
-      width: 80px;
-      max-width: 80px;
       text-overflow: ellipsis;
     }
     .dropdown-toggle-button {

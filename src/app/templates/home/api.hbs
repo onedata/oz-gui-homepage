@@ -1,7 +1,10 @@
 {{page-title (t 'api.title')}}
 
 <div class="api-components-menu">
-  <ul>
+
+  {{!-- components horizontal menu - ONLY IN DESKTOP MODE --}}
+
+  <ul class="visible-sm-block visible-lg-block visible-md-block">
     {{#each apiComponents as |ac|}}
       {{#link-to "home.api.show-api" apiVersion ac.id
         tagName="li"
@@ -11,7 +14,32 @@
     {{/each}}
   </ul>
 
-  {{#bs-dropdown class="api-versions-dropdown"}}
+  {{!-- components dropdown - ONLY IN MOBILE (XS) MODE --}}
+
+  {{#bs-dropdown class="api-dropdown api-dropdown-components visible-xs-block"}}
+    {{#bs-dropdown-toggle class="full-width clickable"}}
+      <span class="dropdown-toggle-label">
+        {{apiComponentName}}
+      </span>
+      <span class="dropdown-toggle-button">
+        <div class="triangle-down"></div>  
+      </span>
+    {{/bs-dropdown-toggle}}
+    {{#bs-dropdown-menu}}
+      {{#each apiComponents as |c|}}
+        {{#link-to "home.api.show-api" apiVersion c.id
+          tagName="li"
+          class="clickable"
+        }}
+          {{c.name}}
+        {{/link-to}}
+      {{/each}}
+    {{/bs-dropdown-menu}}
+  {{/bs-dropdown}}
+
+  {{!-- versions dropdown --}}
+
+  {{#bs-dropdown class="api-dropdown api-dropdown-versions"}}
     {{#bs-dropdown-toggle class="full-width clickable"}}
       <span class="dropdown-toggle-label">
         {{apiVersion}}

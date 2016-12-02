@@ -11,6 +11,11 @@ export default Ember.Controller.extend({
   apiVersion: null,
   apiComponent: null,
 
+  apiComponentName: Ember.computed('apiComponents.[]', 'apiComponent', function() {
+    let {apiComponents, apiComponent} = this.getProperties('apiComponents', 'apiComponent');
+    return apiComponents ? apiComponents.find(ac => ac.id === apiComponent).name : null;
+  }),
+
   /**
    * Strip down model.components to array of id and name only
    * @type {{id: String, name: String}[]}}
