@@ -12,7 +12,6 @@ function escapeJsString(value) {
   return value.replace(/"/g, '\\"');
 }
 
-// FIXME: use https://github.com/jugglinmike/srcdoc-polyfill for IE/Edge
 /**
  * An iframe for hosting ReDoc rendered API documentation.
  * It uses HTML5 ``srcdoc`` property of iframe, generating initial iframe content based on:

@@ -1,9 +1,15 @@
-// An integration of Onedata Homepage with ReDoc
-// NOTE that Babel is not used for this file - write in compatible ES5
-
-// injected:
-// document.apiBaseUrl: String - eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone
-// document.apiAnchor: String - eg. #operation/get_space - as in original ReDoc hrefs
+/**
+ * An integration code for Onedata Homepage with ReDoc.
+ * NOTE that Babel is not used for this file - write in compatible ES5.
+ * 
+ * Injected variables:
+ * - document.apiBaseUrl: String - eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone
+ * - document.apiAnchor: String - eg. #operation/get_space - as in original ReDoc hrefs
+ * 
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
 
 /**
  * jQuery offset method (fitted to this code)
