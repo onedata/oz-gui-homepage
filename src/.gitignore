@@ -72,6 +72,8 @@ app/helpers/.gitkeep
 app/helpers/icon.js
 app/helpers/safe-element-id.js
 app/helpers/trim-string.js
+app/initializers/configure-console.js
+app/initializers/fetch-config.js
 app/initializers/i18n.js
 app/initializers/inject-session.js
 app/instance-initializers/global-app.js
@@ -116,6 +118,7 @@ app/styles/main-menu.scss
 app/styles/message-box-modal.scss
 app/styles/modal-types.scss
 app/styles/modal.scss
+app/styles/notify.scss
 app/styles/one-option-button.scss
 app/styles/onedata-common.scss
 app/styles/oneicons/style.scss
@@ -214,7 +217,6 @@ tests/index.html
 tests/integration/.gitkeep
 tests/test-helper.js
 tests/unit/.gitkeep
-tests/unit/components/account-add-test.js
 tests/unit/components/one-checkbox-button-test.js
 tests/unit/components/one-checkbox-group-test.js
 tests/unit/components/one-radio-button-test.js
