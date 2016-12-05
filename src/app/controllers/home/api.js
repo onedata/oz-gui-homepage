@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 /**
- * FIXME: jsdoc
+ * Helps rendering ``/home/api`` template.
  * @module controllers/home/api
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH

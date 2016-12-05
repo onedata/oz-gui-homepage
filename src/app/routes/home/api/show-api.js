@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 /**
- * FIXME: jsdoc
+ * A route for displaying API doc for specific version and Onedata component. 
  * @module routes/home/api/show-api
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH

@@ -11,7 +11,15 @@ function escapeJsString(value) {
 
 // FIXME: use https://github.com/jugglinmike/srcdoc-polyfill for IE/Edge
 /**
- * FIXME: jsdoc
+ * An iframe for hosting ReDoc rendered API documentation.
+ * It uses HTML5 ``srcdoc`` property of iframe, generating initial iframe content based on:
+ * - apiVersion
+ * - apiComponent
+ * - anchor (optional) - a section/tag/operation to jump inside API doc
+ * 
+ * Using above properties, a Swagger JSON is selected, which is then injected into redoc tag.
+ * See ``srcdoc`` computed property for more information.
+ *  
  * @module components/redoc-iframe
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
@@ -88,7 +96,6 @@ export default Ember.Component.extend({
     let {anchor, swaggerJsonPath} = this.getProperties('swaggerJsonPath', 'anchor');
     let baseUrl = stripUrlFromQueryParams(window.location.href);
 
-    // FIXME: test JS injection in anchor, baseUrl and swaggerJsonPath
     if (anchor) {
       anchor = escapeJsString(anchor);
     }
