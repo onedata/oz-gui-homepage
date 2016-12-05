@@ -34,7 +34,7 @@ function offset(elem) {
  * @param {String} originalHref (not a homepage href!)
  */
 function anchorType(anchor) {
-  var match = anchor.match(/^#?(section|tag|operation)/)
+  var match = anchor.match(/^#?(section|tag|operation)/);
   return match ? match[1] : null;
 }
 
