@@ -14,7 +14,7 @@
     </div>
   </a>
   <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
-    {{!-- TODO: style and copy button --}}
+    {{!-- TODO: style --}}
     {{#each authProviders as |authProvider|}}
       {{account-item type=authProvider.type label=authProvider.label
         mode="connect" action="connectNewAccount"}}
