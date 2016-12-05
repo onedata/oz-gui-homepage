@@ -1,5 +1,14 @@
 import Ember from 'ember';
 
+function stripUrlFromQueryParams(href) {
+  let match = href.match(/(.*?)\?.*|.*/);
+  return match[1] || match[0];
+}
+
+function escapeJsString(value) {
+  return value.replace(/"/g, '\\"');
+}
+
 // FIXME: use https://github.com/jugglinmike/srcdoc-polyfill for IE/Edge
 /**
  * FIXME: jsdoc
@@ -32,6 +41,14 @@ export default Ember.Component.extend({
   apiComponent: null,
 
   /**
+   * To inject. Optional.
+   * A ReDoc internal link, eg. ``#operation/modify_provider``
+   * If not null, go to the specified anchor after ReDoc load.
+   * @type {String}
+   */
+  anchor: null,
+
+  /**
    * Optional inject.
    * A jQuery selector to find a element that will be above redoc-iframe.
    * @type {String}
@@ -50,10 +67,34 @@ export default Ember.Component.extend({
   /**
    * Generates a HTML for iframe with API documentation.
    * It renders redoc using redoc tag and importing redoc JS.
+   *
+   * The generated document has included:
+   * - ``/assets/redoc.css`` - custom styles to modify ReDoc look for Onedata integration
+   * - ``/assets/redoc.min.js`` - RedDoc documentation system (https://github.com/Rebilly/ReDoc)
+   *   that will set up a documentation
+   * - ``/assets/onedata-redoc.js`` - code for Onedata Homepage and ReDoc integration
+   *   see this file for details
+   * 
+   * Also two variables are setted for the iframe context:
+   * - ``document.apiAnchor`` - if an anchor is passed in ``anchor`` property then
+   *   try to jump to proper section/tag/operation in ReDoc docs
+   * - ``apiBaseUrl`` - a URL of current location where this component is rendered
+   *   e.g. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone (without query string "?query=...")
+   * 
+   * For more information about integration code, see ``/assets/onedata-redoc.js``.
    * @type {String}
    */
-  srcdoc: Ember.computed('swaggerJsonPath', function() {
-    let swaggerJsonPath = this.get('swaggerJsonPath');
+  srcdoc: Ember.computed('swaggerJsonPath', 'anchor', function() {
+    let {anchor, swaggerJsonPath} = this.getProperties('swaggerJsonPath', 'anchor');
+    let baseUrl = stripUrlFromQueryParams(window.location.href);
+
+    // FIXME: test JS injection in anchor, baseUrl and swaggerJsonPath
+    if (anchor) {
+      anchor = escapeJsString(anchor);
+    }
+    swaggerJsonPath = escapeJsString(swaggerJsonPath);
+    baseUrl = escapeJsString(baseUrl);
+
     return `
 <!DOCTYPE html>
 <html>
@@ -63,6 +104,11 @@ export default Ember.Component.extend({
   <body>
     <redoc spec-url="${swaggerJsonPath}" hide-hostname=true></redoc>
     <script src="/assets/redoc.min.js"></script>
+    <script>
+      document.apiAnchor = ${anchor ? `"#${anchor}"` : 'null'};
+      document.apiBaseUrl = "${baseUrl}";
+    </script>
+    <script src="/assets/onedata-redoc.js"></script>
   </body>
 </html>
 `;

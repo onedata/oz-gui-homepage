@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   apiController: Ember.inject.controller('home.api'),
 
+  queryParams: ['anchor'],
+  anchor: null,
+
   apiComponent: Ember.computed.alias('model.apiComponent'),
   apiVersion: Ember.computed.alias('model.apiVersion'),
 

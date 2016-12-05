@@ -2,6 +2,7 @@
   <div class="row-index row-redoc">
     {{#if (and apiVersion apiComponent)}}
       {{redoc-iframe apiVersion=apiVersion apiComponent=apiComponent
+      anchor=anchor
       aboveElementSelector=".api-components-menu"}}
     {{/if}}
   </div>
