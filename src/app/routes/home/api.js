@@ -2,6 +2,15 @@ import Ember from 'ember';
 
 const VERSIONS_PATH = '/swagger/versions.json'; 
 
+/**
+ * Provide a JSON with components and versions of Swagger JSONs (AJAX GET).
+ * Then use it to render controls for swithicng API doc versions/components.
+ *  
+ * @module routes/home/api
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
 export default Ember.Route.extend({
   /**
    * The model is API versions object provided as a get JSON.

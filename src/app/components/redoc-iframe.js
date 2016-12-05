@@ -75,7 +75,7 @@ export default Ember.Component.extend({
   }),
 
   /**
-   * Generates a HTML for iframe with API documentation.
+   * Generates an HTML for iframe with API documentation.
    * It renders redoc using redoc tag and importing redoc JS.
    *
    * The generated document has included:
