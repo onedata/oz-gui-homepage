@@ -1,5 +1,5 @@
 <ul class="accordion-content">
-  {{#if session.sessionDetails.basicAuthEnabled}}
+  {{#if passwordConfigEnabled}}
   <li>
     {{account-item-password}}
   </li>
@@ -8,7 +8,7 @@
     <li class="non-hoverable">
       {{!-- TODO: add spinner (there is some problems with positioning) --}}
       <div class="account-label">
-        Loading accounts info...
+        {{t 'components.accountsList.loadingAccounts'}}
       </div>
     </li>
   {{else}}
@@ -19,6 +19,14 @@
     {{/each}}
   {{/if}}
   <li>
-    {{account-add}}
+    {{#if loadingSupportedAuthorizers}}
+      <div class="loading-supported-authorizers">
+        {{t 'components.accountsList.loadingSupportedAuthorizers'}}
+      </div>
+    {{else}}
+      {{#unless noSupportedAuthorizers}}
+        {{account-add supportedAuthorizers=supportedAuthorizers}}
+      {{/unless}}
+    {{/if}}    
   </li>
 </ul>
