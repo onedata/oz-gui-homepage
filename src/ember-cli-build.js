@@ -35,7 +35,8 @@ module.exports = function(defaults) {
     'bind-first/release/jquery.bind-first-0.2.3.min.js',
     'jquery-mousewheel/jquery.mousewheel.min.js',
     'jquery-searchable/dist/jquery.searchable-1.1.0.min.js',
-    'spin.js/spin.js'
+    'spin.js/spin.js',
+    'srcdoc-polyfill/srcdoc-polyfill.min.js'
   ];
 
   BOWER_ASSETS.forEach(path => app.import(app.bowerDirectory + '/' + path));

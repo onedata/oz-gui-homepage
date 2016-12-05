@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+// from srcdoc-polyfill
+/* globals srcDoc */
+
 function stripUrlFromQueryParams(href) {
   let match = href.match(/(.*?)\?.*|.*/);
   return match[1] || match[0];
@@ -122,6 +125,15 @@ export default Ember.Component.extend({
   }),
 
   /**
+   * Use srcdoc-polyfill for IE/Edge support
+   */
+  updateSrcdocPolyfill: Ember.observer('srcdoc', function() {
+    Ember.run.schedule('afterRender', this, function() {
+      srcDoc.set(this.$()[0]);
+    });    
+  }),
+
+  /**
    * Will bind to ``window.resize`` event to change top fixed position of
    * its parent. This is done because of problems with positioning content
    * below a top bar.
@@ -141,6 +153,7 @@ export default Ember.Component.extend({
     };
     $(window).on('resize.redocIframe', __resizeFun);
     __resizeFun();
+    this.updateSrcdocPolyfill();
   },
 
   willRemoveElement() {
