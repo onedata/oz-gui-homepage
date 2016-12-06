@@ -29,7 +29,7 @@
       {{#each apiComponents as |c|}}
         {{#link-to "home.api.show-api" apiVersion c.id
           tagName="li"
-          class=(concat "clickable " (if (eq c apiComponent) " active-item"))
+          class=(concat "clickable " (if (eq c.id apiComponent) " active-item"))
         }}
           {{c.name}}
         {{/link-to}}
