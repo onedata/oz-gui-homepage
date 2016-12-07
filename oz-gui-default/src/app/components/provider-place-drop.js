@@ -16,33 +16,40 @@ export default Ember.Component.extend({
   classNameBindings: ['isWorking', 'dropSide'],
   messageBox: Ember.inject.service(),
 
-  isWorking: function() {
+  isWorking: Ember.computed('provider.isWorking', function() {
     return this.get('provider.isWorking') ? 'working' : '';
-  }.property('provider.isWorking'),
+  }),
 
-  /** Parent component - must be injected! */
+  /**
+   * To inject.
+   * Parent component
+   * @required
+   * @type {ProviderPlaceComponent}
+   */
   providerPlace: null,
 
-  provider: function() {
-    return this.get('providerPlace.provider');
-  }.property('providerPlace'),
+  provider: Ember.computed.readOnly('providerPlace.provider'),
 
-  spaces: function() {
-    return this.get('provider.spaces');
-  }.property('provider', 'provider.spaces'),
+  spaces: Ember.computed.readOnly('provider.spaces'),
 
   spacesSorting: ['isDefault:desc', 'name'],
   spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
 
-  /** If true, places provider drop on the left of provider place circle */
-  dropSideLeft: function() {
+  /**
+   * If true, places provider drop on the left of provider place circle
+   * @type {Ember.computed<Boolean>} 
+   */
+  dropSideLeft: Ember.computed('provider.longitude', function() {
     return this.get('provider.longitude') >= 0;
-  }.property('provider.longitude'),
+  }),
 
-  /** Returns a class name */
-  dropSide: function() {
+  /**
+   * Returns a class name
+   * @type {Ember.computed<String>}
+   */
+  dropSide: Ember.computed('dropSideLeft', function() {
     return this.get('dropSideLeft') ? 'drop-left' : 'drop-right';
-  }.property('dropSideLeft'),
+  }),
 
   /** Binds a fixed position update event */
   didInsertElement() {
