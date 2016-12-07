@@ -10,6 +10,7 @@ export default Ember.Component.extend({
       // Some tabs are currently not implemented, but will be
       //'get-started',
       'documentation',
+      'api',
       //'community',
       //'download',
       'support',

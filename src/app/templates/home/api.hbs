@@ -1,0 +1,66 @@
+{{page-title (t 'api.title')}}
+
+<div class="api-components-menu">
+
+  {{!-- components horizontal menu - ONLY IN DESKTOP MODE --}}
+
+  <ul class="visible-sm-block visible-lg-block visible-md-block">
+    {{#each apiComponents as |ac|}}
+      {{#link-to "home.api.show-api" apiVersion ac.id
+        tagName="li"
+        class=(concat "api-components-menu-item clickable " (if (eq ac.id apiComponent) "active"))}}
+        {{ac.name}}
+      {{/link-to}}
+    {{/each}}
+  </ul>
+
+  {{!-- components dropdown - ONLY IN MOBILE (XS) MODE --}}
+
+  {{#bs-dropdown class="api-dropdown api-dropdown-components visible-xs-block"}}
+    {{#bs-dropdown-toggle class="full-width clickable"}}
+      <span class="dropdown-toggle-label">
+        {{apiComponentName}}
+      </span>
+      <span class="dropdown-toggle-button">
+        <div class="triangle-down"></div>  
+      </span>
+    {{/bs-dropdown-toggle}}
+    {{#bs-dropdown-menu}}
+      {{#each apiComponents as |c|}}
+        {{#link-to "home.api.show-api" apiVersion c.id
+          tagName="li"
+          class=(concat "clickable " (if (eq c.id apiComponent) " active-item"))
+        }}
+          {{c.name}}
+        {{/link-to}}
+      {{/each}}
+    {{/bs-dropdown-menu}}
+  {{/bs-dropdown}}
+
+  {{!-- versions dropdown --}}
+
+  {{#bs-dropdown class="api-dropdown api-dropdown-versions"}}
+    {{#bs-dropdown-toggle class="full-width clickable"}}
+      <span class="dropdown-toggle-label">
+        {{apiVersion}}
+      </span>
+      <span class="dropdown-toggle-button">
+        <div class="triangle-down"></div>  
+      </span>
+    {{/bs-dropdown-toggle}}
+    {{#bs-dropdown-menu}}
+      {{#each apiVersions as |version|}}
+        {{#link-to "home.api.show-api" version apiComponent
+          tagName="li"
+          class=(concat "clickable " (if (eq version apiVersion) " active-item"))
+        }}
+          {{version}}
+        {{/link-to}}
+      {{/each}}
+    {{/bs-dropdown-menu}}
+  {{/bs-dropdown}}
+
+</div>
+
+
+{{outlet}}

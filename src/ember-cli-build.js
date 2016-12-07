@@ -1,6 +1,8 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var Funnel = require('broccoli-funnel');
+var fs = require('fs');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
@@ -13,6 +15,17 @@ module.exports = function(defaults) {
     }
   });
 
+  // Generate app-config.json for environment that is used.
+  // Currently app-config.json is always overwritten on build.
+  var onedataAppConfig = {
+    debug: !app.isProduction
+  };
+  fs.writeFile("public/app-config.json", JSON.stringify(onedataAppConfig), function(err) {
+    if (err) {
+      return console.error('Error on writing app-config.json: ' + err);
+    }
+  });
+  
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
@@ -26,16 +39,26 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  app.import("bower_components/owl-carousel/owl-carousel/owl.carousel.min.js");
-  app.import("bower_components/owl-carousel/owl-carousel/owl.carousel.css");
-  app.import("bower_components/owl-carousel/owl-carousel/owl.theme.css");
-  app.import("bower_components/owl-carousel/owl-carousel/owl.transitions.css");
+  const BOWER_ASSETS = [
+    'owl-carousel/owl-carousel/owl.carousel.min.js',
+    'owl-carousel/owl-carousel/owl.carousel.css',
+    'owl-carousel/owl-carousel/owl.theme.css',
+    'owl-carousel/owl-carousel/owl.transitions.css',
+    'bind-first/release/jquery.bind-first-0.2.3.min.js',
+    'jquery-mousewheel/jquery.mousewheel.min.js',
+    'jquery-searchable/dist/jquery.searchable-1.1.0.min.js',
+    'spin.js/spin.js',
+    'srcdoc-polyfill/srcdoc-polyfill.min.js'
+  ];
 
-  app.import("bower_components/bind-first/release/jquery.bind-first-0.2.3.min.js");
-  app.import("bower_components/jquery-mousewheel/jquery.mousewheel.min.js");
-  app.import("bower_components/jquery-searchable/dist/jquery.searchable-1.1.0.min.js");
+  BOWER_ASSETS.forEach(path => app.import(app.bowerDirectory + '/' + path));
 
-  app.import(app.bowerDirectory + '/spin.js/spin.js');
+  // copy assets for libraries that will be used as separate files (not concatenated into vendor)
+  var redocAssets = new Funnel('bower_components/redoc', {
+    srcDir: '/dist',
+    include: ['redoc.min.js'],
+    destDir: '/assets'
+  });
 
-  return app.toTree();
+  return app.toTree([redocAssets]);
 };

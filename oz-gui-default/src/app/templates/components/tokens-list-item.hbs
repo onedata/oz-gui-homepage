@@ -19,11 +19,14 @@
         {{!-- TODO: translate --}}
           Fetching token...
         {{else}}
-          {{input value=token.id}}
+          <div {{action "activate"}}>
+            {{input value=fullToken readonly=true class=(unless active "hidden")}}
+            <div class="short-token {{if active "hidden"}}">{{shortToken}}</div>
+          </div>
         {{/if}}
       </div>
 
-      {{#copy-button tagName='div' success='copySuccess' error='copyError'
+      {{#copy-button click=(action "activate") tagName='div' success='copySuccess' error='copyError'
         clipboardTarget=clipboardTarget class="select-button white-on-parent-hover"}}
         <div class="copy-icon">
           {{one-icon icon="copy"}}

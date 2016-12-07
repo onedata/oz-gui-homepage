@@ -1,0 +1,73 @@
+/* main container */
+.onedata-notify {
+}
+/* message box */
+.onedata-notify .callout {
+}
+/* classes applied for animating in/out */
+.onedata-notify .ember-notify-show {}
+.onedata-notify .ember-notify-hide {}
+
+.onedata-notify {
+    position: fixed;
+    z-index: 5000;
+    bottom: 0px;
+    left: 0px;
+    margin-left: 100px;
+    margin-bottom: 50px;
+
+    .ember-notify {
+        display: block;
+        position: relative;
+        box-sizing: border-box;
+        margin: 10px;
+        width: 450px;
+        padding: 10px;
+        border: none;
+        border-left-style: solid;
+        border-left-width: 4px;
+        // force always no radius
+        border-radius: 0;
+        color: white;
+        background-color: $color-notify-background;
+
+        .message {
+            display: block;
+            font-size: 14px;
+            word-break: break-word;
+            margin-right: 40px;
+        }
+    }
+
+    .close-button {
+      position: absolute;
+      // position an icon to be in middle on single line text 
+      top: -3px;
+      right: 6px;
+      color: #FFF;
+      opacity: 1;
+      text-shadow: none;
+      font-size: 39px;
+      cursor: pointer; cursor: hand;
+    }
+
+    .info {
+      border-left-color: $color-notify-info;
+    }
+
+    .success {
+      border-left-color: $color-notify-success;
+    }
+
+    .warning {
+      border-left-color: $color-notify-warning;
+    }
+
+    .error {
+      border-left-color: $color-notify-error;
+    }
+
+    .alert {
+      border-left-color: $color-notify-alert;
+    }
+}
