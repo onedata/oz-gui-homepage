@@ -172,7 +172,6 @@ app/templates/home/login.hbs
 app/templates/home/logout.hbs
 app/templates/onezone.hbs
 app/templates/onezone/index.hbs
-app/utils/bind-floater.js
 app/utils/safe-element-id.js
 app/utils/snake-to-camel.js
 config/environment.js
