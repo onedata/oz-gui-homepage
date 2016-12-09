@@ -42,11 +42,9 @@ $body-font-size: 14pt;
 $title-font: 'Myriad Pro Semibold';
 $body-font: 'Open Sans';
 
-$icomoon-font-path: "fonts/oneicons";
-@import "oneicons/style.scss";
-
 @import "colors-common";
 @import "onedata-common";
+
 @import "colors";
 @import "fonts";
 @import "main-menu";
@@ -55,13 +53,13 @@ $icomoon-font-path: "fonts/oneicons";
 @import "provider-place";
 @import "provider-place-drop";
 @import "dropdowns";
-@import "common-loader";
+@import "components/common-loader";
 @import "modal";
 @import "button";
-@import "spin-button-base";
+@import "components/spin-button-base";
 @import "modal-types";
-@import "message-box-modal";
-@import "one-option-button";
+@import "components/message-box-modal";
+@import "components/one-option-button";
 @import "notify";
 
 html, body {
