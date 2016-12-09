@@ -11,12 +11,17 @@ export default Ember.Component.extend({
   classNames: ['provider-place'],
   classNameBindings: ['isWorking'],
 
-  isWorking: function() {
-    return this.get('provider.isWorking') ? 'working' : '';
-  }.property('provider.isWorking'),
-
-  /** A provider model that will be represented on map */
+  /**
+   * To inject.
+   * A provider model that will be represented on map
+   * @required
+   * @type {Provider}
+   */
   provider: null,
+
+  isWorking: Ember.computed('provider.isWorking', function() {
+    return this.get('provider.isWorking') ? 'working' : '';
+  }),
 
   // TODO: map to provider props
   latitude: Ember.computed('provider.latitude', function() {
@@ -29,48 +34,56 @@ export default Ember.Component.extend({
     return lon >= -180 && lon <= 180 ? lon : 0;
   }),
 
-  width: function() {
+  width: Ember.computed('atlas.width', function() {
     return this.get('atlas.width')*0.02;
-  }.property('atlas.width'),
+  }),
 
   height: Ember.computed.alias('width'),
 
-  sizeChanged: function() {
+  isActive: Ember.computed.readOnly('provider.isSelected'),
+
+  sizeChanged: Ember.observer('width', 'height', function() {
+    let {width, height} = this.getProperties('width', 'height');
+
     let circle = this.$().find('.circle');
     circle.css({
-      fontSize: this.get('width')*0.75 + 'px',
-      lineHeight: this.get('height')*0.90 + 'px',
-      width: this.get('width') + 'px',
-      height: this.get('height') + 'px',
+      fontSize: width*0.75 + 'px',
+      lineHeight: height*0.90 + 'px',
+      width: width + 'px',
+      height: height + 'px',
     });
-  }.observes('width', 'height'),
+  }),
 
-  posY: function() {
-    let h = this.get('atlas.height');
-    let ltr = this.get('latitude') * (Math.PI/180);
+  posY: Ember.computed('atlas.{height,centerY}', 'latitude', 'height', function() {
+    let {height: h, centerY: atlasCenterY} = this.get('atlas').getProperties('height', 'centerY');
+    let {latitude, height} = this.getProperties('latitude', 'height');
+    let ltr = latitude * (Math.PI/180);
 
     let y = 1.25 * Math.log(Math.tan(Math.PI / 4 + 0.4 * ltr));
-    let yp = this.get('atlas.centerY') - (h/2) * y * (1/2.303412543) - this.get('height')/2;
-    // console.debug(`lat ${ltr} -> y ${y} -> y' ${yp}`);
+    let yp = atlasCenterY - (h/2) * y * (1/2.303412543) - height/2;
+    console.debug(`lat ${ltr} -> y ${y} -> y' ${yp}`);
     return yp;
-  }.property('latitude', 'atlas.centerY', 'height'),
+  }),
 
-  posX: function() {
-    return this.get('atlas.centerX') +
-      (this.get('longitude')/180)*(this.get('atlas.width')/2) -
-      (this.get('width')/2);
-  }.property('longitude', 'atlas.centerX', 'atlas.width', 'width'),
+  posX: Ember.computed('atlas.{width,centerX}', 'longitude', 'width', function() {
+    let {width: atlasWidth, centerX: atlasCenterX} = this.get('atlas').getProperties('width', 'centerX');
+    let {longitude, width} = this.getProperties('longitude', 'width');
 
-  positionChanged: function() {
-    if (this.get('posX') && this.get('posY')) {
-      this.$().css('left', `${this.get('posX')}px`);
-      this.$().css('top', `${this.get('posY')}px`);
+    return atlasCenterX +
+      (longitude/180)*(atlasWidth/2) -
+      (width/2);
+  }),
+
+  positionChanged: Ember.observer('posX', 'posY', function() {
+    let {posX, posY} = this.getProperties('posX', 'posY');
+
+    if (posX && posY) {
+      this.$().css({
+        top: `${posY}px`,
+        left: `${posX}px`
+      });
     }
-  }.observes('posX', 'posY'),
-
-  isActive: function() {
-    return this.get('provider.isSelected');
-  }.property('provider.isSelected'),
+  }),
 
   didInsertElement() {
     this.positionChanged();
