@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import PromiseLoadingMixin from '../mixins/promise-loading';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 /**
  * One of main sidebar items: allows to change alias.

@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import PromiseLoadingMixin from '../mixins/promise-loading';
-import bindFloater from '../utils/bind-floater';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 const AUTH_PROVIDERS_NAMES = {
   google: 'Google+',
