@@ -28,6 +28,7 @@ public/app-config.json
 
 .jsdoc.conf
 app/adapters/application-localstorage.js
+app/adapters/application.js
 app/app.js
 app/components/.gitkeep
 app/components/account-add.js
