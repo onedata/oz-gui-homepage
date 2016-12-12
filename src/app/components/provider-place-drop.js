@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 /**
  * A popup (drop) with fixed position placed near to the provider-place widget,

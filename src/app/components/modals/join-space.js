@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import ModalMixin from '../../mixins/components/modal';
-import PromiseLoadingMixin from '../../mixins/promise-loading';
+import ModalMixin from 'ember-cli-onedata-common/mixins/components/modal';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 /**
  * A form for joining space using space invitation token
