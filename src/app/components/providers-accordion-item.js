@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
-import safeElementId from '../utils/safe-element-id';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
+import safeElementId from 'ember-cli-onedata-common/utils/safe-element-id';
 
 /**
  * Provider entry in sidebar. Contains list of its spaces.
