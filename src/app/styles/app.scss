@@ -47,20 +47,24 @@ $body-font: 'Open Sans';
 
 @import "colors";
 @import "fonts";
-@import "main-menu";
 @import "login";
 @import "onezone";
-@import "provider-place";
-@import "provider-place-drop";
-@import "dropdowns";
-@import "components/common-loader";
-@import "modal";
-@import "button";
+@import "notify";
+
+// OZ components and styles
+@import "components/button";
+@import "components/dropdowns";
+@import "components/main-menu";
+@import "components/modal";
+@import "components/provider-place";
+@import "components/provider-place-drop";
+
+// onedata-common components
+@import "components/button-common";
 @import "components/spin-button-base";
-@import "modal-types";
 @import "components/message-box-modal";
 @import "components/one-option-button";
-@import "notify";
+@import "components/common-loader";
 
 html, body {
   height: 100%;
