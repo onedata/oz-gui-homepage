@@ -1,7 +1,7 @@
 /* jshint expr:true */
 import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'op-worker-gui/hacks/sinon-chai';
+import sinonChai from 'ember-cli-onedata-common/exports/sinon-chai';
 import chai from 'chai';
 chai.use(sinonChai);
 
@@ -18,12 +18,6 @@ describeModule(
     // needs: ['service:foo']
   },
   function() {
-    // Replace this with your real tests.
-    it('exists', function() {
-      let service = this.subject();
-      expect(service).to.be.ok;
-    });
-
     it('allows to register an event handler which will be triggered on event', function() {
       const service = this.subject();
       const eventName = 'hello-world';
