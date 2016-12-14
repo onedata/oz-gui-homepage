@@ -1,14 +1,24 @@
 <div class="drop-panel">
   <div class="drop-title-bar">
     <div class="title-label">
-      {{t (if provider.isWorking "onezone.providerPlaceDrop.operable" "onezone.providerPlaceDrop.inoperable")}}
+      {{!-- FIXME truncate --}}
+      <div class="provider-label">
+        {{provider.name}}
+      </div>
+      {{#unless provider.isWorking}}
+        <div class="provider-offline">
+          {{t "onezone.providerPlaceDrop.offline"}}
+        </div>  
+      {{/unless}}
     </div>
-    <div class="status-circle"></div>
+  </div>
+  <div class="drop-provider-host-container">
+    <input class="provider-host-text truncate" value={{provider.host}} readonly>
+    <div class="provider-host-copy-btn clickable">
+      {{one-icon tagName="div" icon="clipboard-copy"}}
+    </div>
   </div>
   <div class="drop-body">
-    <div class="provider-label">
-      {{trim-string provider.name 20}}
-    </div>
     {{!-- TODO: location name - get it from Google Maps API --}}
     {{!-- <div class="provider-location">
       {{provider.location}}

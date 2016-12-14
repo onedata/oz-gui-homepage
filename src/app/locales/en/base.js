@@ -190,8 +190,7 @@ export default {
     },
     tokensAccordionItem: {},
     providerPlaceDrop: {
-      operable: 'Operable',
-      inoperable: 'Inoperable',
+      offline: 'offline',
       goToFiles: 'Go to your files',
       goToFilesErrorMessage: 'Could not fetch URL of selected provider'
     },
