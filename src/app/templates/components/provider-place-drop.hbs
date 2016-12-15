@@ -14,9 +14,12 @@
   </div>
   <div class="drop-provider-host-container">
     <input class="provider-host-text truncate" value={{provider.host}} readonly>
-    <div class="provider-host-copy-btn clickable">
+    {{#copy-button tagName="div" success='copySuccess' error='copyError'
+        class="provider-host-copy-btn clickable"
+        clipboardTarget=clipboardTarget}}
       {{one-icon tagName="div" icon="clipboard-copy"}}
-    </div>
+    {{/copy-button}}
+
   </div>
   <div class="drop-body">
     {{!-- TODO: location name - get it from Google Maps API --}}

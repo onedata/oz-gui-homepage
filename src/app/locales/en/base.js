@@ -192,7 +192,9 @@ export default {
     providerPlaceDrop: {
       offline: 'offline',
       goToFiles: 'Go to your files',
-      goToFilesErrorMessage: 'Could not fetch URL of selected provider'
+      goToFilesErrorMessage: 'Could not fetch URL of selected provider',
+      hostnameCopySuccess: 'Provider hostname copied to clipboard',
+      hostnameCopyError: 'Failed to copy hostname to clipboard - please do it manually'
     },
     aliasPanel: {
       noAlias: 'You have no alias'

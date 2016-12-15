@@ -11,11 +11,13 @@ import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  onezoneServer: Ember.inject.service('onezone-server'),
+  onezoneServer: Ember.inject.service(),
+  messageBox: Ember.inject.service(),
+  notify: Ember.inject.service(),
+  
   classNames: ['provider-place-drop'],
   classNameBindings: ['isWorking', 'dropSide'],
-  messageBox: Ember.inject.service(),
-
+  
   isWorking: Ember.computed('provider.isWorking', function() {
     return this.get('provider.isWorking') ? 'working' : '';
   }),
@@ -49,6 +51,11 @@ export default Ember.Component.extend({
    */
   dropSide: Ember.computed('dropSideLeft', function() {
     return this.get('dropSideLeft') ? 'drop-left' : 'drop-right';
+  }),
+
+  clipboardTarget: Ember.computed('elementId', function() {
+    let elementId = this.get('elementId');
+    return `#${elementId} input`;
   }),
 
   /** Binds a fixed position update event */
@@ -89,6 +96,16 @@ export default Ember.Component.extend({
       );
 
       p.finally(() => this.set('goToIsLoading', false));
+    },
+
+    copySuccess() {
+      let {i18n, notify} = this.getProperties('i18n', 'notify');
+      notify.info(i18n.t('onezone.providerPlaceDrop.hostnameCopySuccess'));
+    },
+
+    copyError() {
+      let {i18n, notify} = this.getProperties('i18n', 'notify');
+      notify.info(i18n.t('onezone.providerPlaceDrop.hostnameCopyError'));
     }
   }
 });
