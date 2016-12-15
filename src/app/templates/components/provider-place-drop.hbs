@@ -31,13 +31,12 @@
           <div class="space-icon">
             {{one-icon icon=(if space.isDefault "space-default" "space")}}
           </div>
-          <div class="space-label">
-            {{trim-string space.name 20}}
+          <div class="space-label truncate">
+            {{space.name}}
           </div>
-          {{!-- TODO: space capacity --}}
-          {{!-- <div class="space-size">
-            {{space.capacity}}
-          </div> --}}
+           <div class="space-size">
+            {{bytes-to-string space.size}}
+          </div> 
         </li>
       {{/each}}
     </ul>
