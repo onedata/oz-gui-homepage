@@ -2,6 +2,10 @@ $provider-drop-triangle-width: 12px;
 $provider-drop-triangle-height: 10px;
 $provider-drop-radius: 8px;
 
+$color-provider-drop-font: #646464;
+$color-provider-drop-host-background: #F3F0F0;
+$color-provider-drop-space-size: #D7D7D7;
+
 .provider-place-drop {
   position: fixed;
   z-index: 1001 !important;
@@ -9,7 +13,7 @@ $provider-drop-radius: 8px;
 
   &.working {
     .drop-panel .drop-title-bar {
-      background-color: $color-pale-green;
+      background-color: $color-provider-working;
     }
   }
 
@@ -44,6 +48,7 @@ $provider-drop-radius: 8px;
   }
 
   .provider-label {
+    max-width: 120px;
     font-weight: bold;
   }
 
@@ -60,14 +65,14 @@ $provider-drop-radius: 8px;
     border: none;
     border-radius: $provider-drop-radius;
     background-color: white;
-    color: #646464;
+    color: $color-provider-drop-font;
 
     .drop-title-bar {
       height: 28px;
       line-height: 28px;
       padding-left: 8px;
       padding-right: 8px;
-      background-color: $color-red;
+      background-color: $color-provider-not-working;
       color: #FFF;
       border-top-left-radius: $provider-drop-radius;
       border-top-right-radius: $provider-drop-radius;
@@ -79,15 +84,13 @@ $provider-drop-radius: 8px;
       }
     }
 
-    $color-drop-provider-host-background: #F3F0F0;
-
     .drop-provider-host-container {
       display: table;
       width: 100%;
       padding-left: 10px;
       height: 28px;
       line-height: 28px;
-      background-color: $color-drop-provider-host-background;
+      background-color: $color-provider-drop-host-background;
 
       .provider-host-text {
         display: table-cell;
@@ -111,7 +114,7 @@ $provider-drop-radius: 8px;
         line-height: inherit;
 
         &:hover {
-          background-color: darken($color-drop-provider-host-background, 20);
+          background-color: darken($color-provider-drop-host-background, 20);
         }
 
         .oneicon {
@@ -128,8 +131,6 @@ $provider-drop-radius: 8px;
       padding: 8px;
       border-bottom-left-radius: $provider-drop-radius;
       border-bottom-right-radius: $provider-drop-radius;
-      // FIXME former color of li:
-      // color: #7B7B7B;
 
       .btn {
         width: 100%;
@@ -181,7 +182,7 @@ $provider-drop-radius: 8px;
 
           .space-size {
             width: 30px;
-            color: #D7D7D7;
+            color: $color-provider-drop-space-size;
           }
         }
       }
