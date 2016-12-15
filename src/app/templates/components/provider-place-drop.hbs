@@ -27,17 +27,7 @@
     </div> --}}
     <ul>
       {{#each spacesSorted as |space|}}
-        <li>
-          <div class="space-icon">
-            {{one-icon icon=(if space.isDefault "space-default" "space")}}
-          </div>
-          <div class="space-label truncate">
-            {{space.name}}
-          </div>
-           <div class="space-size">
-            {{bytes-to-string space.size}}
-          </div> 
-        </li>
+        {{provider-place-drop-space space=space providerId=provider.id}}
       {{/each}}
     </ul>
     {{#if provider.isWorking}}

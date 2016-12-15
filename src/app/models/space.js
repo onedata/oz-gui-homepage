@@ -10,7 +10,17 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   name: DS.attr('string'),
 
-  size: DS.attr('number'),
+  /**
+   * Total capacity in bytes of this space.
+   * @type {Number}
+   */
+  totalSize: DS.attr('number'),
+
+  /**
+   * Maps: provider name => capacity in bytes provided for this space
+   * @type {Object}
+   */
+  supportSizes: DS.attr('object'),
 
   /** isDefault is old form of "is home a space" - only one user space can be default */
   isDefault: DS.attr('boolean', {defaultValue: false}),
