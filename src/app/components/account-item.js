@@ -8,13 +8,19 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  classNames: ['account-item', 'clickable'],
+  classNames: ['account-item', 'clickable:clickable'],
 
   /** Label of entry, string */
   label: null,
 
   /** Type of authorizer, one of: google, plgrid, dropbox, google, facebook, github */
   type: null,
+
+  /**
+   * To inject. Optional.
+   * @type {Boolean}
+   */
+  clickable: true,
 
   // TODO: DEPRECATED
   accepted: null,

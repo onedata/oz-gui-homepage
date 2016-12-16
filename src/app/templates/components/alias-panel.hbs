@@ -1,47 +1,52 @@
-<div class="accordion secondary-accordion spaces-accordion">
+<div class="accordion secondary-accordion alias-accordion">
   {{!-- faking the accordion group... this should be separate class --}}
-  <div class="accordion-group secondary-accordion-group spaces-accordion-group">
-    <div class="accordion-heading secondary-accordion-heading spaces-accordion-heading">
-      <a class="accordion-toggle secondary-accordion-toggle spaces-accordion-toggle create-new first-create-new clickable"
+  <div class="accordion-group secondary-accordion-group alias-accordion-group">
+    <div class="accordion-heading secondary-accordion-heading alias-accordion-heading">
+      <div class="accordion-toggle secondary-accordion-toggle alias-accordion-toggle create-new clickable"
         {{action 'startEditAlias'}}>
-        <div class="secondary-icon">
-          {{#if isLoading}}
-            <div class="spinner-container">
-              {{spin-spinner scale=0.16 lines=12 length=20 width=10}}
-            </div>
-          {{else}}
-            {{one-icon icon='user'}}
-          {{/if}}
-        </div>
-        <div class="secondary-header space-header stretch-hack">
-          {{#if aliasEditing}}
-            {{input enter='endEditAlias' value=aliasTextEdit autofocus="autofocus"
-              disabled=isLoading}}
-          {{else}}
+
+        <div class="secondary-item-container alias-edit-container">
+
+          <div class="secondary-icon">
             {{#if isLoading}}
-              <em>{{t 'common.loading'}}</em>
+              <div class="spinner-container">
+                {{spin-spinner scale=0.16 lines=12 length=20 width=10}}
+              </div>
             {{else}}
-              {{#if correctAlias}}
-                {{aliasText}}
+              {{one-icon tagName="div" icon='user'}}
+            {{/if}}
+          </div>
+          <div class="secondary-header space-header">
+            {{#if aliasEditing}}
+              {{input enter='endEditAlias' value=aliasTextEdit autofocus="autofocus"
+                disabled=isLoading class="alias-edit"}}
+            {{else}}
+              {{#if isLoading}}
+                <em>{{t 'common.loading'}}</em>
               {{else}}
-                <em>{{t 'onezone.aliasPanel.noAlias'}}</em>
+                {{#if correctAlias}}
+                  {{aliasText}}
+                {{else}}
+                  <em>{{t 'onezone.aliasPanel.noAlias'}}</em>
+                {{/if}}
               {{/if}}
             {{/if}}
+          </div>
+          {{#if aliasEditing}}
+            <div class="secondary-icon" {{action 'endEditAlias' aliasTextEdit bubbles=false }}>
+              {{one-icon tagName="div" icon='checkbox-check'}}
+            </div>
+            <div class="secondary-icon" {{action 'cancelEditAlias' bubbles=false }} >
+              {{one-icon tagName="div" icon='checkbox-x'}}
+            </div>
+          {{else}}
+            <div class="secondary-icon">
+              {{one-icon tagName="div" icon='rename'}}
+            </div>
           {{/if}}
         </div>
-        {{#if aliasEditing}}
-          <div class="secondary-icon" {{action 'endEditAlias' aliasTextEdit bubbles=false }}>
-            {{one-icon icon='checkbox-check'}}
-          </div>
-          <div class="secondary-icon" {{action 'cancelEditAlias' bubbles=false }} >
-            {{one-icon icon='checkbox-x'}}
-          </div>
-        {{else}}
-          <div class="secondary-icon">
-            {{one-icon icon='rename'}}
-          </div>
-        {{/if}}
-      </a>
+
+        </div>
     </div>
   </div>
 </div>

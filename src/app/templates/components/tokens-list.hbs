@@ -17,7 +17,7 @@
       </div>
     </div>
   {{else}}
-    <div class="sidebar-row space-add-text-row">{{t 'onezone.tokensAccordion.info'}}</div>
+    <div class="sidebar-row sidebar-row-text-info">{{t 'onezone.tokensAccordion.info'}}</div>
 
     {{#each tokenModels as |tm|}}
       {{tokens-list-item token=tm.token active=tm.active deactivateAllTokens="deactivateAllTokens"}}
@@ -26,15 +26,15 @@
 
   <div class="accordion-group secondary-accordion-group tokens-accordion-group">
     <div class="accordion-heading secondary-accordion-heading tokens-accordion-heading">
-      <a class="onezone-sidebar-secondary-item accordion-toggle secondary-accordion-toggle create-new first-create-new clickable"
+      <div class="onezone-sidebar-secondary-item accordion-toggle secondary-accordion-toggle create-new first-create-new clickable"
         {{action 'createNewToken'}}>
         <div class="add-item-icon token-icon">
-          {{one-icon icon='add'}}
+          {{one-icon tagName="div" icon='add'}}
         </div>
         <div class="token-header stretch-hack">
           {{t 'onezone.tokensAccordion.createNewToken'}}
         </div>
-      </a>
+      </div>
     </div>
   </div>
 

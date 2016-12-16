@@ -14,7 +14,7 @@
   {{else}}
     {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
-      {{account-item type=account.type label=account.email}}
+      {{account-item type=account.type label=account.email clickable=false}}
     </li>
     {{/each}}
   {{/if}}
