@@ -18,15 +18,20 @@
     </li>
     {{/each}}
   {{/if}}
-  <li>
-    {{#if loadingSupportedAuthorizers}}
+
+  {{!-- add authorizer --}}
+
+  {{#if loadingSupportedAuthorizers}}
+    <li class="non-hoverable">
       <div class="loading-supported-authorizers">
         {{t 'components.accountsList.loadingSupportedAuthorizers'}}
       </div>
-    {{else}}
-      {{#unless noSupportedAuthorizers}}
+    </li>
+  {{else}}
+    {{#unless noSupportedAuthorizers}}
+      <li>
         {{account-add supportedAuthorizers=supportedAuthorizers}}
-      {{/unless}}
-    {{/if}}    
-  </li>
+      </li>
+    {{/unless}}
+  {{/if}}
 </ul>

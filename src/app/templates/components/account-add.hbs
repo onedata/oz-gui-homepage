@@ -1,18 +1,26 @@
 <div class="dropdown side-dropdown">
-  <a href="#" class="dropdown-toggle side-dropdown-toggle full-width clickable"
+  <div href="#" class="dropdown-toggle side-dropdown-toggle full-width clickable"
     data-toggle="dropdown" role="button" aria-haspopup="true"
     aria-expanded="false">
-    <div class="account-icon account-add-icon sidebar-icon-container">
+
+    <div class="secondary-item-container">
+    
       {{#if isLoading}}
-        {{spin-spinner scale=0.25 lines=12 length=20 width=10}}
+        <div class="secondary-item-element spinner-container spinner-32">
+          {{spin-spinner scale=0.2 lines=12 length=20 width=10}}
+        </div>
       {{else}}
-        {{one-icon tagName="div" icon="add"}}
+        <div class="secondary-item-element account-icon account-add-icon sidebar-icon-container icon">
+          {{one-icon tagName="div" icon="add"}}
+        </div>
       {{/if}}
+      <div class="secondary-item-element account-label connect-new one-label one-label-large">
+        {{t 'onezone.accountAdd.connectNewAccount'}}
+      </div>
+      
     </div>
-    <div class="account-label connect-new">
-      {{t 'onezone.accountAdd.connectNewAccount'}}
-    </div>
-  </a>
+    
+  </div>
   <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
     {{!-- TODO: style --}}
     {{#each authProviders as |authProvider|}}

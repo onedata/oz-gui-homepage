@@ -4,6 +4,7 @@ export default {
   common: {
     fetchingToken: 'Fetching token...',
     loading: 'Loading...',
+    loadingNamed: 'Loading {{name}}...',
     modal: {
       ok: 'OK',
       cancel: 'Cancel',
@@ -169,6 +170,7 @@ export default {
       connectBy: 'Connect by'
     },
     spacesAccordion: {
+      spacesList: 'spaces list',
       createNewSpace: 'Create new space',
       createNewSpaceText: 'You can also become a provider yourself and support ' +
       'your own space.',
@@ -180,11 +182,13 @@ export default {
       getSupport: 'Get support'
     },
     providersAccordion: {
+      providersList: 'providers list',
       chooseProvider: 'Choose Provider',
       noProviders: 'No providers, get support first.'
     },
     providersAccordionItem: {},
     tokensAccordion: {
+      tokensList: 'tokens list',
       createNewToken: 'Create new access token',
       info: 'Generate new token to get access to Onedata using command line client or REST API'
     },
@@ -197,7 +201,8 @@ export default {
       hostnameCopyError: 'Failed to copy hostname to clipboard - please do it manually'
     },
     aliasPanel: {
-      noAlias: 'You have no alias'
+      noAlias: 'You have no alias',
+      userAlias: 'user alias'
     }
   }
 };

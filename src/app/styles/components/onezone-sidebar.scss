@@ -90,11 +90,13 @@
 
           text-decoration: none !important;
 
-          &:hover {
-            background-color: rgba(255, 255, 255, 0.1) !important;
+          &:not(.non-hoverable) {
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.1) !important;
 
-            .star-empty {
-              color: #fff !important;
+              .star-empty {
+                color: #fff !important;
+              }
             }
           }
         }
@@ -217,11 +219,6 @@
       line-height: $onezone-secondary-accordion-heading-height;
     }
     .token-header {
-      display: table-cell;
-      // TODO: maybe create a header common class
-      vertical-align: top;
-      padding-left: 15px;
-      padding-right: 15px;
       text-transform: none;
       line-height: $onezone-secondary-accordion-heading-height;
 
@@ -234,27 +231,25 @@
         background: inherit;
       }
     }
+    
     .visible-on-hover {
       color: transparent;
     }
+
+    // TODO: generic right button class or something like in spaces list
+
     .select-button {
-      // size hack
       font-size: 24px;
       position: relative;
-      top: -3px;
 
-      display: table-cell;
       width: 32px;
       line-height: $onezone-secondary-accordion-heading-height;
       cursor: pointer; cursor: hand;
     }
     .trash-button {
-      // size hack
       font-size: 24px;
       position: relative;
-      top: -3px;
 
-      display: table-cell;
       width: 32px;
       line-height: $onezone-secondary-accordion-heading-height;
       cursor: pointer; cursor: hand;
@@ -278,14 +273,6 @@
       &:first-of-type {
         margin-top: 20px;
       }
-    }
-
-    .stretch-hack {
-      display: table-cell;
-      // a hack to stretch main heading element horizontally - use with caution!
-      width: 500px;
-      // TODO: maybe create a header common class
-      vertical-align: top;
     }
 
     .secondary-accordion-group {
@@ -511,12 +498,13 @@
       @include vendor-prefix(transform, rotate(0));
 
       &.account-add-icon {
-        // add account does not need pulling down...
         padding-top: 0;
-        // size hack
         font-size: 48px;
-        position: relative;
-        left: -8px;
+
+        .one-icon {
+          position: relative;
+          left: -8px;
+        }
       }
 
       .circle {
@@ -560,24 +548,6 @@
         background-color: none !important;
       }
     }
-
-    // TODO: max width to prevent overflow or use table-cell
-    .account-label {
-      vertical-align: middle;
-      display: table-cell;
-      padding-left: 20px;
-
-      font-size: 0.8em;
-
-      &.connect-new {
-        font-family: 'Lato', sans-serif;
-        font-weight: 100;
-        font-style: italic;
-
-        // hack TODO
-        padding-left: 4px;
-      }
-    }
   }
 }
 
@@ -585,6 +555,19 @@
   padding-left: 8px;
 }
 
+.one-icon + .one-label-large {
+  padding-left: 16px;
+}
+
+.one-label-large {
+  font-size: 15px;
+}
+
+.connect-new {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
 
 // as we use one-label in providers count, disable padding
 .providers-count {
