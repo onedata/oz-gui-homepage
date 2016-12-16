@@ -645,3 +645,15 @@
   color: rgba(255, 255, 255, 0.5);
   text-align: right;
 }
+
+.sidebar-provider-space {
+  &.space-header {
+    max-width: 120px;
+  }
+}
+  
+.alias-edit-container {
+  .alias-text.readonly {
+    max-width: 120px;
+  }
+}
