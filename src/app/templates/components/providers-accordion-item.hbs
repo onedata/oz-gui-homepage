@@ -39,14 +39,7 @@
       <div class="accordion-inner">
         <ul class="tertiary-list">
           {{#each spacesSorted as |s|}}
-            <li class="secondary-item-container sidebar-provider-space non-hoverable">
-              <div class="secondary-item-element icon tertiary-icon">
-                {{one-icon tagName="div" icon=(if s.isDefault "space-home" "space")}}
-              </div>
-              <div class="secondary-item-element one-label after-icon truncate">
-                {{s.name}}
-              </div>
-            </li>
+            {{providers-accordion-item-space space=s providerId=provider.id}}
           {{/each}}
         </ul>
       </div>

@@ -346,16 +346,6 @@
             &.provider-header {
               max-width: 190px;
             }
-
-            &.space-header-size {
-              overflow-x: hidden;
-              text-overflow: clip;
-              white-space: nowrap;
-              font-size: 0.9em;
-              color: rgba(255, 255, 255, 0.5);
-              padding-right: 10px;
-              text-align: right;
-            }
           }
 
           // for space
@@ -644,4 +634,14 @@
     display: table-cell;
     vertical-align: middle;
   }
+}
+
+.space-header-size {
+  padding-right: 10px;
+  overflow-x: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: right;
 }
