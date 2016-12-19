@@ -4,7 +4,8 @@
 
 {{onezone-sidebar tagName='nav' class='onezone-sidebar'
   providers=model.providers spaces=model.spaces authorizers=model.authorizers
-  tokens=model.clienttokens}}
+  tokens=model.clienttokens
+  openModal="openModal"}}
 {{onezone-top-bar tagName='header' class='onezone-top-bar'}}
 
 <div class="onezone-container-application">
@@ -12,3 +13,14 @@
     {{outlet}}
   </div>
 </div>
+
+{{!-- modals --}}
+
+{{dialog-modal open=(eq modalInfo.name "leaveSpace")
+  resolve=modalInfo.resolve
+  reject=modalInfo.reject
+  model=modalInfo.model
+  yesAction="leaveSpace"
+  title=(t "onezone.leaveSpaceModal.title")
+  label=(t "onezone.leaveSpaceModal.label")
+}}

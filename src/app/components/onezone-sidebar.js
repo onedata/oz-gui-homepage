@@ -16,4 +16,10 @@ export default Ember.Component.extend({
   authAccounts: null,
   /** Tokens list sholud be injected (from model) */
   tokens: null,
+
+  actions: {
+    openModal() {
+      this.sendAction('openModal', ...arguments);
+    }
+  }
 });

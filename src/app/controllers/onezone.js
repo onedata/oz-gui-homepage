@@ -39,6 +39,12 @@ export default Ember.Controller.extend({
     return this.get('expand_alias') === 'true';
   }.property('expand_alias'),
 
+  modalInfo: Ember.Object.create({
+    name: null,
+    resolve: null,
+    reject: null,
+  }),
+
   actions: {
     expandQuerySpecifiedAccordions: function() {
       if (this.get('expandAccounts')) {
@@ -56,6 +62,12 @@ export default Ember.Controller.extend({
       if (this.get('expandAlias')) {
         $('#collapse-alias').collapse('show');
       }
+    },
+
+    openModal(name, resolve, reject) {
+      this.get('modalInfo').setProperties({
+        name, resolve, reject
+      });
     }
   },
 });

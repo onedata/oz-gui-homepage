@@ -68,55 +68,59 @@ export default Ember.Component.extend({
   },
 
   actions: {
-      // TODO: this action should not be invoked when there is currently opened other token
-      getNewSupportToken: function() {
-        let space = this.get('space');
-        this.set('supportToken', null);
-        if (space) {
-          this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
-            .then((data) => {
-              const token = data.token;
-              // TODO: only debug, should be removed in future
-              console.debug('Fetched new support token: ' + token);
-              this.set('supportToken', token);
-            });
-        } else {
-          console.warn('Tried to get new support token, but no space is assigned to item');
-        }
-      },
+    openModal() {
+      this.sendAction('openModal', ...arguments);
+    },
 
-      /** Set the space as default, unsetting other spaces */
-      toggleDefault() {
-        let store = this.get('store');
-        // TODO: use query?
-        // there should be only one default provider, but for safety...
-        let defaultSpaces = store.peekAll('space').filterBy('isDefault', true);
-        defaultSpaces.toArray().forEach((p) => {
-          p.set('isDefault', false);
-          p.save();
-        });
-
-        let space = this.get('space');
-        space.set('isDefault', true);
-        space.save();
-      },
-      // TODO: a notification for user
-      copySuccess() {
-        this.selectTokenText();
-        this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
-      },
-      // TODO: a notification for user
-      copyError() {
-        this.selectTokenText();
-        this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
-      },
-      goToProvider(provider) {
-        this.get('space.providers').forEach((p) => p.set('isSelected', false));
-        provider.set('isSelected', true);
-      },
-
-      showUnsupportSpaceModal(provider) {
-        this.sendAction('showUnsupportSpaceModal', this.get('space'), provider);
+    // TODO: this action should not be invoked when there is currently opened other token
+    getNewSupportToken: function() {
+      let space = this.get('space');
+      this.set('supportToken', null);
+      if (space) {
+        this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
+          .then((data) => {
+            const token = data.token;
+            // TODO: only debug, should be removed in future
+            console.debug('Fetched new support token: ' + token);
+            this.set('supportToken', token);
+          });
+      } else {
+        console.warn('Tried to get new support token, but no space is assigned to item');
       }
+    },
+
+    /** Set the space as default, unsetting other spaces */
+    toggleDefault() {
+      let store = this.get('store');
+      // TODO: use query?
+      // there should be only one default provider, but for safety...
+      let defaultSpaces = store.peekAll('space').filterBy('isDefault', true);
+      defaultSpaces.toArray().forEach((p) => {
+        p.set('isDefault', false);
+        p.save();
+      });
+
+      let space = this.get('space');
+      space.set('isDefault', true);
+      space.save();
+    },
+    // TODO: a notification for user
+    copySuccess() {
+      this.selectTokenText();
+      this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
+    },
+    // TODO: a notification for user
+    copyError() {
+      this.selectTokenText();
+      this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
+    },
+    goToProvider(provider) {
+      this.get('space.providers').forEach((p) => p.set('isSelected', false));
+      provider.set('isSelected', true);
+    },
+
+    showUnsupportSpaceModal(provider) {
+      this.sendAction('showUnsupportSpaceModal', this.get('space'), provider);
+    }
   }
 });
