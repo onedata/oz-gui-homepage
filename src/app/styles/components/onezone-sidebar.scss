@@ -486,29 +486,35 @@
       width: 100%;
     }
 
+    .spinner-container {
+      // to slightly better align with account circle
+      left: -1px;
+    }
+
     .account-icon {
       position: relative;
-      display: table-cell;
       width: 32px;
       height: $onezone-account-item-height;
-      // pull down the circle
-      padding-top: 12px;
       text-align: center;
 
-      @include vendor-prefix(transform, rotate(0));
-
       &.account-add-icon {
-        padding-top: 0;
+        position: relative;
         font-size: 48px;
+        left: -8px;
 
         .one-icon {
-          position: relative;
-          left: -8px;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
         }
       }
 
       .circle {
         position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -536,7 +542,9 @@
       }
       .icon {
         position: absolute;
-        display: table-cell;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
         vertical-align: middle;
         height: $onezone-secondary-accordion-item-height;
         line-height: $onezone-secondary-accordion-item-height;
@@ -545,7 +553,11 @@
         padding: 0;
         color: white;
         font-size: 30px;
-        background-color: none !important;
+        background: transparent;
+
+        .one-icon {
+          line-height: inherit;
+        }
       }
     }
   }
@@ -555,7 +567,7 @@
   padding-left: 8px;
 }
 
-.one-icon + .one-label-large {
+.icon + .one-label-large {
   padding-left: 16px;
 }
 

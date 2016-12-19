@@ -20,7 +20,7 @@
           <div class="secondary-item-element secondary-header alias-text readonly truncate">
             {{#if aliasEditing}}
               {{input enter='endEditAlias' value=aliasTextEdit autofocus="autofocus"
-                disabled=true class="alias-edit"}}
+                disabled=isLoading class="alias-edit"}}
             {{else}}
               {{#if isLoading}}
                 {{t 'common.loadingNamed' name=(t 'onezone.aliasPanel.userAlias')}}

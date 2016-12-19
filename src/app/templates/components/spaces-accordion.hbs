@@ -30,7 +30,7 @@
         </div>
         <div class="secondary-header">
           {{#if createNewSpaceEditing}}
-            {{input enter='endCreateNewSpace' value=createNewSpaceName autofocus="autofocus"}}
+            {{input id="create-new-space-name" enter='endCreateNewSpace' value=createNewSpaceName autofocus="autofocus"}}
           {{else}}
             {{t 'onezone.spacesAccordion.createNewSpace'}}
           {{/if}}
