@@ -31,6 +31,8 @@ export default Ember.Component.extend({
         if (!this.get('createNewSpaceEditing')) {
           this.set('createNewSpaceEditing', true);
         }
+        let $input = this.$('#create-new-space-name');
+        $input.focus();
       },
 
       // TODO: this should be invoked when pressing Esc when in editing mode

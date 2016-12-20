@@ -14,19 +14,24 @@
   {{else}}
     {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
-      {{account-item type=account.type label=account.email}}
+      {{account-item type=account.type label=account.email clickable=false}}
     </li>
     {{/each}}
   {{/if}}
-  <li>
-    {{#if loadingSupportedAuthorizers}}
+
+  {{!-- add authorizer --}}
+
+  {{#if loadingSupportedAuthorizers}}
+    <li class="non-hoverable">
       <div class="loading-supported-authorizers">
         {{t 'components.accountsList.loadingSupportedAuthorizers'}}
       </div>
-    {{else}}
-      {{#unless noSupportedAuthorizers}}
+    </li>
+  {{else}}
+    {{#unless noSupportedAuthorizers}}
+      <li>
         {{account-add supportedAuthorizers=supportedAuthorizers}}
-      {{/unless}}
-    {{/if}}    
-  </li>
+      </li>
+    {{/unless}}
+  {{/if}}
 </ul>

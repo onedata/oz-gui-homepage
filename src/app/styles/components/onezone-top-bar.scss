@@ -1,0 +1,40 @@
+.onezone-top-bar {
+  position: fixed;
+  z-index: $onezone-fog-z + 2;
+  top: 0;
+  left: $onezone-sidebar-width;
+  right: 0;
+  height: $onezone-top-bar-height;
+  line-height: $onezone-top-bar-height;
+  background: $color-onezone-top-bar-bg;
+
+  .container-fluid {
+    padding-left: 42px;
+    padding-right: 42px;
+
+    .title {
+      text-transform: uppercase;
+      h1 {
+        padding: 0;
+        margin: 0;
+        line-height: inherit;
+        font-size: 1em;
+      }
+    }
+
+    .hints {
+      text-transform: uppercase;
+      font-size: 0.7em;
+    }
+  }
+}
+
+.navbar-onezone {
+  .navbar-nav {
+    margin: 0 !important;
+    float: right !important;
+    .dropdown-menu {
+      position: absolute !important;
+    }
+  }
+}

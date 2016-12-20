@@ -267,17 +267,6 @@ input {
   cursor: default !important;
 }
 
-.hover-parent {
-  .white-on-parent-hover {
-    color: transparent !important;
-  }
-  &:hover {
-    .white-on-parent-hover {
-      color: white !important;
-    }
-  }
-}
-
 .input-with-button {
   display: table;
   width: 100%;

@@ -1,14 +1,19 @@
 $provider-drop-triangle-width: 12px;
 $provider-drop-triangle-height: 10px;
-$provider-drop-radius: 4px;
+$provider-drop-radius: 8px;
+
+$color-provider-drop-font: #646464;
+$color-provider-drop-host-background: #F3F0F0;
+$color-provider-drop-space-size: #BDBDBD;
 
 .provider-place-drop {
   position: fixed;
   z-index: 1001 !important;
+  font-size: 12px;
 
   &.working {
-    .drop-panel .drop-title-bar .status-circle {
-      background-color: $color-pale-green;
+    .drop-panel .drop-title-bar {
+      background-color: $color-provider-working;
     }
   }
 
@@ -42,48 +47,88 @@ $provider-drop-radius: 4px;
     }
   }
 
+  .provider-label {
+    max-width: 120px;
+    font-weight: bold;
+  }
+
+  .provider-offline {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    right: 10px;
+  }
+
   .drop-panel {
     width: 190px;
     min-height: 50px;
-    font-size: 0.8em;
-    border: 1px #B8B8B8 solid;
+    border: none;
     border-radius: $provider-drop-radius;
     background-color: white;
-    color: black;
+    color: $color-provider-drop-font;
 
     .drop-title-bar {
       height: 28px;
       line-height: 28px;
-      padding-left: 8px;
-      padding-right: 8px;
-      font-size: 0.8em;
-      background-color: #F5F2F2;
-      color: #B8B8B8;
-      border-bottom: 1px solid #F3F3F3;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: $color-provider-not-working;
+      color: #FFF;
       border-top-left-radius: $provider-drop-radius;
       border-top-right-radius: $provider-drop-radius;
 
       .title-label {
         float: left;
+        // add to radius to align with host-container padding
+        padding-left: 2px;
+      }
+    }
+
+    .drop-provider-host-container {
+      display: table;
+      width: 100%;
+      padding-left: 10px;
+      height: 28px;
+      line-height: 28px;
+      background-color: $color-provider-drop-host-background;
+
+      .provider-host-text {
+        display: table-cell;
+        color: inherit;
+        // for text truncate
+        max-width: 150px;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
       }
 
-      .status-circle {
-        margin-top: 10px;
-        margin-right: 2px;
-        float: right;
-        border-radius: 50%;
-        width: 8px;
-        height: 8px;
-        padding-top: auto;
-        padding-bottom: auto;
-        background-color: $color-red;
+      .provider-host-copy-btn {
+        position: relative;
+        display: table-cell;
+        width: 28px;
+        border-left: 1px solid #EAE6E6;
+        color: inherit;
+        font-size: 28px;
+        text-align: center;
+        line-height: inherit;
+
+        &:hover {
+          background-color: darken($color-provider-drop-host-background, 20);
+        }
+
+        .oneicon {
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          top: 0;
+          left: 0;
+        }
       }
     }
 
     .drop-body {
       padding: 8px;
-      font-size: 0.9em;
-      color: #646464;
       border-bottom-left-radius: $provider-drop-radius;
       border-bottom-right-radius: $provider-drop-radius;
 
@@ -98,42 +143,53 @@ $provider-drop-radius: 4px;
         color: #F2F2F2;
       }
 
-      .provider-label {
-        font-weight: bold;
-      }
-      .provider-location {
-      }
-
       ul {
         padding-top: 0;
         padding-left: 0;
         padding-right: 0;
-        margin-top: 8px;
+        margin-top: 0;
         margin-bottom: 0;
 
         li {
           display: table;
+          width: 100%;
           height: 22px;
           line-height: 22px;
+          vertical-align: middle;
 
           > * {
             display: table-cell;
-            color: #7B7B7B;
+            color: inherit;
           }
 
           .space-icon {
             position: relative;
             top: 2px;
             width: 20px;
+            padding-right: 8px;
+
+            .oneicon {
+              font-size: 20px;
+              line-height: inherit;
+            }
           }
 
           .space-label {
+            max-width: 50px;
             line-height: inherit;
+            vertical-align: inherit;
+            font-size: 0.9em;
           }
 
           .space-size {
-            width: 30px;
-            color: #D7D7D7;
+            max-width: 50px;
+            padding-left: 4px;
+            vertical-align: inherit;
+            text-align: right;
+            text-overflow: clip;
+            white-space: nowrap;
+            overflow: hidden;
+            color: $color-provider-drop-space-size;
           }
         }
       }
