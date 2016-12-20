@@ -127,6 +127,20 @@ export default Ember.Service.extend({
   },
 
   /**
+   * The current user (session user) leaves a space.
+   *
+   * @param {String} spaceId An ID of the space to leave
+   * @returns {RSVP.Promise} A backend operation completion:
+   * - ``resolve()`` when successfully left the space
+   * - ``reject(object: error)`` on failure
+   */
+  userLeaveSpace(spaceId) {
+    return this.get('server').privateRPC('userLeaveSpace', {
+      spaceId: spaceId
+    });
+  },
+
+  /**
    * Change user password for login/password authentication method.
    *
    * @param {String} oldPassword Old (currently set) user password

@@ -21,7 +21,13 @@ export default {
     fatalApplicationErrorResources: "A fatal error occured loading application's resources"
   },
   services: {
-    session: sessionLocales
+    session: sessionLocales,
+    spacesManager: {
+      leaveModal: {
+        title: 'Leave a space',
+        label: 'Are you sure you want to leave space "{{spaceName}}"?'
+      }
+    }
   },
   application: {
     title: 'Onezone',
@@ -53,7 +59,7 @@ export default {
     boxSubtitle: 'A new account will be created automatically on first login',
     unknownZoneName: 'unknown'
   },
-  components: {
+  components: { 
     modals: {
       loginForm: {
         title: 'Login with username and password',
@@ -113,6 +119,12 @@ export default {
     accountsList: {
       loadingAccounts: 'Loading accounts info...',
       loadingSupportedAuthorizers: 'Loading supported authorizers...',
+    },
+    spaceSettingsDrop: {
+      setHome: 'set as home',
+      leave: 'leave',
+      rename: 'rename',
+      getSupport: 'get support'
     }
   },
   logout: {

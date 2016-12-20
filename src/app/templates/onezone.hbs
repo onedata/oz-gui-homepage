@@ -16,11 +16,11 @@
 
 {{!-- modals --}}
 
-{{dialog-modal open=(eq modalInfo.name "leaveSpace")
-  resolve=modalInfo.resolve
-  reject=modalInfo.reject
-  model=modalInfo.model
-  yesAction="leaveSpace"
-  title=(t "onezone.leaveSpaceModal.title")
-  label=(t "onezone.leaveSpaceModal.label")
-}}
+{{#if (eq modal.type "dialog")}}
+  {{dialog-modal open=(eq modal.type "dialog")
+  onConfirm=modal.options.onConfirm
+  onCancel=modal.options.onCancel
+  title=modal.options.title
+  title=modal.options.label
+  }}
+{{/if}}

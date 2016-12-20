@@ -328,10 +328,12 @@
 
             &.space-header {
               max-width: 120px;
+              width: 120px;
             }
 
             &.provider-header {
               max-width: 190px;
+              width: 190px;
             }
           }
 
@@ -340,7 +342,6 @@
             position: relative;
 
             display: table-cell;
-            width: 50px;
             overflow-x: hidden;
             .icon {
               display: table-cell;
@@ -367,13 +368,17 @@
 
           .star-toggle {
             display: table-cell;
-            width: 40px;
+            width: 32px;
             font-size: 30px;
             cursor: pointer; cursor: hand;
 
             .star-empty {
               color: transparent;
             }
+          }
+
+          .settings-tool {
+            text-align: center;
           }
 
           // for provider
@@ -632,6 +637,8 @@
 }
 
 .space-header-size {
+  width: 75px;
+  max-width: 75px;
   padding-right: 10px;
   overflow-x: hidden;
   text-overflow: clip;
@@ -643,7 +650,8 @@
 
 .sidebar-provider-space {
   &.space-header {
-    max-width: 120px;
+    max-width: 112px;
+    width: 112px;
   }
 }
   

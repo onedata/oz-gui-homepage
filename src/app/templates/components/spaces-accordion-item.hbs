@@ -6,13 +6,13 @@
         <div class="secondary-item-element clickable" data-toggle="collapse" href="#collapse-space-{{space.id}}">
 
           <div class="secondary-item-container">
-            <div class="secondary-icon space-icon">
+            <div class="secondary-item-element secondary-icon space-icon">
               {{one-icon tagName='div' icon=(if space.isDefault "space-home" "space")}}
             </div>
-            <div class="secondary-header space-header truncate">
+            <div class="secondary-item-element secondary-header space-header truncate">
               {{space.name}}
             </div>
-            <div class="secondary-header space-header-size">
+            <div class="secondary-item-element secondary-header space-header-size">
               {{bytes-to-string space.totalSize}}
             </div>
           </div>
@@ -41,12 +41,11 @@
         </div>
 
         {{/if}}
-
-        <div class="secondary-item-element">
-          {{space-settings-drop space=space
-            toggleDefault='toggleDefault'
-            openModal="openModal"}}
-        </div>
+        
+        {{space-settings-drop space=space
+          class="secondary-item-element settings-tool"
+          toggleDefault='toggleDefault'
+          openModal="openModal"}}
 
       </div>
 

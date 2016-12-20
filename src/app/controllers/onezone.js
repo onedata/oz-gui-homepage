@@ -9,6 +9,10 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Controller.extend({
+  modalsManager: Ember.inject.service(),
+
+  modal: Ember.computed.alias('modalsManager.currentModal'),
+
   init: function () {
     this._super();
     Ember.run.schedule('afterRender',this,function() {

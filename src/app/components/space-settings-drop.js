@@ -11,8 +11,7 @@ import SettingsDropLayout from 'ember-cli-onedata-common/templates/components/se
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default SettingsDrop.extend({
-  commonModals: Ember.inject.service(),
-  messageBox: Ember.inject.service(),
+  spacesManager: Ember.inject.service(),
 
   layout: SettingsDropLayout,
 
@@ -29,41 +28,37 @@ export default SettingsDrop.extend({
     }
     ```
   */
-  menuItems: function() {
+  menuItems: Ember.computed('i18n', 'space.isDefault', function() {
     let i18n = this.get('i18n');
-    return [
-      {
-        icon: 'home',
-        label: i18n.t('components.spacesMenu.drop.setHome'),
-        action: 'toggleDefault'
-      },
-      {
-        icon: 'leave-space',
-        label: i18n.t('components.spacesMenu.drop.leave'),
-        action: 'leaveSpace'
-      },
+    let spaceIsDefault = this.get('space.isDefault');
+    let toggleHomeItem = {
+      icon: 'home',
+      label: i18n.t('components.spaceSettingsDrop.setHome'),
+      action: 'toggleDefault'
+    };
+    let items = [];
+    if (!spaceIsDefault) {
+      items = items.concat(toggleHomeItem);
+    }
+    items = items.concat([
       {
         icon: 'rename',
-        label: i18n.t('components.spacesMenu.drop.rename'),
+        label: i18n.t('components.spaceSettingsDrop.rename'),
         action: 'renameSpace'
       },
       {
-        icon: 'user-add',
-        label: i18n.t('components.spacesMenu.drop.inviteUser'),
-        action: 'inviteUser'
-      },
-      {
-        icon: 'group-invite',
-        label: i18n.t('components.spacesMenu.drop.inviteGroup'),
-        action: 'inviteGroup'
-      },
-      {
         icon: 'support',
-        label: i18n.t('components.spacesMenu.drop.getSupport'),
+        label: i18n.t('components.spaceSettingsDrop.getSupport'),
         action: 'getSupport'
+      },
+      {
+        icon: 'leave-space',
+        label: i18n.t('components.spaceSettingsDrop.leave'),
+        action: 'leaveSpace'
       }
-    ];
-  }.property(),
+    ]);
+    return items;
+  }),
 
   actions: {
     toggleDefault() {
@@ -71,54 +66,21 @@ export default SettingsDrop.extend({
     },
 
     leaveSpace() {
-      this.sendAction('openModal', 'leaveSpace', {
-        model: this.get('space'),
-        resolve: (status) => {
-          if (status) {
-            window.alert('left space successfully');
-          } else {
-            window.alert('left space failed!');
-          }
-        }
-      });
+      let {spacesManager, space} =
+        this.getProperties('spacesManager', 'space');
+      
+      spacesManager.startLeaveSpace(space);
     },
 
     renameSpace() {
-      this.sendAction('openSettingsModal', 'rename', this.get('space'));
-    },
+      let {spacesManager, space} =
+        this.getProperties('spacesManager', 'space');
 
-    removeSpace() {
-      let i18n = this.get('i18n');
-      this.get('messageBox').open({
-        title: i18n.t('common.featureNotSupportedShort'),
-        type: 'warning',
-        allowClose: false,
-        message: i18n.t('common.featureNotSupportedLong')
-      });
-
-      // TODO: remove function currently disabled
-      // this.sendAction('openSettingsModal', 'remove', this.get('space'));
-    },
-
-    inviteGroup() {
-      this.get('commonModals').openModal('token', {
-        type: 'groupJoinSpace',
-        funArgs: [this.get('space.id')],
-      });
-    },
-
-    inviteUser() {
-      this.get('commonModals').openModal('token', {
-        funArgs: [this.get('space.id')],
-        type: 'userJoinSpace'
-      });
+      spacesManager.startRenameSpace(space);
     },
 
     getSupport() {
-      this.get('commonModals').openModal('token', {
-        funArgs: [this.get('space.id')],
-        type: 'providerSupport'
-      });
+      // FIXME
     }
   }
 });
