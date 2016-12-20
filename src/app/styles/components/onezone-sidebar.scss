@@ -366,13 +366,20 @@
           }
 
           .star-toggle {
+            position: relative;
             display: table-cell;
             width: 40px;
-            font-size: 30px;
+            font-size: 28px;
             cursor: pointer; cursor: hand;
 
             .star-empty {
               color: transparent;
+            }
+
+            .one-icon {
+              position: relative;
+              // it looks better if its slightly pulled to top
+              top: -1px;
             }
           }
 
