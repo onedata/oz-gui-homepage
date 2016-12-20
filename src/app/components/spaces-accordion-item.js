@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 /**
  * Single space entry in spaces-accordion. Has a list of its providers.

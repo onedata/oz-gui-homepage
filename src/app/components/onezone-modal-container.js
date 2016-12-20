@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 // TODO: tests please, because it was a draft; integrate with atlas
 /**

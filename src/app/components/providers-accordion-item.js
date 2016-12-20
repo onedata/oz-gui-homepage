@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
-import safeElementId from '../utils/safe-element-id';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
+import safeElementId from 'ember-cli-onedata-common/utils/safe-element-id';
 
 /**
  * Provider entry in sidebar. Contains list of its spaces.
@@ -31,9 +31,9 @@ export default Ember.Component.extend({
     return (provider && provider.get('isDefault')) ? 'provider-home' : 'provider';
   }.property('provider.isDefault'),
 
-  iconColor: function() {
+  iconColorClass: function() {
     let provider = this.get('provider');
-    return (provider && provider.get('isWorking')) ? 'provider-working' : 'provider-not-working';
+    return (provider && provider.get('isWorking')) ? 'color-provider-working' : 'color-provider-not-working';
   }.property('provider.isWorking'),
 
   classNames: ['secondary-accordion-item', 'providers-accordion-item'],

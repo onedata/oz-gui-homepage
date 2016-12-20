@@ -13,7 +13,6 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   classNames: ['account-item'],
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
 
-  isLoading: false,
   authProviders: null,
 
   init() {

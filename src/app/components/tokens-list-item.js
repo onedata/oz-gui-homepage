@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import safeElementId from '../utils/safe-element-id';
+import safeElementId from 'ember-cli-onedata-common/utils/safe-element-id';
 
 /**
  * A token entry in tokens-list.

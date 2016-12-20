@@ -12,6 +12,7 @@ $onedata-light-gray: #F0F0F0;
 $onedata-light-azure: #DCEFFA;
 $onedata-fresh-green: #97C31B;
 $onedata-mint-green: #55E191;
+$onedata-mint-green-pale: #5FC489;
 // TODO: same as graphite?
 $onedata-topbar-graphite: #363A42;
 
@@ -44,8 +45,12 @@ $color-login-plgrid: #026381;
 $color-login-google: #F1514F;
 $color-login-dropbox: #86D7F2;
 $color-login-facebook: #5B87C5;
-$color-login-username: #5FC489;
+$color-login-username: $onedata-mint-green-pale;
 $color-login-egi: #0455A1;
+
+$color-modal-message-info: $onedata-mint-green-pale;
+$color-modal-message-warning: #FDC64E;
+$color-modal-message-error: #EC3438;
 
 // these colors are used only for modals buttons
 // TODO: maybe merge with other button styles...
