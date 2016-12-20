@@ -10,42 +10,35 @@ export default Ember.Component.extend({
   label: null,
   type: "question",
 
-  /**
-   * A function to invoke when submit action resolved or rejected.
-   * The first arguments passed is true/false - is submit promise resolved?
-   * @type {Function}
-   */
-  resolve: null,
-
-  // FIXME: implement
-  /**
-   * A function to ivoke when user chose "no"
-   * @type {Function}
-   */
-  reject: null,
-
-  yesAction: null,
+  onConfirm: null,
+  onCancel: null,
 
   // FIXME
   btnClass: null,
 
   actions: {
-    submit() {
-      let {resolve, model} =
-        this.getProperties('resolve', 'model');
-      
-      let submitPromise = new Ember.RSVP.Promise((submitResolve, submitReject) => {
-        this.sendAction('yesAction', {
-          resolve: submitResolve,
-          reject: submitReject,
-          model
+    buttonClicked(confirmed=false) {
+      let fun = confirmed ? this.get('onConfirm') : this.get('onCancel');
+      if (fun) {
+        fun().finally(() => {
+          this.sendAction('close');
         });
-      });
+      } else {
+        this.sendAction('close');
+      }
+    },
 
-      submitPromise.then(() => resolve && resolve(true, ...arguments));
-      submitPromise.catch(() => resolve && resolve(false, ...arguments));
-      // FIXME: what to do on reject? - now closing dialog
-      submitPromise.finally(() => this.set('open', false));
+    confirm() {
+      this.sendAction('buttonClicked', true);
+    },
+
+    cancel() {
+      this.sendAction('buttonClicked', false);
+    },
+
+    close() {
+      this.set('open', false);
+      // TODO: after close, reset properties
     }
   }
 

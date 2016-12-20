@@ -14,7 +14,7 @@
   {{/bs-modal-body}}
   {{#bs-modal-footer as |footer|}}
     {{#spin-button-onedata buttonType="submit"
-      action=(action "submit")
+      action=(action "confirm")
       class=(concat btnClass " btn no-outline")
       spinnerColor="#fff"
       inFlight=isLoading
@@ -22,7 +22,7 @@
     }}
       {{t "common.modal.yes"}}
     {{/spin-button-onedata}}
-    {{#bs-button action=(action "close" target=footer) type="default"}}
+    {{#bs-button action=(action "cancel") type="default"}}
       {{t "common.modal.no"}}
     {{/bs-button}}
   {{/bs-modal-footer}}

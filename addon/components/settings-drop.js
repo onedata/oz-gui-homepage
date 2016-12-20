@@ -42,6 +42,7 @@ export default Ember.Component.extend({
   // TODO: deregister event from sidebar on willDestroyElement
   // maybe use: this.on('willDestroyElement', () => { sidebar.off(...) } ) etc.
   didInsertElement() {
+    // FIXME: wrong fixed element for updater (only for OP)
     let sidebar = $('.secondary-sidebar');
     let drop = this.$().find('.dropdown-menu');
     let updater = bindFloater(drop, null, {
@@ -49,14 +50,6 @@ export default Ember.Component.extend({
     });
     sidebar.on('scroll', updater);
     drop.on('mouseover', updater);
-
-    // a hack to update drop position after space menu expand
-    // this hack is probably not needed anymore, because spaces menu doesn't expand
-    // on settings icon click - but we leave it "just in case"
-    drop.closest('.settings-dropdown').on('click', function() {
-      window.setTimeout(() => {
-        updater();
-      }, 50);
-    });
+    updater();
   },
 });
