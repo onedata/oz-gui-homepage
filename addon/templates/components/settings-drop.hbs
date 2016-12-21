@@ -10,7 +10,8 @@
     {{yield}}
     
     {{#each menuItems as |item|}}
-      {{settings-drop-item icon=item.icon label=item.label click=(action item.action)}}
+      {{settings-drop-item icon=item.icon label=item.label click=(action item.action)
+        scrollParentSelector=".accordion-container"}}
     {{/each}}
 
   {{/bs-dropdown-menu}}
