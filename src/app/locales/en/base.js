@@ -18,6 +18,7 @@ export default {
       clipboardFailue: 'Text cannot be copied to clipboard - please copy it manually'
     },
     serverError: 'Server error',
+    unknownError: 'Unknown error',
     fatalApplicationErrorResources: "A fatal error occured loading application's resources"
   },
   services: {
@@ -25,7 +26,9 @@ export default {
     spacesManager: {
       leaveModal: {
         title: 'Leave a space',
-        label: 'Are you sure you want to leave space "{{spaceName}}"?'
+        label: 'Are you sure you want to leave space "{{spaceName}}"?',
+        success: 'Space "{{spaceName}} has been left successfully"',
+        failure: 'Failed to leave space "{{spaceName}}"'
       }
     }
   },

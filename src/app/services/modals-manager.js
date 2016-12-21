@@ -6,6 +6,13 @@ export default Ember.Service.extend({
     options: Ember.Object.create({})
   }),
 
+  _resetProperties() {
+    this.get('currentModal').setProperties({
+      type: null,
+      options: null
+    });
+  },
+
   openModal(type, options) {
     if (typeof options === 'object') {
       options = Ember.Object.create(options);
@@ -21,10 +28,9 @@ export default Ember.Service.extend({
     let {type: currentModalType} =
       currentModal.getProperties('type');
     if (currentModalType === type) {
-      currentModalType.set({
-        type: null,
-        options: null
-      });
+      this._resetProperties();
+    } else {
+      console.debug(`service:modals-manager: Tried to close modal that is not opened: ${currentModalType}`);
     }
   }
 });

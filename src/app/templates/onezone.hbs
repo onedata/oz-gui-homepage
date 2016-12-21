@@ -16,11 +16,11 @@
 
 {{!-- modals --}}
 
-{{#if (eq modal.type "dialog")}}
-  {{dialog-modal open=(eq modal.type "dialog")
+{{dialog-modal open=(eq modal.type "dialog")
   onConfirm=modal.options.onConfirm
   onCancel=modal.options.onCancel
   title=modal.options.title
-  title=modal.options.label
-  }}
-{{/if}}
+  label=modal.options.label
+  btnClass="btn-danger"
+  closeModal=(action "closeModal")
+}}

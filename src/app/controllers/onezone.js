@@ -68,10 +68,8 @@ export default Ember.Controller.extend({
       }
     },
 
-    openModal(name, resolve, reject) {
-      this.get('modalInfo').setProperties({
-        name, resolve, reject
-      });
+    closeModal() {
+      this.get('modalsManager').closeModal(...arguments);
     }
   },
 });

@@ -7,6 +7,7 @@ export default Ember.Service.extend({
   onezoneServer: Ember.inject.service(),
   i18n: Ember.inject.service(),
   store: Ember.inject.service(),
+  notify: Ember.inject.service(),
 
   /**
    * @param {Space} space
@@ -30,15 +31,22 @@ export default Ember.Service.extend({
    * @private
    */
   _leaveSpaceConfirmed(space) {
-    let server = this.get('onezoneServer');
+    let {server, notify, i18n} =
+      this.getProperties('onezoneServer', 'notify', 'i18n');
+    let {spaceId, spaceName} = space.getProperties('id', 'name');
     return new Promise((resolve, reject) => {
-      let leavePromise = server.userLeaveSpace(space.get('id'));
+      let leavePromise = server.userLeaveSpace(spaceId);
       leavePromise.then(() => {
         // FIXME: notify
+        notify.info(i18n.t('services.spacesManager.leaveModal.success'));
+        
         resolve(...arguments);
       });
-      leavePromise.catch(() => {
-        // FIXME: notify or persistent message
+      leavePromise.catch(({message}) => {
+        notify.info(i18n.t('services.spacesManager.leaveModal.failure', {
+          spaceName: spaceName,
+          errorMesssage: message || i18n.t('common.unknownError')
+        }));
         reject(...arguments);
       });
     });
