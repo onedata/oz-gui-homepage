@@ -340,9 +340,10 @@
           // for space
           .providers-count {
             position: relative;
-
             display: table-cell;
             overflow-x: hidden;
+            width: 40px;
+
             .icon {
               display: table-cell;
               .one-icon {
