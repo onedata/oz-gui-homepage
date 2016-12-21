@@ -2,6 +2,15 @@ import Ember from 'ember';
 
 const {RSVP: {Promise}} = Ember;
 
+/**
+ * A service for managing and manipulaing spaces.
+ * See public methods for details.
+ * 
+ * @module services/spaces-manager
+ * @author Jakub Liput
+ * @copyright (C) 2016 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
 export default Ember.Service.extend({
   modalsManager: Ember.inject.service(),
   onezoneServer: Ember.inject.service(),
@@ -31,20 +40,20 @@ export default Ember.Service.extend({
    * @private
    */
   _leaveSpaceConfirmed(space) {
-    let {server, notify, i18n} =
+    let {onezoneServer, notify, i18n} =
       this.getProperties('onezoneServer', 'notify', 'i18n');
-    let {spaceId, spaceName} = space.getProperties('id', 'name');
+    let {id: spaceId, name: spaceName} = space.getProperties('id', 'name');
     return new Promise((resolve, reject) => {
-      let leavePromise = server.userLeaveSpace(spaceId);
+      let leavePromise = onezoneServer.userLeaveSpace(spaceId);
       leavePromise.then(() => {
-        // FIXME: notify
-        notify.info(i18n.t('services.spacesManager.leaveModal.success'));
-        
+        notify.info(i18n.t('services.spacesManager.leaveModal.success', {
+          spaceName
+        }));
         resolve(...arguments);
       });
       leavePromise.catch(({message}) => {
-        notify.info(i18n.t('services.spacesManager.leaveModal.failure', {
-          spaceName: spaceName,
+        notify.error(i18n.t('services.spacesManager.leaveModal.failure', {
+          spaceName,
           errorMesssage: message || i18n.t('common.unknownError')
         }));
         reject(...arguments);

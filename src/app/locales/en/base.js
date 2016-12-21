@@ -27,7 +27,7 @@ export default {
       leaveModal: {
         title: 'Leave a space',
         label: 'Are you sure you want to leave space "{{spaceName}}"?',
-        success: 'Space "{{spaceName}} has been left successfully"',
+        success: 'Space "{{spaceName}}" has been left successfully',
         failure: 'Failed to leave space "{{spaceName}}"'
       }
     }
