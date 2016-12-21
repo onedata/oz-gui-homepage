@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/settings-drop-item';
 
 /**
- * FIXME jsdoc
+ * An item in ``settings-drop`` component.
  * Action should be bound externally using action helper.
  * @module components/settings-drop-item
  * @author Jakub Liput
