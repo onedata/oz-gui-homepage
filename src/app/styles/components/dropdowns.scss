@@ -90,7 +90,9 @@ $dropdown-bg: #2B3037;
   &.dropdown-menu-right {
     left: 100%;
     top: -50%;
-    margin-top: 0;
+    // pull up, because the triangle is not completely on top
+    margin-top: -$dropdown-triangle-width;
+    margin-left: $dropdown-triangle-width;
     min-width: 150px;
     border-top-left-radius: 0 !important;
 

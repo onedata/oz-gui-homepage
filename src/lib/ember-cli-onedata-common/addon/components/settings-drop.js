@@ -39,16 +39,21 @@ export default Ember.Component.extend({
    */
   type: 'generic',
 
+  /**
+   * jQuery selector for element that is a container for this settings-drop
+   * and can be scrolled, so scrolling should update position of the settings-drop.
+   */
+  scrollParentSelector: null,
+
   // TODO: deregister event from sidebar on willDestroyElement
   // maybe use: this.on('willDestroyElement', () => { sidebar.off(...) } ) etc.
   didInsertElement() {
-    // FIXME: wrong fixed element for updater (only for OP)
-    let sidebar = $('.secondary-sidebar');
-    let drop = this.$().find('.dropdown-menu');
-    let updater = bindFloater(drop, null, {
-      offsetX: 8
-    });
-    sidebar.on('scroll', updater);
+    let scrollParentSelector = this.get('scrollParentSelector');
+    let drop = this.$('.dropdown-menu');
+    let updater = bindFloater(drop);
+    if (scrollParentSelector) {
+      $(scrollParentSelector).on('scroll', updater);
+    }
     drop.on('mouseover', updater);
     updater();
   },
