@@ -127,12 +127,6 @@ export default Ember.Component.extend({
       this.changeRedocAnchor(anchor);
     }
   }),
-
-  init() {
-    this._super(...arguments);
-    let {windowMessages, anchor} = this.getProperties('windowMessages', 'anchor');
-    windowMessages.onWindowMessage('redoc-rendered', () => this.changeRedocAnchor(anchor));
-  },
   
   changeRedocAnchor(anchor) {
     let redocWindow = this.$()[0].contentWindow;
@@ -155,6 +149,10 @@ export default Ember.Component.extend({
    * below a top bar.
    */
   didInsertElement() {
+    let {windowMessages, anchor} = this.getProperties('windowMessages', 'anchor');
+
+    windowMessages.onWindowMessage('redoc-rendered', () => this.changeRedocAnchor(anchor));
+
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');
     let $container = this.$().parent();
@@ -172,7 +170,9 @@ export default Ember.Component.extend({
     this.updateSrcdocPolyfill();
   },
 
-  willRemoveElement() {
+  willDestroyElement() {
+    let windowMessages = this.get('windowMessages');
     $(window).off('.redocIframe');
+    windowMessages.offWindowMessage('redoc-rendered');
   }
 });

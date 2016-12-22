@@ -16,14 +16,23 @@ export default Ember.Service.extend({
     this.set('handlers', new Map());
   },
 
-  // FIXME off window message
-
   onWindowMessage(type, handler) {
     let handlers = this.get('handlers');
     if (handlers[type] == null) {
       handlers[type] = [];
     }
     handlers[type].push(handler);
+  },
+
+  offWindowMessage(type, handler) {
+    let handlers = this.get('handlers');
+    if (handlers[type] != null) {
+      if (!handler) {
+        handlers[type] = [];
+      } else {
+        handlers[type] = handlers[type].filter(e => e !== handler);
+      }
+    }
   },
 
   handleMessage(event) {
