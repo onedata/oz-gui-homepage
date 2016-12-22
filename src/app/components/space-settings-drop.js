@@ -80,7 +80,7 @@ export default SettingsDrop.extend({
     },
 
     getSupport() {
-      // FIXME
+      this.sendAction('getSupport');
     }
   }
 });

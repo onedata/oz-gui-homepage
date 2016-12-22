@@ -45,7 +45,7 @@
         {{space-settings-drop space=space
           class="secondary-item-element settings-tool"
           toggleDefault='toggleDefault'
-          openModal="openModal"}}
+          openModal="openModal" getSupport="getNewSupportToken"}}
 
       </div>
 
@@ -97,7 +97,7 @@
                   {{input id=(concat "support-token-" (safe-element-id space.id)) value=supportToken readonly=true}}
                   {{#copy-button success='copySuccess' error='copyError'
                       clipboardTarget=(concat "#support-token-" (safe-element-id space.id)) class="btn btn-primary btn-right"}}
-                    {{one-icon icon='copy'}}
+                    {{one-icon icon='clipboard-copy'}}
                   {{/copy-button}}
                 </div>
               {{else}}

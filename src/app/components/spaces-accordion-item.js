@@ -34,6 +34,11 @@ export default Ember.Component.extend({
 
   supportToken: null,
 
+  collapseId: Ember.computed('space.id', function() {
+    let spaceId = this.get('space.id');
+    return spaceId ? `collapse-space-${this.get('space.id')}` : undefined;
+  }),
+
   init() {
     this._super(...arguments);
   },
@@ -68,12 +73,17 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    uncollapse() {
+      this.$(`#${this.get('collapseId')}`).collapse('show');
+    },
+
     openModal() {
       this.sendAction('openModal', ...arguments);
     },
 
     // TODO: this action should not be invoked when there is currently opened other token
-    getNewSupportToken: function() {
+    getNewSupportToken() {
+      this.send('uncollapse');
       let space = this.get('space');
       this.set('supportToken', null);
       if (space) {
