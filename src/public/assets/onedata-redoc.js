@@ -5,6 +5,7 @@
  * Injected variables:
  * - document.apiBaseUrl: String - eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone
  * - document.apiAnchor: String - eg. #operation/get_space - as in original ReDoc hrefs
+ * - document.parentOrigin: String - window.location.origin of OZ app in time when it generated iframe content
  * 
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
@@ -116,9 +117,21 @@ function afterRender() {
     // it works even with pressing "enter" on link
     sl.addEventListener('click', handleLinkOpen);
   });
-  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, '*');
+  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, document.parentOrigin);
   if (document.apiAnchor) {
     redocAnchorChanged(document.apiAnchor);
+  }
+}
+
+function redocAnchorChanged(anchor) {
+  jumpToAnchor(anchor);
+}
+
+function handleMessage(event) {
+  var type = event.data.type;
+  var message = event.data.message;
+  if (type === 'anchor-changed') {
+    redocAnchorChanged(message);
   }
 }
 
@@ -137,17 +150,5 @@ function checkReady() {
 }
 
 __ONEDATA__redocCheckReadyId = window.setInterval(checkReady, 100);
-
-function redocAnchorChanged(anchor) {
-  jumpToAnchor(anchor);
-}
-
-function handleMessage(event) {
-  var type = event.data.type;
-  var message = event.data.message;
-  if (type === 'anchor-changed') {
-    redocAnchorChanged(message);
-  }
-}
 
 window.addEventListener("message", handleMessage, false);

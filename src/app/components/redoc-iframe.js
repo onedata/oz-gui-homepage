@@ -114,6 +114,7 @@ export default Ember.Component.extend({
     <script src="/assets/redoc.min.js"></script>
     <script>
       document.apiBaseUrl = "${baseUrl}";
+      document.parentOrigin = "${escapeJsString(window.location.origin)}";
     </script>
     <script src="/assets/onedata-redoc.js"></script>
   </body>
@@ -130,7 +131,6 @@ export default Ember.Component.extend({
   
   changeRedocAnchor(anchor) {
     let redocWindow = this.$()[0].contentWindow;
-    // FIXME: more specific targetOrigin https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
     redocWindow.postMessage({type: 'anchor-changed', message: anchor}, '*');
   },
 
