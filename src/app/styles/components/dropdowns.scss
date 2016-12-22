@@ -3,11 +3,18 @@ $dropdown-triangle-width: 8px;
 
 $dropdown-bg: #2B3037;
 
+@mixin border-radius-all($radius) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
 .dropdown-menu {
   position: absolute;
   padding: 15px;
   background-color: $color-dropdown-menu-bg;
-  border-radius: $dropdown-radius !important;
+  @include border-radius-all($dropdown-radius);
   border: none;
 
   // TODO: use scss mixins to triangle arrow
@@ -94,7 +101,7 @@ $dropdown-bg: #2B3037;
     margin-top: -$dropdown-triangle-width;
     margin-left: $dropdown-triangle-width;
     min-width: 150px;
-    border-top-left-radius: 0 !important;
+    @include border-radius-all(0);
 
     &:before {
       position: absolute;
@@ -107,16 +114,25 @@ $dropdown-bg: #2B3037;
       border-top: $dropdown-triangle-width solid transparent;
       content: '';
     }
+
+    &.dropdown-menu-list {
+      > li:not(.divider) {
+        @include border-radius-all(0);
+
+        // override default radius styles - TODO, refactor
+        &:first-child, &:last-child {
+          @include border-radius-all(0);
+        }
+      }
+    }
   }
 
   &.dropdown-menu-settings {
     width: 220px;
-    border-radius: 0px !important;
 
     li {
       color: white;
       padding: 4px 6px;
-      border-radius: 0px !important;
 
       .item-icon {
           font-size: 30px !important;
@@ -208,4 +224,10 @@ $dropdown-bg: #2B3037;
   font-size: 24px;
   line-height: 32px;
   vertical-align: middle;
+}
+
+
+// override Bootstrap styles 
+.navbar-nav > li > .dropdown-menu {
+  @include border-radius-all($dropdown-radius);
 }
