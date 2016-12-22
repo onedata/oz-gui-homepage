@@ -5,11 +5,15 @@
  * Injected variables:
  * - document.apiBaseUrl: String - eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone
  * - document.apiAnchor: String - eg. #operation/get_space - as in original ReDoc hrefs
+ * - document.parentOrigin: String - window.location.origin of OZ app in time when it generated iframe content
  * 
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
+
+// note, that it works only for one level iframe
+var PARENT_WINDOW = window.parent;
 
 /**
  * jQuery offset method (fitted to this code)
@@ -92,7 +96,8 @@ function homepageLink(originalHref) {
 function handleLinkOpen(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
-  jumpToAnchor(event.target.getAttribute('orig-href'));
+  var origHref = event.target.getAttribute('orig-href');
+  PARENT_WINDOW.location = homepageLink(origHref);
 }
 
 /**
@@ -112,8 +117,21 @@ function afterRender() {
     // it works even with pressing "enter" on link
     sl.addEventListener('click', handleLinkOpen);
   });
+  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, document.parentOrigin);
   if (document.apiAnchor) {
-    jumpToAnchor(document.apiAnchor);
+    redocAnchorChanged(document.apiAnchor);
+  }
+}
+
+function redocAnchorChanged(anchor) {
+  jumpToAnchor(anchor);
+}
+
+function handleMessage(event) {
+  var type = event.data.type;
+  var message = event.data.message;
+  if (type === 'anchor-changed') {
+    redocAnchorChanged(message);
   }
 }
 
@@ -133,3 +151,4 @@ function checkReady() {
 
 __ONEDATA__redocCheckReadyId = window.setInterval(checkReady, 100);
 
+window.addEventListener("message", handleMessage, false);
