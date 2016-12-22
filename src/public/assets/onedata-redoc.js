@@ -11,6 +11,9 @@
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
+// note, that it works only for one level iframe
+var PARENT_WINDOW = window.parent;
+
 /**
  * jQuery offset method (fitted to this code)
  */
@@ -93,9 +96,7 @@ function handleLinkOpen(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   var origHref = event.target.getAttribute('orig-href');
-  window.frameElement.ownerDocument.changeWindowUrl(homepageLink(origHref));
-  // FIXME
-  // jumpToAnchor(origHref);
+  PARENT_WINDOW.location = homepageLink(origHref);
 }
 
 /**
@@ -115,8 +116,9 @@ function afterRender() {
     // it works even with pressing "enter" on link
     sl.addEventListener('click', handleLinkOpen);
   });
+  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, '*');
   if (document.apiAnchor) {
-    jumpToAnchor(document.apiAnchor);
+    redocAnchorChanged(document.apiAnchor);
   }
 }
 
@@ -136,3 +138,16 @@ function checkReady() {
 
 __ONEDATA__redocCheckReadyId = window.setInterval(checkReady, 100);
 
+function redocAnchorChanged(anchor) {
+  jumpToAnchor(anchor);
+}
+
+function handleMessage(event) {
+  var type = event.data.type;
+  var message = event.data.message;
+  if (type === 'anchor-changed') {
+    redocAnchorChanged(message);
+  }
+}
+
+window.addEventListener("message", handleMessage, false);
