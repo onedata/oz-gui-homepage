@@ -92,7 +92,10 @@ function homepageLink(originalHref) {
 function handleLinkOpen(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
-  jumpToAnchor(event.target.getAttribute('orig-href'));
+  var origHref = event.target.getAttribute('orig-href');
+  window.frameElement.ownerDocument.changeWindowUrl(homepageLink(origHref));
+  // FIXME
+  // jumpToAnchor(origHref);
 }
 
 /**
