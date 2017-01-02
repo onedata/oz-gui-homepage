@@ -7,6 +7,6 @@
 <div id="desktop-test" class="visible-md visible-lg"></div>
 
 {{#ember-notify closeAfter=5000 classPrefix="onedata-notify" as |message close|}}
-  <div {{action close}} class='close-button clickable'>{{icon 'checkbox-x'}}</div>
+  <div {{action close}} class='close-button clickable'>{{one-icon icon='checkbox-x'}}</div>
   <span class='message'>{{message.text}}</span>
 {{/ember-notify}}
