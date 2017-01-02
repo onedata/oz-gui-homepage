@@ -76,6 +76,23 @@ $modal-top-border-radius: 4px;
         }
       }
     }
+    .message-icon {
+      font-size: 64px;
+
+      &.info {
+        color: $color-modal-message-info;
+      }
+      &.warning {
+        color: $color-modal-message-warning;
+      }
+      &.error {
+        color: $color-modal-message-error;
+      }
+    }
+
+    .message-text {
+      padding-left: 30px;
+    }
   }
 
   // buttons in modals - the same as in OP, maybe TODO to merge styles with main OZ btn styles..

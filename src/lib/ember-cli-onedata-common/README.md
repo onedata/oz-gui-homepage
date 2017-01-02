@@ -13,8 +13,8 @@ Onedata web applications:
 
 Use this repo as a subtree in Ember application ``lib`` directory, which in case of Onedata apps is placed in: ``src/lib/``.
 If you want to modify this addon from specific Onedata project, do from project's root:
-- add a remote: ``git remote add ember-cli-onedata-common git@github.com:kliput/ember-cli-onedata-common.git``
-- pull recent changes: ``git subtree pull --squash --prefix=src/lib/ember-cli-onedata-common ember-cli-onedatada-common develop`` (you can use other branch name than ``develop``)
+- add a remote: ``git remote add ember-cli-onedata-common ssh://git@git.plgrid.pl:7999/vfs/ember-cli-onedata-common.git``
+- pull recent changes: ``git subtree pull --squash --prefix=src/lib/ember-cli-onedata-common ember-cli-onedata-common develop`` (you can use other branch name than ``develop``)
 - make changes in ``src/lib/ember-cli-onedata-common`` and commit them
 - push changes to project's repo: ``git push``
 - push changes to addon repo: ``git subtree push --squash --prefix=src/lib/ember-cli-onedata-common ember-cli-onedata-common <branch_name>``
@@ -88,4 +88,5 @@ They can be also used in pure HTML:
 
 ### Tests
 
-Currently, GUI front-end JS files have no tests in this repo - the tests can be found in specific projects that uses them.
+Tests are in ``test-support`` directory - they are merged with tests tree of the project that uses this addon.
+Start specific project tests to start tests.

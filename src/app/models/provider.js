@@ -13,6 +13,8 @@ export default DS.Model.extend({
   isDefault: DS.attr('boolean', {defaultValue: false}),
   spaces: DS.hasMany('space', {async: true}),
 
+  host: DS.attr('string'),
+
   /** North */
   latitude: DS.attr('number'),
   /** East */

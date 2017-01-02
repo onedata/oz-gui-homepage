@@ -6,8 +6,8 @@ $provider-place-circle-border-size: 2px;
 
   &.working {
     .circle {
-      border-color: $color-pale-green;
-      color: $color-pale-green;
+      border-color: $color-provider-working;
+      color: $color-provider-working;
     }
   }
 
@@ -18,8 +18,8 @@ $provider-place-circle-border-size: 2px;
     font-size: ($provider-place-circle-size * 0.75);
     line-height: ($provider-place-circle-size - $provider-place-circle-border-size * 2);
     border-radius: 50%;
-    border: $color-red $provider-place-circle-border-size solid;
-    color: $color-red;
+    border: $color-provider-not-working $provider-place-circle-border-size solid;
+    color: $color-provider-not-working;
     background-color: white;
     cursor: pointer; cursor: hand;
 
