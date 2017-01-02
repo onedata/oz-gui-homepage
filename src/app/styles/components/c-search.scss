@@ -1,0 +1,19 @@
+// TODO: search icon color on hover
+.c-search {
+  input {
+    height: $search-box-height;
+    color: white;
+    background-color: $color-onezone-search;
+    border: none;
+  }
+  button {
+    height: $search-box-height;
+    font-size: 1.3em;
+    color: white;
+    background-color: $color-onezone-search;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+  }
+}
