@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import PromiseLoadingMixin from '../mixins/promise-loading';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 /**
  * A change account password button, which shows modal with password change form.
