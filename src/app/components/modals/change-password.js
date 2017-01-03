@@ -12,6 +12,8 @@ import ModalMixin from 'ember-cli-onedata-common/mixins/components/modal';
 export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   onezoneServer: Ember.inject.service(),
 
+  classNames: ['modals-change-password'],
+
   /** @implements ModalMixin */
   i18nPrefixKey: 'components.modals.changePassword',
 
