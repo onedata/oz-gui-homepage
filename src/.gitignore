@@ -328,6 +328,7 @@ tests/helpers/resolver.js
 tests/helpers/start-app.js
 tests/index.html
 tests/integration/.gitkeep
+tests/integration/components/modals/change-password-test.js
 tests/test-helper.js
 tests/unit/.gitkeep
 tests/unit/components/one-checkbox-button-test.js
