@@ -60,3 +60,9 @@ src/tests/test-results.xml
 
 # OSX
 .DS_Store
+
+# VS Code
+.vscode/**
+.vscodeignore
+jsconfig.json
+typings/

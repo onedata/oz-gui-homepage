@@ -6,11 +6,35 @@ var fs = require('fs');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     sassOptions: {
-      includePaths: ['app/styles', 'app/styles/oneicons']
+      includePaths: [
+        'app/styles',
+        // emer-cli-onedata-common addon
+        'lib/ember-cli-onedata-common/app/styles',
+        'lib/ember-cli-onedata-common/app/styles/oneicons',
+        'lib/ember-cli-onedata-common/app/styles/components',
+      ]
     },
+    // a "bootstrap" should be imported into app.scss
+    'ember-cli-bootstrap-sassy': {
+      // import SASS styles and some JS that is used outside of ember-bootstrap components 
+      'js': [
+        // TODO: use ember-bootstrap tooltip (needs refactoring and removing own bs-tooltip component)
+        'tooltip',
+        'transition',
+        // TODO: rewrite collapses to ember-bootstrap components
+        'collapse',
+        // TODO: use bs-alert inside alert-panel component
+        'alert',
+        // TODO: rewrite dropdowns to ember-bootstrap components
+        'dropdown'
+      ],
+      'glyphicons': false
+    },
+    // import only JS
     'ember-bootstrap': {
-      'importBootstrapFont': true,
-      'importBootstrapCSS': false
+      'importBootstrapCSS': false,
+      'importBootstrapTheme': false,
+      'importBootstrapFont': false
     }
   });
 

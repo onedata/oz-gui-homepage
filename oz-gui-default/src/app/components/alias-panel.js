@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import PromiseLoadingMixin from '../mixins/promise-loading';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 /**
  * One of main sidebar items: allows to change alias.
@@ -32,6 +32,11 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
 
   /** True if in alias edit mode (shows alias edit) */
   aliasEditing: false,
+
+  toggleClass: Ember.computed('isLoading', function() {
+    let isLoading = this.get('isLoading');
+    return isLoading ? 'non-hoverable' : 'clickable';
+  }),
 
   /** Fetch alias from server on init - sets aliasText */
   updateAliasText: function() {

@@ -6,12 +6,12 @@
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
-import OnedataAdapter from './application-onedata';
+import OnedataWebsocketAdapter from 'ember-cli-onedata-common/adapters/onedata-websocket';
 import LSAdapter from './application-localstorage';
 
 import ENV from '../config/environment';
 
 let ApplicationAdapter =
-  (ENV.environment === 'test' ? LSAdapter : OnedataAdapter);
+  (ENV.environment === 'test' ? LSAdapter : OnedataWebsocketAdapter);
 
 export default ApplicationAdapter;

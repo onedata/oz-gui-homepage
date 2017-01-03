@@ -9,7 +9,7 @@ describeComponent(
   'one-radio-group',
   'OneRadioGroupComponent',
   {
-    needs: ['helper:icon'],
+    needs: ['component:one-icon'],
     unit: true
   },
   function() {

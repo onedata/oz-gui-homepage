@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
 
 // TODO: tests please, because it was a draft; integrate with atlas
 /**
@@ -16,24 +15,6 @@ export default Ember.Component.extend({
 
   /** Should be injected */
   providers: null,
-
-  isLoading: Ember.computed.alias('providers.isUpdating'),
-
-  isLoadingChanged: function() {
-    if (this.get('isLoading')) {
-      const updater = bindFloater($('.onezone-modal-container .spinner-container'), $('.onezone-atlas'), {
-        posX: 'center',
-        posY: 'middle-middle'
-      });
-      $('.onezone-atlas').on('mouseover', updater);
-      $('.onezone-atlas').on('scroll', updater);
-
-      // a HACK to update loader position after atlas resize...
-      setTimeout(function () {
-        updater();
-      }, 100);
-    }
-  }.observes('isLoading'),
 
   isFirstLogin: function () {
     let sessionDetails = this.get('session').get('sessionDetails');
@@ -55,9 +36,5 @@ export default Ember.Component.extend({
     return this.get('providers.length') > 0 &&
       this.get('providers').filterBy('isWorking', true).length === 0;
   }.property('providers.@each.isWorking'),
-
-  didInsertElement() {
-    this.isLoadingChanged();
-  }
 
 });

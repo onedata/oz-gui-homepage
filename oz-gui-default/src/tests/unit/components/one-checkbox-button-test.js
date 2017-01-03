@@ -9,7 +9,7 @@ describeComponent(
   'one-checkbox-button',
   'OneCheckboxButtonComponent',
   {
-    needs: ['helper:icon'],
+    needs: ['component:one-icon'],
     unit: true
   },
   function() {

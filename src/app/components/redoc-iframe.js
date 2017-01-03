@@ -28,6 +28,8 @@ function escapeJsString(value) {
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
+  windowMessages: Ember.inject.service(),
+
   tagName: 'iframe',
   attributeBindings: ['srcdoc'],
   classNames: ['redoc-iframe'],
@@ -94,13 +96,10 @@ export default Ember.Component.extend({
    * For more information about integration code, see ``/assets/onedata-redoc.js``.
    * @type {String}
    */
-  srcdoc: Ember.computed('swaggerJsonPath', 'anchor', function() {
-    let {anchor, swaggerJsonPath} = this.getProperties('swaggerJsonPath', 'anchor');
+  srcdoc: Ember.computed('swaggerJsonPath', function() {
+    let {swaggerJsonPath} = this.getProperties('swaggerJsonPath');
     let baseUrl = stripUrlFromQueryParams(window.location.href);
 
-    if (anchor) {
-      anchor = escapeJsString(anchor);
-    }
     swaggerJsonPath = escapeJsString(swaggerJsonPath);
     baseUrl = escapeJsString(baseUrl);
 
@@ -114,14 +113,26 @@ export default Ember.Component.extend({
     <redoc spec-url="${swaggerJsonPath}" hide-hostname=true></redoc>
     <script src="/assets/redoc.min.js"></script>
     <script>
-      document.apiAnchor = ${anchor ? `"#${anchor}"` : 'null'};
       document.apiBaseUrl = "${baseUrl}";
+      document.parentOrigin = "${escapeJsString(window.location.origin)}";
     </script>
     <script src="/assets/onedata-redoc.js"></script>
   </body>
 </html>
 `;
   }),
+  
+  anchorChanged: Ember.observer('anchor', function() {
+    let anchor = this.get('anchor');
+    if (anchor) {
+      this.changeRedocAnchor(anchor);
+    }
+  }),
+  
+  changeRedocAnchor(anchor) {
+    let redocWindow = this.$()[0].contentWindow;
+    redocWindow.postMessage({type: 'anchor-changed', message: anchor}, '*');
+  },
 
   /**
    * Use srcdoc-polyfill for IE/Edge support
@@ -138,6 +149,10 @@ export default Ember.Component.extend({
    * below a top bar.
    */
   didInsertElement() {
+    let {windowMessages, anchor} = this.getProperties('windowMessages', 'anchor');
+
+    windowMessages.onWindowMessage('redoc-rendered', () => this.changeRedocAnchor(anchor));
+
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');
     let $container = this.$().parent();
@@ -155,7 +170,9 @@ export default Ember.Component.extend({
     this.updateSrcdocPolyfill();
   },
 
-  willRemoveElement() {
+  willDestroyElement() {
+    let windowMessages = this.get('windowMessages');
     $(window).off('.redocIframe');
+    windowMessages.offWindowMessage('redoc-rendered');
   }
 });

@@ -19,6 +19,12 @@
 
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/oz-worker-gui.js"></script>
+    <script>
+      // helper method for iframe -> main document communiaction
+      document.changeWindowUrl = function(url) {
+        window.location = url;
+      };
+    </script>
 
     {{content-for 'body-footer'}}
   </body>
