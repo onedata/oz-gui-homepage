@@ -37,6 +37,26 @@ export default Ember.Service.extend({
   },
 
   /**
+   * @param {Space} space
+   * @public
+   */
+  startRenameSpace(space) {
+    let {i18n, modalsManager} =
+      this.getProperties('i18n', 'modalsManager');
+    let spaceName = space.get('name');
+
+    modalsManager.openModal('rename', {
+      onConfirm: (newName) => this._renameSpaceConfirmed(space, newName),
+      onCancel: null,
+      title: i18n.t('services.spacesManager.renameModal.title'),
+      label: i18n.t('services.spacesManager.renameModal.label', {
+        spaceName
+      }),
+      originalName: spaceName
+    });
+  },
+
+  /**
    * @private
    */
   _leaveSpaceConfirmed(space) {
@@ -54,11 +74,39 @@ export default Ember.Service.extend({
       });
       leavePromise.catch(({message}) => {
         notify.error(i18n.t('services.spacesManager.leaveModal.failure', {
-          spaceName,
+          spaceName: spaceName,
           errorMesssage: message || i18n.t('common.unknownError')
         }));
         reject(...arguments);
       });
     });
   },
+
+  /**
+   * @private
+   */
+  _renameSpaceConfirmed(space, newName) {
+    let {notify, i18n} =
+      this.getProperties('notify', 'i18n');
+    let oldName = space.get('name');
+    space.set('name', newName);
+    return new Promise((resolve, reject) => {
+      let savePromise = space.save();
+      savePromise.then(() => {
+        notify.info(i18n.t('services.spacesManager.renameModal.success', {
+          oldName,
+          newName: newName
+        }));
+        resolve(...arguments);
+      });
+      savePromise.catch(({message: errorMessage}) => {
+        notify.error(i18n.t('services.spacesManager.renameModal.failure', {
+          oldName,
+          errorMessage
+        }));
+        reject(...arguments);
+      });
+    });
+  },
+
 });

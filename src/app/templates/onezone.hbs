@@ -24,3 +24,13 @@
   btnClass="btn-danger"
   closeModal=(action "closeModal")
 }}
+
+{{rename-modal open=(eq modal.type "rename")
+  onConfirm=modal.options.onConfirm
+  onCancel=modal.options.onCancel
+  title=modal.options.title
+  label=modal.options.label
+  originalName=modal.options.originalName
+  btnClass="btn-primary"
+  closeModal=(action "closeModal")
+}}

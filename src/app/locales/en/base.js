@@ -29,6 +29,12 @@ export default {
         label: 'Are you sure you want to leave space "{{spaceName}}"?',
         success: 'Space "{{spaceName}}" has been left successfully',
         failure: 'Failed to leave space "{{spaceName}}"'
+      },
+      renameModal: {
+        title: 'Rename a space',
+        label: 'Enter new name for space "{{spaceName}}":',
+        success: 'Space "{{oldName}}" has been renamed to "{{newName}}"',
+        failure: 'Failed to rename space "{{oldName}}": {{errorMessage}}'
       }
     }
   },
