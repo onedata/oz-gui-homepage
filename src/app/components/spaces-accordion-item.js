@@ -19,6 +19,13 @@ export default Ember.Component.extend({
   hasViewPrivilege: Ember.computed.alias('space.hasViewPrivilege'),
   showProviders: Ember.computed.alias('hasViewPrivilege'),
 
+  /**
+   * Toggles support token dropdown visibility (two-way).
+   * @type {boolean}
+   * @private
+   */
+  supportTokenOpened: false,
+
   providers: Ember.computed('showProviders', 'space.providers', function() {
     if (this.get('space.hasViewPrivilege')) {
       return this.get('space.providers');
@@ -52,12 +59,17 @@ export default Ember.Component.extend({
   })),
 
   prepareGetSupportTokenFloaters() {
+    let self = this;
     this.$().find('.floater').each(function() {
       let ft = $(this);
       let updatePosition = bindFloater(ft);
       ft.parent().on('mouseover', updatePosition);
       // TODO: performance - better all updatePositions in one fun
       $('.accordion-container').on('scroll', updatePosition);
+
+      if (ft.hasClass('token-popup')) {
+        self.set('__getSupportTokenUpdatePosition', updatePosition);
+      }
     });
 
     // prevent space token popup close on input and button click
@@ -81,9 +93,24 @@ export default Ember.Component.extend({
       this.sendAction('openModal', ...arguments);
     },
 
-    // TODO: this action should not be invoked when there is currently opened other token
-    getNewSupportToken() {
+    /**
+     * If the support token is hidden, show it.
+     * Then, regardless of dropdown state, fetch new.
+     */
+    showNewSupportToken() {
+      let __getSupportTokenUpdatePosition = this.get('__getSupportTokenUpdatePosition');
       this.send('uncollapse');
+      setTimeout(() => {
+        let supportTokenOpened = this.get('supportTokenOpened');
+        if (!supportTokenOpened) {
+          this.set('supportTokenOpened', true);
+        }
+        setTimeout(__getSupportTokenUpdatePosition, 0);
+        this.send('getNewSupportToken');
+      }, 0);
+    },
+
+    getNewSupportToken() {
       let space = this.get('space');
       this.set('supportToken', null);
       if (space) {
