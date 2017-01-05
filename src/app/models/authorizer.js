@@ -1,5 +1,9 @@
 import DS from 'ember-data';
 
+const {
+  attr
+} = DS;
+
 /**
  * A login account of user, using remote services, eg. OAuth2.
  * @module modals/authorizer
@@ -9,9 +13,11 @@ import DS from 'ember-data';
  */
 export default DS.Model.extend({
   /**
-    Provider of authentication.
-    Allowed: github, plgrid, google, dropbox, facebook
-  */
-  type: DS.attr('string'),
-  email: DS.attr('string')
+   * Provider of authentication.
+   * Allowed: github, plgrid, google, dropbox, facebook
+   * @type {String}
+   */
+  type: attr('string'),
+  
+  email: attr('string')
 });

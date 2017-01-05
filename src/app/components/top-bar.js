@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+const {
+  computed
+} = Ember;
+
 /**
  * A top bar for homepage.
  * @module components/top-bar
@@ -8,13 +12,14 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
+  session: Ember.inject.service(),
+
   tagName: 'nav',
 
   classNames: ['navbar', 'navbar-onedata'],
 
-  userName: function() {
-    return this.get('session.sessionDetails.userName');
-  }.property('session.sessionDetails'),
+  // FIXME: check
+  userName: computed.alias('session.user.name'),
 
   didInsertElement() {
     let box = $('#navbar');

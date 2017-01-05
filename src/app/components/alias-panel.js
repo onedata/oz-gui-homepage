@@ -10,12 +10,18 @@ import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading
  */
 export default Ember.Component.extend(PromiseLoadingMixin, {
   store: Ember.inject.service(),
-  onezoneServer: Ember.inject.service(),
+  session: Ember.inject.service(),
   messageBox: Ember.inject.service(),
   i18n: Ember.inject.service(),
 
   classNames: ['secondary-accordion', 'alias-panel', 'accordion-content'],
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
+
+  /** To inject.
+   * @public
+   * @type {User}
+   */
+  user: null,
 
   isLoading: false,
 
@@ -25,7 +31,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   }.property('aliasText'),
 
   /** Client-side known alias */
-  aliasText: null,
+  aliasText: Ember.computed.alias('session.user.alias'),
 
   /** Client-side temporary value of alias edit field */
   aliasTextEdit: null,
@@ -37,24 +43,6 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     let isLoading = this.get('isLoading');
     return isLoading ? 'non-hoverable' : 'clickable';
   }),
-
-  /** Fetch alias from server on init - sets aliasText */
-  updateAliasText: function() {
-    this.promiseLoading(this.get('onezoneServer').getUserAlias()).then(
-      (data) => {
-        this.set('aliasText', data.userAlias);
-      },
-      (error) => {
-        // TODO: this should be a non-blocking notify
-        this.get('messageBox').open({
-          title: this.get('i18n').t('common.serverError'),
-          message: this.get('i18n').t('components.aliasPanel.getAliasFailed') +
-            (error.message ? ': ' + error.message : ''),
-          type: 'warning'
-        });
-      }
-    );
-  }.on('init'),
 
   actions: {
     startEditAlias: function() {
@@ -76,13 +64,13 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
 
     endEditAlias: function(aliasName) {
       this.set('isLoading', true);
-      let setAliasPromise = this.get('onezoneServer').setUserAlias(aliasName);
-      setAliasPromise.then(
-        (data) => {
-          this.set('aliasText', data.userAlias);
-          console.debug('Set alias successful');
-        },
-        (error) => {
+      let user = this.get('session.user');
+      user.set('alias', aliasName);
+      let userSavePromise = user.save();
+      userSavePromise.then(() => {
+        console.debug('Set alias successful');
+      });
+      userSavePromise.catch(error => {
           this.get('messageBox').open({
             title: this.get('i18n').t('common.serverError'),
             message: this.get('i18n').t('components.aliasPanel.setAliasFailed') +
@@ -91,7 +79,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           });
         }
       );
-      setAliasPromise.finally(() => {
+      userSavePromise.finally(() => {
         this.setProperties({
           aliasEditing: false,
           isLoading: false

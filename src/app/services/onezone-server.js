@@ -100,33 +100,6 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Fetch user alias stored in backend.
-   *
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully fetched the alias
-   *   - ``data.userAlias`` (string) - an alias
-   * - ``reject(object: error)`` on failure
-   */
-  getUserAlias() {
-    return this.get('server').privateRPC('getUserAlias');
-  },
-
-  /**
-   * Set new user alias in backend.
-   *
-   * @param {String} userAlias A new user alias to set
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully set new alias
-   *   - ``data.userAlias`` (string) - an alias which was set (should be same as userAlias param)
-   * - ``reject(object: error)`` on failure
-   */
-  setUserAlias(userAlias) {
-    return this.get('server').privateRPC('setUserAlias', {
-      userAlias: userAlias
-    });
-  },
-
-  /**
    * The current user (session user) leaves a space.
    *
    * @param {String} spaceId An ID of the space to leave

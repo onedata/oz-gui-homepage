@@ -1,25 +1,49 @@
 import DS from 'ember-data';
 
+const {
+  attr,
+  hasMany
+} = DS;
+
 /**
- * A oneprovider representation, available for user.
+ * A Oneprovider host representation, available for user.
  * @module
  * @author Jakub Liput
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default DS.Model.extend({
-  name: DS.attr('string'),
-  isWorking: DS.attr('boolean', {defaultValue: false}),
-  isDefault: DS.attr('boolean', {defaultValue: false}),
-  spaces: DS.hasMany('space', {async: true}),
+  name: attr('string'),
+  isWorking: attr('boolean', {defaultValue: false}),
+  
+  /**
+   * Hostname of this provider
+   * @type {String}
+   */
+  host: attr('string'),
 
-  host: DS.attr('string'),
+  /**
+   * North (-90..90)
+   * @type {Number}
+   */
+  latitude: attr('number'),
 
-  /** North */
-  latitude: DS.attr('number'),
-  /** East */
-  longitude: DS.attr('number'),
+  /**
+   * East (-180..180)
+   * @type {Number}
+   */
+  longitude: attr('number'),
 
-  /** Is provider selected in GUI */
+  /*** Relations ***/
+  
+  spaces: hasMany('space', {async: true}),
+
+  /*** Runtime properties ***/
+
+  /**
+   * Is provider selected in GUI
+   * @type {Boolean}
+   * @public
+   */
   isSelected: false
 });
