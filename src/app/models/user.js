@@ -20,7 +20,7 @@ export default DS.Model.extend({
   defaultProvider: belongsTo('provider', ASYNC_ONEWAY),
 
   authorizers: hasMany('authorizer', ASYNC_ONEWAY),
-  clientTokens: hasMany('clienttokens', ASYNC_ONEWAY),
+  clienttokens: hasMany('clienttokens', ASYNC_ONEWAY),
   groups: hasMany('group', ASYNC_ONEWAY),
   spaces: hasMany('spaces', ASYNC_ONEWAY),
   providers: hasMany('provider', ASYNC_ONEWAY),
