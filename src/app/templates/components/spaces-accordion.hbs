@@ -16,7 +16,8 @@
   {{else}}
 
     {{#each spacesSorted as |s|}}
-        {{spaces-accordion-item space=s showUnsupportSpaceModal="showUnsupportSpaceModal"}}
+        {{spaces-accordion-item space=s showUnsupportSpaceModal="showUnsupportSpaceModal"
+          openModal="openModal"}}
       {{/each}}
     {{/if}}
 
