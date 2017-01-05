@@ -1,12 +1,6 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const {
-  RSVP: {
-    Promise
-  }
-} = Ember;
-
 /**
  * Main entry to onezone application - load neccessary data for application.
  * @module routes/onezone
@@ -25,7 +19,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       let promises = [
         user.get('providers'),
         user.get('spaces'),
-        new Promise(resolve => resolve(user.get('authorizers'))),
+        user.get('authorizers'),
         user.get('clienttokens')
       ];
       Ember.RSVP.Promise.all(promises).then(
