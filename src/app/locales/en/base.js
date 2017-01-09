@@ -18,10 +18,25 @@ export default {
       clipboardFailue: 'Text cannot be copied to clipboard - please copy it manually'
     },
     serverError: 'Server error',
+    unknownError: 'Unknown error',
     fatalApplicationErrorResources: "A fatal error occured loading application's resources"
   },
   services: {
-    session: sessionLocales
+    session: sessionLocales,
+    spacesManager: {
+      leaveModal: {
+        title: 'Leave a space',
+        label: 'Are you sure you want to leave space "{{spaceName}}"?',
+        success: 'Space "{{spaceName}}" has been left successfully',
+        failure: 'Failed to leave space "{{spaceName}}"'
+      },
+      renameModal: {
+        title: 'Rename a space',
+        label: 'Enter new name for space "{{spaceName}}":',
+        success: 'Space "{{oldName}}" has been renamed to "{{newName}}"',
+        failure: 'Failed to rename space "{{oldName}}": {{errorMessage}}'
+      }
+    }
   },
   application: {
     title: 'Onezone',
@@ -53,7 +68,7 @@ export default {
     boxSubtitle: 'A new account will be created automatically on first login',
     unknownZoneName: 'unknown'
   },
-  components: {
+  components: { 
     modals: {
       loginForm: {
         title: 'Login with username and password',
@@ -113,6 +128,12 @@ export default {
     accountsList: {
       loadingAccounts: 'Loading accounts info...',
       loadingSupportedAuthorizers: 'Loading supported authorizers...',
+    },
+    spaceSettingsDrop: {
+      setHome: 'set as home',
+      leave: 'leave',
+      rename: 'rename',
+      getSupport: 'get support'
     }
   },
   logout: {

@@ -26,6 +26,10 @@ export default Ember.Component.extend({
     isJoinSpaceModalOpened: false,
 
     actions: {
+      openModal() {
+        this.sendAction('openModal', ...arguments);
+      },
+
       startCreateNewSpace: function() {
         this.set('createNewSpaceName', null);
         if (!this.get('createNewSpaceEditing')) {
