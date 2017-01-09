@@ -19,6 +19,13 @@ export default Ember.Component.extend({
   hasViewPrivilege: Ember.computed.alias('space.hasViewPrivilege'),
   showProviders: Ember.computed.alias('hasViewPrivilege'),
 
+  /**
+   * Toggles support token dropdown visibility (two-way).
+   * @type {boolean}
+   * @private
+   */
+  supportTokenOpened: false,
+
   providers: Ember.computed('showProviders', 'space.providers', function() {
     if (this.get('space.hasViewPrivilege')) {
       return this.get('space.providers');
@@ -34,6 +41,11 @@ export default Ember.Component.extend({
 
   supportToken: null,
 
+  collapseId: Ember.computed('space.id', function() {
+    let spaceId = this.get('space.id');
+    return spaceId ? `collapse-space-${this.get('space.id')}` : undefined;
+  }),
+
   init() {
     this._super(...arguments);
   },
@@ -47,12 +59,17 @@ export default Ember.Component.extend({
   })),
 
   prepareGetSupportTokenFloaters() {
+    let self = this;
     this.$().find('.floater').each(function() {
       let ft = $(this);
       let updatePosition = bindFloater(ft);
       ft.parent().on('mouseover', updatePosition);
       // TODO: performance - better all updatePositions in one fun
       $('.accordion-container').on('scroll', updatePosition);
+
+      if (ft.hasClass('token-popup')) {
+        self.set('__getSupportTokenUpdatePosition', updatePosition);
+      }
     });
 
     // prevent space token popup close on input and button click
@@ -68,55 +85,79 @@ export default Ember.Component.extend({
   },
 
   actions: {
-      // TODO: this action should not be invoked when there is currently opened other token
-      getNewSupportToken: function() {
-        let space = this.get('space');
-        this.set('supportToken', null);
-        if (space) {
-          this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
-            .then((data) => {
-              const token = data.token;
-              // TODO: only debug, should be removed in future
-              console.debug('Fetched new support token: ' + token);
-              this.set('supportToken', token);
-            });
-        } else {
-          console.warn('Tried to get new support token, but no space is assigned to item');
+    uncollapse() {
+      this.$(`#${this.get('collapseId')}`).collapse('show');
+    },
+
+    openModal() {
+      this.sendAction('openModal', ...arguments);
+    },
+
+    /**
+     * If the support token is hidden, show it.
+     * Then, regardless of dropdown state, fetch new.
+     */
+    showNewSupportToken() {
+      let __getSupportTokenUpdatePosition = this.get('__getSupportTokenUpdatePosition');
+      this.send('uncollapse');
+      setTimeout(() => {
+        let supportTokenOpened = this.get('supportTokenOpened');
+        if (!supportTokenOpened) {
+          this.set('supportTokenOpened', true);
         }
-      },
+        setTimeout(__getSupportTokenUpdatePosition, 0);
+        this.send('getNewSupportToken');
+      }, 0);
+    },
 
-      /** Set the space as default, unsetting other spaces */
-      toggleDefault() {
-        let store = this.get('store');
-        // TODO: use query?
-        // there should be only one default provider, but for safety...
-        let defaultSpaces = store.peekAll('space').filterBy('isDefault', true);
-        defaultSpaces.toArray().forEach((p) => {
-          p.set('isDefault', false);
-          p.save();
-        });
-
-        let space = this.get('space');
-        space.set('isDefault', true);
-        space.save();
-      },
-      // TODO: a notification for user
-      copySuccess() {
-        this.selectTokenText();
-        this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
-      },
-      // TODO: a notification for user
-      copyError() {
-        this.selectTokenText();
-        this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
-      },
-      goToProvider(provider) {
-        this.get('space.providers').forEach((p) => p.set('isSelected', false));
-        provider.set('isSelected', true);
-      },
-
-      showUnsupportSpaceModal(provider) {
-        this.sendAction('showUnsupportSpaceModal', this.get('space'), provider);
+    getNewSupportToken() {
+      let space = this.get('space');
+      this.set('supportToken', null);
+      if (space) {
+        this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
+          .then((data) => {
+            const token = data.token;
+            // TODO: only debug, should be removed in future
+            console.debug('Fetched new support token: ' + token);
+            this.set('supportToken', token);
+          });
+      } else {
+        console.warn('Tried to get new support token, but no space is assigned to item');
       }
+    },
+
+    /** Set the space as default, unsetting other spaces */
+    toggleDefault() {
+      let store = this.get('store');
+      // TODO: use query?
+      // there should be only one default provider, but for safety...
+      let defaultSpaces = store.peekAll('space').filterBy('isDefault', true);
+      defaultSpaces.toArray().forEach((p) => {
+        p.set('isDefault', false);
+        p.save();
+      });
+
+      let space = this.get('space');
+      space.set('isDefault', true);
+      space.save();
+    },
+    // TODO: a notification for user
+    copySuccess() {
+      this.selectTokenText();
+      this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
+    },
+    // TODO: a notification for user
+    copyError() {
+      this.selectTokenText();
+      this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
+    },
+    goToProvider(provider) {
+      this.get('space.providers').forEach((p) => p.set('isSelected', false));
+      provider.set('isSelected', true);
+    },
+
+    showUnsupportSpaceModal(provider) {
+      this.sendAction('showUnsupportSpaceModal', this.get('space'), provider);
+    }
   }
 });

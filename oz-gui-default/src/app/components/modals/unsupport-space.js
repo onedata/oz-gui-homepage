@@ -73,7 +73,6 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
       unsupportSpacePromise.then(
         () => {
           console.debug(`Space "${space.get('name')}" unsupported successfully`);
-          // FIXME: translate
           this.setProperties({
             message: i18n.t('components.modals.unsupportSpace.unsupportSpaceSuccess', {
               spaceName: space.get('name')

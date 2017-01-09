@@ -36,14 +36,6 @@ $color-onezone-panel-hover: rgba(255, 255, 255, 0.1);
 
 $search-box-height: 36px;
 
-// FIXME: move to app.scss?
-@import "components/c-search";
-@import "components/panel-onezone";
-@import "components/onezone-atlas";
-@import "components/onezone-top-bar";
-@import "components/onezone-sidebar";
-@import "components/onezone-modal-container";
-
 // styles used directly on onezone and child templates
 
 .onezone-fog {

@@ -52,6 +52,12 @@ $body-font: 'Open Sans';
 @import "notify";
 
 // OZ components and styles
+@import "components/c-search";
+@import "components/panel-onezone";
+@import "components/onezone-atlas";
+@import "components/onezone-top-bar";
+@import "components/onezone-sidebar";
+@import "components/onezone-modal-container";
 @import "components/button";
 @import "components/dropdowns";
 @import "components/main-menu";

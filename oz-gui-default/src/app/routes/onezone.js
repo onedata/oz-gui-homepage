@@ -30,5 +30,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           reject();
         });
     });
+  },
+
+  actions: {
+    openModal() {
+      this.get('controller').actions['openModal'](...arguments);
+    }
   }
 });
