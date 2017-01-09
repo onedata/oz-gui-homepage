@@ -328,20 +328,22 @@
 
             &.space-header {
               max-width: 120px;
+              width: 120px;
             }
 
             &.provider-header {
               max-width: 190px;
+              width: 190px;
             }
           }
 
           // for space
           .providers-count {
             position: relative;
-
             display: table-cell;
-            width: 50px;
             overflow-x: hidden;
+            width: 40px;
+
             .icon {
               display: table-cell;
               .one-icon {
@@ -368,7 +370,7 @@
           .star-toggle {
             position: relative;
             display: table-cell;
-            width: 40px;
+            width: 32px;
             font-size: 28px;
             cursor: pointer; cursor: hand;
 
@@ -381,6 +383,10 @@
               // it looks better if its slightly pulled to top
               top: -1px;
             }
+          }
+
+          .settings-tool {
+            text-align: center;
           }
 
           // for provider
@@ -639,6 +645,8 @@
 }
 
 .space-header-size {
+  width: 75px;
+  max-width: 75px;
   padding-right: 10px;
   overflow-x: hidden;
   text-overflow: clip;
@@ -650,7 +658,8 @@
 
 .sidebar-provider-space {
   &.space-header {
-    max-width: 120px;
+    max-width: 112px;
+    width: 112px;
   }
 }
   

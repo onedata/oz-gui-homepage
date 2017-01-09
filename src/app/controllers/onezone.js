@@ -9,6 +9,10 @@ import Ember from 'ember';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Controller.extend({
+  modalsManager: Ember.inject.service(),
+
+  modal: Ember.computed.alias('modalsManager.currentModal'),
+
   init: function () {
     this._super();
     Ember.run.schedule('afterRender',this,function() {
@@ -39,6 +43,12 @@ export default Ember.Controller.extend({
     return this.get('expand_alias') === 'true';
   }.property('expand_alias'),
 
+  modalInfo: Ember.Object.create({
+    name: null,
+    resolve: null,
+    reject: null,
+  }),
+
   actions: {
     expandQuerySpecifiedAccordions: function() {
       if (this.get('expandAccounts')) {
@@ -56,6 +66,10 @@ export default Ember.Controller.extend({
       if (this.get('expandAlias')) {
         $('#collapse-alias').collapse('show');
       }
+    },
+
+    closeModal() {
+      this.get('modalsManager').closeModal(...arguments);
     }
   },
 });
