@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-const {RSVP: {Promise}} = Ember;
+const {
+  RSVP: { Promise },
+  inject
+} = Ember;
 
 /**
  * A service for managing and manipulaing spaces.
@@ -12,11 +15,12 @@ const {RSVP: {Promise}} = Ember;
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Service.extend({
-  modalsManager: Ember.inject.service(),
-  onezoneServer: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  store: Ember.inject.service(),
-  notify: Ember.inject.service(),
+  modalsManager: inject.service(),
+  onezoneServer: inject.service(),
+  i18n: inject.service(),
+  store: inject.service(),
+  notify: inject.service(),
+  session: inject.service(),
 
   /**
    * @param {Space} space
@@ -53,6 +57,24 @@ export default Ember.Service.extend({
         spaceName
       }),
       originalName: spaceName
+    });
+  },
+
+  toggleSpaceAsDefault(space) {
+    let user = this.get('session.user');
+    user.set('defaultSpaceId',
+      space.get('isDefault') ? null : space.get('id'));
+
+    let userSave = user.save();
+    userSave.catch(({message}) => {
+      this.get('notify').error(this.get('i18n').t('onezone.spacesAccordionItem.toggleDefaultFailed', {
+        errorMessage: message
+      }));
+      let reloadUser = user.reload();
+      reloadUser.catch(() => {
+        console.warn('Reloading User model after alias set failure failed - rolling back local User record');
+        user.rollbackAttributes();
+      });
     });
   },
 

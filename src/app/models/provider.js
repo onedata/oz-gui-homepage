@@ -1,9 +1,15 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+import isDefaultMixinFactory from 'oz-worker-gui/mixin-factories/models/is-default';
 
 const {
   attr,
   hasMany
 } = DS;
+
+const {
+  inject
+} = Ember;
 
 /**
  * A Oneprovider host representation, available for user.
@@ -12,10 +18,12 @@ const {
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default DS.Model.extend({
+export default DS.Model.extend(isDefaultMixinFactory('defaultProviderId'), {
+  session: inject.service(),
+
   name: attr('string'),
-  isWorking: attr('boolean', {defaultValue: false}),
-  
+  isWorking: attr('boolean', { defaultValue: false }),
+
   /**
    * Hostname of this provider
    * @type {String}
@@ -35,8 +43,8 @@ export default DS.Model.extend({
   longitude: attr('number'),
 
   /*** Relations ***/
-  
-  spaces: hasMany('space', {async: true}),
+
+  spaces: hasMany('space', { async: true }),
 
   /*** Runtime properties ***/
 
@@ -45,5 +53,13 @@ export default DS.Model.extend({
    * @type {Boolean}
    * @public
    */
-  isSelected: false
+  isSelected: false,
+
+  /*** Additional computed properties ***/
+
+  /**
+   * Implemented by ``IsDefault`` mixin
+   * @abstract 
+   * @property {boolean} isDefault
+   */
 });

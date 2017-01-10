@@ -5,7 +5,7 @@ import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading
  * One of main sidebar items: allows to change alias.
  * @module components/alias-panel
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(PromiseLoadingMixin, {
@@ -71,14 +71,18 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
         console.debug('Set alias successful');
       });
       userSavePromise.catch(error => {
-          this.get('messageBox').open({
-            title: this.get('i18n').t('common.serverError'),
-            message: this.get('i18n').t('components.aliasPanel.setAliasFailed') +
-              (error.message ? ': ' + error.message : ''),
-            type: 'warning'
-          });
-        }
-      );
+        this.get('messageBox').open({
+          title: this.get('i18n').t('common.serverError'),
+          message: this.get('i18n').t('components.aliasPanel.setAliasFailed') +
+            (error.message ? ': ' + error.message : ''),
+          type: 'warning'
+        });
+        let reloadUser = user.reload();
+        reloadUser.catch(() => {
+          console.warn('Reloading User model after alias set failure failed - rolling back local User record');
+          user.rollbackAttributes();
+        });
+      });
       userSavePromise.finally(() => {
         this.setProperties({
           aliasEditing: false,

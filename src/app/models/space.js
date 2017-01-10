@@ -1,9 +1,16 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+
+import isDefaultMixinFactory from 'oz-worker-gui/mixin-factories/models/is-default';
 
 const {
   attr,
   hasMany
 } = DS;
+
+const {
+  inject
+} = Ember;
 
 /**
  * Space representation.
@@ -12,7 +19,9 @@ const {
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default DS.Model.extend({
+export default DS.Model.extend(isDefaultMixinFactory('defaultSpaceId'), {
+  session: inject.service(),
+
   name: attr('string'),
 
   /**
@@ -40,4 +49,12 @@ export default DS.Model.extend({
    * @type {Provider[]}
    */
   providers: hasMany('provider', {async: true}),
+
+  /*** Additional computed properties ***/
+
+  /**
+   * Implemented by ``IsDefault`` mixin
+   * @abstract 
+   * @property {boolean} isDefault
+   */
 });

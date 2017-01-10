@@ -33,6 +33,8 @@ export default Ember.Mixin.create({
   supportSize: Ember.computed('space.supportSizes', 'providerId', function() {
     let supportSizes = this.get('space.supportSizes');
     let providerId = this.get('providerId');
-    return supportSizes[providerId];
+    if (supportSizes && providerId) {
+      return supportSizes[providerId];
+    }
   }),
 });

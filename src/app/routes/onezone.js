@@ -14,27 +14,27 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   user: Ember.computed.alias('session.user'),
 
   model() {
-    let user = this.get('user');
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      let promises = [
-        user.get('providers'),
-        user.get('spaces'),
-        user.get('authorizers'),
-        user.get('clienttokens')
-      ];
-      Ember.RSVP.Promise.all(promises).then(
-        (values) => {
-          resolve({
-            providers: values[0],
-            spaces: values[1],
-            authorizers: values[2],
-            clienttokens: values[3]
-          });
-        },
-        () => {
-          reject();
-        });
-    });
+    return this.get('user');
+    // return new Ember.RSVP.Promise((resolve, reject) => {
+    //   let promises = [
+    //     user.get('providers'),
+    //     user.get('spaces'),
+    //     user.get('authorizers'),
+    //     user.get('clienttokens')
+    //   ];
+    //   Ember.RSVP.Promise.all(promises).then(
+    //     (values) => {
+    //       resolve({
+    //         providers: values[0],
+    //         spaces: values[1],
+    //         authorizers: values[2],
+    //         clienttokens: values[3]
+    //       });
+    //     },
+    //     () => {
+    //       reject();
+    //     });
+    // });
   },
 
   actions: {

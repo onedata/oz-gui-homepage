@@ -2,7 +2,6 @@ import DS from 'ember-data';
 
 const {
   attr,
-  belongsTo,
   hasMany
 } = DS;
 
@@ -14,14 +13,14 @@ export default DS.Model.extend({
   alias: attr('string'),
   basicAuthEnabled: attr('boolean'),
 
-  /*** Relations ***/
+  defaultSpaceId: attr('string'),
+  defaultProviderId: attr('string'),
 
-  defaultSpace: belongsTo('space', ASYNC_ONEWAY),
-  defaultProvider: belongsTo('provider', ASYNC_ONEWAY),
+  /*** Relations ***/
 
   authorizers: hasMany('authorizer', ASYNC_ONEWAY),
   clienttokens: hasMany('clienttokens', ASYNC_ONEWAY),
   groups: hasMany('group', ASYNC_ONEWAY),
-  spaces: hasMany('spaces', ASYNC_ONEWAY),
+  spaces: hasMany('space', ASYNC_ONEWAY),
   providers: hasMany('provider', ASYNC_ONEWAY),
 });

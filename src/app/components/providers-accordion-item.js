@@ -2,25 +2,32 @@ import Ember from 'ember';
 import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 import safeElementId from 'ember-cli-onedata-common/utils/safe-element-id';
 
+const {
+  inject,
+  computed
+} = Ember;
+
 /**
  * Provider entry in sidebar. Contains list of its spaces.
  * @module components/providers-accordion-item
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  store: Ember.inject.service('store'),
-  onezoneServer: Ember.inject.service('onezoneServer'),
+  store: inject.service(),
+  onezoneServer: inject.service(),
+  providersManager: inject.service(),
+
 
   /** Provider model to display - should be injected */
   provider: null,
 
-  spaces: Ember.computed('provider.spaces', function() {
+  spaces: computed('provider.spaces', function() {
     return this.get('provider.spaces');
   }),
   spacesSorting: ['isDefault:desc', 'name'],
-  spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
+  spacesSorted: computed.sort('spaces', 'spacesSorting'),
 
   collapseId: function() {
     return safeElementId(`collapse-provider-${this.get('provider.id')}`);
@@ -57,19 +64,10 @@ export default Ember.Component.extend({
 
     /** Set or unset the provider as default (can unset other providers) */
     toggleDefault() {
-      let store = this.get('store');
-      let provider = this.get('provider');
-      if (provider.get('isDefault')) {
-        provider.set('isDefault', false);
-      } else {
-        let defaultProviders = store.peekAll('provider').filterBy('isDefault', true);
-        defaultProviders.toArray().forEach((p) => {
-          p.set('isDefault', false);
-          p.save();
-        });
-        provider.set('isDefault', true);
-      }
-      provider.save();
+      let { providersManager, provider } =
+        this.getProperties('providersManager', 'provider');
+
+      providersManager.toggleProviderAsDefault(provider);
     }
   }
 });
