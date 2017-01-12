@@ -54,19 +54,19 @@ CHANGELOG
 * VFS-2752 Access token input is now readonly
 
 
-### 3.0.0-rc11
+### 3.0.0-rc6 -- 3.0.0-rc11
 
 * VFS-2660 Do not allow to submit space without name
-* VFS-2660 Adding deploy_to_getting_started script
+* VFS-2660 Adding `deploy_to_getting_started` script
 * VFS-2646 Fixed preparing get support token widgets
 * VFS-2608 Vectorized Oneworld text for login logo SVG
 * VFS-2638 Support for Space's hasViewPrivilege in OZ sidebar
-* VFS-2608 Redirect to / instead of onedata.org in top OD logo
+* VFS-2608 Redirect to `/` instead of onedata.org in top OD logo
 * VFS-2608 SVG brand logo in login page
 * VFS-2626 Improved responsive design for login view for 8+ login btns
 * VFS-2626 Added EGI login; added new icons (social-egi, metadata)
 * VFS-2626 Ordering of login buttons by backend
-* VFS-2624 Using url from /do_login response
+* VFS-2624 Using url from `/do_login` response
 * VFS-2582 Settings npm and bower packages versions to fixed values
 * VFS-2581 Fixing page titles for new ember-page-title version
 
