@@ -70,6 +70,7 @@ export default Ember.Service.extend({
       this.get('notify').error(this.get('i18n').t('onezone.spacesAccordionItem.toggleDefaultFailed', {
         errorMessage: message
       }));
+      user.rollbackAttributes();
       let reloadUser = user.reload();
       reloadUser.catch(() => {
         console.warn('Reloading User model after alias set failure failed - rolling back local User record');

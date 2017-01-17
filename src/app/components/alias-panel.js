@@ -77,6 +77,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
             (error.message ? ': ' + error.message : ''),
           type: 'warning'
         });
+        user.rollbackAttributes();
         let reloadUser = user.reload();
         reloadUser.catch(() => {
           console.warn('Reloading User model after alias set failure failed - rolling back local User record');
