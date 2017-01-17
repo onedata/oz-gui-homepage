@@ -4,7 +4,8 @@ import isDefaultMixinFactory from 'ember-cli-onedata-common/mixin-factories/mode
 
 const {
   attr,
-  hasMany
+  hasMany,
+  belongsTo
 } = DS;
 
 const {
@@ -54,6 +55,8 @@ export default DS.Model.extend(isDefaultMixinFactory('defaultProviderId'), {
    * @public
    */
   isSelected: false,
+
+  user: belongsTo('user', {async: true})
 
   /*** Additional computed properties ***/
 

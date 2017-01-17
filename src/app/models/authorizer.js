@@ -1,7 +1,8 @@
 import DS from 'ember-data';
 
 const {
-  attr
+  attr,
+  belongsTo
 } = DS;
 
 /**
@@ -19,5 +20,7 @@ export default DS.Model.extend({
    */
   type: attr('string'),
   
-  email: attr('string')
+  email: attr('string'),
+
+  user: belongsTo('user', {async: true})
 });

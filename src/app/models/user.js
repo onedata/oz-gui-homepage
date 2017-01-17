@@ -5,8 +5,6 @@ const {
   hasMany
 } = DS;
 
-const ASYNC_ONEWAY = { async: true, inverse: null };
-
 // FIXME jsdoc
 export default DS.Model.extend({
   name: attr('string'),
@@ -18,9 +16,9 @@ export default DS.Model.extend({
 
   /*** Relations ***/
 
-  authorizers: hasMany('authorizer', ASYNC_ONEWAY),
-  clienttokens: hasMany('clienttokens', ASYNC_ONEWAY),
-  groups: hasMany('group', ASYNC_ONEWAY),
-  spaces: hasMany('space', ASYNC_ONEWAY),
-  providers: hasMany('provider', ASYNC_ONEWAY),
+  authorizers: hasMany('authorizer', { async: true }),
+  clienttokens: hasMany('clienttokens', { async: true }),
+  groups: hasMany('group', { async: true }),
+  spaces: hasMany('space', { async: true }),
+  providers: hasMany('provider', { async: true }),
 });

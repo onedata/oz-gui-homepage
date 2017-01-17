@@ -1,10 +1,13 @@
 import DS from 'ember-data';
 
 const {
-  attr
+  attr,
+  belongsTo
 } = DS;
 
 // FIXME jsdoc
 export default DS.Model.extend({
-  name: attr('string')
+  name: attr('string'),
+
+  user: belongsTo('user', {async: true})
 });

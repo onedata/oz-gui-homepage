@@ -1,5 +1,9 @@
 import DS from 'ember-data';
 
+const {
+  belongsTo
+} = DS;
+
 /**
  * A client token (access token). It uses only id, which is given from server.
  * @module models/clienttoken
@@ -8,4 +12,5 @@ import DS from 'ember-data';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default DS.Model.extend({
+  user: belongsTo('user', {async: true})
 });
