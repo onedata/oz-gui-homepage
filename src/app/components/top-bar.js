@@ -18,7 +18,6 @@ export default Ember.Component.extend({
 
   classNames: ['navbar', 'navbar-onedata'],
 
-  // FIXME: check
   userName: computed.alias('session.user.name'),
 
   didInsertElement() {

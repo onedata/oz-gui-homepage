@@ -14,6 +14,5 @@ const {
 export default Ember.Component.extend({
   session: Ember.inject.service(),
 
-  // FIXME: check
   userName: computed.alias('session.user.name'),
 });

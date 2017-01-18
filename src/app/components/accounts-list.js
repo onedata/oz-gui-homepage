@@ -39,7 +39,6 @@ export default Ember.Component.extend({
       supportedAuthorizers.length === 1 && supportedAuthorizers[0] === 'basicAuth';
   }),
 
-  // FIXME: Use global User
   passwordConfigEnabled: computed.alias('session.user.basicAuthEnabled'),
 
   initSupportedAuthorizers: on('init', function() {
