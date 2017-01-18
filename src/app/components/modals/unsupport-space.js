@@ -65,9 +65,15 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
 
     submit() {
       // TODO This should use relationship removal rather than RPC call
-      let space = this.get('space');
-      let provider = this.get('provider');
-      let i18n = this.get('i18n');
+      let {
+        space,
+        provider,
+        i18n
+      } = this.getProperties(
+        'space',
+        'provider',
+        'i18n'
+      );
       let unsupportSpacePromise =
         this.get('onezoneServer').unsupportSpace(space.get('id'), provider.get('id'));
       unsupportSpacePromise.then(
