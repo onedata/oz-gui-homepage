@@ -55,6 +55,7 @@ app/components/providers-accordion-item.js
 app/components/providers-accordion.js
 app/components/social-box-list.js
 app/components/social-box.js
+app/components/space-settings-drop.js
 app/components/spaces-accordion-item.js
 app/components/spaces-accordion.js
 app/components/tokens-list-item.js
@@ -85,8 +86,11 @@ app/routes/home/logout.js
 app/routes/index.js
 app/routes/onezone.js
 app/routes/onezone/index.js
+app/serializers/application.js
+app/services/modals-manager.js
 app/services/onezone-server.js
 app/services/page-title-list.js
+app/services/spaces-manager.js
 app/services/top-menu.js
 app/session-stores/application.js
 app/styles/bootstrap-config.scss
@@ -155,6 +159,7 @@ lib/ember-cli-onedata-common/addon/adapters/onedata-websocket.js
 lib/ember-cli-onedata-common/addon/authenticators/basic.js
 lib/ember-cli-onedata-common/addon/components/bs-tooltip.js
 lib/ember-cli-onedata-common/addon/components/common-loader.js
+lib/ember-cli-onedata-common/addon/components/dialog-modal.js
 lib/ember-cli-onedata-common/addon/components/modals/elements/alert-panel.js
 lib/ember-cli-onedata-common/addon/components/modals/message-box.js
 lib/ember-cli-onedata-common/addon/components/one-checkbox-button.js
@@ -163,6 +168,9 @@ lib/ember-cli-onedata-common/addon/components/one-icon.js
 lib/ember-cli-onedata-common/addon/components/one-overlay.js
 lib/ember-cli-onedata-common/addon/components/one-radio-button.js
 lib/ember-cli-onedata-common/addon/components/one-radio-group.js
+lib/ember-cli-onedata-common/addon/components/rename-modal.js
+lib/ember-cli-onedata-common/addon/components/settings-drop-item.js
+lib/ember-cli-onedata-common/addon/components/settings-drop.js
 lib/ember-cli-onedata-common/addon/components/spin-button-onedata.js
 lib/ember-cli-onedata-common/addon/components/status-panel.js
 lib/ember-cli-onedata-common/addon/components/truncated-string.js
@@ -186,6 +194,7 @@ lib/ember-cli-onedata-common/addon/services/server.js
 lib/ember-cli-onedata-common/addon/services/session-core.js
 lib/ember-cli-onedata-common/addon/services/session.js
 lib/ember-cli-onedata-common/addon/templates/components/common-loader.hbs
+lib/ember-cli-onedata-common/addon/templates/components/dialog-modal.hbs
 lib/ember-cli-onedata-common/addon/templates/components/modals/elements/alert-panel.hbs
 lib/ember-cli-onedata-common/addon/templates/components/modals/message-box.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-checkbox-button.hbs
@@ -194,6 +203,9 @@ lib/ember-cli-onedata-common/addon/templates/components/one-icon.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-overlay.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-radio-button.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-radio-group.hbs
+lib/ember-cli-onedata-common/addon/templates/components/rename-modal.hbs
+lib/ember-cli-onedata-common/addon/templates/components/settings-drop-item.hbs
+lib/ember-cli-onedata-common/addon/templates/components/settings-drop.hbs
 lib/ember-cli-onedata-common/addon/templates/components/spin-button-onedata.hbs
 lib/ember-cli-onedata-common/addon/templates/components/status-panel.hbs
 lib/ember-cli-onedata-common/addon/templates/components/truncated-string.hbs
@@ -208,6 +220,7 @@ lib/ember-cli-onedata-common/app/adapters/onedata-websocket.js
 lib/ember-cli-onedata-common/app/authenticators/basic.js
 lib/ember-cli-onedata-common/app/components/bs-tooltip.js
 lib/ember-cli-onedata-common/app/components/common-loader.js
+lib/ember-cli-onedata-common/app/components/dialog-modal.js
 lib/ember-cli-onedata-common/app/components/modals/elements/alert-panel.js
 lib/ember-cli-onedata-common/app/components/modals/message-box.js
 lib/ember-cli-onedata-common/app/components/one-checkbox-button.js
@@ -216,6 +229,9 @@ lib/ember-cli-onedata-common/app/components/one-icon.js
 lib/ember-cli-onedata-common/app/components/one-overlay.js
 lib/ember-cli-onedata-common/app/components/one-radio-button.js
 lib/ember-cli-onedata-common/app/components/one-radio-group.js
+lib/ember-cli-onedata-common/app/components/rename-modal.js
+lib/ember-cli-onedata-common/app/components/settings-drop-item.js
+lib/ember-cli-onedata-common/app/components/settings-drop.js
 lib/ember-cli-onedata-common/app/components/spin-button-onedata.js
 lib/ember-cli-onedata-common/app/components/status-panel.js
 lib/ember-cli-onedata-common/app/components/truncated-string.js
@@ -328,6 +344,7 @@ tests/helpers/resolver.js
 tests/helpers/start-app.js
 tests/index.html
 tests/integration/.gitkeep
+tests/integration/components/dialog-modal-test.js
 tests/integration/components/modals/change-password-test.js
 tests/test-helper.js
 tests/unit/.gitkeep
