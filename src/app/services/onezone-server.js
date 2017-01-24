@@ -7,7 +7,7 @@ import Ember from 'ember';
  * See methods documentation for information about parameters and the promise's ``resolve`` arguments.
  * @module services/onezone-server
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Service.extend({
@@ -97,33 +97,6 @@ export default Ember.Service.extend({
    */
   getZoneName() {
     return this.get('server').publicRPC('getZoneName');
-  },
-
-  /**
-   * Fetch user alias stored in backend.
-   *
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully fetched the alias
-   *   - ``data.userAlias`` (string) - an alias
-   * - ``reject(object: error)`` on failure
-   */
-  getUserAlias() {
-    return this.get('server').privateRPC('getUserAlias');
-  },
-
-  /**
-   * Set new user alias in backend.
-   *
-   * @param {String} userAlias A new user alias to set
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully set new alias
-   *   - ``data.userAlias`` (string) - an alias which was set (should be same as userAlias param)
-   * - ``reject(object: error)`` on failure
-   */
-  setUserAlias(userAlias) {
-    return this.get('server').privateRPC('setUserAlias', {
-      userAlias: userAlias
-    });
   },
 
   /**

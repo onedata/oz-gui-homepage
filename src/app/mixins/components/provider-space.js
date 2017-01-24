@@ -4,7 +4,7 @@ import Ember from 'ember';
  * A base to build a component that shows info about space in context of particular provider.
  * @module mixins/components/providers-space
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Mixin.create({
@@ -33,6 +33,8 @@ export default Ember.Mixin.create({
   supportSize: Ember.computed('space.supportSizes', 'providerId', function() {
     let supportSizes = this.get('space.supportSizes');
     let providerId = this.get('providerId');
-    return supportSizes[providerId];
+    if (supportSizes && providerId) {
+      return supportSizes[providerId];
+    }
   }),
 });
