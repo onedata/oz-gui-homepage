@@ -172,6 +172,7 @@ export default {
     sidebar: {
       connectHead: 'authentication settings',
       manageSpacesHead: 'data space management',
+      manageGroupsHead: 'groups management',
       filesHead: 'go to your files',
       tokensHead: 'access tokens',
       aliasHead: 'user alias'
