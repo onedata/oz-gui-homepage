@@ -108,6 +108,12 @@ export default {
         label: 'Enter a token of a space to join:',
         joinSuccess: 'Successfully joined space "{{spaceName}}"',
         joinFailed: 'Cannot join space: "{{errorDetails}}"',
+      },
+      joinGroup: {
+        title: 'Join a group',
+        label: 'Enter a token of a group to join:',
+        joinSuccess: 'Successfully joined group "{{groupName}}"',
+        joinFailed: 'Cannot join group: "{{errorDetails}}"',
       }
     },
     socialBoxList: {
@@ -190,6 +196,9 @@ export default {
     accountAdd: {
       connectNewAccount: 'Connect new account',
       connectBy: 'Connect by'
+    },
+    groupsList: {
+      joinGroup: 'Join a group',
     },
     spacesAccordion: {
       spacesList: 'spaces list',

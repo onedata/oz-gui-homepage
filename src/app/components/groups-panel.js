@@ -6,13 +6,13 @@ const {
 
 /**
  * List of groups that the User belongs to.
- * @module components/groups-list
+ * @module components/groups-panel
  * @author Jakub Liput
  * @copyright (C) 2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  classNames: ['groups-list', 'accordion-content', 'sidebar-list'],
+  classNames: ['groups-panel', 'accordion-content', 'sidebar-list'],
 
   groups: null,
 
@@ -21,4 +21,9 @@ export default Ember.Component.extend({
   groupsSorting: ['type', 'email'],
   groupsSorted: computed.sort('groups', 'groupsSorting'),
 
+  actions: {
+    startJoinGroup() {
+      this.set('isJoinGroupModalOpened', true);
+    }
+  }
 });
