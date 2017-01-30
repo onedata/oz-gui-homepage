@@ -108,6 +108,12 @@ export default {
         label: 'Enter a token of a space to join:',
         joinSuccess: 'Successfully joined space "{{spaceName}}"',
         joinFailed: 'Cannot join space: "{{errorDetails}}"',
+      },
+      joinGroup: {
+        title: 'Join a group',
+        label: 'Enter a token of a group to join:',
+        joinSuccess: 'Successfully joined group "{{groupName}}"',
+        joinFailed: 'Cannot join group: "{{errorDetails}}"',
       }
     },
     socialBoxList: {
@@ -157,7 +163,8 @@ export default {
         text: 'Currently, none of your spaces is supported by any provider. ' +
         'You need support from at least one provider to store data in ' +
         'a space. To get support, go to "{{manageDataSpacesTitle}}" menu, get a ' +
-        'support token for chosen space and pass it to a provider of your choice.'
+        'support token for selected space and pass it to a provider of your choice. ' +
+        'You can also join a group in "{{manageGroupsTitle}}" menu.'
       },
       firstLogin: {
         title: 'First login',
@@ -170,11 +177,12 @@ export default {
       }
     },
     sidebar: {
-      connectHead: 'authentication settings',
-      manageSpacesHead: 'data space management',
-      filesHead: 'go to your files',
-      tokensHead: 'access tokens',
-      aliasHead: 'user alias'
+      connectHead: 'Authentication settings',
+      manageSpacesHead: 'Data space management',
+      manageGroupsHead: 'Group management',
+      filesHead: 'Go to your files',
+      tokensHead: 'Access tokens',
+      aliasHead: 'User alias'
     },
     topBar: {
       manageProviders: 'manage account',
@@ -189,6 +197,9 @@ export default {
     accountAdd: {
       connectNewAccount: 'Connect new account',
       connectBy: 'Connect by'
+    },
+    groupsList: {
+      joinGroup: 'Join a group',
     },
     spacesAccordion: {
       spacesList: 'spaces list',
