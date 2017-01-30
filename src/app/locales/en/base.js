@@ -163,7 +163,8 @@ export default {
         text: 'Currently, none of your spaces is supported by any provider. ' +
         'You need support from at least one provider to store data in ' +
         'a space. To get support, go to "{{manageDataSpacesTitle}}" menu, get a ' +
-        'support token for chosen space and pass it to a provider of your choice.'
+        'support token for selected space and pass it to a provider of your choice. ' +
+        'You can also join a group in "{{manageGroupsTitle}}" menu.'
       },
       firstLogin: {
         title: 'First login',
@@ -176,12 +177,12 @@ export default {
       }
     },
     sidebar: {
-      connectHead: 'authentication settings',
-      manageSpacesHead: 'data space management',
-      manageGroupsHead: 'groups management',
-      filesHead: 'go to your files',
-      tokensHead: 'access tokens',
-      aliasHead: 'user alias'
+      connectHead: 'Authentication settings',
+      manageSpacesHead: 'Data space management',
+      manageGroupsHead: 'Group management',
+      filesHead: 'Go to your files',
+      tokensHead: 'Access tokens',
+      aliasHead: 'User alias'
     },
     topBar: {
       manageProviders: 'manage account',

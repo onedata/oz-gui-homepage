@@ -7,6 +7,11 @@
 <div class="accordion-container">
   <div class="accordion main-accordion">  
 
+    {{#sidebar-main-group collapseId="providers"
+      title=(t 'onezone.sidebar.filesHead')}}
+      {{providers-accordion providers=providers}}
+    {{/sidebar-main-group}}
+
     {{#sidebar-main-group collapseId="spaces"
       title=(t 'onezone.sidebar.manageSpacesHead')}}
       {{spaces-accordion spaces=spaces openModal="openModal"}}
@@ -20,11 +25,6 @@
     {{#sidebar-main-group collapseId="tokens"
       title=(t 'onezone.sidebar.tokensHead')}}
       {{tokens-list tokens=tokens}}
-    {{/sidebar-main-group}}
-
-    {{#sidebar-main-group collapseId="providers"
-      title=(t 'onezone.sidebar.filesHead')}}
-      {{providers-accordion providers=providers}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="accounts"

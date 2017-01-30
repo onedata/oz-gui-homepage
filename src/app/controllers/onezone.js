@@ -7,7 +7,10 @@ const {
   },
   inject,
   computed,
-  run
+  run: {
+    schedule
+  },
+  observer
 } = Ember;
 
 const SIDEBAR_GROUPS = [
@@ -27,12 +30,13 @@ const EXPAND_PARAMS = SIDEBAR_GROUPS.map(name => `expand_${name}`);
  */
 const controller = Ember.Controller.extend({
   modalsManager: inject.service(),
+  onezoneSidebar: inject.service(),
 
   modal: computed.alias('modalsManager.currentModal'),
 
   init: function () {
     this._super();
-    run.schedule('afterRender',this,function() {
+    schedule('afterRender',this,function() {
       this.send('expandQuerySpecifiedAccordions');
     });
   },
@@ -41,6 +45,15 @@ const controller = Ember.Controller.extend({
     name: null,
     resolve: null,
     reject: null,
+  }),
+
+  expandProvidersInSidebar: observer('model.providers.{isFulfilled,length}', function() {
+    let providers = this.get('model.providers');
+    if (providers.get('isFulfilled') && providers.get('length') > 0) {
+      schedule('afterRender', this, function() {
+        this.get('onezoneSidebar').expandMain('providers');
+      });      
+    }
   }),
 
   actions: {
@@ -66,7 +79,7 @@ EXPAND_PARAMS.forEach(function(prop) {
 expandMixin.actions['expandQuerySpecifiedAccordions'] = function() {
   SIDEBAR_GROUPS.forEach(prop => {
     if (this.get('expand' + classify(prop))) {
-      $(`#collapse-${prop}`).collapse('show');
+      this.get('onezoneSidebar').expandMainAccordion(prop);
     }
   });
 };
