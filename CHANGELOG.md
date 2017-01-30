@@ -6,6 +6,8 @@ CHANGELOG
 
 ### 3.0.0-rc12
 
+* VFS-2881 Reordered panels in Onezone sidebar, automatic context expand
+* VFS-2881 Group management panel: list groups and join a group
 * VFS-2661 Major refactor of model; using User model with resources relations instead of findAll
 * VFS-2882 Fixing hanging loading states of modals
 * VFS-2882 New generic rename space modal
