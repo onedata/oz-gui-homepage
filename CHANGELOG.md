@@ -6,6 +6,7 @@ CHANGELOG
 
 ### 3.0.0-rc12
 
+* VFS-2661 Major refactor of model; using User model with resources relations instead of findAll
 * VFS-2882 Fixing hanging loading states of modals
 * VFS-2882 New generic rename space modal
 * VFS-2882 Get support token from dropdown menu of space
