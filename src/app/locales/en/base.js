@@ -200,14 +200,17 @@ export default {
       noViewPermissions: 'You do not have privileges to view details of this space.',
     },
     spacesAccordionItem: {
-      getSupport: 'Get support'
+      getSupport: 'Get support',
+      toggleDefaultFailed: 'Changing default space failed: {{errorMessage}}'
     },
     providersAccordion: {
       providersList: 'providers list',
       chooseProvider: 'Choose Provider',
       noProviders: 'No providers, get support first.'
     },
-    providersAccordionItem: {},
+    providersAccordionItem: {
+      toggleDefaultFailed: 'Changing default provider failed: {{errorMessage}}'
+    },
     tokensAccordion: {
       tokensList: 'tokens list',
       createNewToken: 'Create new access token',
