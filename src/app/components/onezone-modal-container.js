@@ -56,4 +56,10 @@ export default Ember.Component.extend({
     }
   }),
 
+  actions: {
+    goToTab(tab) {
+      this.sendAction('goToTab', tab);
+    }
+  }
+
 });

@@ -3,3 +3,11 @@
   top: 0;
   left: 0;
 }
+
+.oz-modal-link {
+  color: #337ab7;
+  &:hover {
+    cursor: hand;
+    cursor: pointer;
+  }
+}

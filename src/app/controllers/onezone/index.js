@@ -27,6 +27,10 @@ export default Ember.Controller.extend({
       let sidebar = this.get('onezoneSidebar');
       sidebar.expandMain('spaces');
       sidebar.expandMain('groups');
+    },
+    goToTab(tab) {
+      let sidebar = this.get('onezoneSidebar');
+      sidebar.expandMain(tab);
     }
   }
 });
