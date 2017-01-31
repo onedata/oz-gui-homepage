@@ -62,11 +62,14 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  app.import("bower_components/bind-first/release/jquery.bind-first-0.2.3.min.js");
-  app.import("bower_components/jquery-mousewheel/jquery.mousewheel.min.js");
-  app.import("bower_components/jquery-searchable/dist/jquery.searchable-1.1.0.min.js");
+  const BOWER_ASSETS = [
+    'bind-first/release/jquery.bind-first-0.2.3.min.js',
+    'jquery-mousewheel/jquery.mousewheel.min.js',
+    'jquery-searchable/dist/jquery.searchable-1.1.0.min.js',
+    'spin.js/spin.js'
+  ];
 
-  app.import(app.bowerDirectory + '/spin.js/spin.js');
+  BOWER_ASSETS.forEach(path => app.import(app.bowerDirectory + '/' + path));
 
   return app.toTree();
 };
