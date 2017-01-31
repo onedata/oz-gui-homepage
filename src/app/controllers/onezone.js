@@ -79,7 +79,7 @@ EXPAND_PARAMS.forEach(function(prop) {
 expandMixin.actions['expandQuerySpecifiedAccordions'] = function() {
   SIDEBAR_GROUPS.forEach(prop => {
     if (this.get('expand' + classify(prop))) {
-      this.get('onezoneSidebar').expandMainAccordion(prop);
+      this.get('onezoneSidebar').expandMain(prop);
     }
   });
 };
