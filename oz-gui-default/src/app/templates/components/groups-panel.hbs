@@ -1,0 +1,29 @@
+<div class="accordion secondary-accordion groups-accordion">
+  <div class="groups-list-list">
+    {{#each groupsSorted as |group|}}
+      {{#sidebar-list-item hasBackground=true}}
+        <div class="secondary-item-container">
+          <div class="secondary-item-element secondary-icon">
+            {{one-icon tagName="div" icon="group"}}
+          </div>
+          <div class="secondary-item-element secondary-header">
+            {{group.name}}
+          </div>
+        </div>
+      {{/sidebar-list-item}}
+    {{/each}}
+  </div>
+
+  <div class="operation-buttons-group">
+    {{#sidebar-list-item click=(action "startJoinGroup") isButton=true class="join-group-button"}}
+      <div class="secondary-item-element secondary-icon">
+        {{one-icon tagName="div" icon="join"}}
+      </div>
+      <div class="secondary-item-element secondary-header">
+        {{t 'onezone.groupsList.joinGroup'}}
+      </div>
+    {{/sidebar-list-item}}
+  </div>
+</div>
+
+{{modals/join-group open=isJoinGroupModalOpened}}

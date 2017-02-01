@@ -148,15 +148,29 @@ export default Ember.Service.extend({
   /**
    * Use an invitation token to join a space for which the token was generated.
    *
-   * @param {String} token A token generated with ``this.getTokenUserJoinSpace``
+   * @param {String} token A token generated with ``getTokenUserJoinSpace``
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully joined to space
    *   - ``data.spaceId`` - ID of Space record that was joined to
    * - ``reject(object: error)`` on failure
    */
-  store: Ember.inject.service(),
   userJoinSpace(token) {
     return this.get('server').privateRPC('userJoinSpace', {
+      token: token
+    });
+  },
+
+  /**
+   * Use an invitation token to join a group for which the token was generated.
+   *
+   * @param {String} token A token generated with ``getTokenUserJoinGroup``
+   * @returns {RSVP.Promise} A backend operation completion:
+   * - ``resolve(object: data)`` when successfully joined to space
+   *   - ``data.spaceId`` - ID of Space record that was joined to
+   * - ``reject(object: error)`` on failure
+   */
+  userJoinGroup(token) {
+    return this.get('server').privateRPC('userJoinGroup', {
       token: token
     });
   },
