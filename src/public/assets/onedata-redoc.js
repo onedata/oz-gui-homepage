@@ -8,7 +8,7 @@
  * - document.parentOrigin: String - window.location.origin of OZ app in time when it generated iframe content
  * 
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
@@ -143,7 +143,7 @@ var __ONEDATA__redocCheckReadyId = null;
 function checkReady() {
   if (__ONEDATA__redocIsReady) {
     window.clearInterval(__ONEDATA__redocCheckReadyId);
-  } else if (document.querySelector('api-logo')) {
+  } else if (!document.querySelector('redoc.loading')) {
     __ONEDATA__redocIsReady = true;
     afterRender();
   }
