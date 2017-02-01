@@ -65,10 +65,14 @@ function jumpToAnchor(anchor) {
   var element;
   switch (type) {
     case 'section':
-      element = document.querySelector('h2[section="' + anchor + '"]');
+      element = document.querySelector('h1[section="' + anchor + '"],h2[section="' + anchor + '"]');
       break;
     case 'tag':
-      element = document.querySelector('div.tag-info[section="' + anchor + '"]');
+      element = document.querySelector('div.tag-info a.share-link[orig-href="#' + anchor + '"]');
+      // find .tag-info parent
+      while (!element.classList.contains('tag-info')) {
+        element = element.parentElement;
+      }
       break;
     case 'operation':
       var operationId = anchor.match(/operation\/(.*)/)[1];
