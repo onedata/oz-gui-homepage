@@ -4,7 +4,7 @@
  * @module services/session
  * @author Lukasz Opiola
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
@@ -158,7 +158,9 @@ export default SessionService.extend({
     this.get('server').sessionRPC().then((data) => {
       console.debug("RESOLVE SESSION REQ");
       console.debug('data: ' + JSON.stringify(data));
-      if (data.sessionValid === true) {
+      let isSessionValid = (data.sessionValid === true);
+      this.set('sessionValid', isSessionValid);
+      if (isSessionValid) {
         this.onResolveSessionValid(data);
       } else {
         this.onResolveSessionInvalid();

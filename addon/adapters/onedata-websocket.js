@@ -4,7 +4,7 @@
  * @module adapters/application
  * @author Łukasz Opioła
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
@@ -480,8 +480,15 @@ export default DS.RESTAdapter.extend({
   receive(event) {
     let json = JSON.parse(event.data);
     if (Array.isArray(json.batch)) {
-      for (let message of json.batch) {
-        this.processMessage(message);
+      // as the for..of loop is currently tanspiled with Babel
+      // this can slightly increase performance
+      // and facilitates debugging
+      if (json.batch.length === 1) {
+        this.processMessage(json.batch[0]);
+      } else {
+        for (let message of json.batch) {
+          this.processMessage(message);
+        }
       }
     } else {
       console.warn('A json.batch message was dropped because is not an Array, see debug logs for details');
