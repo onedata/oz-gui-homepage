@@ -6,7 +6,7 @@ import ModalMixin from 'ember-cli-onedata-common/mixins/components/modal';
  * A modal for unsupport space (remove provider support from space).
  * @module components/modals/unsupport-space
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
@@ -65,9 +65,15 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
 
     submit() {
       // TODO This should use relationship removal rather than RPC call
-      let space = this.get('space');
-      let provider = this.get('provider');
-      let i18n = this.get('i18n');
+      let {
+        space,
+        provider,
+        i18n
+      } = this.getProperties(
+        'space',
+        'provider',
+        'i18n'
+      );
       let unsupportSpacePromise =
         this.get('onezoneServer').unsupportSpace(space.get('id'), provider.get('id'));
       unsupportSpacePromise.then(
