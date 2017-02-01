@@ -1,0 +1,9 @@
+{{!-- this is slightly hacky as it fakes the secondary accordion group --}}
+{{!-- TODO: simplify --}}
+<div class="accordion-group secondary-accordion-group {{type}}-accordion-group">
+  <div class="accordion-heading secondary-accordion-heading {{type}}-accordion-heading">
+    <div class={{accordionToggleClass}}>
+      {{yield}}
+    </div>
+  </div>
+</div>

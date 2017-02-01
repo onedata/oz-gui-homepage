@@ -1,75 +1,89 @@
 import Ember from 'ember';
 
+const {
+  String: {
+    camelize,
+    classify
+  },
+  inject,
+  computed,
+  run: {
+    schedule
+  },
+  observer
+} = Ember;
+
+const SIDEBAR_GROUPS = [
+  'accounts', 'spaces', 'providers',
+  'tokens', 'alias', 'groups'
+];
+
+const EXPAND_PARAMS = SIDEBAR_GROUPS.map(name => `expand_${name}`);
+
 /**
  * Controller used mainly for reading query params for expanding particular accordions.
  * See queryParams property.
  * @module controllers/onezone
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Controller.extend({
-  modalsManager: Ember.inject.service(),
+const controller = Ember.Controller.extend({
+  modalsManager: inject.service(),
+  onezoneSidebar: inject.service(),
 
-  modal: Ember.computed.alias('modalsManager.currentModal'),
+  modal: computed.alias('modalsManager.currentModal'),
 
   init: function () {
     this._super();
-    Ember.run.schedule('afterRender',this,function() {
+    schedule('afterRender',this,function() {
       this.send('expandQuerySpecifiedAccordions');
     });
   },
 
-  queryParams: ['expand_accounts', 'expand_spaces', 'expand_providers',
-    'expand_tokens', 'expand_alias'],
-
-  expandAccounts: function() {
-    return this.get('expand_accounts') === 'true';
-  }.property('expand_accounts'),
-
-  expandSpaces: function() {
-    return this.get('expand_spaces') === 'true';
-  }.property('expand_spaces'),
-
-  expandProviders: function() {
-    return this.get('expand_providers') === 'true';
-  }.property('expand_providers'),
-
-  expandTokens: function() {
-    return this.get('expand_tokens') === 'true';
-  }.property('expand_tokens'),
-
-  expandAlias: function() {
-    return this.get('expand_alias') === 'true';
-  }.property('expand_alias'),
-
-  modalInfo: Ember.Object.create({
+  modalInfo: Object.create({
     name: null,
     resolve: null,
     reject: null,
   }),
 
-  actions: {
-    expandQuerySpecifiedAccordions: function() {
-      if (this.get('expandAccounts')) {
-        $('#collapse-accounts').collapse('show');
-      }
-      if (this.get('expandSpaces')) {
-        $('#collapse-spaces').collapse('show');
-      }
-      if (this.get('expandProviders')) {
-        $('#collapse-providers').collapse('show');
-      }
-      if (this.get('expandTokens')) {
-        $('#collapse-tokens').collapse('show');
-      }
-      if (this.get('expandAlias')) {
-        $('#collapse-alias').collapse('show');
-      }
-    },
+  expandProvidersInSidebar: observer('model.providers.{isFulfilled,length}', function() {
+    let providers = this.get('model.providers');
+    if (providers.get('isFulfilled') && providers.get('length') > 0) {
+      schedule('afterRender', this, function() {
+        this.get('onezoneSidebar').expandMain('providers');
+      });      
+    }
+  }),
 
+  actions: {
     closeModal() {
       this.get('modalsManager').closeModal(...arguments);
     }
   },
 });
+
+// Adds query params and 
+
+let expandMixin = {
+  queryParams: EXPAND_PARAMS,
+  actions: {}
+};
+
+EXPAND_PARAMS.forEach(function(prop) {
+  expandMixin[camelize(prop)] = computed(prop, function() {
+    return this.get(prop) === 'true';
+  });
+});
+
+expandMixin.actions['expandQuerySpecifiedAccordions'] = function() {
+  SIDEBAR_GROUPS.forEach(prop => {
+    if (this.get('expand' + classify(prop))) {
+      this.get('onezoneSidebar').expandMain(prop);
+    }
+  });
+};
+
+controller.reopen(expandMixin);
+
+export default controller;

@@ -50,6 +50,7 @@ $body-font: 'Open Sans';
 @import "login";
 @import "onezone";
 @import "notify";
+@import "animate";
 
 // OZ components and styles
 @import "components/c-search";
@@ -64,6 +65,7 @@ $body-font: 'Open Sans';
 @import "components/modal";
 @import "components/provider-place";
 @import "components/provider-place-drop";
+@import "components/groups-panel";
 
 // onedata-common components
 @import "components/button-common";
