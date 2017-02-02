@@ -80,7 +80,7 @@ module.exports = function(defaults) {
   // copy assets for libraries that will be used as separate files (not concatenated into vendor)
   var redocAssets = new Funnel('bower_components/redoc', {
     srcDir: '/dist',
-    include: ['redoc.min.js'],
+    include: ['redoc.min.js', 'redoc.min.js.map'],
     destDir: '/assets'
   });
 

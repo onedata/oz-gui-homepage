@@ -8,7 +8,7 @@
  * - document.parentOrigin: String - window.location.origin of OZ app in time when it generated iframe content
  * 
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
@@ -65,10 +65,14 @@ function jumpToAnchor(anchor) {
   var element;
   switch (type) {
     case 'section':
-      element = document.querySelector('h2[section="' + anchor + '"]');
+      element = document.querySelector('h1[section="' + anchor + '"],h2[section="' + anchor + '"]');
       break;
     case 'tag':
-      element = document.querySelector('div.tag-info[section="' + anchor + '"]');
+      element = document.querySelector('div.tag-info a.share-link[orig-href="#' + anchor + '"]');
+      // find .tag-info parent
+      while (!element.classList.contains('tag-info')) {
+        element = element.parentElement;
+      }
       break;
     case 'operation':
       var operationId = anchor.match(/operation\/(.*)/)[1];
@@ -143,7 +147,7 @@ var __ONEDATA__redocCheckReadyId = null;
 function checkReady() {
   if (__ONEDATA__redocIsReady) {
     window.clearInterval(__ONEDATA__redocCheckReadyId);
-  } else if (document.querySelector('api-logo')) {
+  } else if (!document.querySelector('redoc.loading')) {
     __ONEDATA__redocIsReady = true;
     afterRender();
   }

@@ -1,5 +1,15 @@
 import Ember from 'ember';
 
+const {
+  Controller,
+  computed,
+  computed: {
+    alias
+  },
+  inject,
+  observer
+} = Ember;
+
 /**
  * Needed for:
  * - updating ``api`` controller properties after API version and component choose (in route)
@@ -11,16 +21,40 @@ import Ember from 'ember';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Controller.extend({
-  apiController: Ember.inject.controller('home.api'),
+export default Controller.extend({
+  apiController: inject.controller('home.api'),
 
   queryParams: ['anchor'],
   anchor: null,
 
-  apiComponent: Ember.computed.alias('model.apiComponent'),
-  apiVersion: Ember.computed.alias('model.apiVersion'),
+  /**
+   * Should contain default version of API.
+   * Should be set by route in ``setupController``.
+   * @type {String}
+   */
+  defaultVersion: null,
 
-  apiComponentOrVersionUpdated: Ember.observer('apiComponent', 'apiVersion', function() {
+  apiComponent: alias('model.apiComponent'),
+  apiVersion: alias('model.apiVersion'),
+
+  /**
+   * A version of API passed to iframe with ReDoc.
+   * As the iframe with API will read specific version,
+   * we need to convert special version strings to specific versions.
+   * Eg. latest to specific latest.
+   * 
+   * @type {computed<string>}
+   */
+  iframeApiVersion: computed('apiVersion', function() {
+    let apiVersion = this.get('apiVersion');
+    if (apiVersion === 'latest') {
+      return this.get('defaultVersion');
+    } else {
+      return apiVersion;
+    }
+  }),
+
+  apiComponentOrVersionUpdated: observer('apiComponent', 'apiVersion', function() {
     let {apiComponent, apiVersion} = this.getProperties('apiComponent', 'apiVersion');
     this.get('apiController').setProperties({apiComponent, apiVersion});
   }),

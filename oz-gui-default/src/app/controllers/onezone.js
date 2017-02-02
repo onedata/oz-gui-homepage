@@ -47,9 +47,12 @@ const controller = Ember.Controller.extend({
     reject: null,
   }),
 
+  __providersDidExpand: false,
+
   expandProvidersInSidebar: observer('model.providers.{isFulfilled,length}', function() {
     let providers = this.get('model.providers');
-    if (providers.get('isFulfilled') && providers.get('length') > 0) {
+    if (!this.get('__providersDidExpand') && providers.get('isFulfilled') && providers.get('length') > 0) {
+      this.set('__providersDidExpand', true);
       schedule('afterRender', this, function() {
         this.get('onezoneSidebar').expandMain('providers');
       });      
