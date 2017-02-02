@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 const {
-  computed
+  computed,
+  observer
 } = Ember;
 
 /**
@@ -42,5 +43,23 @@ export default Ember.Component.extend({
     return this.get('providers.length') > 0 &&
       this.get('providers').filterBy('isWorking', true).length === 0;
   }),
+
+  init() {
+    this._super(...arguments);
+    this.notifyGetSupport();
+  },
+
+  notifyGetSupport: observer('modalGetSupport', function() {
+    let modalGetSupport = this.get('modalGetSupport');
+    if (modalGetSupport) {
+      this.sendAction('needSupport');
+    }
+  }),
+
+  actions: {
+    goToTab(tab) {
+      this.sendAction('goToTab', tab);
+    }
+  }
 
 });

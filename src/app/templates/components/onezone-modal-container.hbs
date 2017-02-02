@@ -10,9 +10,28 @@
 
 {{#if modalGetSupport}}
   {{#panel-onezone title="onezone.messages.getSupport.title" useI18n=true}}
-    {{t 'onezone.messages.getSupport.text'
-      manageDataSpacesTitle=(t 'onezone.sidebar.manageSpacesHead')
-    }}
+    {{t 'onezone.messages.getSupport.intro'}}
+    <ul>
+      <li>
+        {{t "onezone.messages.getSupport.p1_1"}}
+        <span class="oz-modal-link" {{action "goToTab" "spaces"}}>{{t "onezone.sidebar.manageSpacesHead"}}</span>
+        {{t "onezone.messages.getSupport.p1_2"}}
+      </li>
+      <li>
+        {{t "onezone.messages.getSupport.pIfYouHave"}}
+        <strong>{{t "onezone.messages.getSupport.space"}} {{t "onezone.messages.getSupport.invitationToken"}}</strong>,
+        {{t "onezone.messages.getSupport.pVisit"}}
+        <span class="oz-modal-link" {{action "goToTab" "spaces"}}>{{t "onezone.sidebar.manageSpacesHead"}}</span>
+        {{t "onezone.messages.getSupport.p2_2"}}
+      </li>
+      <li>
+        {{t "onezone.messages.getSupport.pIfYouHave"}}
+        <strong>{{t "onezone.messages.getSupport.group"}} {{t "onezone.messages.getSupport.invitationToken"}}</strong>,
+        {{t "onezone.messages.getSupport.pVisit"}}
+        <span class="oz-modal-link" {{action "goToTab" "groups"}}>{{t "onezone.sidebar.manageGroupsHead"}}</span>
+        {{t "onezone.messages.getSupport.p3_2"}}
+      </li>
+    </ul>
   {{/panel-onezone}}
 {{/if}}
 
