@@ -7,7 +7,7 @@ import Ember from 'ember';
  * See methods documentation for information about parameters and the promise's ``resolve`` arguments.
  * @module services/onezone-server
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Service.extend({
@@ -100,33 +100,6 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Fetch user alias stored in backend.
-   *
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully fetched the alias
-   *   - ``data.userAlias`` (string) - an alias
-   * - ``reject(object: error)`` on failure
-   */
-  getUserAlias() {
-    return this.get('server').privateRPC('getUserAlias');
-  },
-
-  /**
-   * Set new user alias in backend.
-   *
-   * @param {String} userAlias A new user alias to set
-   * @returns {RSVP.Promise} A backend operation completion:
-   * - ``resolve(object: data)`` when successfully set new alias
-   *   - ``data.userAlias`` (string) - an alias which was set (should be same as userAlias param)
-   * - ``reject(object: error)`` on failure
-   */
-  setUserAlias(userAlias) {
-    return this.get('server').privateRPC('setUserAlias', {
-      userAlias: userAlias
-    });
-  },
-
-  /**
    * The current user (session user) leaves a space.
    *
    * @param {String} spaceId An ID of the space to leave
@@ -175,15 +148,29 @@ export default Ember.Service.extend({
   /**
    * Use an invitation token to join a space for which the token was generated.
    *
-   * @param {String} token A token generated with ``this.getTokenUserJoinSpace``
+   * @param {String} token A token generated with ``getTokenUserJoinSpace``
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully joined to space
    *   - ``data.spaceId`` - ID of Space record that was joined to
    * - ``reject(object: error)`` on failure
    */
-  store: Ember.inject.service(),
   userJoinSpace(token) {
     return this.get('server').privateRPC('userJoinSpace', {
+      token: token
+    });
+  },
+
+  /**
+   * Use an invitation token to join a group for which the token was generated.
+   *
+   * @param {String} token A token generated with ``getTokenUserJoinGroup``
+   * @returns {RSVP.Promise} A backend operation completion:
+   * - ``resolve(object: data)`` when successfully joined to space
+   *   - ``data.spaceId`` - ID of Space record that was joined to
+   * - ``reject(object: error)`` on failure
+   */
+  userJoinGroup(token) {
+    return this.get('server').privateRPC('userJoinGroup', {
       token: token
     });
   },

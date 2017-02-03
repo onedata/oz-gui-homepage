@@ -1,5 +1,13 @@
 import Ember from 'ember';
 
+const {
+  Route,
+  assert,
+  RSVP: {
+    Promise
+  }
+} = Ember;
+
 /**
  * A route for displaying API doc for specific version and Onedata component. 
  * @module routes/home/api/show-api
@@ -7,7 +15,7 @@ import Ember from 'ember';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Route.extend({
+export default Route.extend({
   /**
    * The model is an Ember.Object with properties:
    * - apiComponent: String
@@ -15,7 +23,7 @@ export default Ember.Route.extend({
    * @type {Ember.Object}
    */
   model({api_component, api_version}) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // if want to implement json-not-found error handler
       // do it here by checking if json is present by GET
       if (api_component && api_version) {
@@ -27,6 +35,16 @@ export default Ember.Route.extend({
         reject();
       }
     });
+  },
+
+  setupController(controller/*, model*/) {
+    this._super(...arguments);
+    let apiModel = this.modelFor('home.api');
+    assert(
+      apiModel && apiModel.hasOwnProperty('default'),
+      'apiModel should be non-null and include non-empty "default" attribute'
+    );
+    controller.set('defaultVersion', apiModel.default);
   },
 
   serialize({apiVersion, apiComponent}) {

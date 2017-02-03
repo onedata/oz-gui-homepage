@@ -296,6 +296,10 @@
             cursor: pointer; cursor: hand;
           }
 
+          &.no-background {
+            background-color: transparent;
+          }
+
           &.create-new {
             &.first-create-new {
               margin-top: 20px;

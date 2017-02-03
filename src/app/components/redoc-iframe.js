@@ -151,7 +151,11 @@ export default Ember.Component.extend({
   didInsertElement() {
     let {windowMessages, anchor} = this.getProperties('windowMessages', 'anchor');
 
-    windowMessages.onWindowMessage('redoc-rendered', () => this.changeRedocAnchor(anchor));
+    windowMessages.onWindowMessage('redoc-rendered', () => {
+      if (anchor) {
+        this.changeRedocAnchor(anchor);
+      }
+    });
 
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');

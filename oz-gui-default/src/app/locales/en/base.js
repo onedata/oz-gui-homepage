@@ -108,6 +108,12 @@ export default {
         label: 'Enter a token of a space to join:',
         joinSuccess: 'Successfully joined space "{{spaceName}}"',
         joinFailed: 'Cannot join space: "{{errorDetails}}"',
+      },
+      joinGroup: {
+        title: 'Join a group',
+        label: 'Enter a token of a group to join:',
+        joinSuccess: 'Successfully joined group "{{groupName}}"',
+        joinFailed: 'Cannot join group: "{{errorDetails}}"',
       }
     },
     socialBoxList: {
@@ -154,10 +160,17 @@ export default {
       },
       getSupport: {
         title: 'Get support',
-        text: 'Currently, none of your spaces is supported by any provider. ' +
-        'You need support from at least one provider to store data in ' +
-        'a space. To get support, go to "{{manageDataSpacesTitle}}" menu, get a ' +
-        'support token for chosen space and pass it to a provider of your choice.'
+        intro: 'To store data, you need to belong to a space that is supported by at least one provider. ' +
+          'There are three ways to achieve this:',
+        space: 'space',
+        group: 'group',
+        invitationToken: 'invitation token',
+        p1_1: 'Visit a',
+        p1_2: 'tab, get a support token for one of your spaces (you can create one at this point) and pass it to a provider of your choice, asking for support',
+        pIfYouHave: 'If you have a',
+        pVisit: 'visit',
+        p2_2: 'tab and join an existing space',
+        p3_2: 'tab and join a group to gain access to spaces of that group'
       },
       firstLogin: {
         title: 'First login',
@@ -170,11 +183,12 @@ export default {
       }
     },
     sidebar: {
-      connectHead: 'authentication settings',
-      manageSpacesHead: 'data space management',
-      filesHead: 'go to your files',
-      tokensHead: 'access tokens',
-      aliasHead: 'user alias'
+      connectHead: 'Authentication settings',
+      manageSpacesHead: 'Data space management',
+      manageGroupsHead: 'Group management',
+      filesHead: 'Go to your files',
+      tokensHead: 'Access tokens',
+      aliasHead: 'User alias'
     },
     topBar: {
       manageProviders: 'manage account',
@@ -190,6 +204,9 @@ export default {
       connectNewAccount: 'Connect new account',
       connectBy: 'Connect by'
     },
+    groupsList: {
+      joinGroup: 'Join a group',
+    },
     spacesAccordion: {
       spacesList: 'spaces list',
       createNewSpace: 'Create new space',
@@ -200,14 +217,17 @@ export default {
       noViewPermissions: 'You do not have privileges to view details of this space.',
     },
     spacesAccordionItem: {
-      getSupport: 'Get support'
+      getSupport: 'Get support',
+      toggleDefaultFailed: 'Changing default space failed: {{errorMessage}}'
     },
     providersAccordion: {
       providersList: 'providers list',
       chooseProvider: 'Choose Provider',
       noProviders: 'No providers, get support first.'
     },
-    providersAccordionItem: {},
+    providersAccordionItem: {
+      toggleDefaultFailed: 'Changing default provider failed: {{errorMessage}}'
+    },
     tokensAccordion: {
       tokensList: 'tokens list',
       createNewToken: 'Create new access token',

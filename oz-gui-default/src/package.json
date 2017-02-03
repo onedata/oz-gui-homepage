@@ -1,6 +1,6 @@
 {
   "name": "oz-worker-gui",
-  "version": "3.0.0-rc6",
+  "version": "3.0.0-rc12",
   "description": "GUI for oz-worker",
   "private": true,
   "directories": {
@@ -55,6 +55,7 @@
     "ember-notify": "5.1.7",
     "ember-page-title": "3.0.6",
     "ember-resolver": "2.0.3",
+    "ember-rollback-relationships": "1.0.2",
     "ember-simple-auth": "1.1.0",
     "ember-sinon": "0.5.1",
     "ember-spin-spinner": "0.3.1",
