@@ -9,7 +9,6 @@ Router.map(function() {
   this.route('home', function() {
     [
       'get-started',
-      'documentation',
       // 'community',
       // 'download',
       'support',
@@ -23,6 +22,10 @@ Router.map(function() {
 
     this.route('api', function() {
       this.route('show-api', {path: ':api_version/:api_component'});
+    });
+
+    this.route('documentation', function() {
+      this.route('show', {path: ':gitbook_path'});
     });
   });
 

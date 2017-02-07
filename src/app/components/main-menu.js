@@ -32,14 +32,6 @@ export default Ember.Component.extend({
       i.showAuthenticated = false;
     });
 
-    // For documentation tab, add external URL (this is done by setting the
-    // url property)
-    let docItem = menuItems.find((i) => i.linkTo === 'home.documentation');
-    if (docItem) {
-      // Under this path, the docker with documentation should be mounted
-      docItem.url = '/docs/index.html';
-    }
-
     menuItems.forEach((i) => {
       console.log(i.linkTo + ' ' + i.url);
     });
