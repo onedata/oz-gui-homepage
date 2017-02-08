@@ -25,7 +25,7 @@ Router.map(function() {
     });
 
     this.route('documentation', function() {
-      this.route('show', {path: ':gitbook_path'});
+      this.route('show', {path: '*gitbook_path'});
     });
   });
 

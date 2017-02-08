@@ -6,12 +6,13 @@ const {
 
 export default Route.extend({
   model({ gitbook_path }) {
+    // FIXME do not allow to pass absolute URLs
     return gitbook_path;
   },
 
   setupController(controller, model) {
     this._super(...arguments);
-    controller.set('gitbookPath', model);
+    controller.set('startGitbookPath', model);
   },
 
   actions: {
