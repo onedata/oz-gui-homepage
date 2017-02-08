@@ -7,6 +7,10 @@ const {
 
 const DOCUMENTATION_PREFIX = '/documentation';
 
+function stripDocumentationPath(path) {
+  return path.match(new RegExp(DOCUMENTATION_PREFIX + '/(.*)'))[1];
+}
+
 export default Component.extend({
   tagName: 'iframe',
   classNames: ['documentation-iframe'],
@@ -28,13 +32,16 @@ export default Component.extend({
 
   aboveElementSelector: '.container-home',
 
-  onLoad(iframe/*, event*/) {
+  // FIXME on page doc/using_onedata/privilege_management.html#something link to privilege_management.html doesn't change location
+
+  iframeBodyClicked(/*event*/) {
     // FIXME
+    let iframe = this.$()[0];
     console.log('new location: ' + iframe.contentWindow.location);
     let iframeLocation = iframe.contentWindow.location;
     let isLocal = window.location.origin === iframeLocation.origin;
     if (isLocal) {
-      let path = iframeLocation.path;
+      let path = stripDocumentationPath(iframeLocation.pathname) + (iframeLocation.hash || '');
       console.log('FIXME: change url part to: ' + path);
       this.send('gitbookPathChanged', path);
     } else {
@@ -46,11 +53,15 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-
+    
     let self = this;
 
-    this.$().on('load', function(event) {
-      self.onLoad(this, event);
+    this.$().on('load', function () {
+      // FIXME on bad url, this will be not invoked (cross origin frame), so we should catch exception and set index!
+      $(this.contentWindow.document.body).on('click', (event) => {
+        // FIXME: should poll url to change after click
+        setTimeout(() => self.iframeBodyClicked(event), 0);
+      });
     });
 
     // FIXME same as redoc-iframe - common!
