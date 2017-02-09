@@ -11,7 +11,7 @@ import {
 const gitbookUrl = new GitbookUrl(
   window.location.origin,
   '/documentation',
-  '/home/documentation'
+  '/#/home/documentation'
 );
 
 const {
