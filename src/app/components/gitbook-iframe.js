@@ -1,68 +1,23 @@
 import Ember from 'ember';
 
+import GitbookUrl from 'oz-worker-gui/utils/gitbook-url';
+
+import {
+  isAbsoluteUrl,
+  absolutePath,
+  absoluteUrl
+} from 'oz-worker-gui/utils/urls';
+
+const gitbookUrl = new GitbookUrl(
+  window.location.origin,
+  '/documentation',
+  '/home/documentation'
+);
+
 const {
   Component,
   assert
 } = Ember;
-
-const ORIGIN = window.location.origin;
-const DOCUMENTATION_PREFIX = '/documentation';
-const HOMEPAGE_DOCUMENTATION_PREFIX = '/#/home/documentation';
-const RE_DOCUMENTATION_URL = new RegExp(ORIGIN + DOCUMENTATION_PREFIX + '/(.*)');
-const RE_HOMEPAGE_URL = new RegExp(ORIGIN + HOMEPAGE_DOCUMENTATION_PREFIX + '/(.*)');
-const RE_ABSOLUTE_URL = new RegExp('^(?:[a-z]+:)?//', 'i');
-
-function gitbookPathToSrc(gitbookPath='index.html') {
-  return DOCUMENTATION_PREFIX + '/' + gitbookPath;
-}
-
-function gitbookUrl(gitbookPath) {
-  return ORIGIN + gitbookPathToSrc(gitbookPath);
-}
-
-function isAbsoluteUrl(url) {
-  return RE_ABSOLUTE_URL.test(url);
-}
-
-/**
- * http://stackoverflow.com/a/14780463
- */
-function absolutePath(base, relative) {
-  var stack = base.split("/"),
-    parts = relative.split("/");
-  // (omit if "base" is the current folder without trailing slash)
-  stack.pop(); // remove current file name (or empty string)
-  for (var i = 0; i < parts.length; i++) {
-    if (parts[i] === ".") {
-      continue;
-    }
-    if (parts[i] === "..") {
-      stack.pop();
-    } else {
-      stack.push(parts[i]);
-    }
-  }
-  return stack.join("/");
-}
-
-
-// FIXME X ignore absolute links
-// FIXME X convert relative ../ and ./ in links - should use base of current iframe url
-function homepageLink(originalHref, gitbookBase) {
-  if (isAbsoluteUrl(originalHref)) {
-    return originalHref;
-  } else {
-    return ORIGIN + HOMEPAGE_DOCUMENTATION_PREFIX + '/' + absolutePath(gitbookBase, originalHref);
-  }
-}
-
-function stripHomepageDocumentationUrl(url) {
-  return url.match(RE_HOMEPAGE_URL)[1];
-}
-
-function stripDocumentationUrl(url) {
-  return url.match(RE_DOCUMENTATION_URL)[1];
-}
 
 export default Component.extend({
   tagName: 'iframe',
@@ -80,7 +35,7 @@ export default Component.extend({
       'component:gitbook-iframe: startSrc should not be null',
       startGitbookPath
     );
-    this.set('src', gitbookPathToSrc(startGitbookPath));
+    this.set('src', gitbookUrl.gitbookPathToSrc(startGitbookPath));
   },
 
   aboveElementSelector: '.container-home',
@@ -100,49 +55,41 @@ export default Component.extend({
     if (isAbsoluteUrl(origHref)) {
       window.location = origHref;
     } else {
-      // FIXME
+      let startGitbookPath = this.get('startGitbookPath');
+      let hrefAbsolutePath = absolutePath(startGitbookPath, origHref);
+
+      if (hrefAbsolutePath.startsWith('/')) {
+        hrefAbsolutePath = hrefAbsolutePath.substr(1);
+      }
+
+      // FIXME check this code
+      // FIXME check if origHref is used somewhere - if no, maybe set absolute path to every <a>
+      this.send(
+        'gitbookPathChanged',
+        hrefAbsolutePath
+      );
       // let gitbookPath = stripHomepageDocumentationUrl(anchor.getAttribute('href'));
       // this.send('gitbookPathChanged', gitbookPath);
 
-      // iframe.contentWindow.location = gitbookUrl(origHref);
-      // FIXME
-      document.getElementsByTagName('iframe')[0].contentWindow.location = gitbookUrl(origHref);
-    }    
-  },
-
-  iframeBodyClicked(event) {
-    if (event.target.tagName === 'A') {
-      this.linkClicked(event);
+      // FIXME if absoluteUrl is used only here, check if it can use evaluated absoluteUrl
+      // FIXME possible DOMException (cross-origin iframe)
+      iframe.contentWindow.location = absoluteUrl(origHref, iframe.contentDocument);
     }
   },
-    // otherwise - something that is not a link was clicked
-    // FIXME: check not-links (buttons?)
-
-    // FIXME - move features to this.linkClicked
-  //   let iframe = this.$()[0];
-  //   console.log('new location: ' + iframe.contentWindow.location);
-  //   let iframeLocation = iframe.contentWindow.location;
-  //   let isLocal = window.location.origin === iframeLocation.origin;
-  //   if (isLocal) {
-  //     let path = stripDocumentationUrl(iframeLocation.href) + (iframeLocation.hash || '');
-  //     console.log('FIXME: change url part to: ' + path);
-  //     this.send('gitbookPathChanged', path);
-  //   } else {
-  //     let url = iframeLocation.href;
-  //     console.debug('component:gitbook-iframe: redirecting to external: ' + url);
-  //     window.location = url;
-  //   }
 
   convertGitbookLinks() {
+    // FIXME can throw accessing cross-origin frame (DOMException)
     let gitbookBody = this.$()[0].contentWindow.document.body;
     let $anchors = $(gitbookBody).find('a');
-    let gitbookBase = this.get('startGitbookPath');
+    let startGitbookPath = this.get('startGitbookPath');
+    let clickHandler = this.linkClicked.bind(this);
     $anchors.each(function() {
       let origHref = this.getAttribute('orig-href');
       if (!origHref) {
         let href = this.getAttribute('href');
         this.setAttribute('orig-href', href);
-        this.setAttribute('href', homepageLink(href, gitbookBase));
+        this.setAttribute('href', gitbookUrl.homepageHref(href, startGitbookPath));
+        this.addEventListener('click', clickHandler);
       }
     });
   },
@@ -150,17 +97,11 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     
-    let self = this;
-
-    this.$().on('load', function () {
-      // FIXME on bad url, this will be not invoked (cross origin frame), so we should catch exception and set index!
-      $(this.contentWindow.document.body).on('click', (event) => {
-        setTimeout(() => self.iframeBodyClicked(event), 0);
-      });
-    });
-
     // FIXME this should be invoked on load page event
-    setInterval(() => this.convertGitbookLinks(), 3000);
+    // this.convertGitbookLinks();
+    // setInterval(() => this.convertGitbookLinks(), 3000);
+
+    this.$().on('load', this.convertGitbookLinks.bind(this));
 
     // FIXME same as redoc-iframe - common!
     let $aboveElement = $(this.get('aboveElementSelector'));
