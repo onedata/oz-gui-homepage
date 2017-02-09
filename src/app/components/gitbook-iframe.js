@@ -43,8 +43,7 @@ export default Component.extend({
   // FIXME on page doc/using_onedata/privilege_management.html#something link to privilege_management.html doesn't change location
 
   linkClicked(event) {
-    // FIXME use some data-gitbook-href to change URL inside iframe
-    let anchor = event.target;
+    let anchor = event.currentTarget;
     event.preventDefault();
     event.stopImmediatePropagation();
     let iframe = this.$()[0];
