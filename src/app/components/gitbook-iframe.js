@@ -8,6 +8,8 @@ import {
   absoluteUrl
 } from 'oz-worker-gui/utils/urls';
 
+// FIXME: documentation should be changed to "docs" or "documentation" should be fetched and built on runtime
+
 const gitbookUrl = new GitbookUrl(
   window.location.origin,
   '/documentation',
@@ -18,6 +20,12 @@ const {
   Component,
   assert
 } = Ember;
+
+/**
+ * A CSS selector for anchors that shouldn't be modified by ``convertGitbookLinks``.
+ * @type {String}
+ */
+const IGNORE_ANCHOR_SELECTOR = '.js-toolbar-action';
 
 export default Component.extend({
   tagName: 'iframe',
@@ -84,7 +92,7 @@ export default Component.extend({
     let clickHandler = this.linkClicked.bind(this);
     $anchors.each(function() {
       let origHref = this.getAttribute('orig-href');
-      if (!origHref) {
+      if (!this.matches(IGNORE_ANCHOR_SELECTOR) && !origHref) {
         let href = this.getAttribute('href');
         this.setAttribute('orig-href', href);
         this.setAttribute('href', gitbookUrl.homepageHref(href, startGitbookPath));
