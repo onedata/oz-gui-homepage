@@ -1,9 +1,3 @@
-// FIXME handle forbidden
-// FIXME links in sidebar are "nested" sometimes (eg. doc/cos/doc/inne)
-// FIXME homepageAbsoluteUrl links with hash are wrongly generated: https://veilfsdev.com/#/home/documentation/doc/using_onedata/space_management.html/#create-new-spaceindex.html
-
-// FIXME these static methods can be moved to other file
-
 import {
   isAbsoluteUrl,
   isAbsolutePath,
@@ -43,8 +37,6 @@ class GitbookUrl {
     return url;
   }
 
-  // FIXME X ignore absolute links
-  // FIXME X convert relative ../ and ./ in links - should use base of current iframe url
   homepageHref(originalHref, startGitbookPath) {
     if (isAbsoluteUrl(originalHref)) {
       return originalHref;

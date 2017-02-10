@@ -2,8 +2,6 @@ import Ember from 'ember';
 
 import GitbookUrl from 'oz-worker-gui/utils/gitbook-url';
 
-// FIXME back button in browser support
-
 import {
   isAbsoluteUrl,
   absolutePath,
@@ -35,8 +33,6 @@ export default Component.extend({
   classNames: ['documentation-iframe'],
   attributeBindings: ['src'],
 
-  // FIXME: do not change src if already changed inside iframe
-
   startGitbookPath: null,
   _preventNextLocationChange: false,
 
@@ -67,8 +63,6 @@ export default Component.extend({
 
   aboveElementSelector: '.container-home',
 
-  // FIXME on page doc/using_onedata/privilege_management.html#something link to privilege_management.html doesn't change location
-
   linkClicked(event) {
     let anchor = event.currentTarget;
     event.preventDefault();
@@ -77,7 +71,6 @@ export default Component.extend({
 
     let origHref = anchor.getAttribute('orig-href');
 
-    // FIXME X proper handle of absolute urls - prevent changing iframe location
     if (isAbsoluteUrl(origHref)) {
       window.location = origHref;
     } else {
@@ -88,24 +81,17 @@ export default Component.extend({
         hrefAbsolutePath = hrefAbsolutePath.substr(1);
       }
 
-      // FIXME check if origHref is used somewhere - if no, maybe set absolute path to every <a>
       this.set('_preventNextLocationChange', true);
       this.send(
         'gitbookPathChanged',
         hrefAbsolutePath
       );
-      // let gitbookPath = stripHomepageDocumentationUrl(anchor.getAttribute('href'));
-      // this.send('gitbookPathChanged', gitbookPath);
-
-      // FIXME if absoluteUrl is used only here, check if it can use evaluated absoluteUrl
-      // FIXME possible DOMException (cross-origin iframe)
       iframe.contentWindow.location = absoluteUrl(origHref, iframe.contentDocument);
     }
   },
 
   convertGitbookLinks() {
-    // FIXME can throw accessing cross-origin frame (DOMException)
-    let gitbookBody = this.$()[0].contentWindow.document.body;
+    let gitbookBody = this.element.contentWindow.document.body;
     let $anchors = $(gitbookBody).find('a');
     let startGitbookPath = this.get('startGitbookPath');
     startGitbookPath = stripHash(startGitbookPath);
@@ -122,6 +108,7 @@ export default Component.extend({
   },
 
   gitbookPageLoaded() {
+    // FIXME can throw accessing cross-origin frame (DOMException) - handle invalid links
     let currentGitbookPath = gitbookUrl.stripDocumentationUrl(this.element.contentWindow.location.href);
     if (currentGitbookPath !== this.get('startGitbookPath')) {
       this.set('_preventNextLocationChange', true);
