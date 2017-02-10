@@ -8,11 +8,9 @@ import {
   absoluteUrl
 } from 'oz-worker-gui/utils/urls';
 
-// FIXME: documentation should be changed to "docs" or "documentation" should be fetched and built on runtime
-
 const gitbookUrl = new GitbookUrl(
   window.location.origin,
-  '/documentation',
+  '/docs',
   '/#/home/documentation'
 );
 

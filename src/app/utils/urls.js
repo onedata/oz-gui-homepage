@@ -25,13 +25,12 @@ export function isDirectoryPath(path) {
  * @return {String} absolute resource path (without origin, so this is not full URL!)
  */
 export function absolutePath(base, relative) {
+  let absolutePath;
   if (relative.startsWith('#')) {
-    return base + relative;
+    absolutePath = base + relative;
   } else {
     var stack = base.split("/"),
       parts = relative.split("/");
-    // FIXME: check what if relative is href to other HTML file with hash
-    // if relative href is only hash, do not remove HTML file name
     stack.pop(); // remove current file name (or empty string)
     for (var i = 0; i < parts.length; i++) {
       if (parts[i] === ".") {
@@ -43,8 +42,12 @@ export function absolutePath(base, relative) {
         stack.push(parts[i]);
       }
     }
-    return '/' + stack.join("/");
+    absolutePath = stack.join("/");
   }
+  if (!absolutePath.startsWith('/')) {
+    absolutePath = '/' + absolutePath;
+  }
+  return absolutePath;
 }
 
 /**

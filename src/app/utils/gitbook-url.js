@@ -39,7 +39,7 @@ class GitbookUrl {
       }
       path += 'index.html';
     }
-    let url = this.origin + this.homepageDocumentationPrefix + '/' + path;
+    let url = this.origin + this.homepageDocumentationPrefix + path;
     return url;
   }
 
