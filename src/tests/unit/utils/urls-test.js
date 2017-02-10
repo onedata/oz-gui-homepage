@@ -59,6 +59,14 @@ describe('Unit | Utility | urls', function() {
     
     expect(result).to.be.equal('/hello/foo.html#world');
   });
+  it('has absolutePath function which handles base paths with hashes', function () {
+    let absolutePath = urls.absolutePath;
+    expect(absolutePath).to.be.ok;
+
+    let result = absolutePath('/hello/foo.html#one', '#world');
+
+    expect(result).to.be.equal('/hello/foo.html#world');
+  });
   it('has absolutePath function which generates valid URLs from relative paths with parent dirs', function() {
     let absolutePath = urls.absolutePath;
     expect(absolutePath).to.be.ok;
@@ -80,5 +88,37 @@ describe('Unit | Utility | urls', function() {
     );
     
     expect(result).to.be.equal('/hello/world/other/bar.html');
+  });
+  it('has serializePathWithHash which leaves non-hashed paths without changes', function() {
+    let serializePathWithHash = urls.serializePathWithHash;
+    expect(serializePathWithHash).to.be.ok;
+
+    let path = 'something/completely/different.html';
+
+    let result = serializePathWithHash(path);
+    expect(result).to.be.equal(path);
+  });
+  it('has serializePathWithHash which serializes document path', function () {
+    let serializePathWithHash = urls.serializePathWithHash;
+    expect(serializePathWithHash).to.be.ok;
+
+    let result = serializePathWithHash('something/completely/different.html#some-other');
+    expect(result).to.be.equal('something/completely/different[some-other].html');
+  });
+  it('has deserializePathWithHash which leaves non-hashed paths without changes', function () {
+    let deserializePathWithHash = urls.deserializePathWithHash;
+    expect(deserializePathWithHash).to.be.ok;
+
+    let path = 'something/completely/different.html';
+
+    let result = deserializePathWithHash(path);
+    expect(result).to.be.equal(path);
+  });
+  it('has deserializePathWithHash which deserializes document path', function () {
+    let deserializePathWithHash = urls.deserializePathWithHash;
+    expect(deserializePathWithHash).to.be.ok;
+
+    let result = deserializePathWithHash('something/completely/different[some-other].html');
+    expect(result).to.be.equal('something/completely/different.html#some-other');
   });
 });

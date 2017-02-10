@@ -1,23 +1,33 @@
 import Ember from 'ember';
 
+import {
+  serializePathWithHash,
+  deserializePathWithHash,
+  isAbsoluteUrl
+} from 'oz-worker-gui/utils/urls';
+
 const {
-  Route
+  Route,
+  RSVP: {
+    Promise
+  }
 } = Ember;
 
 export default Route.extend({
   model({ gitbook_path }) {
-    // FIXME do not allow to pass absolute URLs
-    return gitbook_path;
-  },
-
-  setupController(controller, model) {
-    this._super(...arguments);
-    controller.set('startGitbookPath', model);
+    return new Promise((resolve, reject) => {
+      if (isAbsoluteUrl(gitbook_path)) {
+        console.error('Tried to pass absolute URL as documentation source');
+        reject();
+      } else {
+        resolve(deserializePathWithHash(gitbook_path));
+      }
+    });
   },
 
   actions: {
     gitbookPathChanged(path) {
-      this.transitionTo('home.documentation.show', path);
+      this.transitionTo('home.documentation.show', serializePathWithHash(path));
     }
   }
 });

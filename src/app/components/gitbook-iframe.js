@@ -2,10 +2,14 @@ import Ember from 'ember';
 
 import GitbookUrl from 'oz-worker-gui/utils/gitbook-url';
 
+// FIXME back button in browser support
+
 import {
   isAbsoluteUrl,
   absolutePath,
-  absoluteUrl
+  absoluteUrl,
+  serializePathWithHash,
+  stripHash
 } from 'oz-worker-gui/utils/urls';
 
 const gitbookUrl = new GitbookUrl(
@@ -16,7 +20,8 @@ const gitbookUrl = new GitbookUrl(
 
 const {
   Component,
-  assert
+  assert,
+  observer
 } = Ember;
 
 /**
@@ -33,15 +38,31 @@ export default Component.extend({
   // FIXME: do not change src if already changed inside iframe
 
   startGitbookPath: null,
+  _preventNextLocationChange: false,
 
-  init() {
-    this._super(...arguments);
+  startGitbookPathChanged: observer('startGitbookPath', function() {
+    let _preventNextLocationChange = this.get('_preventNextLocationChange');
+    if (_preventNextLocationChange) {
+      this.set('_preventNextLocationChange', false);
+    } else {
+      this.updateIframeSrc();
+    }
+    console.log('startGitbookPath: ' + this.get('startGitbookPath'));
+  }),
+
+  updateIframeSrc() {
     let startGitbookPath = this.get('startGitbookPath');
     assert(
       'component:gitbook-iframe: startSrc should not be null',
       startGitbookPath
     );
     this.set('src', gitbookUrl.gitbookPathToSrc(startGitbookPath));
+  },
+
+  init() {
+    this._super(...arguments);
+        
+    this.startGitbookPathChanged();
   },
 
   aboveElementSelector: '.container-home',
@@ -67,8 +88,8 @@ export default Component.extend({
         hrefAbsolutePath = hrefAbsolutePath.substr(1);
       }
 
-      // FIXME check this code
       // FIXME check if origHref is used somewhere - if no, maybe set absolute path to every <a>
+      this.set('_preventNextLocationChange', true);
       this.send(
         'gitbookPathChanged',
         hrefAbsolutePath
@@ -87,13 +108,14 @@ export default Component.extend({
     let gitbookBody = this.$()[0].contentWindow.document.body;
     let $anchors = $(gitbookBody).find('a');
     let startGitbookPath = this.get('startGitbookPath');
+    startGitbookPath = stripHash(startGitbookPath);
     let clickHandler = this.linkClicked.bind(this);
     $anchors.each(function() {
       let origHref = this.getAttribute('orig-href');
       if (!this.matches(IGNORE_ANCHOR_SELECTOR) && !origHref) {
         let href = this.getAttribute('href');
         this.setAttribute('orig-href', href);
-        this.setAttribute('href', gitbookUrl.homepageHref(href, startGitbookPath));
+        this.setAttribute('href', serializePathWithHash(gitbookUrl.homepageHref(href, startGitbookPath)));
         this.addEventListener('click', clickHandler);
       }
     });

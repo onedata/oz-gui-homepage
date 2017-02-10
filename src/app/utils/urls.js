@@ -27,7 +27,7 @@ export function isDirectoryPath(path) {
 export function absolutePath(base, relative) {
   let absolutePath;
   if (relative.startsWith('#')) {
-    absolutePath = base + relative;
+    absolutePath = stripHash(base) + relative;
   } else {
     var stack = base.split("/"),
       parts = relative.split("/");
@@ -60,4 +60,22 @@ export function absoluteUrl(href, localDocument = document) {
   var link = localDocument.createElement("a");
   link.href = href;
   return (link.protocol + "//" + link.host + link.pathname + link.search + link.hash);
+}
+
+const RE_PATH_WITH_HASH =  /^(.*)\.html#(.*)$/;
+
+export function serializePathWithHash(rawPath) {
+  return rawPath.replace(RE_PATH_WITH_HASH, '$1[$2].html');
+}
+
+const RE_SERIALIZED_PATH_WITH_HASH = /^(.*?)\[(.*?)\].html$/;
+
+export function deserializePathWithHash(serializedPath) {
+  return serializedPath.replace(RE_SERIALIZED_PATH_WITH_HASH, '$1.html#$2');
+}
+
+const RE_STRIP_HASH = /(.*)?#.*/;
+
+export function stripHash(path) {
+  return path.replace(RE_STRIP_HASH, '$1');
 }
