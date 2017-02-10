@@ -121,14 +121,22 @@ export default Component.extend({
     });
   },
 
+  gitbookPageLoaded() {
+    let currentGitbookPath = gitbookUrl.stripDocumentationUrl(this.element.contentWindow.location.href);
+    if (currentGitbookPath !== this.get('startGitbookPath')) {
+      this.set('_preventNextLocationChange', true);
+      this.send(
+        'gitbookPathChanged',
+        currentGitbookPath
+      );
+    }
+    this.convertGitbookLinks();
+  },
+
   didInsertElement() {
     this._super(...arguments);
-    
-    // FIXME this should be invoked on load page event
-    // this.convertGitbookLinks();
-    // setInterval(() => this.convertGitbookLinks(), 3000);
 
-    this.$().on('load', this.convertGitbookLinks.bind(this));
+    this.$().on('load', this.gitbookPageLoaded.bind(this));
 
     // FIXME same as redoc-iframe - common!
     let $aboveElement = $(this.get('aboveElementSelector'));
