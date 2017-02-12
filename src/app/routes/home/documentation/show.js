@@ -28,6 +28,9 @@ export default Route.extend({
   actions: {
     gitbookPathChanged(path) {
       this.transitionTo('home.documentation.show', serializePathWithHash(path));
+    },
+    invalidPageOpened() {
+      this.transitionTo('home.documentation');
     }
   }
 });

@@ -1,5 +1,9 @@
 <div class="container-index container-gitbook">
   <div class="row-index row-gitbook">
-    {{gitbook-iframe startGitbookPath=model gitbookPathChanged="gitbookPathChanged"}}
+    {{gitbook-iframe
+      startGitbookPath=model
+      gitbookPathChanged="gitbookPathChanged"
+      invalidPageOpened="invalidPageOpened"
+    }}
   </div>
 </div>

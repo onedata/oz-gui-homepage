@@ -1,3 +1,4 @@
+/* global DOMException */
 import Ember from 'ember';
 
 import GitbookUrl from 'oz-worker-gui/utils/gitbook-url';
@@ -10,15 +11,17 @@ import {
   stripHash
 } from 'oz-worker-gui/utils/urls';
 
+const DOCUMENTATION_PREFIX = '/docs';
+const DOCUMENTATION_INDEX = DOCUMENTATION_PREFIX + '/index.html';
+
 const gitbookUrl = new GitbookUrl(
   window.location.origin,
-  '/docs',
+  DOCUMENTATION_PREFIX,
   '/#/home/documentation'
 );
 
 const {
   Component,
-  assert,
   observer
 } = Ember;
 
@@ -27,6 +30,15 @@ const {
  * @type {String}
  */
 const IGNORE_ANCHOR_SELECTOR = '.js-toolbar-action';
+
+function isGitbookDocument(doc) {
+  return !!doc.querySelector('body > .book');
+}
+
+function isDOMSecurityError(error) {
+  return error instanceof DOMException &&
+    error.code === DOMException.SECURITY_ERR;
+}
 
 export default Component.extend({
   tagName: 'iframe',
@@ -48,10 +60,7 @@ export default Component.extend({
 
   updateIframeSrc() {
     let startGitbookPath = this.get('startGitbookPath');
-    assert(
-      'component:gitbook-iframe: startSrc should not be null',
-      startGitbookPath
-    );
+    console.warn('component:gitbook-iframe: startSrc is null, that means that probably iframe tried to open invalid page');
     this.set('src', gitbookUrl.gitbookPathToSrc(startGitbookPath));
   },
 
@@ -107,23 +116,69 @@ export default Component.extend({
     });
   },
 
-  gitbookPageLoaded() {
-    // FIXME can throw accessing cross-origin frame (DOMException) - handle invalid links
-    let currentGitbookPath = gitbookUrl.stripDocumentationUrl(this.element.contentWindow.location.href);
-    if (currentGitbookPath !== this.get('startGitbookPath')) {
-      this.set('_preventNextLocationChange', true);
-      this.send(
-        'gitbookPathChanged',
-        currentGitbookPath
-      );
+  /**
+   * Check if ``doc`` is a valid Gitbook document.
+   * If it is, return true.
+   * Otherwise invoke proper action and write console error and return false. 
+   * @param {HTMLDocument} doc
+   * @return {Boolean} result of validation: true if document is valid
+   */
+  validateGitbookDocument(doc) {
+    if (doc == null) {
+      console.error('component:gitbook-iframe: document of Gitbook iframe is null');
+      this.send('invalidPageOpened');
+      return false;
+    } else if (!isGitbookDocument(doc)) {
+      if (doc.location.pathname === DOCUMENTATION_INDEX) {
+        console.error('component:gitbook-iframe: loaded index document is not valid Gitbook document');
+        return false;
+      } else {
+        console.error('component:gitbook-iframe: a document was not recognized as a valid Gitbook document');
+        this.send('invalidPageOpened');
+        return false;
+      }
+    } else {
+      return true;
     }
-    this.convertGitbookLinks();
+  },
+
+  /**
+   * Handler of main iframe ``load`` event.
+   * Checks if the loaded document is valid and if it is -
+   * invoke optional notify and post-processing.
+   * @param {HTMLIframeElement} iframe
+   */
+  onIframeLoad(iframe) {
+    try {
+      let iframeDocument = iframe.contentWindow.document;
+      if (this.validateGitbookDocument(iframeDocument)) {
+        let currentIframeGitbookPath =
+          gitbookUrl.stripDocumentationUrl(iframeDocument.location.href);
+        if (currentIframeGitbookPath !== this.get('startGitbookPath')) {
+          this.send(
+            'gitbookPathChanged',
+            currentIframeGitbookPath
+          );
+        }
+        this.convertGitbookLinks();
+      }
+    } catch (error) {
+      if (isDOMSecurityError(error)) {
+        console.error('component:gitbook-iframe: security error on loading Gitbook document');
+        this.send('invalidPageOpened');
+      } else {
+        throw error;
+      }
+    }
   },
 
   didInsertElement() {
     this._super(...arguments);
+    let self = this;
 
-    this.$().on('load', this.gitbookPageLoaded.bind(this));
+    this.element.addEventListener('load', function() {
+      self.onIframeLoad(this);
+    });
 
     // FIXME same as redoc-iframe - common!
     let $aboveElement = $(this.get('aboveElementSelector'));
@@ -143,12 +198,19 @@ export default Component.extend({
   },
 
   didRender() {
+    // FIXME debug to remove
     console.debug('iframe did render');
   },
 
   actions: {
     gitbookPathChanged(path) {
+      this.set('_preventNextLocationChange', true);
       this.sendAction('gitbookPathChanged', path);
+    },
+    invalidPageOpened() {
+      // FIXME force reset to index does not work when internal frame changes location to invalid
+      this.set('startGitbookPath', null);
+      this.sendAction('invalidPageOpened');
     }
   }
 });
