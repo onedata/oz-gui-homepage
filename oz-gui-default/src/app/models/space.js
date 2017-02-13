@@ -1,18 +1,63 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+
+import isDefaultMixinFactory from 'ember-cli-onedata-common/mixin-factories/models/is-default';
+
+const {
+  attr,
+  hasMany,
+  belongsTo
+} = DS;
+
+const {
+  inject
+} = Ember;
 
 /**
  * Space representation.
  * @module models/space
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default DS.Model.extend({
-  name: DS.attr('string'),
+export default DS.Model.extend(isDefaultMixinFactory('defaultSpaceId'), {
+  session: inject.service(),
 
-  /** isDefault is old form of "is home a space" - only one user space can be default */
-  isDefault: DS.attr('boolean', {defaultValue: false}),
+  name: attr('string'),
 
-  /** List of models of providers that support this space */
-  providers: DS.hasMany('provider', {async: true})
+  /**
+   * Total capacity in bytes of this space.
+   * @type {Number}
+   */
+  totalSize: attr('number'),
+
+  /**
+   * Maps: provider name => capacity in bytes provided for this space
+   * @type {Object}
+   */
+  supportSizes: attr('object'),
+
+  /**
+   * If true, user can view list of providers that support this space.
+   * @type {Boolean}
+   */
+  hasViewPrivilege: attr('boolean'),
+
+  /*** Relations ***/
+
+  /**
+   * List of Providers that support this space
+   * @type {Provider[]}
+   */
+  providers: hasMany('provider', {async: true}),
+
+  user: belongsTo('user', {async: true})
+
+  /*** Additional computed properties ***/
+
+  /**
+   * Implemented by ``IsDefault`` mixin
+   * @abstract 
+   * @property {boolean} isDefault
+   */
 });

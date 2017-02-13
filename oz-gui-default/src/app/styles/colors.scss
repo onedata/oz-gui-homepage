@@ -1,5 +1,21 @@
 // colors variables
 
+$onedata-red: #F14549;
+$onedata-azure: #5192EB;
+$onedata-gold: #F5A700;
+$onedata-graphite: #2F333A;
+// TODO: used as a dropright menu background
+$onedata-graphite-2: #2B3037;
+$onedata-gray: #B6BAC0;
+$onedata-snow: #F6F7F8;
+$onedata-light-gray: #F0F0F0;
+$onedata-light-azure: #DCEFFA;
+$onedata-fresh-green: #97C31B;
+$onedata-mint-green: #55E191;
+$onedata-mint-green-pale: #5FC489;
+// TODO: same as graphite?
+$onedata-topbar-graphite: #363A42;
+
 $color-dark-steel: #555C73;
 $color-steel: #6C7692;
 $color-grey-1: #8D8D8D;
@@ -22,18 +38,37 @@ $color-yellow: #F6A500;
 $color-green: #4DC249;
 $color-pale-green: #69CB93;
 
+$color-login-indigo: #341246;
 $color-login-github: #1E2325;
 $color-login-twitter: #6ED3F3;
 $color-login-plgrid: #026381;
 $color-login-google: #F1514F;
 $color-login-dropbox: #86D7F2;
 $color-login-facebook: #5B87C5;
+$color-login-username: $onedata-mint-green-pale;
+$color-login-egi: #0455A1;
+
+$color-modal-message-info: $onedata-mint-green-pale;
+$color-modal-message-warning: #FDC64E;
+$color-modal-message-error: #EC3438;
+
+// these colors are used only for modals buttons
+// TODO: maybe merge with other button styles...
+$color-button-primary: #55E191;
+$color-button-default: #8E8E8E;
 
 $color-dropdown-menu-bg: #2B3037;
 // color from screenshot: #F35154;
 $color-dropdown-menu-bg-hover: $color-red-2;
 
 $onedata-light-gray: $color-grey-2;
+
+$color-notify-background: #2B3037;
+$color-notify-info: $onedata-fresh-green;
+$color-notify-success: $onedata-fresh-green;
+$color-notify-warning: $onedata-gold;
+$color-notify-alert: $onedata-red;
+$color-notify-error: $onedata-red;
 
 // TODO: all colors as classes - use functions
 

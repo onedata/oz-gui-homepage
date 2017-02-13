@@ -5,16 +5,21 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
  * Main entry to onezone application - load neccessary data for application.
  * @module routes/onezone
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  session: Ember.inject.service('session'),
+
+  user: Ember.computed.alias('session.user'),
+
   model() {
-    return {
-      providers: this.store.findAll('provider'),
-      spaces: this.store.findAll('space'),
-      authorizers: this.store.findAll('authorizer'),
-      clienttokens: this.store.findAll('clienttoken')
-    };
+    return this.get('user');
+  },
+
+  actions: {
+    openModal() {
+      this.get('controller').actions['openModal'](...arguments);
+    }
   }
 });

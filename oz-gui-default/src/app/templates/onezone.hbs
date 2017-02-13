@@ -4,7 +4,8 @@
 
 {{onezone-sidebar tagName='nav' class='onezone-sidebar'
   providers=model.providers spaces=model.spaces authorizers=model.authorizers
-  tokens=model.clienttokens}}
+  tokens=model.clienttokens groups=model.groups
+  openModal="openModal"}}
 {{onezone-top-bar tagName='header' class='onezone-top-bar'}}
 
 <div class="onezone-container-application">
@@ -12,3 +13,24 @@
     {{outlet}}
   </div>
 </div>
+
+{{!-- modals --}}
+
+{{dialog-modal open=(eq modal.type "dialog")
+  onConfirm=modal.options.onConfirm
+  onCancel=modal.options.onCancel
+  title=modal.options.title
+  label=modal.options.label
+  btnClass="btn-danger"
+  closeModal=(action "closeModal")
+}}
+
+{{rename-modal open=(eq modal.type "rename")
+  onConfirm=modal.options.onConfirm
+  onCancel=modal.options.onCancel
+  title=modal.options.title
+  label=modal.options.label
+  originalName=modal.options.originalName
+  btnClass="btn-primary"
+  closeModal=(action "closeModal")
+}}

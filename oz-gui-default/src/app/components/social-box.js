@@ -28,8 +28,12 @@ export default Ember.Component.extend({
   }.property('link'),
 
   actions: {
-    authenticate() {
-      this.sendAction('action', this.get('type'));
+    clicked() {
+      if (this.get('hasLink')) {
+        window.location = this.get('link');
+      } else {
+        this.sendAction('action', this);
+      }
     }
   }
 });

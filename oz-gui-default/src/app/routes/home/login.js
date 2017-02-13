@@ -13,6 +13,7 @@ let LoginRoute = PageBase.extend(UnauthenticatedRouteMixin);
  */
 export default LoginRoute.extend({
   session: Ember.inject.service('session'),
+  messageBox: Ember.inject.service(),
   onezoneServer: Ember.inject.service('onezoneServer'),
   name: 'login',
   zoneName: null,
@@ -25,27 +26,26 @@ export default LoginRoute.extend({
 
   model() {
     return new Ember.RSVP.Promise((resolve/*, reject*/) => {
-      this.get('onezoneServer').getZoneName().then(
-        (zoneName) => {
-          resolve({
-            zoneName: zoneName
-          });
-        },
-        () => {
-          console.error('Failed to get zone name');
-          resolve({
-            zoneName: null,
-          });
-        }
-      );
+      try {
+        this.get('onezoneServer').getZoneName().then(
+          (data) => {
+            resolve({
+              zoneName: data.zoneName
+            });
+          },
+          (error) => {
+            console.error('Failed to get zone name: ' + error.message);
+            resolve({
+              zoneName: null,
+            });
+          }
+        );
+      } catch (error) {
+        console.error('Failed to get zone name because of exception: ' + error);
+        resolve({
+          zoneName: null,
+        });
+      }
     });
-  }
-
-  //actions: {
-  //  authenticate(providerName) {
-  //    this.get('onezoneServer').getLoginEndpoint(providerName).then((url) => {
-  //      window.location = url;
-  //    });
-  //  }
-  //}
+  },
 });

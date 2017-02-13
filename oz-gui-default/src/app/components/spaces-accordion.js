@@ -18,12 +18,25 @@ export default Ember.Component.extend({
     spacesSorting: ['isDefault:desc', 'name'],
     spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
 
+    isLoading: Ember.computed.alias('spaces.isUpdating'),
+
+    unsupportSpaceSpacet: null,
+    unsupportSpaceProvider: null,
+    isUnsupportModalOpened: false,
+    isJoinSpaceModalOpened: false,
+
     actions: {
+      openModal() {
+        this.sendAction('openModal', ...arguments);
+      },
+
       startCreateNewSpace: function() {
         this.set('createNewSpaceName', null);
         if (!this.get('createNewSpaceEditing')) {
           this.set('createNewSpaceEditing', true);
         }
+        let $input = this.$('#create-new-space-name');
+        $input.focus();
       },
 
       // TODO: this should be invoked when pressing Esc when in editing mode
@@ -36,19 +49,34 @@ export default Ember.Component.extend({
       },
 
       endCreateNewSpace: function(spaceName) {
-        try {
-          let store = this.get('store');
-          let space = store.createRecord('space', {
-            name: spaceName,
-          });
-          // TODO: handle errors
-          space.save().then(() => {
-            // TODO: some animation on new space entry?
-            // logger.debug(`Space ${spaceName} created successfully`);
-          });
-        } finally {
-          this.set('createNewSpaceEditing', false);
+        if (spaceName) {
+          try {
+            let store = this.get('store');
+            let space = store.createRecord('space', {
+              name: spaceName,
+            });
+            // TODO: handle errors
+            space.save().then(() => {
+              // TODO: some animation on new space entry?
+              // logger.debug(`Space ${spaceName} created successfully`);
+            });
+          } finally {
+            this.set('createNewSpaceEditing', false);
+          }
         }
-      }
-    }
+      },
+
+      startJoinSpace() {
+        this.set('isJoinSpaceModalOpened', true);
+      },
+
+      showUnsupportSpaceModal(space, provider) {
+        this.setProperties({
+          isUnsupportModalOpened: true,
+          unsupportSpaceSpace: space,
+          unsupportSpaceProvider: provider
+        });
+      },
+    },
+
 });

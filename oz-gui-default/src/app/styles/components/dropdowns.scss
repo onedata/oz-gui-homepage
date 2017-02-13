@@ -1,0 +1,233 @@
+$dropdown-radius: 6px;
+$dropdown-triangle-width: 8px;
+
+$dropdown-bg: #2B3037;
+
+@mixin border-radius-all($radius) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+.dropdown-menu {
+  position: absolute;
+  padding: 15px;
+  background-color: $color-dropdown-menu-bg;
+  @include border-radius-all($dropdown-radius);
+  border: none;
+
+  // TODO: use scss mixins to triangle arrow
+
+  &.dropdown-menu-down {
+    min-width: 150px;
+
+    .expand-left {
+      left: auto;
+      right: 0;
+
+      &:before {
+        position: absolute;
+        top: -$dropdown-triangle-width;
+        right: 10px;
+        display: inline-block;
+        border-right: $dropdown-triangle-width solid transparent;
+        border-bottom: $dropdown-triangle-width solid $dropdown-bg;
+        border-left: $dropdown-triangle-width solid transparent;
+        border-bottom-color: $dropdown-bg;
+        content: '';
+      }
+    }
+
+    .expand-right {
+      left: 0;
+      right: auto;
+
+      &:before {
+        position: absolute;
+        top: -$dropdown-triangle-width;
+        left: 10px;
+        display: inline-block;
+        border-right: $dropdown-triangle-width solid transparent;
+        border-bottom: $dropdown-triangle-width solid $dropdown-bg;
+        border-left: $dropdown-triangle-width solid transparent;
+        border-bottom-color: $dropdown-bg;
+        content: '';
+      }
+    }
+
+    .expand-center {
+      left: -50%;
+      right: auto;
+
+      &:before {
+        position: absolute;
+        top: -$dropdown-triangle-width;
+        left: 50%;
+        margin-right: -$dropdown-triangle-width/2;
+        display: inline-block;
+        border-right: $dropdown-triangle-width solid transparent;
+        border-bottom: $dropdown-triangle-width solid $dropdown-bg;
+        border-left: $dropdown-triangle-width solid transparent;
+        border-bottom-color: $dropdown-bg;
+        content: '';
+      }
+    }
+
+  }
+
+  &.dropdown-menu-down {
+    left: auto;
+    right: 0;
+    min-width: 150px;
+
+    &:before {
+      position: absolute;
+      top: -$dropdown-triangle-width;
+      right: 10px;
+      display: inline-block;
+      border-right: $dropdown-triangle-width solid transparent;
+      border-bottom: $dropdown-triangle-width solid $dropdown-bg;
+      border-left: $dropdown-triangle-width solid transparent;
+      border-bottom-color: $dropdown-bg;
+      content: '';
+    }
+  }
+
+  &.dropdown-menu-right {
+    left: 100%;
+    top: -50%;
+    // pull up, because the triangle is not completely on top
+    margin-top: -$dropdown-triangle-width;
+    margin-left: $dropdown-triangle-width;
+    min-width: 150px;
+    @include border-radius-all(0);
+
+    &:before {
+      position: absolute;
+      // draw full left triangle
+      top: $dropdown-triangle-width * 2;
+      left: 2 * (-$dropdown-triangle-width);
+      border-bottom: $dropdown-triangle-width solid transparent;
+      border-right: $dropdown-triangle-width solid $dropdown-bg;
+      border-left: $dropdown-triangle-width solid transparent;
+      border-top: $dropdown-triangle-width solid transparent;
+      content: '';
+    }
+
+    &.dropdown-menu-list {
+      > li:not(.divider) {
+        @include border-radius-all(0);
+
+        // override default radius styles - TODO, refactor
+        &:first-child, &:last-child {
+          @include border-radius-all(0);
+        }
+      }
+    }
+  }
+
+  &.dropdown-menu-settings {
+    width: 220px;
+
+    li {
+      color: white;
+      padding: 4px 6px;
+
+      .item-icon {
+          font-size: 30px !important;
+      }
+
+      .item-label {
+        font-size: 9pt !important;
+        text-transform: uppercase;
+      }
+
+      &.menu-group-name {
+        margin: 10px 0 5px 0;
+        color: rgba(255,255,255,0.75);
+        pointer-events: none;
+      }
+    }
+  }
+
+  &.dropdown-menu-list {
+    font-size: inherit;
+    padding: 0;
+
+    .divider {
+      // TODO: same as menu bottom line color
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    > li:not(.divider) {
+      list-style-type: none;
+      line-height: 18px;
+      display: table;
+      width: 100%;
+
+      &:first-child {
+        border-top-left-radius: $dropdown-radius;
+        border-top-right-radius: $dropdown-radius;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: $dropdown-radius;
+        border-bottom-right-radius: $dropdown-radius;
+      }
+
+      > a {
+        color: $top-font-color !important;
+        padding: 10px;
+        width: 100%;
+
+        &:hover {
+          color: white !important;
+          background-color: transparent !important;
+        }
+      }
+
+      .item-icon {
+        display: table-cell;
+        padding-right: 10px;
+        font-size: 32px;
+        line-height: 28px;
+        vertical-align: middle;
+        min-width: 32px;
+        width: 32px;
+        max-width: 32px;
+        text-align: center;
+      }
+
+      .item-label {
+        display: table-cell;
+        line-height: 28px;
+        vertical-align: middle;
+        padding-left: 1em;
+        text-align: left;
+      }
+
+      &:hover {
+        background-color: $color-dropdown-menu-bg-hover;
+      }
+    }
+
+    > .divider {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+}
+
+.settings-dropdown .settings-icon > .one-icon {
+  font-size: 24px;
+  line-height: 32px;
+  vertical-align: middle;
+}
+
+
+// override Bootstrap styles 
+.navbar-nav > li > .dropdown-menu {
+  @include border-radius-all($dropdown-radius);
+}

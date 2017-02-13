@@ -2,9 +2,9 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'onedata-org',
+    modulePrefix: 'oz-worker-gui',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'hash',
     EmberENV: {
       FEATURES: {
@@ -36,7 +36,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter

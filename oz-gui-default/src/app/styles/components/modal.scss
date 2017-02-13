@@ -1,0 +1,187 @@
+// this style is mainly cloned style of OP modals
+// we do not make common styles, because styles for OZ modals are not designed yet
+
+$modal-top-border-radius: 4px;
+
+.modal {
+  font-size: 14px;
+  color: #333333;
+
+  .control-label {
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  // use, if positioning label with its input using rows and cols
+  label.one-line {
+    line-height: 34px;
+    text-align: right;
+    width: 100%;
+  }
+
+  .modal-dialog {
+    .modal-content {
+      border: none;
+      // this is hack to prevent modal content border to "stick out" above
+      // header border
+      border-top-left-radius: $modal-top-border-radius + 2px;
+      border-top-right-radius: $modal-top-border-radius + 2px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .modal-header {
+        padding-left: 30px;
+        padding-right: 30px;
+        border-top-left-radius: $modal-top-border-radius;
+        border-top-right-radius: $modal-top-border-radius;
+        // TODO: use h1?
+        font-size: 1.6em;
+        color: white;
+        background-color: #2B3037;
+
+        .close {
+          color: white;
+          text-shadow: none;
+        }
+      }
+
+      .modal-body {
+        padding: 30px;
+
+        .form-group {
+          label {
+            margin-bottom: 20px;
+          }
+        }
+
+        // TODO: only input[type=text] ?
+        .form-control {
+          border-radius: 0;
+          border: solid 1px #545C74;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+
+      .modal-footer {
+        text-align: center;
+        border-radius: inherit;
+        background-color: #F2F2F2;
+        border-top: none;
+
+        .btn + .btn {
+          margin-left: 25px;
+        }
+      }
+    }
+    .message-icon {
+      font-size: 64px;
+
+      &.info {
+        color: $color-modal-message-info;
+      }
+      &.warning {
+        color: $color-modal-message-warning;
+      }
+      &.error {
+        color: $color-modal-message-error;
+      }
+    }
+
+    .message-text {
+      padding-left: 30px;
+    }
+  }
+
+  // buttons in modals - the same as in OP, maybe TODO to merge styles with main OZ btn styles..
+
+  // TODO: box-shadow none?
+  .btn {
+    border: none !important;
+    padding: 10px 40px;
+
+    .oneicon {
+      font-size: 40px;
+    }
+  }
+
+  @mixin button-background-colors($fg-color, $base-bg-color) {
+    color: $fg-color !important;
+    background-color: $base-bg-color;
+
+    &:hover {
+      background-color: lighten($base-bg-color, 10%);
+    }
+
+    &[disabled],
+    &.disabled,
+    &.disabled:hover,
+    &.disabled:focus,
+    &.disabled.focus,
+    &[disabled]:hover,
+    &[disabled]:focus,
+    &[disabled].focus {
+      background-color: darken($base-bg-color, 20%);
+    }
+
+    &:active:focus, &:active:hover, &:focus, &:active {
+      background-color: darken($base-bg-color, 10%);
+    }
+  }
+
+  .btn-primary {
+    @include button-background-colors(white, $color-button-primary);
+  }
+
+  .btn-default {
+    @include button-background-colors(white, $color-button-default);
+  }
+
+  @mixin btn-before-oneicon($icon-name, $top, $left, $font-size) {
+    // because we need absolute-positioned icons inside
+    position: relative;
+    // we need extra space for absolute icon
+    padding-left: $left + $font-size + 10px;
+
+    &:before {
+      position: absolute;
+      top: $top;
+      left: $left;
+      font-size: $font-size;
+      font-family: 'oneicons';
+      content: $icon-name;
+    }
+  }
+
+  .btn-right {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+
+  .btn-left {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+}
+
+// make all modals cenetered
+.modal {
+  height: 100%;
+
+  .modal-dialog {
+    top: 50% !important;
+    margin-top:0;
+    margin-bottom:0;
+  }
+
+  //keep proper transitions on fade in
+  &.fade .modal-dialog {
+    transform: translateY(-100%) !important;
+  }
+  &.in .modal-dialog {
+    transform: translateY(-50%) !important;
+  }
+}

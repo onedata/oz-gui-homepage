@@ -1,6 +1,16 @@
 import Ember from 'ember';
-import PromiseLoadingMixin from '../mixins/promise-loading';
-import bindFloater from '../utils/bind-floater';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
+
+const AUTH_PROVIDERS_NAMES = {
+  google: 'Google+',
+  facebook: 'Facebook',
+  github: 'GitHub',
+  dropbox: 'Dropbox',
+  plgrid: 'PLGrid OpenID',
+  indigo: 'Indigo',
+  egi: 'EGI',
+};
 
 /**
  * An add account button, which shows popup with authorization providers.
@@ -13,9 +23,16 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   onezoneServer: Ember.inject.service('onezoneServer'),
   classNames: ['account-add', 'account-item'],
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
+  messageBox: Ember.inject.service(),
+
+  /**
+   * To inject.
+   * @required
+   * @type {Array<String>}
+   */
+  supportedAuthorizers: null,
 
   isLoading: false,
-  authProviders: null,
 
   didInsertElement() {
     let popup = this.$().find('.account-add-popup');
@@ -24,43 +41,39 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     $('.accordion-container').on('scroll', updater);
   },
 
-  generateAuthProviders: function () {
-    let authProviders = [];
-    let allAuthProviders = {
-      google: 'Google+',
-      facebook: 'Facebook',
-      github: 'GitHub',
-      dropbox: 'Dropbox',
-      plgrid: 'PLGrid OpenID'
-    };
-
-    this.promiseLoading(
-      this.get('onezoneServer').getSupportedAuthorizers()
-    ).then((data) => {
-      data.forEach((authorizerId) => {
-        authProviders.push([authorizerId, allAuthProviders[authorizerId]]);
-      });
-      authProviders = authProviders.map((item) => {
-        return {
-          type: item[0],
-          // TODO: translate connect by
-          label: `Connect by ${item[1]}`
-        };
-      });
-      this.set('authProviders', authProviders);
-    });
-  }.on('init'),
+  authProviders: Ember.computed('supportedAuthorizers.[]', function() {
+    let supportedAuthorizers = this.get('supportedAuthorizers');
+    if (supportedAuthorizers && supportedAuthorizers.length > 0) {
+      // show only these providers for add, which have entry in "allAuthProviders" dict
+      const authProviders = supportedAuthorizers
+        .filter(id => AUTH_PROVIDERS_NAMES[id])
+        .map((id) => {
+          return {
+            type: id,
+            label: `${this.get('i18n').t('onezone.accountAdd.connectBy')} ${AUTH_PROVIDERS_NAMES[id]}`
+          };
+        });
+      return authProviders;
+    } else {
+      return [];
+    }
+  }),
 
   actions: {
     connectNewAccount(providerName) {
       this.promiseLoading(
         this.get('onezoneServer').getConnectAccountEndpoint(providerName)
       ).then(
-        (url) => {
-          window.location = url;
+        (data) => {
+          window.location = data.url;
         },
         (error) => {
-          window.alert(`Error getting url to authorizer: ${error.message}`);
+          this.get('messageBox').open({
+            title: this.get('i18n').t('common.serverError'),
+            message: this.get('i18n').t('components.accountAdd.errorGettingUrl') +
+              (error.message ? ': ' + error.message : ''),
+            type: 'warning'
+          });
         }
       );
     }

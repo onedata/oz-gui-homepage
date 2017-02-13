@@ -1,0 +1,198 @@
+$provider-drop-triangle-width: 12px;
+$provider-drop-triangle-height: 10px;
+$provider-drop-radius: 8px;
+
+$color-provider-drop-font: #646464;
+$color-provider-drop-host-background: #F3F0F0;
+$color-provider-drop-space-size: #BDBDBD;
+
+.provider-place-drop {
+  position: fixed;
+  z-index: 1001 !important;
+  font-size: 12px;
+
+  &.working {
+    .drop-panel .drop-title-bar {
+      background-color: $color-provider-working;
+    }
+  }
+
+  &.drop-right {
+    &:after {
+      position: absolute;
+      // TODO: optional triangle centered (top: 50%)
+      top: 50%;
+      left: -$provider-drop-triangle-height*2 + 1;
+      border-bottom: $provider-drop-triangle-width solid transparent;
+      border-right: $provider-drop-triangle-height solid white;
+      border-left: $provider-drop-triangle-height solid transparent;
+      border-top: $provider-drop-triangle-width solid transparent;
+      content: '';
+      margin-top: -$provider-drop-triangle-width;
+    }
+  }
+
+  &.drop-left {
+    &:after {
+      position: absolute;
+      // TODO: optional triangle centered (top: 50%)
+      top: 50%;
+      right: -$provider-drop-triangle-height*2 + 1;
+      border-bottom: $provider-drop-triangle-width solid transparent;
+      border-right: $provider-drop-triangle-height solid transparent;
+      border-left: $provider-drop-triangle-height solid white;
+      border-top: $provider-drop-triangle-width solid transparent;
+      content: '';
+      margin-top: -$provider-drop-triangle-width;
+    }
+  }
+
+  .provider-label {
+    max-width: 120px;
+    font-weight: bold;
+  }
+
+  .provider-offline {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    right: 10px;
+  }
+
+  .drop-panel {
+    width: 190px;
+    min-height: 50px;
+    border: none;
+    border-radius: $provider-drop-radius;
+    background-color: white;
+    color: $color-provider-drop-font;
+
+    .drop-title-bar {
+      height: 28px;
+      line-height: 28px;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: $color-provider-not-working;
+      color: #FFF;
+      border-top-left-radius: $provider-drop-radius;
+      border-top-right-radius: $provider-drop-radius;
+
+      .title-label {
+        float: left;
+        // add to radius to align with host-container padding
+        padding-left: 2px;
+      }
+    }
+
+    .drop-provider-host-container {
+      display: table;
+      width: 100%;
+      padding-left: 10px;
+      height: 28px;
+      line-height: 28px;
+      background-color: $color-provider-drop-host-background;
+
+      .provider-host-text {
+        display: table-cell;
+        color: inherit;
+        // for text truncate
+        max-width: 150px;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .provider-host-copy-btn {
+        position: relative;
+        display: table-cell;
+        width: 28px;
+        border-left: 1px solid #EAE6E6;
+        color: inherit;
+        font-size: 28px;
+        text-align: center;
+        line-height: inherit;
+
+        &:hover {
+          background-color: darken($color-provider-drop-host-background, 20);
+        }
+
+        .oneicon {
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+
+    .drop-body {
+      padding: 8px;
+      border-bottom-left-radius: $provider-drop-radius;
+      border-bottom-right-radius: $provider-drop-radius;
+
+      .btn {
+        width: 100%;
+        border-radius: 6px;
+      }
+
+      hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        color: #F2F2F2;
+      }
+
+      ul {
+        padding-top: 0;
+        padding-left: 0;
+        padding-right: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        li {
+          display: table;
+          width: 100%;
+          height: 22px;
+          line-height: 22px;
+          vertical-align: middle;
+
+          > * {
+            display: table-cell;
+            color: inherit;
+          }
+
+          .space-icon {
+            position: relative;
+            top: 2px;
+            width: 20px;
+            padding-right: 8px;
+
+            .oneicon {
+              font-size: 20px;
+              line-height: inherit;
+            }
+          }
+
+          .space-label {
+            max-width: 50px;
+            line-height: inherit;
+            vertical-align: inherit;
+            font-size: 0.9em;
+          }
+
+          .space-size {
+            max-width: 50px;
+            padding-left: 4px;
+            vertical-align: inherit;
+            text-align: right;
+            text-overflow: clip;
+            white-space: nowrap;
+            overflow: hidden;
+            color: $color-provider-drop-space-size;
+          }
+        }
+      }
+    }
+  }
+}

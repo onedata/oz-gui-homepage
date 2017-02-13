@@ -2,47 +2,44 @@
 <div class="accordion-group secondary-accordion-group providers-accordion-group">
   <div class="item">
     <div class="accordion-heading secondary-accordion-heading providers-accordion-heading">
-      <a class="accordion-toggle secondary-accordion-toggle providers-accordion-toggle">
-        <div class="go-to-provider" {{action "goToProvider"}}>
-          <div class="secondary-icon provider-icon">
-            {{one-icon icon=iconName color=iconColor}}
-          </div>
-          <div class="secondary-header provider-header stretch-hack">
-            {{trim-string provider.name 24}}
-          </div>
-        </div>
-        <div class="star-toggle" {{action "toggleDefault"}}>
-          {{#if provider.isDefault}}
-            {{one-icon icon="home"}}
-          {{else}}
-            {{!-- class name is star-empty because of historical reasons... --}}
-            <div class="star-empty">
-              {{one-icon icon="home-outline"}}
+      <div class="accordion-toggle secondary-accordion-toggle providers-accordion-toggle">
+        <div class="secondary-item-container">
+
+          <div class="secondary-item-element go-to-provider" {{action "goToProvider"}}>
+            <div class="secondary-icon provider-icon">
+              {{one-icon tagName="div" icon=iconName class=iconColorClass}}
             </div>
-          {{/if}}
-        </div>
-        <div class="spaces-count" data-toggle="collapse" href="#{{collapseId}}">
-          <div class="icon">
-            {{one-icon icon="space"}}
+          <div class="secondary-item-element secondary-header provider-header truncate">
+              {{provider.name}}
+            </div>
           </div>
-          <div class="label">
-            {{spaces.length}}
+          <div class="secondary-item-element star-toggle" {{action "toggleDefault"}}>
+            {{#if provider.isDefault}}
+              {{one-icon tagName="div" icon="home"}}
+            {{else}}
+              {{!-- class name is star-empty because of historical reasons... --}}
+              <div class="star-empty">
+                {{one-icon tagName="div" icon="home-outline"}}
+              </div>
+            {{/if}}
           </div>
+          <div class="secondary-item-element spaces-count" data-toggle="collapse" href="#{{collapseId}}">
+            <div class="icon">
+              {{one-icon tagName="div" icon="space"}}
+            </div>
+            <div class="one-label">
+              {{spaces.length}}
+            </div>
+          </div>
+
         </div>
-      </a>
+      </div>
     </div>
     <div id="{{collapseId}}" class="accordion-body secondary-accordion-body providers-accordion-body sidebar-list collapse">
       <div class="accordion-inner">
-        <ul>
+        <ul class="tertiary-list">
           {{#each spacesSorted as |s|}}
-            <li>
-              <div class="icon">
-                {{one-icon icon=(if s.isDefault "space-home" "space")}}
-              </div>
-              <div class="label">
-                {{trim-string s.name 24}}
-              </div>
-            </li>
+            {{providers-accordion-item-space space=s providerId=provider.id}}
           {{/each}}
         </ul>
       </div>

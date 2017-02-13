@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import safeElementId from '../utils/safe-element-id';
+import safeElementId from 'ember-cli-onedata-common/utils/safe-element-id';
 
 /**
  * A token entry in tokens-list.
@@ -9,42 +9,85 @@ import safeElementId from '../utils/safe-element-id';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  store: Ember.inject.service('store'),
-  onezoneServer: Ember.inject.service('onezoneServer'),
+  store: Ember.inject.service(),
+  onezoneServer: Ember.inject.service(),
+  notify: Ember.inject.service(),
 
   /** Should be injected */
   token: null,
 
+  /**
+   * Public, to inject and to change.
+   * @type {Boolean}
+   */
+  active: false,
+
   classNames: ['tokens-list-item'],
 
-  clipboardTarget: function() {
-    return `#${this.get('inputContainerId')} input`;
-  }.property('inputContainerId'),
+  fullToken: Ember.computed.readOnly('token.id'),
 
-  inputContainerId: function() {
+  shortToken: Ember.computed('fullToken', function() {
+    let fullToken = this.get('fullToken');
+    return fullToken.slice(0, 3) + "..." + fullToken.slice(fullToken.length-14, fullToken.length);
+  }),
+
+  isLoading: Ember.computed('token', 'token.isLoaded', function() {
+    return !this.get('token') || !this.get('token.isLoaded') || !this.get('token.id');
+  }),
+
+  clipboardTarget: Ember.computed('elementId', 'inputContainerId', function() {
+    let {elementId, inputContainerId} = this.getProperties('elementId', 'inputContainerId');
+    return `#${elementId} #${inputContainerId} input[type=text]`;
+  }),
+
+  inputContainerId: Ember.computed('token', 'token.id', function() {
     if (this.get('token.id')) {
       return safeElementId(`clienttoken-input-${this.get('token.id')}`);
     } else {
       return null;
     }
-  }.property('token', 'token.id'),
+  }),
+
+  deactivate() {
+    this.set('active', false);
+  },
+
+  didInsertElement() {
+    let __deactivateFun = this.set('__deactivateFun', () => this.set('active', false));
+    this.$().find('input').on('blur.tokensListItem', __deactivateFun);
+  },
+
+  willDestroyElement() {
+    this.$().find('input').off('.tokensListItem');
+  },
+
+  selectTokenText() {
+    let input = this.$().find('input')[0];
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
+  },
 
   actions: {
+    activate() {
+      if (!this.get('active')) {
+        this.sendAction('deactivateAllTokens');
+        this.set('active', true);
+      }
+      Ember.run.scheduleOnce('afterRender', this.selectTokenText.bind(this));
+    },
+
     remove() {
       this.get('token').destroyRecord();
     },
 
-    selectTokenText() {
-      let input = this.$().find('input')[0];
-      input.setSelectionRange(0, input.value.length);
-    },
-
     copySuccess() {
-      console.debug('Token copied successfully');
+      this.selectTokenText();
+      this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
     },
 
     copyError() {
-      console.error('Token copy error');
-    }
+      this.selectTokenText();
+      this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
+    },
   }
 });

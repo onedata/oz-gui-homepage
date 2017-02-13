@@ -1,10 +1,37 @@
 <ul class="accordion-content">
-  {{#each authorizersSorted as |account|}}
-    <li class="non-hoverable">
-      {{account-item type=account.type label=account.email}}
-    </li>
-  {{/each}}
+  {{#if passwordConfigEnabled}}
   <li>
-    {{account-add}}
+    {{account-item-password}}
   </li>
+  {{/if}}
+  {{#if isLoading}}
+    <li class="non-hoverable">
+      {{!-- TODO: add spinner (there is some problems with positioning) --}}
+      <div class="account-label">
+        {{t 'components.accountsList.loadingAccounts'}}
+      </div>
+    </li>
+  {{else}}
+    {{#each authorizersSorted as |account|}}
+    <li class="non-hoverable">
+      {{account-item type=account.type label=account.email clickable=false}}
+    </li>
+    {{/each}}
+  {{/if}}
+
+  {{!-- add authorizer --}}
+
+  {{#if loadingSupportedAuthorizers}}
+    <li class="non-hoverable">
+      <div class="loading-supported-authorizers">
+        {{t 'components.accountsList.loadingSupportedAuthorizers'}}
+      </div>
+    </li>
+  {{else}}
+    {{#unless noSupportedAuthorizers}}
+      <li>
+        {{account-add supportedAuthorizers=supportedAuthorizers}}
+      </li>
+    {{/unless}}
+  {{/if}}
 </ul>

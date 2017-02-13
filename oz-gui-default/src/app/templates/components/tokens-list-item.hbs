@@ -3,25 +3,50 @@
 {{!-- TODO: create other style class --}}
 <div class="accordion-group secondary-accordion-group tokens-accordion-group">
   <div class="accordion-heading secondary-accordion-heading tokens-accordion-heading">
-    <a class="accordion-toggle secondary-accordion-toggle tokens-accordion-toggle hover-parent">
-      <div class="token-icon secondary-icon">
-          {{one-icon icon='menu-token'}}
-      </div>
-      <div class="token-header stretch-hack" id="{{inputContainerId}}">
-        {{input value=token.id}}
+    <div class="accordion-toggle secondary-accordion-toggle tokens-accordion-toggle hover-parent">
+
+      <div class="secondary-item-container">
+
+        {{#if isLoading}}
+          <div class="secondary-item-element">
+            <div class="spinner-container spinner-32">
+              {{spin-spinner scale=0.16 lines=12 length=20 width=10 top=14}}
+            </div>
+          </div>
+        {{else}}
+          <div class="secondary-item-element secondary-icon token-icon">
+            {{one-icon tagName="div" icon='menu-token'}}
+          </div>
+        {{/if}}
+        
+        <div class="secondary-item-element token-header" id="{{inputContainerId}}">
+          {{#if isLoading}}
+            {{!-- TODO: translate --}}
+            Fetching token...
+          {{else}}
+            <div {{action "activate"}}>
+              {{input value=fullToken readonly=true class=(unless active "hidden")}}
+              <div class="short-token {{if active "hidden"}}">{{shortToken}}</div>
+            </div>
+          {{/if}}
+        </div>
+
+        {{#copy-button click=(action "activate") tagName='div' success='copySuccess'
+          error='copyError' clipboardTarget=clipboardTarget
+          class="secondary-item-element select-button white-on-parent-hover" }}
+          <div class="copy-icon">
+            {{one-icon tagName="div" icon="clipboard-copy"}}
+          </div>
+        {{/copy-button}}
+
+        <div class="secondary-item-element trash-button white-on-parent-hover" {{action "remove"}}>
+          <div class="remove-icon">
+            {{one-icon tagName="div" icon="remove"}}
+          </div>
+        </div>
+
       </div>
 
-      {{#copy-button tagName='div' success='copySuccess' error='copyError'
-        clipboardTarget=clipboardTarget class="select-button white-on-parent-hover"}}
-        <div class="copy-icon">
-          {{one-icon icon="copy"}}
-        </div>
-      {{/copy-button}}
-      <div class="trash-button white-on-parent-hover" {{action "remove"}}>
-        <div class="remove-icon">
-          {{one-icon icon="remove"}}
-        </div>
-      </div>
-    </a>
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import bindFloater from '../utils/bind-floater';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 /**
  * A popup (drop) with fixed position placed near to the provider-place widget,
@@ -11,45 +11,60 @@ import bindFloater from '../utils/bind-floater';
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  onezoneServer: Ember.inject.service('onezone-server'),
+  onezoneServer: Ember.inject.service(),
+  messageBox: Ember.inject.service(),
+  notify: Ember.inject.service(),
+  
   classNames: ['provider-place-drop'],
   classNameBindings: ['isWorking', 'dropSide'],
-
-  isWorking: function() {
+  
+  isWorking: Ember.computed('provider.isWorking', function() {
     return this.get('provider.isWorking') ? 'working' : '';
-  }.property('provider.isWorking'),
+  }),
 
-  /** Parent component - must be injected! */
+  /**
+   * To inject.
+   * Parent component
+   * @required
+   * @type {ProviderPlaceComponent}
+   */
   providerPlace: null,
 
-  provider: function() {
-    return this.get('providerPlace.provider');
-  }.property('providerPlace'),
+  provider: Ember.computed.readOnly('providerPlace.provider'),
 
-  spaces: function() {
-    return this.get('provider.spaces');
-  }.property('provider', 'provider.spaces'),
+  spaces: Ember.computed.readOnly('provider.spaces'),
 
   spacesSorting: ['isDefault:desc', 'name'],
   spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
 
-  /** If true, places provider drop on the left of provider place circle */
-  dropSideLeft: function() {
+  /**
+   * If true, places provider drop on the left of provider place circle
+   * @type {Ember.computed<Boolean>} 
+   */
+  dropSideLeft: Ember.computed('provider.longitude', function() {
     return this.get('provider.longitude') >= 0;
-  }.property('provider.longitude'),
+  }),
 
-  /** Returns a class name */
-  dropSide: function() {
+  /**
+   * Returns a class name
+   * @type {Ember.computed<String>}
+   */
+  dropSide: Ember.computed('dropSideLeft', function() {
     return this.get('dropSideLeft') ? 'drop-left' : 'drop-right';
-  }.property('dropSideLeft'),
+  }),
+
+  clipboardTarget: Ember.computed('elementId', function() {
+    let elementId = this.get('elementId');
+    return `#${elementId} input`;
+  }),
 
   /** Binds a fixed position update event */
   didInsertElement() {
     let popup = this.$();
     let updater = bindFloater(popup, null, {
       posX: (this.get('dropSideLeft') ? 'left' : 'right'),
-      posY: 'middle',
-      offsetY: 12,
+      posY: 'middle-middle',
+      // a margin
       offsetX: 16 * (this.get('dropSideLeft') ? -1 : 1),
     });
     this.$().on('mouseover', updater);
@@ -65,9 +80,32 @@ export default Ember.Component.extend({
 
   actions: {
     goToFiles() {
-      this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id')).then((url) => {
-        window.location = url;
-      });
+      const p = this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id'));
+      p.then(
+        (data) => {
+          window.location = data.url;
+        },
+        (error) => {
+          this.get('messageBox').open({
+            title: this.get('i18n').t('common.serverError'),
+            message: this.get('i18n').t('onezone.providerPlaceDrop.goToFilesErrorMessage') +
+              ((error && error.message) ? (': ' + error.message) : ''),
+            type: 'error'
+          });
+        }
+      );
+
+      p.finally(() => this.set('goToIsLoading', false));
+    },
+
+    copySuccess() {
+      let {i18n, notify} = this.getProperties('i18n', 'notify');
+      notify.info(i18n.t('onezone.providerPlaceDrop.hostnameCopySuccess'));
+    },
+
+    copyError() {
+      let {i18n, notify} = this.getProperties('i18n', 'notify');
+      notify.info(i18n.t('onezone.providerPlaceDrop.hostnameCopyError'));
     }
   }
 });

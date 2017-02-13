@@ -1,39 +1,45 @@
 <div class="drop-panel">
   <div class="drop-title-bar">
     <div class="title-label">
-      {{t (if provider.isWorking "onezone.providerPlaceDrop.operable" "onezone.providerPlaceDrop.inoperable")}}
+      <div class="provider-label truncate">
+        {{provider.name}}
+      </div>
+      {{#unless provider.isWorking}}
+        <div class="provider-offline">
+          {{t "onezone.providerPlaceDrop.offline"}}
+        </div>  
+      {{/unless}}
     </div>
-    <div class="status-circle"></div>
+  </div>
+  <div class="drop-provider-host-container">
+    <input class="provider-host-text truncate" value={{provider.host}} readonly>
+    {{#copy-button tagName="div" success='copySuccess' error='copyError'
+        class="provider-host-copy-btn clickable"
+        clipboardTarget=clipboardTarget}}
+      {{one-icon tagName="div" icon="clipboard-copy"}}
+    {{/copy-button}}
+
   </div>
   <div class="drop-body">
-    <div class="provider-label">
-      {{trim-string provider.name 20}}
-    </div>
     {{!-- TODO: location name - get it from Google Maps API --}}
     {{!-- <div class="provider-location">
       {{provider.location}}
     </div> --}}
     <ul>
       {{#each spacesSorted as |space|}}
-        <li>
-          <div class="space-icon">
-            {{one-icon icon=(if space.isDefault "space-default" "space")}}
-          </div>
-          <div class="space-label">
-            {{trim-string space.name 20}}
-          </div>
-          {{!-- TODO: space capacity --}}
-          {{!-- <div class="space-size">
-            {{space.capacity}}
-          </div> --}}
-        </li>
+        {{provider-place-drop-space space=space providerId=provider.id}}
       {{/each}}
     </ul>
     {{#if provider.isWorking}}
       <hr>
-      <a href="#" class="btn btn-small btn-pale-green" {{action 'goToFiles'}}>
+      {{#spin-button-onedata buttonType="submit"
+        action=(action "goToFiles")
+        class="btn btn-small btn-pale-green no-outline" spinnerColor="#fff"
+        inFlight=goToIsLoading
+        disabled=goToIsLoading
+      }}
         {{t "onezone.providerPlaceDrop.goToFiles"}}
-      </a>
+      {{/spin-button-onedata}}
     {{/if}}
   </div>
 </div>
