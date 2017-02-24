@@ -17,8 +17,7 @@ $color-onezone-fog: rgba($color-onezone-fog-base, 0.8);
 
 $color-button: #5094E4;
 $color-provider-online: #6ACB94;
-$color-provider-pending: $color-grey-7;
-$color-provider-offline: #D86669;
+$color-provider-offline: $color-grey-7;
 
 $color-onezone-search: #2A2A2A;
 
@@ -27,12 +26,35 @@ $color-onezone-panel-body: #60687E;
 
 $color-onezone-panel-hover: rgba(255, 255, 255, 0.1);
 
+@include animation-fg-color-change(
+  provider-pending-fg,
+  $color-provider-offline,
+  $color-provider-online
+);
+
+@include animation-bg-color-change(
+  provider-pending-bg,
+  $color-provider-offline,
+  $color-provider-online
+);
+
+.provider-pending-animation {
+  @extend .animated;
+  @extend .infinite;
+  @extend .hinge; 
+}
+
+.provider-pending-fg-animated {
+  @extend .provider-pending-animation;
+  @extend .provider-pending-fg;
+}
+
 .color-provider-online {
   color: $color-provider-online;
 }
 
 .color-provider-pending {
-  color: $color-provider-pending;
+  @extend .provider-pending-fg-animated;
 }
 
 .color-provider-offline {

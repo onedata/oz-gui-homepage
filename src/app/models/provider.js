@@ -38,7 +38,7 @@ export default DS.Model.extend(isDefaultMixinFactory('defaultProviderId'), {
   /**
    * One of: online, offline, pending
    */
-  status: attr('string', { defaultValue: 'pending' }),
+  status: 'pending', // attr('string', { defaultValue: 'pending' }),
 
   /**
    * Hostname of this provider

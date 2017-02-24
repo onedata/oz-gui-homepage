@@ -13,8 +13,7 @@ $provider-place-circle-border-size: 2px;
   
   &.pending {
     .circle {
-      border-color: $color-provider-pending;
-      color: $color-provider-pending;
+      @extend .provider-pending-fg-animated;
     }
   }
   
