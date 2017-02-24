@@ -16,8 +16,9 @@ $color-onezone-fog-base: #8294b1;
 $color-onezone-fog: rgba($color-onezone-fog-base, 0.8);
 
 $color-button: #5094E4;
-$color-provider-working: #6ACB94;
-$color-provider-not-working: #7B7B7B;
+$color-provider-online: #6ACB94;
+$color-provider-pending: $color-grey-7;
+$color-provider-offline: #D86669;
 
 $color-onezone-search: #2A2A2A;
 
@@ -26,12 +27,16 @@ $color-onezone-panel-body: #60687E;
 
 $color-onezone-panel-hover: rgba(255, 255, 255, 0.1);
 
-.color-provider-working {
-  color: $color-provider-working;
+.color-provider-online {
+  color: $color-provider-online;
 }
 
-.color-provider-not-working {
-  color: $color-provider-not-working;
+.color-provider-pending {
+  color: $color-provider-pending;
+}
+
+.color-provider-offline {
+  color: $color-provider-offline;
 }
 
 $search-box-height: 36px;

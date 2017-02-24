@@ -1,6 +1,12 @@
 import Ember from 'ember';
 import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
+const {
+  Component,
+  computed,
+  inject
+} = Ember;
+
 /**
  * A popup (drop) with fixed position placed near to the provider-place widget,
  * visible when clicked. Contains information about provider and its spaces.
@@ -10,16 +16,17 @@ import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
-  onezoneServer: Ember.inject.service(),
-  messageBox: Ember.inject.service(),
-  notify: Ember.inject.service(),
+export default Component.extend({
+  onezoneServer: inject.service(),
+  messageBox: inject.service(),
+  notify: inject.service(),
   
   classNames: ['provider-place-drop'],
-  classNameBindings: ['isWorking', 'dropSide'],
+  classNameBindings: ['status', 'dropSide'],
   
-  isWorking: Ember.computed('provider.isWorking', function() {
-    return this.get('provider.isWorking') ? 'working' : '';
+  status: computed('provider.status', function() {
+    let provider = this.get('provider');
+    return provider.get('isStatusValid') ? provider.get('status') : 'pending';
   }),
 
   /**
@@ -30,30 +37,30 @@ export default Ember.Component.extend({
    */
   providerPlace: null,
 
-  provider: Ember.computed.readOnly('providerPlace.provider'),
+  provider: computed.readOnly('providerPlace.provider'),
 
-  spaces: Ember.computed.readOnly('provider.spaces'),
+  spaces: computed.readOnly('provider.spaces'),
 
   spacesSorting: ['isDefault:desc', 'name'],
-  spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
+  spacesSorted: computed.sort('spaces', 'spacesSorting'),
 
   /**
    * If true, places provider drop on the left of provider place circle
-   * @type {Ember.computed<Boolean>} 
+   * @type {computed<Boolean>} 
    */
-  dropSideLeft: Ember.computed('provider.longitude', function() {
+  dropSideLeft: computed('provider.longitude', function() {
     return this.get('provider.longitude') >= 0;
   }),
 
   /**
    * Returns a class name
-   * @type {Ember.computed<String>}
+   * @type {computed<String>}
    */
-  dropSide: Ember.computed('dropSideLeft', function() {
+  dropSide: computed('dropSideLeft', function() {
     return this.get('dropSideLeft') ? 'drop-left' : 'drop-right';
   }),
 
-  clipboardTarget: Ember.computed('elementId', function() {
+  clipboardTarget: computed('elementId', function() {
     let elementId = this.get('elementId');
     return `#${elementId} input`;
   }),

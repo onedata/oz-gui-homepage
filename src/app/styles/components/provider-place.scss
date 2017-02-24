@@ -4,10 +4,24 @@ $provider-place-circle-border-size: 2px;
 .provider-place {
   position: absolute;
 
-  &.working {
+  &.online {
     .circle {
-      border-color: $color-provider-working;
-      color: $color-provider-working;
+      border-color: $color-provider-online;
+      color: $color-provider-online;
+    }
+  }
+  
+  &.pending {
+    .circle {
+      border-color: $color-provider-pending;
+      color: $color-provider-pending;
+    }
+  }
+  
+  &.offline {
+    .circle {
+      border-color: $color-provider-offline;
+      color: $color-provider-offline;
     }
   }
 
@@ -18,8 +32,8 @@ $provider-place-circle-border-size: 2px;
     font-size: ($provider-place-circle-size * 0.75);
     line-height: ($provider-place-circle-size - $provider-place-circle-border-size * 2);
     border-radius: 50%;
-    border: $color-provider-not-working $provider-place-circle-border-size solid;
-    color: $color-provider-not-working;
+    border-width: $provider-place-circle-border-size;
+    border-style: solid;
     background-color: white;
     cursor: pointer; cursor: hand;
 

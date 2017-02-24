@@ -1,5 +1,11 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  observer
+} = Ember;
+
 /**
  * A circle representing a provider on world map.
  * @module components/provider-place
@@ -7,9 +13,9 @@ import Ember from 'ember';
  * @copyright (C) 2016 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['provider-place'],
-  classNameBindings: ['isWorking'],
+  classNameBindings: ['status'],
 
   /**
    * To inject.
@@ -19,30 +25,30 @@ export default Ember.Component.extend({
    */
   provider: null,
 
-  isWorking: Ember.computed('provider.isWorking', function() {
-    return this.get('provider.isWorking') ? 'working' : '';
+  status: computed('provider.status', function() {
+    let provider = this.get('provider');
+    return provider.get('isStatusValid') ? provider.get('status') : 'pending';
   }),
 
-  // TODO: map to provider props
-  latitude: Ember.computed('provider.latitude', function() {
+  latitude: computed('provider.latitude', function() {
     const lat = this.get('provider.latitude');
     return lat >= -90 && lat <= 90 ? lat : 0;
   }),
 
-  longitude: Ember.computed('provider.longitude', function() {
+  longitude: computed('provider.longitude', function() {
     const lon = this.get('provider.longitude');
     return lon >= -180 && lon <= 180 ? lon : 0;
   }),
 
-  width: Ember.computed('atlas.width', function() {
+  width: computed('atlas.width', function() {
     return this.get('atlas.width')*0.02;
   }),
 
-  height: Ember.computed.alias('width'),
+  height: computed.alias('width'),
 
-  isActive: Ember.computed.readOnly('provider.isSelected'),
+  isActive: computed.readOnly('provider.isSelected'),
 
-  sizeChanged: Ember.observer('width', 'height', function() {
+  sizeChanged: observer('width', 'height', function() {
     let {width, height} = this.getProperties('width', 'height');
 
     let circle = this.$().find('.circle');
@@ -54,7 +60,7 @@ export default Ember.Component.extend({
     });
   }),
 
-  posY: Ember.computed('atlas.{height,centerY}', 'latitude', 'height', function() {
+  posY: computed('atlas.{height,centerY}', 'latitude', 'height', function() {
     let {height: h, centerY: atlasCenterY} = this.get('atlas').getProperties('height', 'centerY');
     let {latitude, height} = this.getProperties('latitude', 'height');
     let ltr = latitude * (Math.PI/180);
@@ -65,7 +71,7 @@ export default Ember.Component.extend({
     return yp;
   }),
 
-  posX: Ember.computed('atlas.{width,centerX}', 'longitude', 'width', function() {
+  posX: computed('atlas.{width,centerX}', 'longitude', 'width', function() {
     let {width: atlasWidth, centerX: atlasCenterX} = this.get('atlas').getProperties('width', 'centerX');
     let {longitude, width} = this.getProperties('longitude', 'width');
 
@@ -74,7 +80,7 @@ export default Ember.Component.extend({
       (width/2);
   }),
 
-  positionChanged: Ember.observer('posX', 'posY', function() {
+  positionChanged: observer('posX', 'posY', function() {
     let {posX, posY} = this.getProperties('posX', 'posY');
 
     if (posX && posY) {
