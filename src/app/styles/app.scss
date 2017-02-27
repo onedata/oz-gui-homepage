@@ -46,11 +46,11 @@ $body-font: 'Open Sans';
 @import "onedata-common";
 
 @import "colors";
+@import "animate";
 @import "fonts";
 @import "login";
 @import "onezone";
 @import "notify";
-@import "animate";
 
 // OZ components and styles
 @import "components/c-search";

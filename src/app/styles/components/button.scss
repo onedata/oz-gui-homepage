@@ -27,6 +27,12 @@
   background-color: $color-pale-green;
 }
 
+.btn-disabled {
+  color: white !important;
+  border-color: transparent !important;
+  background-color: $color-grey-7;
+}
+
 .btn-index {
   padding: 25px 55px;
   text-transform: uppercase;

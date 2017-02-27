@@ -9,8 +9,19 @@ const {
 } = DS;
 
 const {
-  inject
+  inject,
+  computed
 } = Ember;
+
+const VALID_PROVIDER_STATES = [
+  'online',
+  'offline',
+  'pending'
+];
+
+function isStatusValid(state) {
+  return VALID_PROVIDER_STATES.indexOf(state) !== -1;
+}
 
 /**
  * A Oneprovider host representation, available for user.
@@ -23,7 +34,11 @@ export default DS.Model.extend(isDefaultMixinFactory('defaultProviderId'), {
   session: inject.service(),
 
   name: attr('string'),
-  isWorking: attr('boolean', { defaultValue: false }),
+  
+  /**
+   * One of: online, offline, pending
+   */
+  status: attr('string', { defaultValue: 'pending' }),
 
   /**
    * Hostname of this provider
@@ -56,9 +71,13 @@ export default DS.Model.extend(isDefaultMixinFactory('defaultProviderId'), {
    */
   isSelected: false,
 
-  user: belongsTo('user', {async: true})
+  user: belongsTo('user', {async: true}),
 
   /*** Additional computed properties ***/
+  
+  isStatusValid: computed('status', function() {
+    return isStatusValid(this.get('status'));
+  }),
 
   /**
    * Implemented by ``IsDefault`` mixin
