@@ -4,6 +4,13 @@
 CHANGELOG
 ---------
 
+### 3.0.0-rc13
+
+* VFS-3047 Fixing JS errors on browsers other than Chrome/Blink engine
+* VFS-3047 Added "pending" status of provider
+* VFS-3004 Upgrading to Ember 2.11; upgrading packages
+
+
 ### 3.0.0-rc12
 
 * VFS-2881 Reordered panels in Onezone sidebar, automatic context expand
