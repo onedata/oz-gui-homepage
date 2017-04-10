@@ -2,6 +2,7 @@
 import Ember from 'ember';
 
 import GitbookUrl from 'oz-worker-gui/utils/gitbook-url';
+import bindElementTop from 'oz-worker-gui/utils/bind-element-top';
 
 import {
   isAbsoluteUrl,
@@ -42,7 +43,7 @@ function isDOMSecurityError(error) {
 
 export default Component.extend({
   tagName: 'iframe',
-  classNames: ['documentation-iframe'],
+  classNames: ['documentation-iframe', 'one-iframe'],
   attributeBindings: ['src'],
 
   startGitbookPath: null,
@@ -179,27 +180,12 @@ export default Component.extend({
     this.element.addEventListener('load', function() {
       self.onIframeLoad(this);
     });
-
-    // FIXME same as redoc-iframe - common!
+    
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');
-    let $container = this.$().parent();
-    $container.css({
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      bottom: 0
-    });
-    let __resizeFun = () => {
-      $container.css('top', ($aboveElement.offset().top + $aboveElement.height()) + 'px');
-    };
-    $(window).on('resize.redocIframe', __resizeFun);
-    __resizeFun();
-  },
-
-  didRender() {
-    // FIXME debug to remove
-    console.debug('iframe did render');
+    let $belowElement = this.$().parent();
+    let updater = bindElementTop($aboveElement, $belowElement);
+    $(window).on('resize.gitbookIframe', updater);
   },
 
   actions: {
@@ -208,7 +194,7 @@ export default Component.extend({
       this.sendAction('gitbookPathChanged', path);
     },
     invalidPageOpened() {
-      // FIXME force reset to index does not work when internal frame changes location to invalid
+      // TODO force reset to index does not work when internal frame changes location to invalid
       this.set('startGitbookPath', null);
       this.sendAction('invalidPageOpened');
     }

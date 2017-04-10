@@ -10,15 +10,6 @@
   }
 }
 
-.redoc-iframe {
-  display: block;
-  border: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
 .api-components-menu {
   position: relative;
   height: 50px;
@@ -62,7 +53,7 @@
   right: auto;
 
   .dropdown-toggle {
-    width: 160px;
+    width: 130px;
 
     .dropdown-toggle-label {
       width: 120px;
