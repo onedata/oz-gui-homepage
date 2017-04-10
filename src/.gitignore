@@ -199,6 +199,7 @@ lib/ember-cli-onedata-common/addon/instance-initializers/animate-css.js
 lib/ember-cli-onedata-common/addon/instance-initializers/global-app.js
 lib/ember-cli-onedata-common/addon/locales/en/session.js
 lib/ember-cli-onedata-common/addon/mixin-factories/models/is-default.js
+lib/ember-cli-onedata-common/addon/mixin-factories/routes/user-collection-model.js
 lib/ember-cli-onedata-common/addon/mixins/components/modal.js
 lib/ember-cli-onedata-common/addon/mixins/promise-loading.js
 lib/ember-cli-onedata-common/addon/serializers/onedata-websocket.js
@@ -232,6 +233,7 @@ lib/ember-cli-onedata-common/addon/utils/bind-floater.js
 lib/ember-cli-onedata-common/addon/utils/bytes-to-string.js
 lib/ember-cli-onedata-common/addon/utils/safe-element-id.js
 lib/ember-cli-onedata-common/addon/utils/snake-to-camel.js
+lib/ember-cli-onedata-common/addon/utils/wait-for.js
 lib/ember-cli-onedata-common/app/adapters/onedata-websocket.js
 lib/ember-cli-onedata-common/app/authenticators/basic.js
 lib/ember-cli-onedata-common/app/components/bs-tooltip.js
