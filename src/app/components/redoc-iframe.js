@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import bindElementTop from 'oz-worker-gui/utils/bind-element-top';
 
 // from srcdoc-polyfill
 /* globals srcDoc */
@@ -32,7 +33,7 @@ export default Ember.Component.extend({
 
   tagName: 'iframe',
   attributeBindings: ['srcdoc'],
-  classNames: ['redoc-iframe'],
+  classNames: ['redoc-iframe', 'one-iframe'],
 
   /**
    * To inject.
@@ -159,18 +160,9 @@ export default Ember.Component.extend({
 
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');
-    let $container = this.$().parent();
-    $container.css({
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      bottom: 0
-    });
-    let __resizeFun = () => {
-      $container.css('top', ($aboveElement.offset().top + $aboveElement.height()) + 'px');
-    };
-    $(window).on('resize.redocIframe', __resizeFun);
-    __resizeFun();
+    let $belowElement = this.$().parent();
+    let updater = bindElementTop($aboveElement, $belowElement);
+    $(window).on('resize.redocIframe', updater);
     this.updateSrcdocPolyfill();
   },
 

@@ -121,6 +121,18 @@ function afterRender() {
     // it works even with pressing "enter" on link
     sl.addEventListener('click', handleLinkOpen);
   });
+  // HACK convert wrongly generated swagger.json links (badly used relative link)
+  try {
+    var swaggerUrl = document.getElementsByClassName('openapi-button')[0].href;
+    Array.from(document.getElementsByTagName('a')).filter(function(a) {
+      return a.href.match(/swagger.json/);
+    }).forEach(function(a) {
+      a.href = swaggerUrl;
+    });
+  } catch (error) {
+    console.warn('Failed to convert bad relative swagger.json links: ' + error);
+  }
+  
   PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, document.parentOrigin);
   if (document.apiAnchor) {
     redocAnchorChanged(document.apiAnchor);
