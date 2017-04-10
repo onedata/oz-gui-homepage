@@ -39,9 +39,9 @@ export default Ember.Component.extend({
    * If true, show "none providers" modal
    * @type {Boolean}
    */
-  modalNoneProviders: computed('providers.@each.isWorking', function() {
+  modalNoneProviders: computed('providers.@each.status', function() {
     return this.get('providers.length') > 0 &&
-      this.get('providers').filterBy('isWorking', true).length === 0;
+      this.get('providers').filterBy('status', 'offline').length !== 0;
   }),
 
   init() {
