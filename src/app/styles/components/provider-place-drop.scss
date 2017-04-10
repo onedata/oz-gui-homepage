@@ -11,9 +11,21 @@ $color-provider-drop-space-size: #BDBDBD;
   z-index: 1001 !important;
   font-size: 12px;
 
-  &.working {
+  &.online {
     .drop-panel .drop-title-bar {
-      background-color: $color-provider-working;
+      background-color: $color-provider-online;
+    }
+  }
+
+  &.pending {
+    .drop-panel .drop-title-bar {
+      background-color: $color-provider-offline;
+    }
+  }
+  
+  &.offline {
+    .drop-panel .drop-title-bar {
+      background-color: $color-provider-offline;
     }
   }
 
@@ -52,7 +64,7 @@ $color-provider-drop-space-size: #BDBDBD;
     font-weight: bold;
   }
 
-  .provider-offline {
+  .provider-label-secondary {
     position: absolute;
     color: rgba(255, 255, 255, 0.5);
     top: 0;
@@ -72,7 +84,6 @@ $color-provider-drop-space-size: #BDBDBD;
       line-height: 28px;
       padding-left: 10px;
       padding-right: 10px;
-      background-color: $color-provider-not-working;
       color: #FFF;
       border-top-left-radius: $provider-drop-radius;
       border-top-right-radius: $provider-drop-radius;

@@ -4,9 +4,13 @@
       <div class="provider-label truncate">
         {{provider.name}}
       </div>
-      {{#unless provider.isWorking}}
-        <div class="provider-offline">
-          {{t "onezone.providerPlaceDrop.offline"}}
+      {{#unless provider.isOnline}}
+        <div class="provider-label-secondary">
+          {{#if (eq provider.status "offline")}}
+            {{t "onezone.providerPlaceDrop.offline"}}
+          {{else if (eq provider.status "pending")}}
+            {{t "onezone.providerPlaceDrop.pending"}}
+          {{/if}}
         </div>  
       {{/unless}}
     </div>
@@ -30,7 +34,7 @@
         {{provider-place-drop-space space=space providerId=provider.id}}
       {{/each}}
     </ul>
-    {{#if provider.isWorking}}
+    {{#if (eq provider.status "online")}}
       <hr>
       {{#spin-button-onedata buttonType="submit"
         action=(action "goToFiles")
@@ -39,6 +43,16 @@
         disabled=goToIsLoading
       }}
         {{t "onezone.providerPlaceDrop.goToFiles"}}
+      {{/spin-button-onedata}}
+    {{else if (eq provider.status "pending")}}
+      <hr>
+      {{#spin-button-onedata
+        inFlight=true
+        defaultTimeout=0
+        startDelay=0
+        class="btn btn-small btn-disabled no-outline"
+      }}
+        {{t "onezone.providerPlaceDrop.pending"}}
       {{/spin-button-onedata}}
     {{/if}}
   </div>
