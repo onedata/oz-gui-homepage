@@ -10,8 +10,7 @@
   <div class="col-xs-10">
     <div class="owl-carousel manual">
       {{#each supporters as |s|}}
-        <div class="img-box {{s.boxClasses}}" style="background-image: url({{s.image}});">
-        </div>
+        <a class="img-box {{s.boxClasses}}" style="background-image: url({{s.image}});" href={{s.link}}></a>
       {{/each}}
     </div>
   </div>

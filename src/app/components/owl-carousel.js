@@ -24,21 +24,29 @@ export default Ember.Component.extend({
       boxClasses: 'background-contain'
     },
     {
-      link: '#',
+      link: 'https://www.indigo-datacloud.eu/',
       image: logoFor('indigo')
     },
     {
-      link: '#',
+      link: 'http://plgrid.pl/',
       image: logoFor('plgrid')
     },
     {
-      link: '#',
+      link: 'https://www.egi.eu/',
       // TODO: the logo is poor quality
       image: logoFor('egi')
     },
     {
-      link: '#',
+      link: 'http://www.cyfronet.krakow.pl/',
       image: logoFor('cyfronet')
+    },
+    {
+      link: 'http://www.browserstack.com/',
+      image: logoFor('browserstack')
+    },
+    {
+      link: 'https://www.atlassian.com/software/bamboo',
+      image: logoFor('bamboo', 'png')
     }
   ],
 
