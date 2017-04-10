@@ -6,6 +6,9 @@ var fs = require('fs');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
+    fingerprint: {
+      enabled: false
+    },
     sassOptions: {
       includePaths: [
         'app/styles',
