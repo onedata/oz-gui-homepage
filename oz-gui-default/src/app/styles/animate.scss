@@ -26,6 +26,11 @@
   animation-duration: 2s;
 }
 
+.animated.very-slow {
+  -webkit-animation-duration: 4s;
+  animation-duration: 4s;
+}
+
 /// Own animations
 
 @keyframes sidebar-tab-flash {
@@ -41,5 +46,39 @@
 }
 
 .sidebar-tab-flash {
-  animation: sidebar-tab-flash 1s;
+  animation-name: sidebar-tab-flash;
+}
+
+@mixin pulse-keyframes($name, $attributes, $val1, $val2) {
+  @keyframes #{$name} {
+    0% {
+      @each $attr in $attributes {
+        #{$attr}: $val1;
+      }
+    }
+    50% {
+      @each $attr in $attributes {
+        #{$attr}: $val2;
+      }
+    }
+    100% {
+      @each $attr in $attributes {
+        #{$attr}: $val1;
+      }
+    }
+  }
+}
+
+@mixin animation-fg-color-change($name, $c1, $c2) {
+  @include pulse-keyframes($name, color border-color, $c1, $c2);
+  .#{$name} {
+    animation-name: #{$name};
+  }
+}
+
+@mixin animation-bg-color-change($name, $c1, $c2) {
+  @include pulse-keyframes($name, background-color, $c1, $c2);
+  .#{$name} {
+    animation-name: #{$name};
+  }
 }

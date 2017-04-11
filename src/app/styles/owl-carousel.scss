@@ -3,7 +3,10 @@
 .owl-carousel-component {
   .owl-carousel {
     .owl-item {
+      padding-left: 10px;
+      padding-right: 10px;
       .img-box {
+        display: block;
         height: 64px;
         width: 100%;
         background-repeat: no-repeat;
