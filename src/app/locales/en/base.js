@@ -147,6 +147,7 @@ export default {
   },
   onezone: {
     title: 'Manage account',
+    version: 'version',
 
     messages: {
       noneProviders: {
