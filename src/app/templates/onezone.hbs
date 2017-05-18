@@ -12,6 +12,12 @@
   <div class="onezone-container-application-inner">
     {{outlet}}
   </div>
+  <div class="zone-service-info">
+    <span class="zone-service-name">{{serviceName}}</span>
+    {{#if serviceVersion}}
+      <span class="zone-service-version">{{t "onezone.version"}} {{serviceVersion}}</span>
+    {{/if}}
+  </div>
 </div>
 
 {{!-- modals --}}
