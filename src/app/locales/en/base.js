@@ -66,7 +66,8 @@ export default {
 
     boxTitle: 'login',
     boxSubtitle: 'A new account will be created automatically on first login',
-    unknownZoneName: 'unknown'
+    unknownZoneName: 'unknown',
+    version: 'version',
   },
   components: { 
     modals: {
