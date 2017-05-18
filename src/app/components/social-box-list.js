@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   /**
    * Object with support mapping, eg. ``{plgrid: true, facebook: false}``
    * If authorizer is supported, its button will be displayed.
-   * Allowed supporters: plgrid, dropbox, facebook, google
+   * Allowed supporters: plgrid, dropbox, facebook, google, rhea
    *
    * Set by initSupportedAuthorizers
    */
