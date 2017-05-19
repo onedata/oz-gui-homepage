@@ -30,20 +30,23 @@ export default LoginRoute.extend({
         this.get('onezoneServer').getZoneName().then(
           (data) => {
             resolve({
-              zoneName: data.zoneName
+              zoneName: data.zoneName,
+              serviceVersion: data.serviceVersion,
             });
           },
           (error) => {
-            console.error('Failed to get zone name: ' + error.message);
+            console.error('Failed to get zone name and version: ' + error.message);
             resolve({
               zoneName: null,
+              serviceVersion: null,
             });
           }
         );
       } catch (error) {
-        console.error('Failed to get zone name because of exception: ' + error);
+        console.error('Failed to get zone name and version because of exception: ' + error);
         resolve({
           zoneName: null,
+          serviceVersion: null,
         });
       }
     });

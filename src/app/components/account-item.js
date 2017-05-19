@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   /** Label of entry, string */
   label: null,
 
-  /** Type of authorizer, one of: google, plgrid, dropbox, google, facebook, github */
+  /** Type of authorizer, one of: google, plgrid, dropbox, google, facebook, github, rhea */
   type: null,
 
   /**

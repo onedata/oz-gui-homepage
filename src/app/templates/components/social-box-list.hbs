@@ -19,7 +19,12 @@
               {{#if (eq authorizerName 'basicAuth')}}
                 {{social-box type='username' action='showLoginForm' iconName='key'}}
               {{else}}
-                {{social-box type=authorizerName action='authenticate'}}
+                {{!-- rhea is a special case with full size logo --}}
+                {{social-box 
+                  type=authorizerName
+                  fullSize=(eq authorizerName "rhea")
+                  action='authenticate'
+                }}
               {{/if}}
             </div>
           {{/each}}
