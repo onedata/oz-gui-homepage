@@ -8,6 +8,14 @@
   }
 }
 
+.social-box-component {
+  &.full-size {
+    .one-icon {
+      font-size: 72px;
+    }
+  }
+}
+
 .container-home {
   .login-icon-box {
     display: inline-block;
@@ -66,6 +74,9 @@
     }
     &.egi {
       background-color: $color-login-egi;
+    }
+    &.rhea {
+      background-color: $color-login-rhea;
     }
   }
 
@@ -166,5 +177,13 @@
         font-size: 0.9em;
       }
     }
+  }
+  
+  .login-service-version {
+    font-size: 11pt;
+    text-align: right;
+    padding: 10px;
+    padding-right: 20px;
+    color: rgba(white,0.5);
   }
 }

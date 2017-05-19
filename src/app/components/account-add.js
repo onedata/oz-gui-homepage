@@ -10,6 +10,7 @@ const AUTH_PROVIDERS_NAMES = {
   plgrid: 'PLGrid OpenID',
   indigo: 'Indigo',
   egi: 'EGI',
+  rhea: 'RHEA KeyCloak'
 };
 
 /**

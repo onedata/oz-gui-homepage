@@ -83,3 +83,17 @@ $search-box-height: 36px;
   padding-left: $onezone-sidebar-width + $onezone-content-padding;
   padding-top: $onezone-top-bar-height + $onezone-content-padding;
 }
+
+.zone-service-info {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 11pt;
+  .zone-service-name {
+    color: rgba(white, .7);
+  }
+  .zone-service-version {
+    margin-left: 10px;
+    color: rgba(white, .5);
+  }
+}
