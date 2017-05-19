@@ -10,8 +10,11 @@ const {
   run: {
     schedule
   },
-  observer
+  observer,
+  RSVP: { Promise },
 } = Ember;
+
+const ObjectPromiseProxy = Ember.ObjectProxy.extend(Ember.PromiseProxyMixin);
 
 const SIDEBAR_GROUPS = [
   'accounts', 'spaces', 'providers',
@@ -31,6 +34,8 @@ const EXPAND_PARAMS = SIDEBAR_GROUPS.map(name => `expand_${name}`);
 const controller = Ember.Controller.extend({
   modalsManager: inject.service(),
   onezoneSidebar: inject.service(),
+  session: inject.service(),
+  onezoneServer: inject.service(),
 
   modal: computed.alias('modalsManager.currentModal'),
 
@@ -58,6 +63,18 @@ const controller = Ember.Controller.extend({
       });      
     }
   }),
+
+  serviceVersion: computed.readOnly('session.sessionDetails.serviceVersion'),
+  __serviceNameProxy: computed('onezoneServer', function () {
+    let promise = new Promise((resolve, reject) => {
+      this.get('onezoneServer').getZoneName().then(
+        ({ zoneName }) => resolve(zoneName),
+        () => reject(...arguments)
+      );
+    });
+    return ObjectPromiseProxy.create({ promise });
+  }),
+  serviceName: computed.readOnly('__serviceNameProxy.content'),
 
   actions: {
     closeModal() {
