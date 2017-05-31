@@ -93,6 +93,7 @@ export default Ember.Service.extend({
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched the zone name
    *   - ``data.zoneName`` (string)
+   *   - ``data.serviceVersion`` (string)
    * - ``reject(object: error)`` on failure
    */
   getZoneName() {

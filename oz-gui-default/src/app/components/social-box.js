@@ -11,12 +11,19 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['social-box-component'],
+  classNameBindings: ['fullSize:full-size'],
 
   /** Name of social/login service (eg. 'twitter') */
   type: null,
 
   /** Href for link when clicked */
   link: '',
+
+  /**
+   * If true, render icon without margin
+   * @type {boolean}
+   */
+  fullSize: false,
 
   iconName: function() {
     return `social-${this.get('type')}`;
