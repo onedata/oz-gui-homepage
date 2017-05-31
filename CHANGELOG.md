@@ -4,6 +4,13 @@
 CHANGELOG
 ---------
 
+### 3.0.0-rc15
+
+* VFS-3172, VFS-3173 Displaying Zone name and version in Onezone and login view
+* VFS-3222 Added RHEA social icon
+* VFS-3214 Fix blocking message when at least one provider is offline
+
+
 ### 3.0.0-rc13
 
 * VFS-3047 Fixing JS errors on browsers other than Chrome/Blink engine
