@@ -15,6 +15,11 @@
 // note, that it works only for one level iframe
 var PARENT_WINDOW = window.parent;
 
+var JUMP_SCROLL_MARGIN_TOP = 12;
+
+// get hash part from URL (cutting # sign)
+var RE_HASH = /.*?#(.*)/;
+
 /**
  * jQuery offset method (fitted to this code)
  */
@@ -65,7 +70,7 @@ function jumpToAnchor(anchor) {
   var element;
   switch (type) {
     case 'section':
-      element = document.querySelector('h1[section="' + anchor + '"],h2[section="' + anchor + '"]');
+      element = document.querySelector('h1[section="' + anchor + '"] .share-link, h2[section="' + anchor + '"] .share-link');
       break;
     case 'tag':
       element = document.querySelector('div.tag-info a.share-link[orig-href="#' + anchor + '"]');
@@ -76,12 +81,12 @@ function jumpToAnchor(anchor) {
       break;
     case 'operation':
       var operationId = anchor.match(/operation\/(.*)/)[1];
-      element = document.querySelector('method[operation-id="' + operationId + '"]');
+      element = document.querySelector('operation[operation-id="' + operationId + '"] .operation-content .operation-header');
       break;
     default:
       throw 'Cannot resolve anchor type: ' + anchor;
   }
-  window.scrollTo(0, offset(element).top);
+  window.scrollTo(0, offset(element).top - JUMP_SCROLL_MARGIN_TOP);
 }
 
 /**
@@ -89,7 +94,11 @@ function jumpToAnchor(anchor) {
  * @return {String} Eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone?anchor=#operation/modify_provider
  */
 function homepageLink(originalHref) {
-  return document.apiBaseUrl + '?anchor=' + stripHashChar(originalHref);
+  var link = document.apiBaseUrl;
+  if (originalHref) {
+    link += '?anchor=' + stripHashChar(originalHref);
+  }
+  return link;
 }
 
 /**
@@ -143,6 +152,10 @@ function redocAnchorChanged(anchor) {
   jumpToAnchor(anchor);
 }
 
+function getUrlHashPart(url) {
+  return url.match(RE_HASH)[1];
+}
+
 function handleMessage(event) {
   var type = event.data.type;
   var message = event.data.message;
@@ -150,6 +163,11 @@ function handleMessage(event) {
     redocAnchorChanged(message);
   }
 }
+
+// pass ReDoc URL change parent window
+window.history.replaceState = function (stateObj, title, url) {
+  PARENT_WINDOW.history.replaceState(null, null, homepageLink(getUrlHashPart(url)));
+};
 
 /// MAIN - wait for ReDoc to render (currently polling) and perform integration tasks
 
