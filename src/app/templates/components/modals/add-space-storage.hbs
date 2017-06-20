@@ -1,0 +1,51 @@
+{{#bs-modal open=open body=false footer=false
+    id=modalId
+    title=(t "components.modals.addSpaceStorage.title")
+    openAction="open"
+    keyboard=true
+    autoClose=true
+    backdropClose=true
+    closeButton=false
+    size="lg"
+  }}
+  {{#bs-modal-body}}
+    <div class="row">
+      {{#bs-tab fade=false}}
+        {{#bs-tab-pane
+          title=(t "components.modals.addSpaceStorage.requestSupport.tabName")
+        }}
+          {{modals/add-space-storage/request-support
+            copySuccess=(action "copySuccess")
+            copyError=(action "copyError")
+            tokenProxy=supportTokenProxy
+            getToken=(action "getNewSupportToken")
+          }}
+        {{/bs-tab-pane}}
+        {{#bs-tab-pane
+          title=(t "components.modals.addSpaceStorage.exposeData.tabName")
+        }}
+          {{modals/add-space-storage/expose-data
+            copySuccess=(action "copySuccess")
+            copyError=(action "copyError")
+            tokenProxy=supportTokenProxy
+          }}
+        {{/bs-tab-pane}}
+        {{#bs-tab-pane
+          title=(t "components.modals.addSpaceStorage.deployProvider.tabName")
+        }}
+          {{modals/add-space-storage/deploy-provider
+            copySuccess=(action "copySuccess")
+            copyError=(action "copyError")
+            tokenProxy=supportTokenProxy
+          }}
+        {{/bs-tab-pane}}
+      {{/bs-tab}}
+    </div>
+
+  {{/bs-modal-body}}
+  {{#bs-modal-footer as |footer|}}
+    {{#bs-button action=(action "close" target=footer) type="default"}}
+      {{t "common.modal.close"}}
+    {{/bs-button}}
+  {{/bs-modal-footer}}
+{{/bs-modal}}

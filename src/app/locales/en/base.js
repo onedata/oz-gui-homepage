@@ -11,7 +11,8 @@ export default {
       yes: 'Yes',
       no: 'No',
       signin: 'Sign in',
-      join: 'Join'
+      join: 'Join',
+      close: 'Close',
     },
     notify: {
       clipboardSuccess: 'Text has been copied to clipboard.',
@@ -69,8 +70,36 @@ export default {
     unknownZoneName: 'unknown',
     version: 'version',
   },
-  components: { 
+  components: {
     modals: {
+      addSpaceStorage: {
+        title: 'Add storage',
+        requestSupport: {
+          tabName: 'Request support',
+          desc1: 'Request storage support for this space from existing provider.',
+          desc2: 'Send the token below to the administrator of the preferred ' + 
+            'storage provider (e.g. via email).',
+        },
+        exposeData: {
+          tabName: 'Expose existing data collection',
+          desc1: 'Expose storage with existing data set through this space',
+          desc2: 'Existing directories and files structure will be ' +
+            'automatically discovered and synchronized and anyone with access ' +
+            'to this space will be able to use this data set.',
+        },
+        deployProvider: {
+          tabName: 'Deploy your own provider',
+          desc1: 'Deploy your own Oneprovider service with new storage and ' + 
+            'automatically support this space.',
+        },
+        tabsCommon: {
+          descDistros: 'The following Linux distributions are supported:',
+          descCommand: 'The command installs docker and configure oneprovider',
+          token: 'Token',
+          command: 'Command',
+          generateToken: 'Generate another token',
+        },
+      },
       loginForm: {
         title: 'Login with username and password',
         usernameLabel: 'Username:',
@@ -140,7 +169,7 @@ export default {
       setHome: 'set as home',
       leave: 'leave',
       rename: 'rename',
-      getSupport: 'get support'
+      getSupport: 'add storage'
     }
   },
   logout: {
@@ -219,7 +248,7 @@ export default {
       noViewPermissions: 'You do not have privileges to view details of this space.',
     },
     spacesAccordionItem: {
-      getSupport: 'Get support',
+      getSupport: 'Add storage...',
       toggleDefaultFailed: 'Changing default space failed: {{errorMessage}}'
     },
     providersAccordion: {

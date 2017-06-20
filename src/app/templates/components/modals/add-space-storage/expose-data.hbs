@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-xs-8">
+    <p>
+      {{t "components.modals.addSpaceStorage.exposeData.desc1"}}
+    </p>
+    <p>
+      {{t "components.modals.addSpaceStorage.exposeData.desc2"}}
+    </p>
+  </div>
+  <div class="col-xs-4">
+    GFX
+  </div>
+</div>
+<div class="row">
+  <h2>{{t "components.modals.addSpaceStorage.tabsCommon.token"}}</h2>
+  {{#promise-proxy-container proxy=tokenProxy}}
+    <textarea class="token-input" readonly>{{commandProxy.content}}</textarea>
+  {{/promise-proxy-container}}
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <p>
+      {{t "components.modals.addSpaceStorage.tabsCommon.descCommand"}}
+    </p>
+  </div>
+  <div class="col-xs-6 pull-right">
+    {{!-- TODO handle copy success/failure with changing clipboard icon for a while--}}
+    {{#copy-button tagName="div" success="copySuccess" error="copyError"
+      class="btn-primary clickable"
+      clipboardTarget=_clipboardTarget}}
+      {{one-icon tagName="div" icon="clipboard-copy"}}
+    {{/copy-button}}
+  </div>
+</div>
