@@ -77,6 +77,9 @@ const controller = Ember.Controller.extend({
   serviceName: computed.readOnly('__serviceNameProxy.content'),
 
   actions: {
+    openModal() {
+      this.get('modalsManager').openModal(...arguments);
+    },
     closeModal() {
       this.get('modalsManager').closeModal(...arguments);
     }
