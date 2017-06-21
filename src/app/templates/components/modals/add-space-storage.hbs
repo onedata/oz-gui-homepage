@@ -1,14 +1,17 @@
-{{#bs-modal open=open body=false footer=false
+{{#bs-modal open=open body=false footer=false header=false
     id=modalId
-    title=(t "components.modals.addSpaceStorage.title")
     openAction="open"
     keyboard=true
     autoClose=true
     backdropClose=true
     closeButton=false
     size="lg"
+    class="panel-onezone-modal"
   }}
-  {{#bs-modal-body}}
+  {{#bs-modal-header class="panel-heading"}}
+     {{t "components.modals.addSpaceStorage.title"}} {{space.id}}
+   {{/bs-modal-header}}
+  {{#bs-modal-body class="panel-body"}}
     <div class="row">
       {{#bs-tab fade=false}}
         {{#bs-tab-pane
@@ -41,11 +44,5 @@
         {{/bs-tab-pane}}
       {{/bs-tab}}
     </div>
-
   {{/bs-modal-body}}
-  {{#bs-modal-footer as |footer|}}
-    {{#bs-button action=(action "close" target=footer) type="default"}}
-      {{t "common.modal.close"}}
-    {{/bs-button}}
-  {{/bs-modal-footer}}
 {{/bs-modal}}

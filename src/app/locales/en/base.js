@@ -73,7 +73,7 @@ export default {
   components: {
     modals: {
       addSpaceStorage: {
-        title: 'Add storage',
+        title: 'Add storage for',
         requestSupport: {
           tabName: 'Request support',
           desc1: 'Request storage support for this space from existing provider.',
