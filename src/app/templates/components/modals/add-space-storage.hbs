@@ -25,18 +25,18 @@
           }}
         {{/bs-tab-pane}}
         {{#bs-tab-pane
-          title=(t "components.modals.addSpaceStorage.exposeData.tabName")
+          title=(t "components.modals.addSpaceStorage.deployProvider.tabName")
         }}
-          {{modals/add-space-storage/expose-data
+          {{modals/add-space-storage/deploy-provider
             copySuccess=(action "copySuccess")
             copyError=(action "copyError")
             tokenProxy=supportTokenProxy
           }}
         {{/bs-tab-pane}}
         {{#bs-tab-pane
-          title=(t "components.modals.addSpaceStorage.deployProvider.tabName")
+          title=(t "components.modals.addSpaceStorage.exposeData.tabName")
         }}
-          {{modals/add-space-storage/deploy-provider
+          {{modals/add-space-storage/expose-data
             copySuccess=(action "copySuccess")
             copyError=(action "copyError")
             tokenProxy=supportTokenProxy

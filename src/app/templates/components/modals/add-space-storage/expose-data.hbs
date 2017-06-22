@@ -6,12 +6,15 @@
     <p>
       {{t "components.modals.addSpaceStorage.exposeData.desc2"}}
     </p>
+    <p>
+      {{t "components.modals.addSpaceStorage.tabsCommon.descCommand"}}
+    </p>
   </div>
   <img class="col-xs-6" src="assets/images/onezone/add-storage-expose.svg">
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h2>{{t "components.modals.addSpaceStorage.tabsCommon.token"}}</h2>
+    <h2>{{t "components.modals.addSpaceStorage.tabsCommon.command"}}</h2>
     {{#promise-proxy-container proxy=tokenProxy}}
       <textarea class="token-input form-control" rows="4" readonly>{{commandProxy.content}}</textarea>
     {{/promise-proxy-container}}
@@ -20,7 +23,6 @@
 <div class="row">
   <div class="col-xs-12">
     <p>
-      {{t "components.modals.addSpaceStorage.tabsCommon.descCommand"}}
       {{!-- TODO handle copy success/failure with changing clipboard icon for a while--}}
       {{#copy-button tagName="div" success="copySuccess" error="copyError"
         class="btn btn-primary clickable pull-right"
