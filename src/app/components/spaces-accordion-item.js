@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 
 const {
   computed,
@@ -55,6 +56,30 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
   },
+  
+  didInsertElement() {
+    this.prepareFloaters();
+  },
+
+  prepareFloaters() {
+    let self = this;  
+    this.$().find('.floater').each(function() {
+      let ft = $(this);
+      let updatePosition = bindFloater(ft);
+      ft.parent().on('mouseover', updatePosition);
+      // TODO: performance - better all updatePositions in one fun
+      $('.accordion-container').on('scroll', updatePosition);
+
+      if (ft.hasClass('token-popup')) {
+        self.set('__getSupportTokenUpdatePosition', updatePosition);
+      }
+    });
+
+    // prevent space token popup close on input and button click
+    $(document).on('click', `#${this.get('elementId')} .input-with-button`, function (e) {
+      e.stopPropagation();
+    });
+  },
 
   actions: {
     uncollapse() {
@@ -77,6 +102,16 @@ export default Ember.Component.extend({
         this.getProperties('spacesManager', 'space');
 
       spacesManager.toggleSpaceAsDefault(space);
+    },
+    
+    copySuccess() {
+      this.selectTokenText();
+      this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
+    },
+    
+    copyError() {
+      this.selectTokenText();
+      this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
     },
     
     goToProvider(provider) {
