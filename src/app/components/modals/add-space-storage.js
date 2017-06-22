@@ -20,6 +20,7 @@ const {
 
 export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   onezoneServer: service(),
+  notify: service(),
   
   /** @abstract */
   modalId: null,
@@ -89,12 +90,10 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
     },
     
     copySuccess() {
-      this.selectTokenText();
       this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
     },
     
     copyError() {
-      this.selectTokenText();
       this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
     },
   }
