@@ -1,3 +1,11 @@
+/**
+ * Common component logic for support space modal tabs
+ * @module components/modals/add-space-storage/-tab-base
+ * @author Jakub Liput
+ * @copyright (C) 2017 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
+
 import Ember from 'ember';
 
 import generateShellCommand from 'oz-worker-gui/utils/generate-shell-command';

@@ -8,14 +8,15 @@
  */
 
 import Ember from 'ember';
-import { invokeAction } from 'ember-invoke-action';
-
-import getErrorDetails from 'ember-onedata-onepanel-server/utils/get-error-description';
 
 const {
   Component,
   computed,
 } = Ember;
+
+function getErrorDetails(reason) {
+  return reason && reason.error || reason;
+}
 
 export default Component.extend({
   classNames: ['alert', 'alert-danger', 'alert-promise-error', 'resource-load-error'],
@@ -48,7 +49,7 @@ export default Component.extend({
       this.toggleProperty('showDetails');
     },
     close() {
-      invokeAction(this, 'onClose');
+      this.get('onClose')();
     }
   }
 });

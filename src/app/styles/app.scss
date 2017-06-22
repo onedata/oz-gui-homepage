@@ -52,6 +52,10 @@ $body-font: 'Open Sans';
 @import "onezone";
 @import "notify";
 
+// backported from onepanel-gui
+@import "utils";
+@import "components/spin-spinner-extensions";
+
 // OZ components and styles
 @import "components/c-search";
 @import "components/panel-onezone";

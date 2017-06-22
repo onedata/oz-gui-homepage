@@ -1,14 +1,14 @@
-import Ember from 'ember';
-import ModalMixin from 'ember-cli-onedata-common/mixins/components/modal';
-import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
-
 /**
- * A form for logging in with username and password (invoked by one of login buttons)
+ * A modal that presents multiple support space options to user, see its specific tabs.
  * @module components/modals/add-space-storage
  * @author Jakub Liput
  * @copyright (C) 2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
+
+import Ember from 'ember';
+import ModalMixin from 'ember-cli-onedata-common/mixins/components/modal';
+import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 const ObjectPromiseProxy = Ember.ObjectProxy.extend(Ember.PromiseProxyMixin);
 

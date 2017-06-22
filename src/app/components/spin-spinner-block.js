@@ -1,3 +1,14 @@
+/**
+ * A container for spin-spinner that helps to render a loading spinner 
+ * 
+ * NOTE this is copied component from onepanel-gui project 
+ *
+ * @module components/spin-spinner-block
+ * @author Jakub Liput
+ * @copyright (C) 2017 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
+
 import Ember from 'ember';
 
 const PREDEF_SIZES = {
