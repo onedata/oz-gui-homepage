@@ -103,11 +103,15 @@
       padding: 40px 50px;
       .modal-header {
         position: relative;
+        font-family: "Myriad Pro Regular";
         @extend .truncate;
         padding: 0;
         padding-right: 50px;
         border: none;
         background-color: inherit;
+        .special-name {
+          font-family: "Myriad Pro Semibold";
+        }
         .close {
           position: absolute;
           right: 0;
