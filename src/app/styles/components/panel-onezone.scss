@@ -75,7 +75,7 @@
       font-family: monospace;
     }
 
-    *[type="button"] {
+    .btn {
       text-transform: uppercase;
       .one-icon {
         display: inline;
@@ -103,7 +103,9 @@
       padding: 40px 50px;
       .modal-header {
         position: relative;
+        @extend .truncate;
         padding: 0;
+        padding-right: 50px;
         border: none;
         background-color: inherit;
         .close {
@@ -118,6 +120,7 @@
           border-style: solid;
           text-align: center;
           color: inherit;
+          outline: none !important;
           span {
             font-size: 1.4em;
           }
