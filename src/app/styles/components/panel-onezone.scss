@@ -67,6 +67,24 @@
         content: $oneicon-arrow-right;
       }
     }
+
+    textarea {
+      padding: 15px;
+      border-color: $onedata-light-gray;
+      background-color: $onedata-snow;
+      font-family: monospace;
+    }
+
+    .btn {
+      text-transform: uppercase;
+      .one-icon {
+        display: inline;
+        font-size: 24px;
+        position: relative;
+        line-height: 0;
+        top: 5px;
+      }
+    }
   }
 
   &.panel-onezone-alert {
@@ -75,5 +93,92 @@
       text-transform: none;
     }
 
+  }
+}
+
+.panel-onezone-modal.modal {
+  .modal-dialog {
+    .modal-content {
+      @extend .panel-onezone;
+      padding: 40px 50px;
+      .modal-header {
+        position: relative;
+        @extend .truncate;
+        padding: 0;
+        padding-right: 50px;
+        border: none;
+        background-color: inherit;
+        .close {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1.5em;
+          height: 1.5em;
+          border-width: 2px;
+          border-radius: 100%;
+          border-style: solid;
+          text-align: center;
+          color: inherit;
+          outline: none !important;
+          span {
+            font-size: 1.4em;
+          }
+        }
+      }
+      .modal-body {
+        padding: 30px 0 0 0;
+        .row {
+          margin: 0;
+          margin-bottom: 15px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          & > *:first-child {
+            padding-left: 0;
+          }
+          & > *:last-child {
+            padding-right: 0;
+          }
+        }
+        .nav.nav-tabs {
+          margin: 0 -50px;
+          padding: 0 50px;
+          li {
+            margin: 0 0 -1px 0;
+            &::before {
+              display: none;
+            }
+            a {
+              padding: 20px;
+              padding-bottom: 19px;
+              border: 1px solid $nav-tabs-border-color;
+              border-radius: 0;
+              text-transform: uppercase;
+              color: $color-grey-1;
+              background: $onedata-snow;
+            }
+            &.active {
+              a {
+                background: white;
+                padding-bottom: 20px;
+                border-bottom: 0;
+              }
+            }
+          }
+        }
+        .tab-pane {
+          padding: 40px 0 0 0;
+        }
+      }
+    }
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  a {
+    color: $onedata-mint-green-pale;
   }
 }

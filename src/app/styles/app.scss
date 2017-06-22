@@ -264,6 +264,10 @@ input {
   color: black;
 }
 
+textarea {
+  resize: none;
+}
+
 // TODO: there general-purpose classes should be moved to deps/gui styles
 
 .full-width {

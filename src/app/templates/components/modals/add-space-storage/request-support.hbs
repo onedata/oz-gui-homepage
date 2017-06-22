@@ -1,35 +1,36 @@
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-xs-6">
     <p>
       {{t "components.modals.addSpaceStorage.requestSupport.desc1"}}
     </p>
     <p>
       {{t "components.modals.addSpaceStorage.requestSupport.desc2"}}
     </p>
+    <p>
+      {{t "components.modals.addSpaceStorage.requestSupport.desc3"}}
+    </p>
   </div>
-  <div class="col-xs-4">
-    GFX
+  <img class="col-xs-6" src="assets/images/onezone/add-storage-request.svg">
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h2>{{t "components.modals.addSpaceStorage.tabsCommon.token"}}</h2>
+    {{!-- TODO loading state --}}
+    {{#promise-proxy-container proxy=tokenProxy}}
+      <textarea class="token-input form-control" rows="4" readonly>{{tokenProxy.content}}</textarea>
+    {{/promise-proxy-container}}
   </div>
 </div>
 <div class="row">
-  <h2>{{t "components.modals.addSpaceStorage.tabsCommon.token"}}</h2>
-  {{!-- TODO loading state --}}
-  {{#promise-proxy-container proxy=tokenProxy}}
-    <textarea class="token-input" readonly>{{tokenProxy.content}}</textarea>
-  {{/promise-proxy-container}}
-</div>
-<div class="row">
-  <div class="col-xs-6">
-    <a {{action "getToken"}}>
+  <div class="col-xs-12">
+    <a class="clickable" {{action "getToken"}}>
       {{t "components.modals.addSpaceStorage.tabsCommon.generateToken"}}
     </a>
-  </div>
-  <div class="col-xs-6 pull-right">
     {{!-- TODO handle copy success/failure with changing clipboard icon for a while--}}
     {{#copy-button tagName="div" success="copySuccess" error="copyError"
-      class="btn-primary clickable"
+      class="btn btn-primary clickable pull-right"
       clipboardTarget=_clipboardTarget}}
-      {{one-icon tagName="div" icon="clipboard-copy"}}
+      {{one-icon tagName="div" icon="clipboard-copy"}} Copy
     {{/copy-button}}
   </div>
 </div>
