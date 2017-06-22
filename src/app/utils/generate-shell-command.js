@@ -9,7 +9,7 @@
 
 function _onezoneUrl(windowLocation = window.location) {
   let protocol = windowLocation.protocol;
-  let prefix = `${protocol}://${windowLocation.host}`;
+  let prefix = `${protocol}//${windowLocation.host}`;
   let port = windowLocation.port;
   let suffix = (port &&
     !(protocol === 'http' && port === 80) &&
@@ -29,7 +29,7 @@ function _curlCommand(url, token) {
 
 const GENERATORS = {
   onedatify({ token }) {
-    return _curlCommand('https://get.onedata.org/oneprovider.sh', token);
+    return _curlCommand('https://get.onedata.org/onedatify.sh', token);
   },
   oneprovider({ token }) {
     return _curlCommand('https://get.onedata.org/oneprovider.sh', token);
