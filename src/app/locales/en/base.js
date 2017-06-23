@@ -248,6 +248,7 @@ export default {
       joinSpace: 'Join a space',
       readMore: 'Read more',
       noViewPermissions: 'You do not have privileges to view details of this space.',
+      creatingSpace: 'Creating space:',
     },
     spacesAccordionItem: {
       getSupport: 'Add storage...',

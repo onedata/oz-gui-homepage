@@ -367,3 +367,7 @@ textarea {
 .container-home > .container:first-child, .container-home > .container-index {
   margin-top: 50px;
 }
+
+.disable-pointer-events {
+  pointer-events: none !important;
+}
