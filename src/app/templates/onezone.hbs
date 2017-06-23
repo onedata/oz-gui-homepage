@@ -40,3 +40,7 @@
   btnClass="btn-primary"
   closeModal=(action "closeModal")
 }}
+
+{{modals/add-space-storage open=(eq modal.type "addSpaceStorage")
+  space=modal.options.space
+}}

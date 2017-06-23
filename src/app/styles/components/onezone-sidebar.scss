@@ -454,12 +454,11 @@
         }
 
         .get-support {
-          font-family: "Lato", sans-serif;
-          font-weight: 100;
-          font-style: italic;
-
           .icon {
             text-align: center;
+            .oneicon {
+              font-weight: bold;
+            }
           }
 
           // TODO: make dynamic

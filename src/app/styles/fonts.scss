@@ -2,6 +2,13 @@
 // common fonts are imported with onedata-common.scss
 
 @font-face {
+  font-family: 'Myriad Pro Regular';
+  src: url('/assets/fonts/myriadpro/myriadpro-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Myriad Pro Semibold';
   src: url('/assets/fonts/myriadpro/myriadpro-semibold.otf') format('opentype');
   font-weight: normal;
