@@ -326,6 +326,7 @@
             padding-left: 8px;
             line-height: $onezone-secondary-accordion-heading-height;
             text-transform: none;
+            max-width: 280px;
 
             // TODO: max-width truncation in table-cell seems to be hacky
             // try to find out other solution
@@ -659,6 +660,15 @@
   .secondary-item-element {
     display: table-cell;
     vertical-align: middle;
+  }
+}
+
+.secondary-item-element {
+  .spinner-container {
+    &.spinner-32 {
+      width: 28px;
+      height: initial;
+    }
   }
 }
 
