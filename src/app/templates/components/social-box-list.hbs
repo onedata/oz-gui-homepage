@@ -18,6 +18,12 @@
               {{!-- basicAuth is a special case --}}
               {{#if (eq authorizerName 'basicAuth')}}
                 {{social-box type='username' action='showLoginForm' iconName='key'}}
+              {{else if (eq authorizerName 'elixir')}}
+                {{social-box
+                  iconType='svg'
+                  type='elixir'
+                  action='authenticate'
+                }}
               {{else}}
                 {{!-- rhea is a special case with full size logo --}}
                 {{social-box 

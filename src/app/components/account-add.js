@@ -10,14 +10,15 @@ const AUTH_PROVIDERS_NAMES = {
   plgrid: 'PLGrid OpenID',
   indigo: 'Indigo',
   egi: 'EGI',
-  rhea: 'RHEA KeyCloak'
+  rhea: 'RHEA KeyCloak',
+  elixir: 'ELIXIR',
 };
 
 /**
  * An add account button, which shows popup with authorization providers.
  * @module components/account-add
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(PromiseLoadingMixin, {

@@ -24,8 +24,22 @@
   <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
     {{!-- TODO: style --}}
     {{#each authProviders as |authProvider|}}
-      {{account-item type=authProvider.type label=authProvider.label
-        mode="connect" action="connectNewAccount"}}
+      {{#if (eq authProvider.type 'elixir')}}
+        {{account-item
+          iconType="svg"
+          type=authProvider.type
+          label=authProvider.label
+          mode="connect"
+          action="connectNewAccount"
+        }}
+      {{else}}
+        {{account-item
+          type=authProvider.type
+          label=authProvider.label
+          mode="connect"
+          action="connectNewAccount"
+        }}
+      {{/if}}
     {{/each}}
   </div>
 </div>
