@@ -14,7 +14,18 @@
   {{else}}
     {{#each authorizersSorted as |account|}}
     <li class="non-hoverable">
-      {{account-item type=account.type label=account.email clickable=false}}
+      {{#if (eq account.type 'elixir')}}
+        {{account-item
+          iconType="svg"
+          type=account.type
+          label=account.email
+          clickable=false
+        }}
+      {{else}}
+        {{account-item type=account.type label=account.email clickable=false}}
+      {{/if}}
+
+      
     </li>
     {{/each}}
   {{/if}}
