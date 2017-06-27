@@ -9,6 +9,7 @@
 }
 
 .social-box-component {
+  display: inline-block;
   &.full-size {
     .one-icon {
       font-size: 72px;
@@ -17,7 +18,7 @@
   .social-icon-image {
     width: 100%;
     height: 100%;
-    background-size: 72px 72px;
+    background-size: 40px 40px;
     background-repeat: no-repeat;
     background-position: center center;
     
@@ -32,13 +33,12 @@
 .container-home {
   .login-icon-box {
     display: inline-block;
-    height: 72px;
-    width: 72px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: $border-radius-large;
     text-align: center;
-    line-height: 72px;
-    font-size: 56px;
+    line-height: 50px;
+    font-size: 35px;
     color: white !important;
     text-decoration: none !important;
     cursor: pointer; cursor: hand;
@@ -102,16 +102,91 @@
   }
 
   .login-buttons-container {
-    max-width: 700px;
+    max-width: 440px;
+  }
+  
+  .authorizers-dropdown {
+    position: relative;
+    color: $color-steel;
+    font-size: 80%;
+    margin-top: 10px;
+    .dropdown-label {
+      position: absolute;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 15px;
+      border-right: 1px solid gray;
+      z-index: 2;
+    }
+    .ember-power-select-status-icon {
+      display: none;
+    }
+    .dropdown-arrow {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      font-size: 28px;
+    }
+    .ember-power-select-option, .ember-power-select-trigger {
+      position: relative;
+      padding-left: 50px;
+      .social-box-component {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 25px;
+        margin: 0 10px;
+        .login-icon-box {
+          height: 25px;
+          width: 25px;
+          margin: 0;
+          border-radius: $border-radius-large;
+          text-align: center;
+          line-height: 25px;
+          font-size: 18px;
+          .social-icon-image {
+            background-size: 20px 20px;
+          }
+        }
+      }
+    }
+    .ember-power-select-trigger {
+      min-height: 50px;
+      padding: 11px;
+      padding-left: 130px;
+      .social-box-component {
+        left: 90px;
+      }
+    }
+  }
+
+  .text-with-horiz-line {
+    padding: 10px 0;
+    overflow: hidden;
+    text-align: center;
+    &::before,
+    &::after {
+      content: "";
+      background-color: white;
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 50%;
+    }
+    &::before {
+      right: 0.5em;
+      margin-left: -50%;
+    }
+    &::after {
+      left: 0.5em;
+      margin-right: -50%;
+    }
   }
 
   .login-box {
-    padding-top: 100px;
-    padding-bottom: 90px;
-
-    border: 2px solid white;
-    background: rgba(100%, 100%, 100%, 0.25);
-
     h1 {
       text-align: center;
       margin-bottom: 50px;
@@ -126,6 +201,7 @@
   }
 
   .zone {
+    display: none;
     color: white;
     background: transparent;
     margin-top: 10px;

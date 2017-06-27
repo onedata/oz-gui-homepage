@@ -1,0 +1,11 @@
+$ember-power-select-default-border-radius: $border-radius-large;
+$ember-power-select-default-border: 1px solid $color-grey-2;
+
+@import "../ember-power-select";
+
+.ember-basic-dropdown {
+  .ember-power-select-option {
+    border-top: $ember-power-select-default-border;
+    padding: 6px;
+  }
+}

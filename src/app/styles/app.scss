@@ -78,6 +78,9 @@ $body-font: 'Open Sans';
 @import "components/one-option-button";
 @import "components/common-loader";
 
+@import "components/ember-power-select-overrides";
+
+
 html, body {
   height: 100%;
   font-family: $body-font !important;

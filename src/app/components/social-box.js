@@ -37,26 +37,26 @@ export default Ember.Component.extend({
    */
   fullSize: false,
 
-  iconName: computed('iconType', 'type', function() {
-    let {
-      type,
-      iconType,
-    } = this.getProperties('type', 'iconType');
-    if (iconType === 'oneicon') {
-      return `social-${this.get('type')}`;
-    } else {
-      return `/assets/images/social/${type}.${iconType}`;
-    }
-  }),
-
-  socialIconStyle: computed('iconName', 'iconType', function () {
+  _iconName: computed('iconType', 'iconName', function() {
     let {
       iconName,
       iconType,
     } = this.getProperties('iconName', 'iconType');
+    if (iconType === 'oneicon') {
+      return iconName;
+    } else {
+      return `/assets/images/social/${iconName}.${iconType}`;
+    }
+  }),
+
+  socialIconStyle: computed('_iconName', 'iconType', function () {
+    let {
+      _iconName,
+      iconType,
+    } = this.getProperties('_iconName', 'iconType');
     let style = '';
     if (iconType !== 'oneicon') {
-      style = `background-image: url(${iconName});`;
+      style = `background-image: url(${_iconName});`;
     } else {
       style = '';
     }

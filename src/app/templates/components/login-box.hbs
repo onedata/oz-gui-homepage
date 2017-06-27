@@ -1,0 +1,38 @@
+<div class="container login-box-container">
+  <div class="row row-centered">
+    <div class="col-xs-9 col-centered login-box">
+      <h1>{{t 'login.boxTitle'}}</h1>
+
+      <h2>{{t 'login.boxSubtitle'}}</h2>
+
+      <div class="container-fluid login-buttons-container">
+        {{social-box-list supportedAuthorizers=authorizersForButtons isLoading=isLoading authenticate=(action "authenticate")}}
+
+        <div class="text-with-horiz-line">or</div>
+
+        {{#if supportedAuthorizers}}
+          <div class="authorizers-dropdown">
+            <div class="dropdown-label">Login by</div>
+            {{one-icon tagName="div" icon="arrow-down" class="dropdown-arrow"}}
+            {{#power-select
+              options=authorizersForSelect
+              onchange=(action "authorizerSelected")
+              renderInPlace=true
+              matcher=authorizersSelectMatcher
+              selected=selectedAuthorizer
+              class="authorizers-dropdown"
+              as |authorizer|}}
+              {{social-box 
+                type=authorizer.type
+                iconType=authorizer.iconType
+                iconName=authorizer.iconName
+                fullSize=(eq authorizerName "rhea")
+              }}
+              {{authorizer.name}}
+            {{/power-select}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

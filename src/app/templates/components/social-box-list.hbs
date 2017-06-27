@@ -13,26 +13,24 @@
           {{t 'components.socialBoxList.fetchProvidersFailed'}}: {{errorMessage}}
         {{else}}
         <div>
-          {{#each supportedAuthorizers as |authorizerName|}}
-            <div class="{{boxContainerClasses}}">
-              {{!-- basicAuth is a special case --}}
-              {{#if (eq authorizerName 'basicAuth')}}
-                {{social-box type='username' action='showLoginForm' iconName='key'}}
-              {{else if (eq authorizerName 'elixir')}}
-                {{social-box
-                  iconType='svg'
-                  type='elixir'
-                  action='authenticate'
-                }}
-              {{else}}
-                {{!-- rhea is a special case with full size logo --}}
-                {{social-box 
-                  type=authorizerName
-                  fullSize=(eq authorizerName "rhea")
-                  action='authenticate'
-                }}
-              {{/if}}
-            </div>
+          {{#each supportedAuthorizers as |authorizer|}}
+            {{!-- basicAuth is a special case --}}
+            {{#if (eq authorizer.type 'basicAuth')}}
+              {{social-box 
+                type='username' 
+                action='showLoginForm' 
+                iconType=authorizer.iconType 
+                iconName=authorizer.iconName}}
+            {{else}}
+              {{!-- rhea is a special case with full size logo --}}
+              {{social-box 
+                type=authorizer.type
+                fullSize=(eq authorizer.type "rhea")
+                iconType=authorizer.iconType
+                iconName=authorizer.iconName
+                action='authenticate'
+              }}
+            {{/if}}
           {{/each}}
         </div>
         {{/if}}
