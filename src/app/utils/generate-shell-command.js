@@ -18,13 +18,13 @@ function _onezoneUrl(windowLocation = window.location) {
   return `${prefix}${suffix}`;
 }
 
-function _curlCommand(url, token) {
+function _curlCommand(url, token, suffix = '') {
   if (!url || !token) {
     return undefined;
   } 
   token = token.replace(/'/g, `\\'`);
   let onezoneUrl = _onezoneUrl().replace(/'/g, `\\'`);
-  return `curl ${url} | sh -s '${onezoneUrl}' '${token}'`;
+  return `curl ${url} | sh -s '${onezoneUrl}' '${token}' ${suffix}`;
 }
 
 const GENERATORS = {
@@ -32,7 +32,7 @@ const GENERATORS = {
     return _curlCommand('https://get.onedata.org/onedatify.sh', token);
   },
   oneprovider({ token }) {
-    return _curlCommand('https://get.onedata.org/oneprovider.sh', token);
+    return _curlCommand('https://get.onedata.org/onedatify.sh', token, 'noimport');
   },
 };
 
