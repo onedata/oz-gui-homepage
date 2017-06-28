@@ -133,8 +133,8 @@ describe('Unit | Utility | add conflict labels', function() {
     
     addConflictLabels(records);
     
-    expect(get(records[0], 'conflictLabel')).to.be.undefined;
-    expect(get(records[1], 'conflictLabel')).to.be.undefined;
+    expect(get(records[0], 'conflictLabel')).to.be.not.ok;
+    expect(get(records[1], 'conflictLabel')).to.be.not.ok;
   });
 
 });

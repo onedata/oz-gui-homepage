@@ -55,4 +55,27 @@ describe('Unit | Utility | conflict ids array', function() {
       done();
     });
   });
+  
+  it('removes conflictLabels after changing names to not conflicting', function(done) {
+    const array = new A([
+      Ember.Object.create({
+        id: 'abcdef1',
+        name: 'Some',
+      }),
+      Ember.Object.create({
+        id: 'abcdef2',
+        name: 'Some',
+      }),
+    ]);
+    let arrayProxy = ConflictIdsArray.create({
+      content: array,
+    });
+    
+    array.objectAt(0).set('name', 'Other');
+    
+    wait().then(() => {
+      expect(arrayProxy.objectAt(0).get('conflictLabel')).to.not.be.ok;
+      done();
+    });
+  });
 });
