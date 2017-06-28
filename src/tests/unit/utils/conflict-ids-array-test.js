@@ -9,18 +9,22 @@ const {
   A,
 } = Ember;
 
+function createMockArray() {
+  return new A([
+    Ember.Object.create({
+      id: 'abcdef1',
+      name: 'Some',
+    }),
+    Ember.Object.create({
+      id: 'abcdef2',
+      name: 'Some',
+    }),
+  ]);
+}
+
 describe('Unit | Utility | conflict ids array', function() {
   it('computes conflict labels on init', function() {
-    const array = new A([
-      Ember.Object.create({
-        id: 'abcdef1',
-        name: 'Some',
-      }),
-      Ember.Object.create({
-        id: 'abcdef2',
-        name: 'Some',
-      }),
-    ]);
+    const array = createMockArray();
     
     let arrayProxy = ConflictIdsArray.create({
       content: array,
@@ -31,16 +35,7 @@ describe('Unit | Utility | conflict ids array', function() {
   });
   
   it('computes conflict labels on array change', function(done) {
-    const array = new A([
-      Ember.Object.create({
-        id: 'abcdef1',
-        name: 'Some',
-      }),
-      Ember.Object.create({
-        id: 'abcdef2',
-        name: 'Some',
-      }),
-    ]);
+    const array = createMockArray();
     
     let arrayProxy = ConflictIdsArray.create({
       content: array,
@@ -57,16 +52,7 @@ describe('Unit | Utility | conflict ids array', function() {
   });
   
   it('removes conflictLabels after changing names to not conflicting', function(done) {
-    const array = new A([
-      Ember.Object.create({
-        id: 'abcdef1',
-        name: 'Some',
-      }),
-      Ember.Object.create({
-        id: 'abcdef2',
-        name: 'Some',
-      }),
-    ]);
+    const array = createMockArray();
     let arrayProxy = ConflictIdsArray.create({
       content: array,
     });
