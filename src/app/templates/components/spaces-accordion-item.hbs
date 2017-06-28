@@ -11,7 +11,7 @@
               {{one-icon tagName='div' icon=(if space.isDefault "space-home" "space")}}
             </div>
             <div class="secondary-item-element secondary-header space-header truncate">
-              {{space.name}}
+              {{name-conflict item=space}}
             </div>
             <div class="secondary-item-element secondary-header space-header-size">
               {{bytes-to-string space.totalSize}}
@@ -68,7 +68,7 @@
                 {{one-icon tagName="div" icon=(if p.isDefault "provider-home" "provider")}}
               </div>
               <div class="one-label after-icon truncate">
-                {{p.name}}
+                {{name-conflict item=p}}
               </div>
             </div>
             <div class="icon clickable visible-on-parent-hover" {{action "showUnsupportSpaceModal" p}}>

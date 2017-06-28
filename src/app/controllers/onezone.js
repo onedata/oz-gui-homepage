@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ConflictIdsArray from 'ember-cli-onedata-common/utils/conflict-ids-array';
 
 const {
   String: {
@@ -38,6 +39,8 @@ const controller = Ember.Controller.extend({
   onezoneServer: inject.service(),
 
   modal: computed.alias('modalsManager.currentModal'),
+
+  user: computed.readOnly('model'),
 
   init: function () {
     this._super();
@@ -108,5 +111,14 @@ expandMixin.actions['expandQuerySpecifiedAccordions'] = function() {
 };
 
 controller.reopen(expandMixin);
+
+let collectionsProxyMixin = {};
+['spaces', 'groups', 'providers'].forEach(collection => {
+  collectionsProxyMixin[collection] = computed(`user.${collection}`, function () {
+    return ConflictIdsArray.create({ content: this.get(`user.${collection}`) });
+  });
+});
+controller.reopen(collectionsProxyMixin);
+
 
 export default controller;
