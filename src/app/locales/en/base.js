@@ -67,7 +67,9 @@ export default {
 
     boxTitle: 'login',
     boxSubtitle: 'A new account will be created automatically on first login',
+    isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
+    loginWith: 'Login with',
     version: 'version',
   },
   components: {
@@ -104,8 +106,8 @@ export default {
       },
       loginForm: {
         title: 'Login with username and password',
-        usernameLabel: 'Username:',
-        passwordLabel: 'Password:',
+        usernameLabel: 'Username',
+        passwordLabel: 'Password',
         error: 'Authentication error:',
         success: 'Authenticated successfully!'
       },

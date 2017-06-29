@@ -56,6 +56,8 @@ $body-font: 'Open Sans';
 @import "utils";
 @import "components/spin-spinner-extensions";
 
+@import "components/ember-power-select-overrides";
+
 // OZ components and styles
 @import "components/c-search";
 @import "components/panel-onezone";
@@ -77,8 +79,6 @@ $body-font: 'Open Sans';
 @import "components/message-box-modal";
 @import "components/one-option-button";
 @import "components/common-loader";
-
-@import "components/ember-power-select-overrides";
 
 
 html, body {
@@ -368,7 +368,7 @@ textarea {
 }
 
 .container-home > .container:first-child, .container-home > .container-index {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .disable-pointer-events {

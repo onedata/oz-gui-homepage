@@ -6,31 +6,40 @@
       <h2>{{t 'login.boxSubtitle'}}</h2>
 
       <div class="container-fluid login-buttons-container">
-        {{social-box-list supportedAuthorizers=authorizersForButtons isLoading=isLoading authenticate=(action "authenticate")}}
-
-        <div class="text-with-horiz-line">or</div>
+        {{social-box-list
+          supportedAuthorizers=authorizersForButtons 
+          isLoading=isLoading 
+          authenticate=(action "authenticate")
+          onUsernameLoginClick=(action "usernameLoginToggle")
+          isUsernameLoginActive=isUsernameLoginActive}}
+        
+        {{#unless (or isLoading isUsernameLoginActive)}}
+          <div class="text-with-horiz-line row">or</div>
+        {{/unless}}
 
         {{#if supportedAuthorizers}}
-          <div class="authorizers-dropdown">
-            <div class="dropdown-label">Login by</div>
-            {{one-icon tagName="div" icon="arrow-down" class="dropdown-arrow"}}
-            {{#power-select
-              options=authorizersForSelect
-              onchange=(action "authorizerSelected")
-              renderInPlace=true
-              matcher=authorizersSelectMatcher
-              selected=selectedAuthorizer
-              class="authorizers-dropdown"
-              as |authorizer|}}
-              {{social-box 
-                type=authorizer.type
-                iconType=authorizer.iconType
-                iconName=authorizer.iconName
-                fullSize=(eq authorizerName "rhea")
-              }}
-              {{authorizer.name}}
-            {{/power-select}}
-          </div>
+          {{#if isUsernameLoginActive}}
+            {{login-form class="row"}}
+          {{else}}
+            <div class="authorizers-dropdown-container row">
+              <div class="dropdown-label">{{t 'login.loginWith'}}</div>
+              {{#power-select
+                options=authorizersForSelect
+                onchange=(action "authorizerSelected")
+                matcher=authorizersSelectMatcher
+                selected=selectedAuthorizer
+                dropdownClass="authorizers-dropdown"
+                placeholder="Find your identity provider..."
+                as |authorizer|}}
+                {{social-box 
+                  type=authorizer.type
+                  iconType=authorizer.iconType
+                  iconName=authorizer.iconName
+                }}
+                {{authorizer.name}}
+              {{/power-select}}
+            </div>
+          {{/if}}
         {{/if}}
       </div>
     </div>

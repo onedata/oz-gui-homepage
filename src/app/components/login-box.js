@@ -10,15 +10,16 @@ export default Ember.Component.extend({
   messageBox: Ember.inject.service(),
 
   /**
-   * Object with support mapping, eg. ``{plgrid: true, facebook: false}``
-   * If authorizer is supported, its button will be displayed.
-   * Allowed supporters: plgrid, dropbox, facebook, google, rhea
-   *
+   * List of authorizers
+   * @type {Array.string}
+   * 
    * Set by initSupportedAuthorizers
    */
   supportedAuthorizers: null,
 
   selectedAuthorizer: null,
+
+  isUsernameLoginActive: false,
   
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
@@ -47,21 +48,25 @@ export default Ember.Component.extend({
     this.set('isLoading', true);
     const p = this.get('onezoneServer').getSupportedAuthorizers();
     p.then((data) => {
-      // let predefinedAuthorizersList = AUTHORIZERS.map(auth => auth.type);
-      // this.set('supportedAuthorizers', data.authorizers.map(auth => {
-      //   let authIndex = predefinedAuthorizersList.indexOf(auth);
-      //   if (authIndex > -1) {
-      //     return AUTHORIZERS[authIndex];
-      //   }
-      //   else {
-      //     return {
-      //       type: auth,
-      //       iconType: 'oneicon',
-      //       iconName: 'key',
-      //     };
-      //   }
-      // }));
-      this.set('supportedAuthorizers', AUTHORIZERS);
+      let predefinedAuthorizersList = AUTHORIZERS.map(auth => auth.type);
+      let authorizers = [];
+      predefinedAuthorizersList.forEach((auth, index) => {
+        if (data.authorizers.indexOf(auth) > -1) {
+          authorizers.push(AUTHORIZERS[index]);
+        }
+      });
+      data.authorizers.forEach((auth) => {
+        if (predefinedAuthorizersList.indexOf(auth) === -1) {
+          // default configuration for unknown authorizer
+          authorizers.push({
+            type: auth,
+            name: auth.charAt(0).toUpperCase() + auth.slice(1),
+            iconType: 'oneicon',
+            iconName: 'key',
+          });
+        }
+      });
+      this.set('supportedAuthorizers', authorizers);
     });
 
     p.catch(error => {
@@ -79,8 +84,10 @@ export default Ember.Component.extend({
   actions: {
     authorizerSelected(authorizer) {
       this.set('selectedAuthorizer', authorizer);
-      // this.send('authenticate', authorizer.type);
+      this.send('authenticate', authorizer.type);
     },
+    // TODO: what if there is server error?
+    /** Get a login endpoint URL from server and go to it */
     authenticate(providerName) {
       const p = this.get('onezoneServer').getLoginEndpoint(providerName);
       p.then(
@@ -97,6 +104,9 @@ export default Ember.Component.extend({
         }
       );
       return p;
+    },
+    usernameLoginToggle() {
+      this.toggleProperty('isUsernameLoginActive');
     }
   }
 });

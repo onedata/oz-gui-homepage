@@ -17,13 +17,20 @@ const {
 export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['social-box-component'],
-  classNameBindings: ['fullSize:full-size'],
+  classNameBindings: ['disabled'],
 
   /**
-   * Use oneicon (fonticon) or image placed in ``/assets/images/social/{type}.{iconType}``
+   * Use oneicon (fonticon) or image placed in ``/assets/images/social/{iconName}.{iconType}``
    * @type {string} one of: oneicon, png, jpg, svg, <or other image format>
    */
   iconType: 'oneicon',
+
+  /**
+   * Oneicon character name (for iconType == oneicon) or image file name
+   * (without extension)
+   * @type {string}
+   */
+  iconName: 'key',
 
   /** Name of social/login service (eg. 'twitter') */
   type: null,
@@ -32,10 +39,10 @@ export default Ember.Component.extend({
   link: '',
 
   /**
-   * If true, render icon without margin
+   * Disable state status
    * @type {boolean}
    */
-  fullSize: false,
+  disabled: false,
 
   _iconName: computed('iconType', 'iconName', function() {
     let {
@@ -70,10 +77,12 @@ export default Ember.Component.extend({
 
   actions: {
     clicked() {
-      if (this.get('hasLink')) {
-        window.location = this.get('link');
-      } else {
-        this.sendAction('action', this);
+      if (!this.get('disabled')) {
+        if (this.get('hasLink')) {
+          window.location = this.get('link');
+        } else {
+          this.sendAction('action', this);
+        }
       }
     }
   }
