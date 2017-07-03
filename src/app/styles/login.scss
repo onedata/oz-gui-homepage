@@ -78,6 +78,15 @@
   }
 }
 
+.login-icon-box {
+  margin: 0;
+  border-radius: $border-radius-large;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none !important;
+  color: white !important;
+}
+
 .authorizers-dropdown .ember-power-select-option, 
 .container-home .authorizers-dropdown-container .ember-power-select-trigger {
   position: relative;
@@ -94,12 +103,9 @@
       display: block;
       height: 25px;
       width: 25px;
-      margin: 0;
-      border-radius: $border-radius-large;
-      text-align: center;
+      
       line-height: 25px;
       font-size: 18px;
-      color: white;
       .social-icon-image {
         background-size: 20px 20px;
       }
@@ -120,12 +126,10 @@
     display: inline-block;
     height: 50px;
     width: 50px;
-    border-radius: $border-radius-large;
     text-align: center;
     line-height: 50px;
     font-size: 35px;
-    color: white !important;
-    text-decoration: none !important;
+    
     cursor: pointer; cursor: hand;
 
     .loader {
@@ -286,14 +290,21 @@
       background-position: right center;
     }
     .zone-label {
-      padding-top: 22px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateY(-50%);
       padding-left: 23px;
       font-size: 14pt;
       text-align: left;
       text-transform: uppercase;
       line-height: 100%;
+      .zone-company-name {
+        word-break: break-word;
+      }
       .zone-zone {
         font-size: 0.8em;
+        opacity: 0.8;
       }
     }
     @media(min-height: 750px) {

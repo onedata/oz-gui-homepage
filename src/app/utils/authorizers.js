@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {Object} Authorizer
+ * @typedef {Object} AuthorizerInfo
  * @property {string} type
  * @property {string} name authorizer name to display
  * @property {string} iconType 'oneicon' or any image file extension

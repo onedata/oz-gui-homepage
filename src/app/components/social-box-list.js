@@ -10,7 +10,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   /**
    * List of authorizers
-   * @type {Array.Authorizer}
+   * @type {Array.AuthorizerInfo}
    */
   supportedAuthorizers: null,
 

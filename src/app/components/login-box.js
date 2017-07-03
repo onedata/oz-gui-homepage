@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
   /**
    * List of authorizers
-   * @type {Array.Authorizer}
+   * @type {Array.AuthorizerInfo}
    * 
    * Set by initSupportedAuthorizers
    */
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
 
   /**
    * Authorizer selected in dropdown
-   * @type {Authorizer}
+   * @type {AuthorizerInfo}
    */
   selectedAuthorizer: null,
 
