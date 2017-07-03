@@ -1,5 +1,22 @@
-export default [
-  {
+/**
+ * Provides list of predefined authorization providers with neccessary 
+ * data to display them (name, logo - icon or image).
+ * @module utils/authorizers
+ * @author Michal Borzecki
+ * @copyright (C) 2017 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
+
+/**
+ * @typedef {Object} Authorizer
+ * @property {string} type
+ * @property {string} name authorizer name to display
+ * @property {string} iconType 'oneicon' or any image file extension
+ * @property {string} iconName oneicon character name of file name 
+ * (without extension)
+ */
+
+export default [{
     type: 'basicAuth',
     iconType: 'oneicon',
     iconName: 'key',

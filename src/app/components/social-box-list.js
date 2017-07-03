@@ -3,14 +3,14 @@ import Ember from 'ember';
 /**
  * Renders buttons for supported login providers. A container for social-boxes.
  * @module components/social-box-list
- * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @author Jakub Liput, Michal Borzecki
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
   /**
    * List of authorizers
-   * @type {Array.Object}
+   * @type {Array.Authorizer}
    */
   supportedAuthorizers: null,
 

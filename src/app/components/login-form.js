@@ -2,16 +2,17 @@ import Ember from 'ember';
 import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 
 const {
-  inject: { 
-    service 
+  observer,
+  inject: {
+    service
   },
 } = Ember;
 
 /**
  * A form for logging in with username and password (invoked by one of login buttons)
  * @module components/login-form
- * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @author Jakub Liput, Michal Borzecki
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(PromiseLoadingMixin, {
@@ -22,10 +23,21 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
 
   i18nPrefixKey: 'components.modals.loginForm',
   isLoading: false,
+  isOpen: false,
   message: null,
 
   usernameText: null,
   passwordText: null,
+
+  isOpenObserver: observer('isOpen', function () {
+    if (this.get('isOpen')) {
+      this.setProperties({
+        usernameText: '',
+        passwordText: '',
+        message: null,
+      });
+    }
+  }),
 
   init() {
     this._super(...arguments);
@@ -34,7 +46,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     });
   },
 
-  isSubmitEnabled: function() {
+  isSubmitEnabled: function () {
     return !this.get('isLoading') && this.get('usernameText') && this.get('passwordText');
   }.property('isLoading', 'usernameText', 'passwordText'),
 
@@ -64,13 +76,11 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           console.debug(`Authentication with login/password succeeded:
             data: ${data},
             textStatus: ${textStatus},
-            jqXHR.reponseText: ${jqXHR.responseText}`
-          );
+            jqXHR.reponseText: ${jqXHR.responseText}`);
           component.setProperties({
             isLoading: false
           });
           this.get('notify').success(i18n.t(i18nPrefixKey + '.success'));
-          // timeout set to display a success message for a while
           if (data.url) {
             window.location = data.url;
           } else {
@@ -82,8 +92,7 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
           console.warn(`Authentication with login/password failed:
             errorThrown: ${errorThrown},
             textStatus: ${textStatus},
-            jqXHR.reponseText: ${jqXHR.responseText}`
-          );
+            jqXHR.reponseText: ${jqXHR.responseText}`);
           component.setProperties({
             isLoading: false,
             message: jqXHR.statusText + (jqXHR.reponseText ? `: ${jqXHR.reponseText}` : ''),

@@ -5,28 +5,44 @@ const {
   computed,
 } = Ember;
 
+/**
+ * A component that allows login by one of the supported authorization providers 
+ * (specified by `supportedAuthorizers`) or by username and password (if possible). 
+ * Shows a list of authorizers and a login form.
+ * @module components/login-box
+ * @author Jakub Liput, Michal Borzecki
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
+ * @license This software is released under the MIT license cited in 'LICENSE.txt'.
+ */
 export default Ember.Component.extend({
   onezoneServer: Ember.inject.service(),
   messageBox: Ember.inject.service(),
 
   /**
    * List of authorizers
-   * @type {Array.string}
+   * @type {Array.Authorizer}
    * 
    * Set by initSupportedAuthorizers
    */
   supportedAuthorizers: null,
 
+  /**
+   * Authorizer selected in dropdown
+   * @type {Authorizer}
+   */
   selectedAuthorizer: null,
 
+  /**
+   * Is login form with username/password active (visible)
+   * @type {boolean}
+   */
   isUsernameLoginActive: false,
-  
+
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
     if (supportedAuthorizers) {
       return supportedAuthorizers.slice(0, 7);
-    }
-    else {
+    } else {
       return [];
     }
   }),
@@ -35,8 +51,7 @@ export default Ember.Component.extend({
     let supportedAuthorizers = this.get('supportedAuthorizers');
     if (supportedAuthorizers) {
       return supportedAuthorizers.filter(auth => auth.type !== 'basicAuth');
-    }
-    else {
+    } else {
       return [];
     }
   }),
@@ -60,7 +75,7 @@ export default Ember.Component.extend({
           // default configuration for unknown authorizer
           authorizers.push({
             type: auth,
-            name: auth.charAt(0).toUpperCase() + auth.slice(1),
+            name: auth.capitalize(),
             iconType: 'oneicon',
             iconName: 'key',
           });
@@ -79,6 +94,14 @@ export default Ember.Component.extend({
 
   authorizersSelectMatcher(authorizer, term) {
     return authorizer.name.toLowerCase().indexOf(term.toLowerCase());
+  },
+
+  _animateShow(element) {
+    element.addClass('short-delay fadeIn').removeClass('fadeOut');
+  },
+
+  _animateHide(element) {
+    element.addClass('fadeOut').removeClass('short-delay fadeIn');
   },
 
   actions: {
@@ -106,7 +129,17 @@ export default Ember.Component.extend({
       return p;
     },
     usernameLoginToggle() {
+      let loginForm = this.$('.login-form-container');
+      let authorizersDropdown = this.$('.authorizers-dropdown-container');
+
       this.toggleProperty('isUsernameLoginActive');
+      if (this.get('isUsernameLoginActive')) {
+        this._animateHide(authorizersDropdown);
+        this._animateShow(loginForm);
+      } else {
+        this._animateHide(loginForm);
+        this._animateShow(authorizersDropdown);
+      }
     }
   }
 });

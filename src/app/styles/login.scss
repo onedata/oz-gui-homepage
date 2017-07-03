@@ -153,8 +153,13 @@
     }
   }
   .authorizers-dropdown-container {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
     color: $color-steel;
+    &.fadeOut {
+        z-index: -1;
+    }
     .dropdown-label {
       position: absolute;
       height: 47px;
@@ -210,42 +215,57 @@
         margin-right: -50%;
       }
     }
-    .login-form {
-      margin-top: 30px;
-      .input-group.with-icon-addon {
-        position: relative;
-        .input-group-addon {
+    .login-forms-row {
+      position: relative;
+    }
+    .login-form-container {
+      opacity: 0;
+      .login-form {
+        position: absolute;
+        left: 0;
+        right: 0;
+        &.fadeOut {
+          z-index: -1;
+        }
+        .input-group.with-icon-addon {
           position: relative;
-          padding: 5px;
-          // focus on input changes its z-index from 1 to 3
-          z-index: 4;
-          height: $input-height-base;
-          min-width: $input-height-base;
-          border: 0;
-          border-right: 1px solid $input-border;
-          background-color: transparent;
-          .one-icon {
-            font-size: 32px ;
+          .input-group-addon {
+            position: relative;
+            padding: 5px;
+            // focus on input changes its z-index from 1 to 3
+            z-index: 4;
+            height: $input-height-base;
+            min-width: $input-height-base;
+            border: 0;
+            border-right: 1px solid $input-border;
+            background-color: transparent;
+            .one-icon {
+              font-size: 32px ;
+            }
+          }
+          input {
+            $border-radius: $input-border-radius;
+            height: 45px;
+            float: none;
+            position: absolute;
+            z-index: 1;
+            &:last-child {
+              left: 0;
+              padding-left: 57px;
+              border-radius: $border-radius;
+            }
           }
         }
-        input {
-          $border-radius: $input-border-radius;
-          height: 45px;
-          float: none;
-          position: absolute;
-          z-index: 1;
-          &:last-child {
-            left: 0;
-            padding-left: 57px;
-            border-radius: $border-radius;
+        .has-error .input-group.with-icon-addon .input-group-addon {
+          border-right: 1px solid $state-danger-text;
+        }
+        .btn {
+          padding: 10px 40px;
+          .spin-button-spinner {
+            height: 0;
+            width: 0;
           }
         }
-      }
-      .has-error .input-group.with-icon-addon .input-group-addon {
-        border-right: 1px solid $state-danger-text;
-      }
-      .btn {
-        padding: 10px 40px;
       }
     }
   }
@@ -276,8 +296,8 @@
         font-size: 0.8em;
       }
     }
-    @media(min-width: $screen-md-min) {
-      padding-top: 100px;
+    @media(min-height: 750px) {
+      padding-top: 40px;
     }
   }
   

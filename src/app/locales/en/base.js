@@ -20,7 +20,8 @@ export default {
     },
     serverError: 'Server error',
     unknownError: 'Unknown error',
-    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources",
+    or: 'or'
   },
   services: {
     session: sessionLocales,
@@ -70,6 +71,7 @@ export default {
     isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
     loginWith: 'Login with',
+    findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
   },
   components: {
