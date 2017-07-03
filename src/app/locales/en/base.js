@@ -20,7 +20,8 @@ export default {
     },
     serverError: 'Server error',
     unknownError: 'Unknown error',
-    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources",
+    or: 'or'
   },
   services: {
     session: sessionLocales,
@@ -67,7 +68,10 @@ export default {
 
     boxTitle: 'login',
     boxSubtitle: 'A new account will be created automatically on first login',
+    isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
+    loginWith: 'Login with',
+    findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
   },
   components: {
@@ -104,8 +108,8 @@ export default {
       },
       loginForm: {
         title: 'Login with username and password',
-        usernameLabel: 'Username:',
-        passwordLabel: 'Password:',
+        usernameLabel: 'Username',
+        passwordLabel: 'Password',
         error: 'Authentication error:',
         success: 'Authenticated successfully!'
       },

@@ -1,0 +1,44 @@
+<div class="container login-box-container">
+  <div class="row row-centered">
+    <div class="col-xs-9 col-centered login-box">
+      <h1>{{t 'login.boxTitle'}}</h1>
+
+      <h2>{{t 'login.boxSubtitle'}}</h2>
+
+      <div class="container-fluid login-buttons-container">
+        {{social-box-list
+          supportedAuthorizers=authorizersForButtons 
+          isLoading=isLoading 
+          authenticate=(action "authenticate")
+          onUsernameLoginClick=(action "usernameLoginToggle")
+          isUsernameLoginActive=isUsernameLoginActive}}
+        {{#if supportedAuthorizers}}
+          <div class="row login-forms-row">
+            <div class="login-form-container animated fast">
+              <div class="text-with-horiz-line">{{t 'common.or'}}</div>
+              {{login-form isOpen=isUsernameLoginActive}}
+            </div>
+            <div class="authorizers-dropdown-container animated fast">
+              <div class="dropdown-label">{{t 'login.loginWith'}}</div>
+              {{#power-select
+                options=authorizersForSelect
+                onchange=(action "authorizerSelected")
+                matcher=authorizersSelectMatcher
+                selected=selectedAuthorizer
+                dropdownClass="authorizers-dropdown"
+                placeholder=(t 'login.findProviderPlaceholder')
+                as |authorizer|}}
+                {{social-box 
+                  type=authorizer.type
+                  iconType=authorizer.iconType
+                  iconName=authorizer.iconName
+                }}
+                {{authorizer.name}}
+              {{/power-select}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

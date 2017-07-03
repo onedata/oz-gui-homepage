@@ -9,38 +9,127 @@
 }
 
 .social-box-component {
-  &.full-size {
-    .one-icon {
-      font-size: 72px;
+  display: inline-block;
+  &.disabled {
+    opacity: 0.3;
+    a {
+      cursor: default;
     }
   }
   .social-icon-image {
     width: 100%;
     height: 100%;
-    background-size: 72px 72px;
+    background-size: 40px 40px;
     background-repeat: no-repeat;
     background-position: center center;
-    
-    &.full-size {
-      background-size: 100%;
+  } 
+}
+
+.login-icon-box {
+  // default when provider is unknown
+  background-color: $color-login-plgrid;
+
+  &.active {
+    .one-icon {
+      color: transparent !important;
     }
   }
-  
-    
+
+  .one-icon {
+    line-height: inherit;
+  }
+
+  &.indigo {
+    background-color: $color-login-indigo;
+  }
+  &.github {
+    background-color: $color-login-github;
+  }
+  &.plgrid {
+    background-color: $color-login-plgrid;
+  }
+  &.google {
+    background-color: $color-login-google;
+  }
+  &.dropbox {
+    background-color: $color-login-dropbox;
+  }
+  &.facebook {
+    background-color: $color-login-facebook;
+  }
+  &.username {
+    background-color: $color-login-username;
+  }
+  &.egi {
+    background-color: $color-login-egi;
+  }
+  &.rhea {
+    background-color: $color-login-rhea;
+    .one-icon {
+      font-size: 50px;
+    }
+    .ember-power-select-option & .one-icon,
+    .ember-power-select-trigger & .one-icon {
+      font-size: 25px;
+    }
+  }
+  &.elixir {
+    background-color: $color-login-elixir;
+  }
+}
+
+.login-icon-box {
+  margin: 0;
+  border-radius: $border-radius-large;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.authorizers-dropdown .ember-power-select-option, 
+.container-home .authorizers-dropdown-container .ember-power-select-trigger {
+  position: relative;
+  padding-left: 50px;
+  color: $color-steel;
+  .social-box-component {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    margin: 0 10px;
+    .login-icon-box {
+      display: block;
+      height: 25px;
+      width: 25px;
+      
+      line-height: 25px;
+      font-size: 18px;
+      .social-icon-image {
+        background-size: 20px 20px;
+      }
+    }
+  }
+}
+
+.ember-basic-dropdown-content.authorizers-dropdown {
+  position: fixed;
+  font-size: 10pt;
+  &.ember-basic-dropdown--transitioned-in {
+    position: absolute;
+  }
 }
 
 .container-home {
   .login-icon-box {
     display: inline-block;
-    height: 72px;
-    width: 72px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 50px;
+    width: 50px;
     text-align: center;
-    line-height: 72px;
-    font-size: 56px;
-    color: white !important;
-    text-decoration: none !important;
+    line-height: 50px;
+    font-size: 35px;
+    
     cursor: pointer; cursor: hand;
 
     .loader {
@@ -53,145 +142,173 @@
       width: 40px;
       color: rgba(white, 0.5);
     }
-
-    &.active {
-      .one-icon {
-        color: transparent !important;
-      }
-    }
-
-    .one-icon {
-      line-height: inherit;
-    }
-
-    &.indigo {
-      background-color: $color-login-indigo;
-    }
-    &.github {
-      background-color: $color-login-github;
-    }
-    &.plgrid {
-      background-color: $color-login-plgrid;
-    }
-    &.google {
-      background-color: $color-login-google;
-    }
-    &.dropbox {
-      background-color: $color-login-dropbox;
-    }
-    &.facebook {
-      background-color: $color-login-facebook;
-    }
-    &.username {
-      background-color: $color-login-username;
-    }
-    &.egi {
-      background-color: $color-login-egi;
-    }
-    &.rhea {
-      background-color: $color-login-rhea;
-    }
-    &.elixir {
-      background-color: $color-login-elixir;
-    }
   }
 
   .login-box-container {
     height: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
 
   .login-buttons-container {
-    max-width: 700px;
+    max-width: 400px;
+    font-size: 10pt;
+    .buttons-list {
+      font-size: 32px;
+    }
+  }
+  .authorizers-dropdown-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    color: $color-steel;
+    &.fadeOut {
+        z-index: -1;
+    }
+    .dropdown-label {
+      position: absolute;
+      height: 47px;
+      line-height: 47px;
+      padding: 0 15px;
+      border-right: 1px solid $input-border;
+      z-index: 2;
+    }
+    .ember-power-select-trigger {
+      min-height: 45px;
+      padding: 11px 40px 11px 95px;
+      .social-box-component {
+        left: 94px;
+      }
+      .ember-power-select-selected-item {
+        padding-left: 35px;
+      }
+    }
   }
 
   .login-box {
-    padding-top: 100px;
-    padding-bottom: 90px;
-
-    border: 2px solid white;
-    background: rgba(100%, 100%, 100%, 0.25);
-
     h1 {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 0;
+      font-size: 23pt;
     }
     h2 {
+      font-size: 17pt;
       text-align: center;
-      margin-top: 50px;
-      margin-bottom: 100px;
-      margin-right: 20px;
-      margin-left: 20px;
+      margin: 20px 20px 40px 20px;
+    }
+    .text-with-horiz-line {
+      padding-top: 5px;
+      padding-bottom: 17px;
+      overflow: hidden;
+      text-align: center;
+      &::before,
+      &::after {
+        content: "";
+        background-color: white;
+        display: inline-block;
+        height: 1px;
+        position: relative;
+        vertical-align: middle;
+        width: 50%;
+      }
+      &::before {
+        right: 0.5em;
+        margin-left: -50%;
+      }
+      &::after {
+        left: 0.5em;
+        margin-right: -50%;
+      }
+    }
+    .login-forms-row {
+      position: relative;
+    }
+    .login-form-container {
+      opacity: 0;
+      .login-form {
+        position: absolute;
+        left: 0;
+        right: 0;
+        &.fadeOut {
+          z-index: -1;
+        }
+        .input-group.with-icon-addon {
+          position: relative;
+          .input-group-addon {
+            position: relative;
+            padding: 5px;
+            // focus on input changes its z-index from 1 to 3
+            z-index: 4;
+            height: $input-height-base;
+            min-width: $input-height-base;
+            border: 0;
+            border-right: 1px solid $input-border;
+            background-color: transparent;
+            .one-icon {
+              font-size: 32px ;
+            }
+          }
+          input {
+            $border-radius: $input-border-radius;
+            height: 45px;
+            float: none;
+            position: absolute;
+            z-index: 1;
+            &:last-child {
+              left: 0;
+              padding-left: 57px;
+              border-radius: $border-radius;
+            }
+          }
+        }
+        .has-error .input-group.with-icon-addon .input-group-addon {
+          border-right: 1px solid $state-danger-text;
+        }
+        .btn {
+          padding: 10px 40px;
+          .spin-button-spinner {
+            height: 0;
+            width: 0;
+          }
+        }
+      }
     }
   }
 
   .zone {
     color: white;
-    background: transparent;
-    margin-top: 10px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     font-family: 'Myriad Pro Bold', 'Open Sans', sans-serif;
 
     .zone-image {
       position: relative;
-      height: 170px;
+      right: -13px;
+      height: 80px;
       background-size: contain;
-      background-image: url(/assets/images/login/zone.svg);
+      background-image: url(/assets/images/login/oneworld.svg);
       background-repeat: no-repeat;
-      background-position: center center;
-
-      text-align: center;
-      padding-top: 40px;
-      font-weight: bold;
-      font-size: 20pt;
-
-      line-height: 125%;
-
-      > * {
-        display: table;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100px;
-      }
-
-      .brand-logo {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        background-size: contain;
-        background-image: url(/assets/images/brand-logo.svg);
-        background-repeat: no-repeat;
-        background-position: center center;
-      }
-
-      // .isolated {
-      //   // pull up
-      //   margin-top: -3px;
-      //   font-family: 'Myriad Pro Semibold', 'Open Sans', sans-serif;
-      //   font-size: 0.8em
-      // }
-    }
-    .zone-arrow {
-      height: 170px;
-      background-image: url(/assets/images/login/zone-arrow.svg);
-      background-repeat: no-repeat;
-      background-position: center 100px;
+      background-position: right center;
     }
     .zone-label {
-      padding-top: 50px;
-      font-weight: bold;
-      font-size: 34pt;
-      text-align: center;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      padding-left: 23px;
+      font-size: 14pt;
+      text-align: left;
       text-transform: uppercase;
       line-height: 100%;
-      .zone-zone {
-      }
       .zone-company-name {
-        font-size: 0.9em;
+        word-break: break-word;
       }
+      .zone-zone {
+        font-size: 0.8em;
+        opacity: 0.8;
+      }
+    }
+    @media(min-height: 750px) {
+      padding-top: 40px;
     }
   }
   
