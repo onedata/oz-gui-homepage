@@ -20,13 +20,14 @@
                 type='username' 
                 iconType=authorizer.iconType 
                 iconName=authorizer.iconName
+                tip=(concat (t 'login.loginUsing') (t 'login.onepanelAccount'))
                 action='usernameBoxClick'}}
             {{else}}
               {{social-box 
                 type=authorizer.type
                 iconType=authorizer.iconType
                 iconName=authorizer.iconName
-                disabled=isUsernameLoginActive
+                tip=(concat (t 'login.loginUsing') authorizer.name)
                 action='authenticate'
               }}
             {{/if}}

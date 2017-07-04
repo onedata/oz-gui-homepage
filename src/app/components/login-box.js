@@ -56,6 +56,8 @@ export default Ember.Component.extend({
     }
   }),
 
+  hasAuthorizersForSelect: computed.notEmpty('authorizersForSelect'),
+
   isLoading: false,
   errorMessage: null,
 

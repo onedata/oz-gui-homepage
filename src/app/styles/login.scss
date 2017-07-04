@@ -160,46 +160,15 @@
     position: absolute;
     left: 0;
     right: 0;
-    color: $color-steel;
     &.fadeOut {
-        z-index: -1;
-    }
-    .dropdown-label {
-      position: absolute;
-      height: 47px;
-      line-height: 47px;
-      padding: 0 15px;
-      border-right: 1px solid $input-border;
-      z-index: 2;
-    }
-    .ember-power-select-trigger {
-      min-height: 45px;
-      padding: 11px 40px 11px 95px;
-      .social-box-component {
-        left: 94px;
-      }
-      .ember-power-select-selected-item {
-        padding-left: 35px;
-      }
-    }
-  }
-
-  .login-box {
-    h1 {
-      text-align: center;
-      margin-bottom: 0;
-      font-size: 23pt;
-    }
-    h2 {
-      font-size: 17pt;
-      text-align: center;
-      margin: 20px 20px 40px 20px;
+      z-index: -1;
     }
     .text-with-horiz-line {
       padding-top: 5px;
       padding-bottom: 17px;
       overflow: hidden;
       text-align: center;
+      color: white;
       &::before,
       &::after {
         content: "";
@@ -219,15 +188,59 @@
         margin-right: -50%;
       }
     }
+    .dropdown-label {
+      position: absolute;
+      height: 47px;
+      line-height: 47px;
+      padding: 0 15px;
+      border-right: 1px solid $input-border;
+      z-index: 2;
+      color: $color-steel;
+    }
+    .ember-power-select-trigger {
+      min-height: 45px;
+      padding: 11px 40px 11px 95px;
+      .social-box-component {
+        left: 94px;
+      }
+      .ember-power-select-selected-item {
+        padding-left: 35px;
+      }
+    }
+  }
+
+  .login-box {
+    h1 {
+      text-align: center;
+      margin-top: 25px;
+      margin-bottom: 0;
+      font-size: 23pt;
+    }
+    h2 {
+      font-size: 13pt;
+      text-align: center;
+      margin: 10px 20px 20px 20px;
+      .subtitle-tip {
+        position: relative;
+        top: 2px;
+        left: 2px;
+        opacity: 0.8;
+        font-size: 90%;
+      }
+    }
     .login-forms-row {
       position: relative;
     }
     .login-form-container {
+      position: absolute;
+      left: 0;
+      right: 0;
       opacity: 0;
+      &.always-visible {
+        opacity: initial;
+        margin-top: 10px;
+      }
       .login-form {
-        position: absolute;
-        left: 0;
-        right: 0;
         &.fadeOut {
           z-index: -1;
         }
@@ -265,9 +278,23 @@
         }
         .btn {
           padding: 10px 40px;
+          margin-bottom: 5px;
           .spin-button-spinner {
             height: 0;
             width: 0;
+          }
+          &.back-button {
+            background-color: $color-button-default;
+            border-color: $color-button-default;
+            .one-icon::before {
+              display: inline-block;
+              position: relative;
+              top: 5px;
+              margin-left: -10px;
+              transform: rotate(-180deg);
+              font-size: 17pt;
+              line-height: 0;
+            }
           }
         }
       }
@@ -308,7 +335,7 @@
       }
     }
     @media(min-height: 750px) {
-      padding-top: 40px;
+      margin-top: 40px;
     }
   }
   
