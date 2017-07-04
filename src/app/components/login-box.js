@@ -38,10 +38,26 @@ export default Ember.Component.extend({
    */
   isUsernameLoginActive: false,
 
+  /**
+   * @type {boolean}
+   */
+  isProvidersDropdownVisible: false,
+
+  /**
+   * @type {computed.boolean}
+   */
+  showMoreProvidersButton: computed.gt('supportedAuthorizers.length', 7),
+
+  dropdownAnimationTimeoutId: -1,
+  formAnimationTimeoutId: -1,
+
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
-    let supportedAuthorizers = this.get('supportedAuthorizers');
+    let {
+      supportedAuthorizers,
+      showMoreProvidersButton
+    } = this.getProperties('supportedAuthorizers', 'showMoreProvidersButton');
     if (supportedAuthorizers) {
-      return supportedAuthorizers.slice(0, 7);
+      return supportedAuthorizers.slice(0, showMoreProvidersButton ? 6 : 7);
     } else {
       return [];
     }
@@ -98,8 +114,10 @@ export default Ember.Component.extend({
     return authorizer.name.toLowerCase().indexOf(term.toLowerCase());
   },
 
-  _animateShow(element) {
-    element.addClass('short-delay fadeIn').removeClass('fadeOut');
+  _animateShow(element, delayed) {
+    element
+      .addClass((delayed ? 'short-delay ' : '') + 'fadeIn')
+      .removeClass('hide fadeOut');
   },
 
   _animateHide(element) {
@@ -132,15 +150,36 @@ export default Ember.Component.extend({
     },
     usernameLoginToggle() {
       let loginForm = this.$('.login-form-container');
-      let authorizersDropdown = this.$('.authorizers-dropdown-container');
+      let authorizersSelect = this.$('.authorizers-select-container');
+      clearTimeout(this.get('formAnimationTimeoutId'));
 
       this.toggleProperty('isUsernameLoginActive');
       if (this.get('isUsernameLoginActive')) {
-        this._animateHide(authorizersDropdown);
-        this._animateShow(loginForm);
+        this._animateHide(authorizersSelect);
+        this._animateShow(loginForm, true);
+        // hide dropdown
+        if (this.get('isProvidersDropdownVisible')) {
+          this.send('showMoreClick');
+        }
       } else {
         this._animateHide(loginForm);
+        this._animateShow(authorizersSelect, true);
+        this.set('formAnimationTimeoutId', 
+          setTimeout(() => loginForm.addClass('hide'), 333)
+        );
+      }
+    },
+    showMoreClick() {
+      this.toggleProperty('isProvidersDropdownVisible');
+      let authorizersDropdown = this.$('.authorizers-dropdown-container');
+      clearTimeout(this.get('dropdownAnimationTimeoutId'));
+      if (this.get('isProvidersDropdownVisible')) {
         this._animateShow(authorizersDropdown);
+      } else {
+        this._animateHide(authorizersDropdown);
+        this.set('dropdownAnimationTimeoutId', 
+          setTimeout(() => authorizersDropdown.addClass('hide'), 333)
+        );
       }
     }
   }

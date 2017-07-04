@@ -76,6 +76,15 @@
   &.elixir {
     background-color: $color-login-elixir;
   }
+  &.more {
+    background-color: white;
+    color: $color-dark-steel;
+    font-weight: bold;
+    line-height: 35px !important;
+    &:hover {
+      color: $color-dark-steel;
+    }
+  }
 }
 
 .login-icon-box {
@@ -84,7 +93,11 @@
   overflow: hidden;
   text-align: center;
   text-decoration: none !important;
-  color: white !important;
+  color: white;
+  user-select: none;
+  &:hover {
+    color: white;
+  }
 }
 
 .authorizers-dropdown .ember-power-select-option, 
@@ -156,37 +169,16 @@
       font-size: 32px;
     }
   }
-  .authorizers-dropdown-container {
+  .authorizers-select-container {
     position: absolute;
     left: 0;
     right: 0;
     &.fadeOut {
       z-index: -1;
     }
-    .text-with-horiz-line {
-      padding-top: 5px;
-      padding-bottom: 17px;
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      &::before,
-      &::after {
-        content: "";
-        background-color: white;
-        display: inline-block;
-        height: 1px;
-        position: relative;
-        vertical-align: middle;
-        width: 50%;
-      }
-      &::before {
-        right: 0.5em;
-        margin-left: -50%;
-      }
-      &::after {
-        left: 0.5em;
-        margin-right: -50%;
-      }
+    .authorizers-dropdown-container {
+      opacity: 0;
+      margin-top: 10px;
     }
     .dropdown-label {
       position: absolute;

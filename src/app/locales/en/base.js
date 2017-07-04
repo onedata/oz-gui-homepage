@@ -81,6 +81,7 @@ export default {
     loginWith: 'Login with',
     loginUsing: 'Login using ',
     onepanelAccount: 'Onepanel account',
+    showMore: 'Show all identity providers',
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
   },

@@ -31,14 +31,14 @@
 
   {{#if message}}
     <div class="row">
-      <p class="col-xs-12 form-group text-center">{{message}}</p>
+      <p class="col-xs-12 form-group text-center login-form-error">{{message}}</p>
     </div>
   {{/if}}
 
   <div class="row">
     <div class="col-xs-12 text-center">
       {{#if showBack}}
-        <button class="btn btn-warning back-button" {{action backAction}}>
+        <button type="button" class="btn btn-warning back-button" {{action backAction}}>
           {{one-icon icon="arrow-right"}}
           {{t "common.back"}}
         </button>
