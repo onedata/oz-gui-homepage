@@ -70,11 +70,11 @@ export default {
     boxTitle: 'login',
     formSubtitle: 'Using your Onepanel account',
     formSubtitleTip: 'This login method is available for administrators and special users ' +
-    'created via onepanel administrative interface. Regular users must login via social or ' +
-    'institutional accounts, which can be found in previous menu.',
+      'created via onepanel administrative interface. Regular users must login via social or ' +
+      'institutional accounts, which can be found in previous menu.',
     noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
-    'users created via onepanel administrative interface. Regular users must login via social or ' + 
-    'institutional accounts, which are currently disabled by the administrators of this zone.',
+      'users created via onepanel administrative interface. Regular users must login via social or ' + 
+      'institutional accounts, which are currently disabled by the administrators of this zone.',
     dropdownSubtitle: 'A new account will be created automatically on first login',
     isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',

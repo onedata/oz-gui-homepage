@@ -240,7 +240,8 @@
           position: relative;
           .input-group-addon {
             position: relative;
-            padding: 5px;
+            top: 1px;
+            padding: 4px 5px;
             // focus on input changes its z-index from 1 to 3
             z-index: 4;
             height: $input-height-base;
@@ -254,7 +255,7 @@
           }
           input {
             $border-radius: $input-border-radius;
-            height: 45px;
+            height: 44px;
             float: none;
             position: absolute;
             z-index: 1;
