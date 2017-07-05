@@ -38,10 +38,26 @@ export default Ember.Component.extend({
    */
   isUsernameLoginActive: false,
 
+  /**
+   * @type {boolean}
+   */
+  isProvidersDropdownVisible: false,
+
+  /**
+   * @type {computed.boolean}
+   */
+  showMoreProvidersButton: computed.gt('supportedAuthorizers.length', 7),
+
+  dropdownAnimationTimeoutId: -1,
+  formAnimationTimeoutId: -1,
+
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
-    let supportedAuthorizers = this.get('supportedAuthorizers');
+    let {
+      supportedAuthorizers,
+      showMoreProvidersButton
+    } = this.getProperties('supportedAuthorizers', 'showMoreProvidersButton');
     if (supportedAuthorizers) {
-      return supportedAuthorizers.slice(0, 7);
+      return supportedAuthorizers.slice(0, showMoreProvidersButton ? 6 : 7);
     } else {
       return [];
     }
@@ -55,6 +71,8 @@ export default Ember.Component.extend({
       return [];
     }
   }),
+
+  hasAuthorizersForSelect: computed.notEmpty('authorizersForSelect'),
 
   isLoading: false,
   errorMessage: null,
@@ -92,12 +110,21 @@ export default Ember.Component.extend({
     p.finally(() => this.set('isLoading', false));
   }.on('init'),
 
+  didInsertElement() {
+    this._super(...arguments);
+    if (!this.get('hasAuthorizersForSelect')) {
+      this.$('#-username-input').focus();
+    }
+  },
+
   authorizersSelectMatcher(authorizer, term) {
     return authorizer.name.toLowerCase().indexOf(term.toLowerCase());
   },
 
-  _animateShow(element) {
-    element.addClass('short-delay fadeIn').removeClass('fadeOut');
+  _animateShow(element, delayed) {
+    element
+      .addClass((delayed ? 'short-delay ' : '') + 'fadeIn')
+      .removeClass('hide fadeOut');
   },
 
   _animateHide(element) {
@@ -129,16 +156,46 @@ export default Ember.Component.extend({
       return p;
     },
     usernameLoginToggle() {
+      let {
+        isProvidersDropdownVisible,
+        formAnimationTimeoutId
+      } = this.getProperties(
+        'isProvidersDropdownVisible',
+        'formAnimationTimeoutId'
+      )
       let loginForm = this.$('.login-form-container');
-      let authorizersDropdown = this.$('.authorizers-dropdown-container');
+      let authorizersSelect = this.$('.authorizers-select-container');
+      clearTimeout(formAnimationTimeoutId);
 
       this.toggleProperty('isUsernameLoginActive');
       if (this.get('isUsernameLoginActive')) {
-        this._animateHide(authorizersDropdown);
-        this._animateShow(loginForm);
+        this._animateHide(authorizersSelect);
+        this._animateShow(loginForm, true);
+        this.$('#-username-input').focus();
+        // hide dropdown
+        if (isProvidersDropdownVisible) {
+          this.send('showMoreClick');
+        }
       } else {
         this._animateHide(loginForm);
+        this._animateShow(authorizersSelect, true);
+        this.set('formAnimationTimeoutId', 
+          setTimeout(() => loginForm.addClass('hide'), 333)
+        );
+      }
+    },
+    showMoreClick() {
+      let dropdownAnimationTimeoutId = this.get('dropdownAnimationTimeoutId');
+      this.toggleProperty('isProvidersDropdownVisible');
+      let authorizersDropdown = this.$('.authorizers-dropdown-container');
+      clearTimeout(dropdownAnimationTimeoutId);
+      if (this.get('isProvidersDropdownVisible')) {
         this._animateShow(authorizersDropdown);
+      } else {
+        this._animateHide(authorizersDropdown);
+        this.set('dropdownAnimationTimeoutId', 
+          setTimeout(() => authorizersDropdown.addClass('hide'), 333)
+        );
       }
     }
   }

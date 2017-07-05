@@ -2,43 +2,56 @@
   <div class="row row-centered">
     <div class="col-xs-9 col-centered login-box">
       <h1>{{t 'login.boxTitle'}}</h1>
-
-      <h2>{{t 'login.boxSubtitle'}}</h2>
-
-      <div class="container-fluid login-buttons-container">
-        {{social-box-list
-          supportedAuthorizers=authorizersForButtons 
-          isLoading=isLoading 
-          authenticate=(action "authenticate")
-          onUsernameLoginClick=(action "usernameLoginToggle")
-          isUsernameLoginActive=isUsernameLoginActive}}
-        {{#if supportedAuthorizers}}
+      {{#if supportedAuthorizers}}
+        <div class="container-fluid login-buttons-container">
           <div class="row login-forms-row">
-            <div class="login-form-container animated fast">
-              <div class="text-with-horiz-line">{{t 'common.or'}}</div>
-              {{login-form isOpen=isUsernameLoginActive}}
+            <div class="login-form-container animated fast {{if hasAuthorizersForSelect "hide" "always-visible"}}">
+              <h2>{{t 'login.formSubtitle'}} 
+                {{#bs-tooltip 
+                  title=(if hasAuthorizersForSelect (t "login.formSubtitleTip") (t "login.noProvidersFormSubtitleTip")) 
+                  tagName="span" 
+                  class="subtitle-tip"}}
+                  {{one-icon icon="sign-question"}}
+                {{/bs-tooltip}}
+              </h2>
+              {{login-form 
+                isOpen=isUsernameLoginActive 
+                backAction=(action 'usernameLoginToggle') 
+                showBack=hasAuthorizersForSelect}}
             </div>
-            <div class="authorizers-dropdown-container animated fast">
-              <div class="dropdown-label">{{t 'login.loginWith'}}</div>
-              {{#power-select
-                options=authorizersForSelect
-                onchange=(action "authorizerSelected")
-                matcher=authorizersSelectMatcher
-                selected=selectedAuthorizer
-                dropdownClass="authorizers-dropdown"
-                placeholder=(t 'login.findProviderPlaceholder')
-                as |authorizer|}}
-                {{social-box 
-                  type=authorizer.type
-                  iconType=authorizer.iconType
-                  iconName=authorizer.iconName
-                }}
-                {{authorizer.name}}
-              {{/power-select}}
-            </div>
+            {{#if hasAuthorizersForSelect}}
+              <div class="authorizers-select-container animated fast">
+                <h2>{{t 'login.dropdownSubtitle'}}</h2>
+                {{social-box-list
+                  supportedAuthorizers=authorizersForButtons 
+                  isLoading=isLoading 
+                  authenticate=(action "authenticate")
+                  onUsernameLoginClick=(action "usernameLoginToggle")
+                  showMoreButton=showMoreProvidersButton
+                  showMoreClick=(action "showMoreClick")}}
+                <div class="authorizers-dropdown-container animated fast hide">
+                  <div class="dropdown-label">{{t 'login.loginWith'}}</div>
+                  {{#power-select
+                    options=authorizersForSelect
+                    onchange=(action "authorizerSelected")
+                    matcher=authorizersSelectMatcher
+                    selected=selectedAuthorizer
+                    dropdownClass="authorizers-dropdown"
+                    placeholder=(t 'login.findProviderPlaceholder')
+                    as |authorizer|}}
+                    {{social-box 
+                      type=authorizer.type
+                      iconType=authorizer.iconType
+                      iconName=authorizer.iconName
+                    }}
+                    {{authorizer.name}}
+                  {{/power-select}}
+                </div>
+              </div>
+            {{/if}}
           </div>
-        {{/if}}
-      </div>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

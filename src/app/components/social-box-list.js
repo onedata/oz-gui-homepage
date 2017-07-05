@@ -25,5 +25,8 @@ export default Ember.Component.extend({
     usernameBoxClick() {
       this.get('onUsernameLoginClick')();
     },
+    showMoreClick() {
+      this.get('showMoreClick')();
+    }
   }
 });

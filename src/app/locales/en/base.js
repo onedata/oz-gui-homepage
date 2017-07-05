@@ -21,7 +21,8 @@ export default {
     serverError: 'Server error',
     unknownError: 'Unknown error',
     fatalApplicationErrorResources: "A fatal error occured loading application's resources",
-    or: 'or'
+    or: 'or',
+    back: 'Back'
   },
   services: {
     session: sessionLocales,
@@ -67,10 +68,20 @@ export default {
     title: 'Login',
 
     boxTitle: 'login',
-    boxSubtitle: 'A new account will be created automatically on first login',
+    formSubtitle: 'Using your Onepanel account',
+    formSubtitleTip: 'This login method is available for administrators and special users ' +
+      'created via onepanel administrative interface. Regular users must login via social or ' +
+      'institutional accounts, which can be found in previous menu.',
+    noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
+      'users created via onepanel administrative interface. Regular users must login via social or ' + 
+      'institutional accounts, which are currently disabled by the administrators of this zone.',
+    dropdownSubtitle: 'A new account will be created automatically on first login',
     isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
     loginWith: 'Login with',
+    loginUsing: 'Login using ',
+    onepanelAccount: 'Onepanel account',
+    showMore: 'Show all identity providers',
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
   },

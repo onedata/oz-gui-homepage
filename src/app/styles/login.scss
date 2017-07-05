@@ -76,6 +76,15 @@
   &.elixir {
     background-color: $color-login-elixir;
   }
+  &.more {
+    background-color: white;
+    color: $color-dark-steel;
+    font-weight: bold;
+    line-height: 35px !important;
+    &:hover {
+      color: $color-dark-steel;
+    }
+  }
 }
 
 .login-icon-box {
@@ -84,7 +93,11 @@
   overflow: hidden;
   text-align: center;
   text-decoration: none !important;
-  color: white !important;
+  color: white;
+  user-select: none;
+  &:hover {
+    color: white;
+  }
 }
 
 .authorizers-dropdown .ember-power-select-option, 
@@ -156,13 +169,16 @@
       font-size: 32px;
     }
   }
-  .authorizers-dropdown-container {
+  .authorizers-select-container {
     position: absolute;
     left: 0;
     right: 0;
-    color: $color-steel;
     &.fadeOut {
-        z-index: -1;
+      z-index: -1;
+    }
+    .authorizers-dropdown-container {
+      opacity: 0;
+      margin-top: 10px;
     }
     .dropdown-label {
       position: absolute;
@@ -171,6 +187,7 @@
       padding: 0 15px;
       border-right: 1px solid $input-border;
       z-index: 2;
+      color: $color-steel;
     }
     .ember-power-select-trigger {
       min-height: 45px;
@@ -187,47 +204,35 @@
   .login-box {
     h1 {
       text-align: center;
+      margin-top: 25px;
       margin-bottom: 0;
       font-size: 23pt;
     }
     h2 {
-      font-size: 17pt;
+      font-size: 13pt;
       text-align: center;
-      margin: 20px 20px 40px 20px;
-    }
-    .text-with-horiz-line {
-      padding-top: 5px;
-      padding-bottom: 17px;
-      overflow: hidden;
-      text-align: center;
-      &::before,
-      &::after {
-        content: "";
-        background-color: white;
-        display: inline-block;
-        height: 1px;
+      margin: 10px 20px 20px 20px;
+      .subtitle-tip {
         position: relative;
-        vertical-align: middle;
-        width: 50%;
-      }
-      &::before {
-        right: 0.5em;
-        margin-left: -50%;
-      }
-      &::after {
-        left: 0.5em;
-        margin-right: -50%;
+        top: 2px;
+        left: 2px;
+        opacity: 0.8;
+        font-size: 90%;
       }
     }
     .login-forms-row {
       position: relative;
     }
     .login-form-container {
+      position: absolute;
+      left: 0;
+      right: 0;
       opacity: 0;
+      &.always-visible {
+        opacity: initial;
+        margin-top: 10px;
+      }
       .login-form {
-        position: absolute;
-        left: 0;
-        right: 0;
         &.fadeOut {
           z-index: -1;
         }
@@ -235,7 +240,8 @@
           position: relative;
           .input-group-addon {
             position: relative;
-            padding: 5px;
+            top: 1px;
+            padding: 4px 5px;
             // focus on input changes its z-index from 1 to 3
             z-index: 4;
             height: $input-height-base;
@@ -249,7 +255,7 @@
           }
           input {
             $border-radius: $input-border-radius;
-            height: 45px;
+            height: 44px;
             float: none;
             position: absolute;
             z-index: 1;
@@ -265,9 +271,23 @@
         }
         .btn {
           padding: 10px 40px;
+          margin-bottom: 5px;
           .spin-button-spinner {
             height: 0;
             width: 0;
+          }
+          &.back-button {
+            background-color: $color-button-default;
+            border-color: $color-button-default;
+            .one-icon::before {
+              display: inline-block;
+              position: relative;
+              top: 5px;
+              margin-left: -10px;
+              transform: rotate(-180deg);
+              font-size: 17pt;
+              line-height: 0;
+            }
           }
         }
       }
@@ -308,7 +328,7 @@
       }
     }
     @media(min-height: 750px) {
-      padding-top: 40px;
+      margin-top: 40px;
     }
   }
   

@@ -17,7 +17,6 @@ const {
 export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['social-box-component'],
-  classNameBindings: ['disabled'],
 
   /**
    * Use oneicon (fonticon) or image placed in ``/assets/images/social/{iconName}.{iconType}``
@@ -39,10 +38,10 @@ export default Ember.Component.extend({
   link: '',
 
   /**
-   * Disable state status
-   * @type {boolean}
+   * Text for tooltip
+   * @type {string}
    */
-  disabled: false,
+  tip: '',
 
   _iconName: computed('iconType', 'iconName', function() {
     let {
