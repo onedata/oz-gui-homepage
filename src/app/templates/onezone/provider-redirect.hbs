@@ -1,0 +1,28 @@
+{{!--
+  NOTE We do not know when routable components will be available,
+  so using controller for simplicity...
+--}}
+
+
+<div class="provider-redirect">
+  {{#if error}}
+    <div class="fixed-center application-error">
+      {{one-icon tagName="div" icon="sign-warning" class="application-error-icon"}}
+      <h1 class="application-error-message">
+        {{t 'onezone.providerRedirect.error'}}
+      </h1>
+    </div>
+  {{else}}
+    <div class="spinner-container fixed-center">
+      {{spin-spinner scale=2 lines=12 length=20 width=10}}
+    </div>
+    <div class="fixed-center full-content-message">
+      <div class="message-part">
+        {{t 'onezone.providerRedirect.redirecting'}}
+      </div>
+      <div class="truncate provider-name message-part">
+        {{provider.name}}
+      </div>
+    </div>
+  {{/if}}
+</div>

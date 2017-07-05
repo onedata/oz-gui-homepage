@@ -80,31 +80,14 @@ export default Component.extend({
     $(window).scroll(updater);
   },
 
+  /**
+   * @param {Event} event 
+   */
   click(event) {
-    event.preventDefault();
-    return false;
+    event.stopPropagation();
   },
 
   actions: {
-    goToFiles() {
-      const p = this.get('onezoneServer').getProviderRedirectURL(this.get('provider.id'));
-      p.then(
-        (data) => {
-          window.location = data.url;
-        },
-        (error) => {
-          this.get('messageBox').open({
-            title: this.get('i18n').t('common.serverError'),
-            message: this.get('i18n').t('onezone.providerPlaceDrop.goToFilesErrorMessage') +
-              ((error && error.message) ? (': ' + error.message) : ''),
-            type: 'error'
-          });
-        }
-      );
-
-      p.finally(() => this.set('goToIsLoading', false));
-    },
-
     copySuccess() {
       let {i18n, notify} = this.getProperties('i18n', 'notify');
       notify.info(i18n.t('onezone.providerPlaceDrop.hostnameCopySuccess'));
