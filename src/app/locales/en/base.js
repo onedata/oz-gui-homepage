@@ -196,6 +196,10 @@ export default {
     title: 'Manage account',
     version: 'version',
 
+    providerRedirect: {
+      error: 'We are sorry, but URL for provider cannot be resolved',
+      redirecting: 'Redirecting to provider',
+    },
     messages: {
       noneProviders: {
         title: 'All your providers are offline',
