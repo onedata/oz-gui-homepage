@@ -1,9 +1,9 @@
 <div class="space-icon">
   {{one-icon icon=iconName}}
 </div>
-<div class="space-label truncate">
+{{#truncated-string class="space-label"}}
   {{name-conflict item=space}}
-</div>
-  <div class="space-size">
+{{/truncated-string}}
+<div class="space-size">
   {{bytes-to-string supportSize}}
 </div> 

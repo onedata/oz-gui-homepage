@@ -8,6 +8,6 @@
     {{/if}}
   </div>
 </div>
-<div class="account-label one-label one-label-large secondary-item-element">
-  {{trim-string label 32}}
-</div>
+{{#truncated-string widthBased=true shrinkBy=35 class="account-label one-label one-label-large secondary-item-element"}}
+  {{label}}
+{{/truncated-string}}

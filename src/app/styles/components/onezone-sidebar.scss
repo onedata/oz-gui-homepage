@@ -326,7 +326,7 @@
             padding-left: 8px;
             line-height: $onezone-secondary-accordion-heading-height;
             text-transform: none;
-            max-width: 280px;
+            max-width: 250px;
 
             // TODO: max-width truncation in table-cell seems to be hacky
             // try to find out other solution
@@ -510,6 +510,7 @@
 
     .account-icon {
       position: relative;
+      min-width: 32px;
       width: 32px;
       height: $onezone-account-item-height;
       text-align: center;
