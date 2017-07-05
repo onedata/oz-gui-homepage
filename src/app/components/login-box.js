@@ -162,7 +162,7 @@ export default Ember.Component.extend({
       } = this.getProperties(
         'isProvidersDropdownVisible',
         'formAnimationTimeoutId'
-      )
+      );
       let loginForm = this.$('.login-form-container');
       let authorizersSelect = this.$('.authorizers-select-container');
       clearTimeout(formAnimationTimeoutId);
