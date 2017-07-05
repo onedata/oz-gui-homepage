@@ -110,6 +110,13 @@ export default Ember.Component.extend({
     p.finally(() => this.set('isLoading', false));
   }.on('init'),
 
+  didInsertElement() {
+    this._super(...arguments);
+    if (!this.get('hasAuthorizersForSelect')) {
+      this.$('#-username-input').focus();
+    }
+  },
+
   authorizersSelectMatcher(authorizer, term) {
     return authorizer.name.toLowerCase().indexOf(term.toLowerCase());
   },
@@ -149,16 +156,24 @@ export default Ember.Component.extend({
       return p;
     },
     usernameLoginToggle() {
+      let {
+        isProvidersDropdownVisible,
+        formAnimationTimeoutId
+      } = this.getProperties(
+        'isProvidersDropdownVisible',
+        'formAnimationTimeoutId'
+      );
       let loginForm = this.$('.login-form-container');
       let authorizersSelect = this.$('.authorizers-select-container');
-      clearTimeout(this.get('formAnimationTimeoutId'));
+      clearTimeout(formAnimationTimeoutId);
 
       this.toggleProperty('isUsernameLoginActive');
       if (this.get('isUsernameLoginActive')) {
         this._animateHide(authorizersSelect);
         this._animateShow(loginForm, true);
+        this.$('#-username-input').focus();
         // hide dropdown
-        if (this.get('isProvidersDropdownVisible')) {
+        if (isProvidersDropdownVisible) {
           this.send('showMoreClick');
         }
       } else {
@@ -170,9 +185,10 @@ export default Ember.Component.extend({
       }
     },
     showMoreClick() {
+      let dropdownAnimationTimeoutId = this.get('dropdownAnimationTimeoutId');
       this.toggleProperty('isProvidersDropdownVisible');
       let authorizersDropdown = this.$('.authorizers-dropdown-container');
-      clearTimeout(this.get('dropdownAnimationTimeoutId'));
+      clearTimeout(dropdownAnimationTimeoutId);
       if (this.get('isProvidersDropdownVisible')) {
         this._animateShow(authorizersDropdown);
       } else {
