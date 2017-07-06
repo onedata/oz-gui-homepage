@@ -10,9 +10,9 @@
             <div class="secondary-item-element secondary-icon space-icon">
               {{one-icon tagName='div' icon=(if space.isDefault "space-home" "space")}}
             </div>
-            <div class="secondary-item-element secondary-header space-header truncate">
+            {{#truncated-string  class="secondary-item-element secondary-header space-header"}}
               {{name-conflict item=space}}
-            </div>
+            {{/truncated-string}}
             <div class="secondary-item-element secondary-header space-header-size">
               {{bytes-to-string space.totalSize}}
             </div>
@@ -67,9 +67,9 @@
               <div class="icon tertiary-icon">
                 {{one-icon tagName="div" icon=(if p.isDefault "provider-home" "provider")}}
               </div>
-              <div class="one-label after-icon truncate">
+              {{#truncated-string class="one-label after-icon"}}
                 {{name-conflict item=p}}
-              </div>
+              {{/truncated-string}}
             </div>
             <div class="icon clickable visible-on-parent-hover" {{action "showUnsupportSpaceModal" p}}>
               {{one-icon tagName="div" icon="leave-space"}}
