@@ -75,4 +75,10 @@ export default [{
     iconType: 'oneicon',
     iconName: 'social-rhea',
   },
+  {
+    type: 'unitedid',
+    name: 'UnitedID',
+    iconType: 'png',
+    iconName: 'unitedid',
+  },
 ];

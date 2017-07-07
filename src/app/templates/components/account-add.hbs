@@ -24,22 +24,13 @@
   <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
     {{!-- TODO: style --}}
     {{#each authProviders as |authProvider|}}
-      {{#if (eq authProvider.type 'elixir')}}
-        {{account-item
-          iconType="svg"
-          type=authProvider.type
-          label=authProvider.label
-          mode="connect"
-          action="connectNewAccount"
-        }}
-      {{else}}
-        {{account-item
-          type=authProvider.type
-          label=authProvider.label
-          mode="connect"
-          action="connectNewAccount"
-        }}
-      {{/if}}
+      {{account-item
+        type=authProvider.type
+        iconType=authProvider.iconType
+        label=(concat (concat (t "onezone.accountAdd.connectBy") " ") authProvider.name)
+        mode="connect"
+        action="connectNewAccount"
+      }}
     {{/each}}
   </div>
 </div>
