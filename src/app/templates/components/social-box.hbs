@@ -1,4 +1,4 @@
-{{#bs-tooltip title=tip tagName="a" click=(action 'clicked') class=(concat "login-icon-box v-center-parent " type)}}
+<a {{action 'clicked'}} class="login-icon-box v-center-parent {{type}}">
   {{#if active}}
     <div class="v-center-child">
       {{spin-spinner scale=0.4 lines=12 length=20 width=10}}
@@ -12,4 +12,5 @@
       <div class="social-icon-image" style={{socialIconStyle}}></div>
     {{/if}}
   {{/if}}
-{{/bs-tooltip}}
+</a>
+{{bs-tooltip title=tip}}
