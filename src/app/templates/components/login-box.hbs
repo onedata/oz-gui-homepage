@@ -6,13 +6,11 @@
         <div class="container-fluid login-buttons-container">
           <div class="row login-forms-row">
             <div class="login-form-container animated fast {{if hasAuthorizersForSelect "hide" "always-visible"}}">
-              <h2>{{t 'login.formSubtitle'}} 
-                {{#bs-tooltip 
-                  title=(if hasAuthorizersForSelect (t "login.formSubtitleTip") (t "login.noProvidersFormSubtitleTip")) 
-                  tagName="span" 
-                  class="subtitle-tip"}}
+              <h2>{{t 'login.formSubtitle'}}
+                <span class="subtitle-tip">
                   {{one-icon icon="sign-question"}}
-                {{/bs-tooltip}}
+                  {{bs-tooltip title=(if hasAuthorizersForSelect (t "login.formSubtitleTip") (t "login.noProvidersFormSubtitleTip"))}}
+                </span>
               </h2>
               {{login-form 
                 isOpen=isUsernameLoginActive 

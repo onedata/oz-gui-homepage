@@ -173,6 +173,7 @@
     position: absolute;
     left: 0;
     right: 0;
+    margin-bottom: 30px;
     &.fadeOut {
       z-index: -1;
     }
@@ -227,6 +228,7 @@
       position: absolute;
       left: 0;
       right: 0;
+      margin-bottom: 30px;
       opacity: 0;
       &.always-visible {
         opacity: initial;
@@ -297,7 +299,7 @@
   .zone {
     color: white;
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     font-family: 'Myriad Pro Bold', 'Open Sans', sans-serif;
 
     .zone-image {
@@ -327,8 +329,8 @@
         opacity: 0.8;
       }
     }
-    @media(min-height: 750px) {
-      margin-top: 40px;
+    @media(max-height: 600px) {
+      margin-bottom: 50px;
     }
   }
   
@@ -341,5 +343,17 @@
     padding: 10px;
     padding-right: 20px;
     color: rgba(white,0.5);
+  }
+}
+
+.login-elements {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) translateY(-160px);
+  width: 100%;
+  @media (max-height: 740px) {
+    position: initial;
+    transform: none;
   }
 }
