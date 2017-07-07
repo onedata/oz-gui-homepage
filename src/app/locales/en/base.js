@@ -84,6 +84,22 @@ export default {
     showMore: 'Show all identity providers',
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
+    authenticationError: {
+      text: 'Authentication error',
+      backToLogin: 'Back to login',
+      codes: {
+        server_error: 'Server has encountered an unexpected error while processing ' +
+        'your login request. Please contact site administrators if the problem persists.',
+        invalid_state: 'Login failed due to bad request state - this usually ' + 
+          'happens when you do not complete your login process within 60 seconds ' +
+          'since redirection to chosen identity provider.',
+        invalid_request: 'Your login request could not be validated. Please ' +
+          'contact site administrators if the problem persists.',
+        account_already_connected: 'You cannot link this account because it ' +
+          'already belongs to another user.',
+        unknown: 'Unknown reason.'
+      }
+    },
   },
   components: {
     modals: {
