@@ -55,6 +55,7 @@ export default LoginRoute.extend({
   },
   
   setupController(controller) {
+    this._super(...arguments);
     controller.getAuthenticationError();
   },
 });
