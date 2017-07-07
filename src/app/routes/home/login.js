@@ -15,6 +15,8 @@ export default LoginRoute.extend({
   session: Ember.inject.service('session'),
   messageBox: Ember.inject.service(),
   onezoneServer: Ember.inject.service('onezoneServer'),
+  cookies: Ember.inject.service('cookies'),
+  
   name: 'login',
   zoneName: null,
 
@@ -50,5 +52,9 @@ export default LoginRoute.extend({
         });
       }
     });
+  },
+  
+  setupController(controller) {
+    controller.getAuthenticationError();
   },
 });

@@ -224,6 +224,42 @@
         font-size: 90%;
       }
     }
+    .btn {
+      padding: 10px 40px;
+      margin-bottom: 5px;
+      .spin-button-spinner {
+        height: 0;
+        width: 0;
+      }
+      &.back-button {
+        background-color: $color-button-default;
+        border-color: $color-button-default;
+        .one-icon::before {
+          display: inline-block;
+          position: relative;
+          top: 5px;
+          margin-left: -10px;
+          transform: rotate(-180deg);
+          font-size: 17pt;
+          line-height: 0;
+        }
+      }
+    }
+    .login-box-error-message {
+      padding: 10px;
+      // border: 1px solid white;
+      max-width: 500px;
+      
+      margin-top: 15px;
+      margin-bottom: 10px;
+      
+      .login-box-error-message-buttons {
+        font-size: 14px;
+        .back-button {
+          @extend .btn-success;
+        }
+      }
+    }
     .login-forms-row {
       position: relative;
     }
@@ -273,27 +309,6 @@
         }
         .has-error .input-group.with-icon-addon .input-group-addon {
           border-right: 1px solid $state-danger-text;
-        }
-        .btn {
-          padding: 10px 40px;
-          margin-bottom: 5px;
-          .spin-button-spinner {
-            height: 0;
-            width: 0;
-          }
-          &.back-button {
-            background-color: $color-button-default;
-            border-color: $color-button-default;
-            .one-icon::before {
-              display: inline-block;
-              position: relative;
-              top: 5px;
-              margin-left: -10px;
-              transform: rotate(-180deg);
-              font-size: 17pt;
-              line-height: 0;
-            }
-          }
         }
       }
     }

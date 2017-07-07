@@ -1,9 +1,20 @@
 import Ember from 'ember';
 import AUTHORIZERS from 'oz-worker-gui/utils/authorizers';
+import _ from 'lodash';
 
 const {
   computed,
 } = Ember;
+
+/**
+ * List of known authentication errors
+ */
+const AUTHENTICATION_ERRORS = [
+  'server_error',
+  'invalid_state',
+  'invalid_request',
+  'account_already_connected',
+];
 
 /**
  * A component that allows login by one of the supported authorization providers 
@@ -48,8 +59,27 @@ export default Ember.Component.extend({
    */
   showMoreProvidersButton: computed.gt('supportedAuthorizers.length', 7),
 
+  /**
+   * A code of last authentication error (or null)
+   * @type {string|null}
+   */
+  authenticationError: null,
+
+  showAuthenticationError: false,
+
   dropdownAnimationTimeoutId: -1,
   formAnimationTimeoutId: -1,
+
+  authenticationErrorText: computed('authenticationError', function () {
+    let authenticationError = this.get('authenticationError');
+    if (authenticationError) {
+      if (!_.includes(AUTHENTICATION_ERRORS, authenticationError)) {
+        authenticationError = 'unknown';
+      }
+      return this.get('i18n')
+        .t('login.authenticationError.codes.' + authenticationError);
+    }
+  }),
 
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
     let {
@@ -76,6 +106,13 @@ export default Ember.Component.extend({
 
   isLoading: false,
   errorMessage: null,
+
+  init() {
+    this._super(...arguments);
+    if (this.get('authenticationError')) {
+      this.set('showAuthenticationError', true);
+    }
+  },
 
   initSupportedAuthorizers: function () {
     this.set('isLoading', true);
@@ -197,6 +234,9 @@ export default Ember.Component.extend({
           setTimeout(() => authorizersDropdown.addClass('hide'), 333)
         );
       }
-    }
+    },
+    back() {
+      this.set('showAuthenticationError', false);
+    },
   }
 });

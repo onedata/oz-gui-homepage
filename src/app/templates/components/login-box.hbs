@@ -1,54 +1,71 @@
 <div class="container login-box-container">
   <div class="row row-centered">
     <div class="col-xs-9 col-centered login-box">
-      <h1>{{t 'login.boxTitle'}}</h1>
-      {{#if supportedAuthorizers}}
-        <div class="container-fluid login-buttons-container">
+      {{#if showAuthenticationError}}
+        <h1>{{t "login.authenticationError.text"}}!</h1>
+        <div class="container-fluid login-buttons-container login-box-error-message">
           <div class="row login-forms-row">
-            <div class="login-form-container animated fast {{if hasAuthorizersForSelect "hide" "always-visible"}}">
-              <h2>{{t 'login.formSubtitle'}}
-                <span class="subtitle-tip">
-                  {{one-icon icon="sign-question"}}
-                  {{bs-tooltip title=(if hasAuthorizersForSelect (t "login.formSubtitleTip") (t "login.noProvidersFormSubtitleTip"))}}
-                </span>
-              </h2>
-              {{login-form 
-                isOpen=isUsernameLoginActive 
-                backAction=(action 'usernameLoginToggle') 
-                showBack=hasAuthorizersForSelect}}
-            </div>
-            {{#if hasAuthorizersForSelect}}
-              <div class="authorizers-select-container animated fast">
-                <h2>{{t 'login.dropdownSubtitle'}}</h2>
-                {{social-box-list
-                  supportedAuthorizers=authorizersForButtons 
-                  isLoading=isLoading 
-                  authenticate=(action "authenticate")
-                  onUsernameLoginClick=(action "usernameLoginToggle")
-                  showMoreButton=showMoreProvidersButton
-                  showMoreClick=(action "showMoreClick")}}
-                <div class="authorizers-dropdown-container animated fast hide">
-                  <div class="dropdown-label">{{t 'login.loginWith'}}</div>
-                  {{#power-select
-                    options=authorizersForSelect
-                    onchange=(action "authorizerSelected")
-                    matcher=authorizersSelectMatcher
-                    selected=selectedAuthorizer
-                    dropdownClass="authorizers-dropdown"
-                    placeholder=(t 'login.findProviderPlaceholder')
-                    as |authorizer|}}
-                    {{social-box 
-                      type=authorizer.type
-                      iconType=authorizer.iconType
-                      iconName=authorizer.iconName
-                    }}
-                    {{authorizer.name}}
-                  {{/power-select}}
-                </div>
+            <div class="login-form-container always-visible">
+              <h2 class="login-box-error-message-text">{{authenticationErrorText}}</h2>
+              <div class="col-xs-12 text-center login-box-error-message-buttons">
+                <button type="button" class="btn btn-primary back-button" {{action "back"}}>
+                  {{one-icon icon="arrow-right"}}
+                  {{t "login.authenticationError.backToLogin"}}
+                </button>
               </div>
-            {{/if}}
+            </div>
           </div>
         </div>
+      {{else}}
+        <h1>{{t 'login.boxTitle'}}</h1>
+        {{#if supportedAuthorizers}}
+          <div class="container-fluid login-buttons-container">
+            <div class="row login-forms-row">
+              <div class="login-form-container animated fast {{if hasAuthorizersForSelect "hide" "always-visible"}}">
+                <h2>{{t 'login.formSubtitle'}}
+                  <span class="subtitle-tip">
+                    {{one-icon icon="sign-question"}}
+                    {{bs-tooltip title=(if hasAuthorizersForSelect (t "login.formSubtitleTip") (t "login.noProvidersFormSubtitleTip"))}}
+                  </span>
+                </h2>
+                {{login-form 
+                  isOpen=isUsernameLoginActive 
+                  backAction=(action 'usernameLoginToggle') 
+                  showBack=hasAuthorizersForSelect}}
+              </div>
+              {{#if hasAuthorizersForSelect}}
+                <div class="authorizers-select-container animated fast">
+                  <h2>{{t 'login.dropdownSubtitle'}}</h2>
+                  {{social-box-list
+                    supportedAuthorizers=authorizersForButtons 
+                    isLoading=isLoading 
+                    authenticate=(action "authenticate")
+                    onUsernameLoginClick=(action "usernameLoginToggle")
+                    showMoreButton=showMoreProvidersButton
+                    showMoreClick=(action "showMoreClick")}}
+                  <div class="authorizers-dropdown-container animated fast hide">
+                    <div class="dropdown-label">{{t 'login.loginWith'}}</div>
+                    {{#power-select
+                      options=authorizersForSelect
+                      onchange=(action "authorizerSelected")
+                      matcher=authorizersSelectMatcher
+                      selected=selectedAuthorizer
+                      dropdownClass="authorizers-dropdown"
+                      placeholder=(t 'login.findProviderPlaceholder')
+                      as |authorizer|}}
+                      {{social-box 
+                        type=authorizer.type
+                        iconType=authorizer.iconType
+                        iconName=authorizer.iconName
+                      }}
+                      {{authorizer.name}}
+                    {{/power-select}}
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        {{/if}}
       {{/if}}
     </div>
   </div>
