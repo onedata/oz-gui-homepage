@@ -10,18 +10,18 @@ import Ember from 'ember';
 import AuthenticationErrorMessageMixin from 'oz-worker-gui/mixins/authentication-error-message';
 
 const {
-  inject: { service },
+  inject: {
+    service
+  },
   observer,
+  on,
 } = Ember;
 
 export default Ember.Component.extend(AuthenticationErrorMessageMixin, {
   i18n: service(),
-  
+
   /** @abstract */
   modalId: null,
-
-  open: false,
-  isLoading: false,
 
   showAuthenticationError: false,
 
@@ -30,10 +30,8 @@ export default Ember.Component.extend(AuthenticationErrorMessageMixin, {
    * @type {string}
    */
   authenticationError: null,
-  
-  authenticationErrorChanged: observer('authenticationError', function () {
-    if (this.get('authenticationError')) {
-      this.set('showAuthenticationError');
-    }
-  }),
+
+  authenticationErrorChanged: on('init', observer('authenticationError', function () {
+    this.set('showAuthenticationError', !!this.get('authenticationError'));
+  })),
 });
