@@ -513,9 +513,11 @@
     }
 
     .account-icon {
+      $-account-icon-radius: 16px;
+      
       position: relative;
-      min-width: 32px;
-      width: 32px;
+      min-width: $-account-icon-radius*2;
+      width: $-account-icon-radius*2;
       height: $onezone-account-item-height;
       text-align: center;
 
@@ -530,6 +532,10 @@
           left: 0;
           transform: translateY(-50%);
         }
+      }
+      
+      .icon {
+        clip-path: circle($-account-icon-radius at center);
       }
 
       .social-icon-image {
