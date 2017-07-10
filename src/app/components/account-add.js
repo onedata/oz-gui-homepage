@@ -33,10 +33,12 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     $('.accordion-container').on('scroll', updater);
   },
 
-  authProviders: Ember.computed('supportedAuthorizers.[]', function() {
+  // TODO: handle unknown authorizers  
+  authProviders: Ember.computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
     if (supportedAuthorizers && supportedAuthorizers.length > 0) {
       const authProviders = supportedAuthorizers
+        .filter(id => id !== 'basicAuth')
         .map((id) => _.find(authorizers, a => a && a.type === id));
       return authProviders;
     } else {
