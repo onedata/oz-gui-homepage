@@ -54,7 +54,7 @@ export default {
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "occupied. The system requires that emails are unique and connected to one " +
         "user. To add this OpenID account to your existing account, login on the " +
-        "existing account and use the option 'Connect new account' in Authentication Settings.",
+        "existing account and use the option 'Link new account' in Authentication Settings.",
       connectAccountEmailOccupied:
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "connected to another account. The system requires that emails are unique " +
@@ -96,8 +96,10 @@ export default {
           'since redirection to chosen identity provider.',
         invalid_request: 'Your login request could not be validated. Please ' +
           'contact site administrators if the problem persists.',
-        account_already_connected: 'You cannot link this account because it ' +
-          'already belongs to another user.',
+        account_already_linked_to_another_user: 'You cannot link this account because it ' +
+          'is already linked to another user profile.',
+        account_already_linked_to_current_user: 'This account is already linked ' +
+          'to your profile.',
         unknown: 'Unknown reason.'
       }
     },
@@ -270,7 +272,7 @@ export default {
       changePassword: 'Change your password'
     },
     accountAdd: {
-      connectNewAccount: 'Connect new account',
+      connectNewAccount: 'Link new account',
       connectBy: 'Connect by'
     },
     groupsList: {
