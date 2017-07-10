@@ -85,7 +85,8 @@ export default {
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
     authenticationError: {
-      text: 'Authentication error',
+      title: 'Authentication error',
+      addAccountTitle: 'Cannot add account',
       backToLogin: 'Back to login',
       codes: {
         server_error: 'Server has encountered an unexpected error while processing ' +

@@ -1,0 +1,25 @@
+{{#bs-modal open=open body=false footer=false
+    id=modalId
+    title=(t "login.authenticationError.addAccountTitle")
+    keyboard=(not isDisabled)
+    autoClose=(not isDisabled)
+    backdropClose=(not isDisabled)
+    closeButton=false
+    closedAction=(mut showAuthenticationError false)
+  }}
+
+  {{#bs-modal-body}}
+    {{status-panel
+      blocking=true
+      type="error"
+      message=authenticationErrorText
+    }}
+  {{/bs-modal-body}}
+  {{#bs-modal-footer as |footer|}}
+    {{#bs-button action=(action "close" target=footer) type="default" disabled=isWorking
+      class="no-outline"}}
+      {{t "common.modal.close"}}
+    {{/bs-button}}
+  {{/bs-modal-footer}}
+
+{{/bs-modal}}

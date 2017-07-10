@@ -24,7 +24,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     //   console.debug('session has been invalidated!');
     // });
   // },
-
+  
+  cookies: Ember.inject.service(),
+  beforeModel() {
+    this.get('cookies').write('authentication_error', 'server_error');
+  },
+  
   initSession: function () {
     let p = this.get('session').initSession();
 

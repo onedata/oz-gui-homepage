@@ -44,3 +44,9 @@
 {{modals/add-space-storage open=(eq modal.type "addSpaceStorage")
   space=modal.options.space
 }}
+
+{{modals/authentication-error
+  open=showAuthenticationError
+  modalId="onezone-authentication-error"
+  authenticationError=authenticationError
+}}
