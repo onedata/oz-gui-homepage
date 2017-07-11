@@ -1,20 +1,10 @@
 import Ember from 'ember';
 import AUTHORIZERS from 'oz-worker-gui/utils/authorizers';
-import _ from 'lodash';
+import AuthenticationErrorMessage from 'oz-worker-gui/mixins/authentication-error-message';
 
 const {
   computed,
 } = Ember;
-
-/**
- * List of known authentication errors
- */
-const AUTHENTICATION_ERRORS = [
-  'server_error',
-  'invalid_state',
-  'invalid_request',
-  'account_already_connected',
-];
 
 /**
  * A component that allows login by one of the supported authorization providers 
@@ -25,7 +15,7 @@ const AUTHENTICATION_ERRORS = [
  * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
+export default Ember.Component.extend(AuthenticationErrorMessage, {
   onezoneServer: Ember.inject.service(),
   messageBox: Ember.inject.service(),
 
@@ -70,16 +60,6 @@ export default Ember.Component.extend({
   dropdownAnimationTimeoutId: -1,
   formAnimationTimeoutId: -1,
 
-  authenticationErrorText: computed('authenticationError', function () {
-    let authenticationError = this.get('authenticationError');
-    if (authenticationError) {
-      if (!_.includes(AUTHENTICATION_ERRORS, authenticationError)) {
-        authenticationError = 'unknown';
-      }
-      return this.get('i18n')
-        .t('login.authenticationError.codes.' + authenticationError);
-    }
-  }),
 
   authorizersForButtons: computed('supportedAuthorizers.[]', function () {
     let {

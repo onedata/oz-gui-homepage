@@ -52,7 +52,7 @@ export default Ember.Component.extend({
           _.assign({
               email: get(auth, 'email')
             },
-            _.find(knownAuthorizers, a => a && a.type === auth.type)
+            _.find(knownAuthorizers, a => a && get(a, 'type') === get(auth, 'type'))
           )
         );
       return authItems;

@@ -16,13 +16,13 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   // please use instance-initializers/session-events to handle session events
   // activate() {
-    // examples on registering additional session events handlers
-    // this.get('session').on('authenticationSucceeded', () => {
-    //   console.debug('authentication succeeded!');
-    // });
-    // this.get('session').on('invalidationSucceeded', () => {
-    //   console.debug('session has been invalidated!');
-    // });
+  // examples on registering additional session events handlers
+  // this.get('session').on('authenticationSucceeded', () => {
+  //   console.debug('authentication succeeded!');
+  // });
+  // this.get('session').on('invalidationSucceeded', () => {
+  //   console.debug('session has been invalidated!');
+  // });
   // },
 
   initSession: function () {
@@ -46,7 +46,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     return p;
   }.on('init'),
 
-  resetController(controller, isExiting/*, transition*/) {
+  resetController(controller, isExiting /*, transition*/ ) {
     if (isExiting) {
       controller.resetQueryParams();
     }

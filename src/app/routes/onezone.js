@@ -17,6 +17,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('user');
   },
 
+  setupController(controller) {
+    this._super(...arguments);
+    controller.getAuthenticationError();
+  },
+
   actions: {
     openModal() {
       this.get('controller').actions['openModal'](...arguments);

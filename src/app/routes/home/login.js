@@ -15,12 +15,11 @@ export default LoginRoute.extend({
   session: Ember.inject.service('session'),
   messageBox: Ember.inject.service(),
   onezoneServer: Ember.inject.service('onezoneServer'),
-  cookies: Ember.inject.service('cookies'),
   
   name: 'login',
   zoneName: null,
 
-  beforeModel() {
+  beforeModel() {    
     if (this.get('session.isAuthenticated')) {
       this.transitionTo('onezone');
     }

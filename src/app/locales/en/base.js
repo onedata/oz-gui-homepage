@@ -54,7 +54,7 @@ export default {
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "occupied. The system requires that emails are unique and connected to one " +
         "user. To add this OpenID account to your existing account, login on the " +
-        "existing account and use the option 'Connect new account' in Authentication Settings.",
+        "existing account and use the option 'Link new account' in Authentication Settings.",
       connectAccountEmailOccupied:
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "connected to another account. The system requires that emails are unique " +
@@ -85,8 +85,11 @@ export default {
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
     authenticationError: {
-      text: 'Authentication error',
+      title: 'Authentication error',
+      addAccountTitle: 'Cannot link account',
       backToLogin: 'Back to login',
+      // NOTE: if adding translation here, don't forget to add new message type to
+      // mixins/authentication_error_messages
       codes: {
         server_error: 'Server has encountered an unexpected error while processing ' +
         'your login request. Please contact site administrators if the problem persists.',
@@ -95,8 +98,14 @@ export default {
           'since redirection to chosen identity provider.',
         invalid_request: 'Your login request could not be validated. Please ' +
           'contact site administrators if the problem persists.',
-        account_already_connected: 'You cannot link this account because it ' +
-          'already belongs to another user.',
+        account_already_linked_to_another_user: 'You cannot link this account because it ' +
+          'is already linked to another user profile.',
+        account_already_linked_to_current_user: 'This account is already linked ' +
+          'to your profile.',
+        access_token_invalid: 'Chosen identity provider has issued an invalid ' + 
+          'access token. This can be caused by a misconfiguration of the ' +
+          'identity provider or an expired session. Try to sign out from it ' + 
+          'and repeat the login process.',
         unknown: 'Unknown reason.'
       }
     },
@@ -269,7 +278,7 @@ export default {
       changePassword: 'Change your password'
     },
     accountAdd: {
-      connectNewAccount: 'Connect new account',
+      connectNewAccount: 'Link new account',
       connectBy: 'Connect by'
     },
     groupsList: {
