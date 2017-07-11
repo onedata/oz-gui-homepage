@@ -86,7 +86,7 @@ export default {
     version: 'version',
     authenticationError: {
       title: 'Authentication error',
-      addAccountTitle: 'Cannot add account',
+      addAccountTitle: 'Cannot link account',
       backToLogin: 'Back to login',
       // NOTE: if adding translation here, don't forget to add new message type to
       // mixins/authentication_error_messages
@@ -102,7 +102,10 @@ export default {
           'is already linked to another user profile.',
         account_already_linked_to_current_user: 'This account is already linked ' +
           'to your profile.',
-        access_token_invalid: 'Chosen identity provider has issued an invalid access token. This can be caused by a misconfiguration of the identity provider or an expired session. Try to sign out from it and repeat the login process.',
+        access_token_invalid: 'Chosen identity provider has issued an invalid ' + 
+          'access token. This can be caused by a misconfiguration of the ' +
+          'identity provider or an expired session. Try to sign out from it ' + 
+          'and repeat the login process.',
         unknown: 'Unknown reason.'
       }
     },
