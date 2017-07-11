@@ -17,7 +17,9 @@ const AUTHENTICATION_ERRORS = [
   'server_error',
   'invalid_state',
   'invalid_request',
-  'account_already_connected',
+  'account_already_linked_to_another_user',
+  'account_already_linked_to_current_user',
+  'access_token_invalid',
 ];
 
 const {
