@@ -12,20 +12,14 @@
       </div>
     </li>
   {{else}}
-    {{#each authorizersSorted as |account|}}
+    {{#each authItems as |authItem|}}
     <li class="non-hoverable">
-      {{#if (eq account.type 'elixir')}}
-        {{account-item
-          iconType="svg"
-          type=account.type
-          label=account.email
-          clickable=false
-        }}
-      {{else}}
-        {{account-item type=account.type label=account.email clickable=false}}
-      {{/if}}
-
-      
+      {{account-item
+        type=authItem.type
+        iconType=authItem.iconType
+        label=authItem.email
+        clickable=false
+      }}
     </li>
     {{/each}}
   {{/if}}
