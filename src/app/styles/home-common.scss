@@ -1,6 +1,6 @@
 .container-home {
   a {
-    color: #EF3C40 !important;
+    color: #EF3C40;
   }
 }
 
@@ -11,4 +11,8 @@
   padding: 0;
   width: 100%;
   height: 100%;
+}
+
+.container-home a.login-icon-box {
+  color: white;
 }
