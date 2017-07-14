@@ -3,8 +3,8 @@
 <div class="onezone-fog"></div>
 
 {{onezone-sidebar tagName='nav' class='onezone-sidebar'
-  providers=model.providers spaces=model.spaces authorizers=model.authorizers
-  tokens=model.clienttokens groups=model.groups
+  providers=providers spaces=spaces authorizers=model.authorizers
+  tokens=model.clienttokens groups=groups
   openModal="openModal"}}
 {{onezone-top-bar tagName='header' class='onezone-top-bar'}}
 
@@ -39,4 +39,14 @@
   originalName=modal.options.originalName
   btnClass="btn-primary"
   closeModal=(action "closeModal")
+}}
+
+{{modals/add-space-storage open=(eq modal.type "addSpaceStorage")
+  space=modal.options.space
+}}
+
+{{modals/authentication-error
+  open=showAuthenticationError
+  modalId="onezone-authentication-error"
+  authenticationError=authenticationError
 }}

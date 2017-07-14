@@ -97,3 +97,25 @@ $search-box-height: 36px;
     color: rgba(white, .5);
   }
 }
+
+.full-content-message {
+  transform: translateX(-50%) translateY(150px);
+  font-size: 24px;
+  
+  .message-part {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.provider-redirect {
+  text-align: center;
+  .provider-name {
+    font-weight: bold;
+  }
+  .truncate.provider-name {
+    max-width: 240px;
+  }
+}
+
+

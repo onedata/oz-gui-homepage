@@ -20,6 +20,11 @@ $modal-top-border-radius: 4px;
   }
 
   .modal-dialog {
+    &.modal-lg {
+      @media (min-width: $screen-sm-min) {
+        width: $modal-lg;
+      }
+    }
     .modal-content {
       border: none;
       // this is hack to prevent modal content border to "stick out" above

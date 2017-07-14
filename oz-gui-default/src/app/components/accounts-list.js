@@ -1,9 +1,12 @@
 import Ember from 'ember';
+import knownAuthorizers from 'oz-worker-gui/utils/authorizers';
+import _ from 'lodash';
 
 const {
   computed,
   inject,
-  on
+  on,
+  get
 } = Ember;
 
 /**
@@ -29,11 +32,11 @@ export default Ember.Component.extend({
 
   __supportedAuthorizersInitialized: false,
 
-  loadingSupportedAuthorizers: computed('__supportedAuthorizersInitialized', function() {
+  loadingSupportedAuthorizers: computed('__supportedAuthorizersInitialized', function () {
     return !this.get('__supportedAuthorizersInitialized');
   }),
 
-  noSupportedAuthorizers: computed('supportedAuthorizers.[]', function() {
+  noSupportedAuthorizers: computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
     return !supportedAuthorizers || supportedAuthorizers.length <= 0 ||
       supportedAuthorizers.length === 1 && supportedAuthorizers[0] === 'basicAuth';
@@ -41,7 +44,24 @@ export default Ember.Component.extend({
 
   passwordConfigEnabled: computed.alias('session.user.basicAuthEnabled'),
 
-  initSupportedAuthorizers: on('init', function() {
+  authItems: Ember.computed('authorizersSorted.[]', function () {
+    let authorizers = this.get('authorizersSorted');
+    if (authorizers && authorizers.length > 0) {
+      const authItems = authorizers
+        .map((auth) =>
+          _.assign({
+              email: get(auth, 'email')
+            },
+            _.find(knownAuthorizers, a => a && get(a, 'type') === get(auth, 'type'))
+          )
+        );
+      return authItems;
+    } else {
+      return [];
+    }
+  }),
+
+  initSupportedAuthorizers: on('init', function () {
     let promise = this.get('onezoneServer').getSupportedAuthorizers();
     promise.then(data => {
       this.set('supportedAuthorizers', data.authorizers);
