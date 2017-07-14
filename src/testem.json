@@ -8,6 +8,7 @@
   ],
   "launch_in_dev": [
     "Firefox",
+    "Safari",
     "Chrome"
   ]
 }
