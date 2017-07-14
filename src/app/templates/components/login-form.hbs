@@ -1,0 +1,56 @@
+{{#bs-form action=(action "submit") model=this}}
+  <div class="row">
+    <div class="col-xs-12 form-group {{if message "has-error"}}">
+      <div class="input-group with-icon-addon">
+        <div class="input-group-addon">
+          {{one-icon icon="user"}}
+        </div>
+        {{input id=(concat modalId '-username-input') type="text"
+          value=usernameText autofocus=true disabled=isLoading
+          class="form-control"
+          placeholder=(t 'components.modals.loginForm.usernameLabel')
+          enter=(if isSubmitEnabled (action 'submit') null)}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 form-group {{if message "has-error"}}">
+      <div class="input-group with-icon-addon">
+        <div class="input-group-addon">
+          {{one-icon icon="lock"}}
+        </div>
+        {{input id=(concat modalId '-password-input') type="password"
+          value=passwordText autofocus=true disabled=isLoading
+          class="form-control"
+          placeholder=(t 'components.modals.loginForm.passwordLabel')
+          enter=(if isSubmitEnabled (action 'submit') null)}}
+      </div>
+    </div>
+  </div>
+
+  {{#if message}}
+    <div class="row">
+      <p class="col-xs-12 form-group text-center login-form-error">{{message}}</p>
+    </div>
+  {{/if}}
+
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      {{#if showBack}}
+        <button type="button" class="btn btn-warning back-button" {{action backAction}}>
+          {{one-icon icon="arrow-right"}}
+          {{t "common.back"}}
+        </button>
+      {{/if}}
+      {{#spin-button-onedata buttonType="submit"
+        action=(action "submit")
+        class="btn btn-success no-outline" spinnerColor="#fff"
+        inFlight=isLoading
+        disabled=(not isSubmitEnabled)
+      }}
+        {{t "common.modal.signin"}}
+      {{/spin-button-onedata}}
+    </div>
+  </div>
+{{/bs-form}}

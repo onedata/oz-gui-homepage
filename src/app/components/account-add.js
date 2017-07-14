@@ -1,23 +1,14 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
-
-const AUTH_PROVIDERS_NAMES = {
-  google: 'Google+',
-  facebook: 'Facebook',
-  github: 'GitHub',
-  dropbox: 'Dropbox',
-  plgrid: 'PLGrid OpenID',
-  indigo: 'Indigo',
-  egi: 'EGI',
-  rhea: 'RHEA KeyCloak'
-};
+import authorizers from 'oz-worker-gui/utils/authorizers';
+import _ from 'lodash';
 
 /**
  * An add account button, which shows popup with authorization providers.
  * @module components/account-add
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(PromiseLoadingMixin, {
@@ -42,18 +33,13 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     $('.accordion-container').on('scroll', updater);
   },
 
-  authProviders: Ember.computed('supportedAuthorizers.[]', function() {
+  // TODO: handle unknown authorizers  
+  authProviders: Ember.computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
     if (supportedAuthorizers && supportedAuthorizers.length > 0) {
-      // show only these providers for add, which have entry in "allAuthProviders" dict
       const authProviders = supportedAuthorizers
-        .filter(id => AUTH_PROVIDERS_NAMES[id])
-        .map((id) => {
-          return {
-            type: id,
-            label: `${this.get('i18n').t('onezone.accountAdd.connectBy')} ${AUTH_PROVIDERS_NAMES[id]}`
-          };
-        });
+        .filter(id => id !== 'basicAuth')
+        .map((id) => _.find(authorizers, a => a && a.type === id));
       return authProviders;
     } else {
       return [];

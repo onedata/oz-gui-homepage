@@ -1,44 +1,31 @@
 {{page-title (t 'login.title')}}
 
 {{!-- TODO: i18n? --}}
-<div class="container">
-  <div class="row row-centered">
-    <div class="col-xs-12 col-md-7 col-lg-5 col-centered zone">
-      <div class="row">
-        <div class="col-sm-12 col-md-4 zone-image">
-          <div class="brand-logo">
+<div class="login-elements">
+  <div class="container">
+    <div class="row row-centered">
+      <div class="col-xs-12 text-center zone">
+        <div class="row">
+          <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-3 col-md-offset-1 col-md-5 zone-image">
           </div>
-        </div>
-        <div class="hidden-xs hidden-sm col-md-2 zone-arrow"></div>
-        <div class="col-sm-12 col-md-6 zone-label">
-          <div class="zone-zone">
-            zone
-          </div>
-          <div class="zone-company-name">
-            {{#if model.zoneName}}
-              {{model.zoneName}}
-            {{else}}
-              {{t 'login.unknownZoneName'}}
-            {{/if}}
+          <div class="col-xs-6 col-sm-6 col-md-3 zone-label">
+            <div class="zone-company-name">
+              {{#if model.zoneName}}
+                {{model.zoneName}}
+              {{else}}
+                {{t 'login.unknownZoneName'}}
+              {{/if}}
+            </div>
+            <div class="zone-zone">
+              {{t 'login.isolatedZone'}}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="container login-box-container">
-  <div class="row row-centered">
-    <div class="col-xs-9 col-centered login-box">
-      <h1>{{t 'login.boxTitle'}}</h1>
-
-      <h2>{{t 'login.boxSubtitle'}}</h2>
-
-      <div class="container-fluid login-buttons-container">
-        {{social-box-list}}
-      </div>
-    </div>
-  </div>
+  {{login-box authenticationError=authenticationError}}
 </div>
 
 <div class="login-service-version">{{t "login.version"}} {{model.serviceVersion}}</div>
