@@ -1,6 +1,6 @@
 {
   "name": "oz-worker-gui",
-  "version": "3.0.0-rc12",
+  "version": "17.06.0-beta6",
   "description": "GUI for oz-worker",
   "private": true,
   "directories": {
@@ -45,6 +45,7 @@
     "ember-cli-sri": "2.1.1",
     "ember-cli-test-loader": "1.1.1",
     "ember-cli-uglify": "1.2.0",
+    "ember-cookies": "0.0.13",
     "ember-data": "2.11.0",
     "ember-disable-proxy-controllers": "1.0.1",
     "ember-export-application-global": "1.0.5",
@@ -52,8 +53,10 @@
     "ember-i18n-test-helpers": "0.3.0",
     "ember-load-initializers": "0.6.3",
     "ember-localstorage-adapter": "1.0.0-rc.1",
+    "ember-lodash": "4.17.5",
     "ember-notify": "5.2.0",
     "ember-page-title": "3.1.5",
+    "ember-power-select": "1.8.5",
     "ember-resolver": "2.1.1",
     "ember-rollback-relationships": "1.0.2",
     "ember-simple-auth": "1.1.0",
