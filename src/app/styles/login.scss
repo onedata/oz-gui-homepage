@@ -125,6 +125,10 @@
       .social-icon-image {
         background-size: 20px 20px;
       }
+      .spin-spinner {
+        //alignement fix
+        transform: translateY(-1px);
+      }
     }
   }
 }
