@@ -43,6 +43,12 @@ export default Ember.Component.extend({
    */
   tip: '',
 
+  /**
+   * Spinner scale
+   * @type {number}
+   */
+  spinnerScale: 0.25,
+
   _iconName: computed('iconType', 'iconName', function() {
     let {
       iconName,
@@ -73,6 +79,11 @@ export default Ember.Component.extend({
     let link = this.get('link');
     return link && link.length !== 0;
   }.property('link'),
+
+  click() {
+    // hide tooltip
+    this.$().trigger('mouseout');
+  },
 
   actions: {
     clicked() {
