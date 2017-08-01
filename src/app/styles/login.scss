@@ -26,9 +26,6 @@
 }
 
 .login-icon-box {
-  // default when provider is unknown
-  background-color: $color-login-plgrid;
-
   &.active {
     .one-icon {
       color: transparent !important;
@@ -38,33 +35,8 @@
   .one-icon {
     line-height: inherit;
   }
-
-  &.indigo {
-    background-color: $color-login-indigo;
-  }
-  &.github {
-    background-color: $color-login-github;
-  }
-  &.plgrid {
-    background-color: $color-login-plgrid;
-  }
-  &.google {
-    background-color: $color-login-google;
-  }
-  &.dropbox {
-    background-color: $color-login-dropbox;
-  }
-  &.facebook {
-    background-color: $color-login-facebook;
-  }
-  &.username {
-    background-color: $color-login-username;
-  }
-  &.egi {
-    background-color: $color-login-egi;
-  }
+  
   &.rhea {
-    background-color: $color-login-rhea;
     .one-icon {
       font-size: 50px;
     }
@@ -73,12 +45,7 @@
       font-size: 25px;
     }
   }
-  &.elixir {
-    background-color: $color-login-elixir;
-  }
-  &.unitedid {
-    background-color: $color-login-unitedid;
-  }
+  
   &.more {
     background-color: white;
     color: $color-dark-steel;

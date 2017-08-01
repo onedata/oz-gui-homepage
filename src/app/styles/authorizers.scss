@@ -1,0 +1,37 @@
+$login-colors: (
+  indigo: #341246,
+  github: #1E2325,
+  twitter: #6ED3F3,
+  plgrid: #026381,
+  google: #F1514F,
+  dropbox: #86D7F2,
+  facebook: #5B87C5,
+  username: $onedata-mint-green-pale,
+  egi: #0455A1,
+  rhea: #B51017,
+  elixir: #FF7A04,
+  unitedid: #ABDFF1,
+  cern: #0053A1,
+  cnrs: #FFF,
+  desy: #FFF,
+  embl: #FFF,
+  esrf: #FFF,
+  ifae: #FFF,
+  infn: #FFF,
+  kit: #FFF,
+  stfc: #1C3764,
+  surfsara: #FFF,
+);
+
+.auth-icon {
+  @each $auth-name, $bg-color in $login-colors {
+    &.#{$auth-name} {
+      background-color: #{$bg-color},
+    }
+  }
+}
+
+.login-icon-box {
+  // default when provider is unknown
+  background-color: #{map-get($login-colors, plgrid)};
+}
