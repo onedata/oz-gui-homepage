@@ -111,6 +111,9 @@ export default {
     },
   },
   components: {
+    loginBox: {
+      endpointError: 'Authorization provider configuration is invalid, please contact administrator',
+    },
     modals: {
       addSpaceStorage: {
         title: 'Add storage for',
