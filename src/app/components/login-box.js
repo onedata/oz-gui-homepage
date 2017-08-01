@@ -2,15 +2,11 @@ import Ember from 'ember';
 import AUTHORIZERS from 'oz-worker-gui/utils/authorizers';
 import AuthenticationErrorMessage from 'oz-worker-gui/mixins/authentication-error-message';
 import _ from 'lodash';
-import browserPost from 'oz-worker-gui/utils/browser-post';
+import handleLoginEndpoint from 'oz-worker-gui/utils/handle-login-endpoint';
 
 const {
   computed,
 } = Ember;
-
-function validateGetLoginEndpoint({ method, url, formData }) {
-  return (method === 'get' || (method === 'post' && typeof(formData) === 'object')) && url;
-}
 
 /**
  * A component that allows login by one of the supported authorization providers 
@@ -178,18 +174,11 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
       const p = this.get('onezoneServer').getLoginEndpoint(providerName);
       p.then(
         (data) => {
-          if (!validateGetLoginEndpoint(data)) {
+          handleLoginEndpoint(data, () => {
             this.authEndpointError({
-              message: this.get('i18n').t('components.loginBox.endpointError')
+              message: this.get('i18n').t('login.endpointError')
             });
-          } else {
-            let { method, url, formData } = data;
-            if (method === 'get') {
-              window.location = url;
-            } else if (method === 'post') {
-              browserPost(url, formData);
-            }
-          }
+          });
         },
         (error) => {
           this.authEndpointError(error);
