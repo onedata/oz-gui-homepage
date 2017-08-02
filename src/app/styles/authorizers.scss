@@ -36,12 +36,12 @@ $login-colors: (
   @each $auth-name, $bg-color in $login-colors {
     &.#{$auth-name} {
       color: box-fg-color($bg-color);
-      background-color: #{$bg-color};
+      background-color: $bg-color;
     }
   }
 }
 
 .login-icon-box {
   // default when provider is unknown
-  background-color: #{map-get($login-colors, plgrid)};
+  background-color: map-get($login-colors, plgrid);
 }
