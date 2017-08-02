@@ -24,9 +24,19 @@ $login-colors: (
 );
 
 .auth-icon {
+  @function box-fg-color($color) {
+    @if (lightness($color) > 68) {
+      @return $color-dark-steel;
+    }
+    @else {
+      @return #FFF;
+    }
+  }
+  
   @each $auth-name, $bg-color in $login-colors {
     &.#{$auth-name} {
-      background-color: #{$bg-color},
+      color: box-fg-color($bg-color);
+      background-color: #{$bg-color};
     }
   }
 }
