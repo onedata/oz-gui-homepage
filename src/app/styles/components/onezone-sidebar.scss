@@ -554,37 +554,6 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        // TODO make loop generator in SASS
-        &.google {
-          background-color: $color-login-google !important;
-        }
-        &.plgrid {
-          background-color: $color-login-plgrid !important;
-        }
-        &.dropbox {
-          background-color: $color-login-dropbox !important;
-        }
-        &.facebook {
-          background-color: $color-login-facebook !important;
-        }
-        &.github {
-          background-color: $color-login-github !important;
-        }
-        &.indigo {
-          background-color: $color-login-indigo !important;
-        }
-        &.egi {
-          background-color: $color-login-egi !important;
-        }
-        &.rhea {
-          background-color: $color-login-rhea !important;
-        }
-        &.elixir {
-          background-color: $color-login-elixir !important;
-        }
-        &.unitedid {
-          background-color: $color-login-unitedid !important;
-        }
       }
       .icon {
         position: absolute;

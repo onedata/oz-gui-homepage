@@ -2,6 +2,7 @@ import Ember from 'ember';
 import AUTHORIZERS from 'oz-worker-gui/utils/authorizers';
 import AuthenticationErrorMessage from 'oz-worker-gui/mixins/authentication-error-message';
 import _ from 'lodash';
+import handleLoginEndpoint from 'oz-worker-gui/utils/handle-login-endpoint';
 
 const {
   computed,
@@ -151,6 +152,15 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
     element.addClass('fadeOut').removeClass('short-delay fadeIn');
   },
 
+  authEndpointError(error) {
+    this.get('messageBox').open({
+      title: this.get('i18n').t('components.socialBoxList.error.title'),
+      message: this.get('i18n').t('components.socialBoxList.error.message') +
+        (error.message ? ': ' + error.message : ''),
+      type: 'error'
+    });
+  },
+  
   actions: {
     authorizerSelected(authorizer) {
       this.set('selectedAuthorizer', authorizer);
@@ -164,15 +174,14 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
       const p = this.get('onezoneServer').getLoginEndpoint(providerName);
       p.then(
         (data) => {
-          window.location = data.url;
+          handleLoginEndpoint(data, () => {
+            this.authEndpointError({
+              message: this.get('i18n').t('login.endpointError')
+            });
+          });
         },
         (error) => {
-          this.get('messageBox').open({
-            title: this.get('i18n').t('components.socialBoxList.error.title'),
-            message: this.get('i18n').t('components.socialBoxList.error.message') +
-              (error.message ? ': ' + error.message : ''),
-            type: 'error'
-          });
+          this.authEndpointError(error);
         }
       ).then(() => {
         this.setProperties({

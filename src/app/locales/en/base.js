@@ -84,6 +84,7 @@ export default {
     showMore: 'Show all identity providers',
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
+    endpointError: 'Authorization configuration is invalid, please contact system administrator',
     authenticationError: {
       title: 'Authentication error',
       addAccountTitle: 'Cannot link account',

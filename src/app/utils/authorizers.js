@@ -1,8 +1,12 @@
 /**
  * Provides list of predefined authorization providers with neccessary 
  * data to display them (name, logo - icon or image).
+ * 
+ * For authorizers icons background colors see ``styles/authorizers.scss``
+ * 
  * @module utils/authorizers
  * @author Michal Borzecki
+ * @author Jakub Liput
  * @copyright (C) 2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
@@ -16,6 +20,8 @@
  * (without extension)
  */
 
+const _EG = ' (eduGAIN)';
+ 
 export default [{
     type: 'basicAuth',
     iconType: 'oneicon',
@@ -74,6 +80,66 @@ export default [{
     name: 'RHEA KeyCloak',
     iconType: 'oneicon',
     iconName: 'social-rhea',
+  },
+  {
+    type: 'cern',
+    name: 'CERN (eduGAIN)',
+    iconType: 'svg',
+    iconName: 'cern',
+  },
+  {
+    type: 'cnrs',
+    name: 'CNRS' + _EG,
+    iconType: 'svg',
+    iconName: 'cnrs',
+  },
+  {
+    type: 'desy',
+    name: 'DESY' + _EG,
+    iconType: 'svg',
+    iconName: 'desy',
+  },
+  {
+    type: 'embl',
+    name: 'EMBL' + _EG,
+    iconType: 'svg',
+    iconName: 'embl',
+  },
+  {
+    type: 'esrf',
+    name: 'ESRF' + _EG,
+    iconType: 'svg',
+    iconName: 'esrf',
+  },
+  {
+    type: 'ifae',
+    name: 'IFAE' + _EG,
+    iconType: 'jpg',
+    iconName: 'ifae',
+  },
+  {
+    type: 'infn',
+    name: 'INFN' + _EG,
+    iconType: 'svg',
+    iconName: 'infn',
+  },
+  {
+    type: 'kit',
+    name: 'KIT' + _EG,
+    iconType: 'svg',
+    iconName: 'kit',
+  },
+  {
+    type: 'stfc',
+    name: 'STFC' + _EG,
+    iconType: 'svg',
+    iconName: 'stfc',
+  },
+  {
+    type: 'surfsara',
+    name: 'SURFSara' + _EG,
+    iconType: 'png',
+    iconName: 'surfsara',
   },
   {
     type: 'unitedid',

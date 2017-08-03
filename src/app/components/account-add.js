@@ -3,6 +3,7 @@ import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading
 import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
 import authorizers from 'oz-worker-gui/utils/authorizers';
 import _ from 'lodash';
+import handleLoginEndpoint from 'oz-worker-gui/utils/handle-login-endpoint';
 
 /**
  * An add account button, which shows popup with authorization providers.
@@ -46,21 +47,29 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
     }
   }),
 
+  authEndpointError(error) {
+    this.get('messageBox').open({
+      title: this.get('i18n').t('common.serverError'),
+      message: this.get('i18n').t('components.accountAdd.errorGettingUrl') +
+        (error.message ? ': ' + error.message : ''),
+      type: 'warning'
+    });
+  },
+  
   actions: {
     connectNewAccount(providerName) {
       this.promiseLoading(
         this.get('onezoneServer').getConnectAccountEndpoint(providerName)
       ).then(
         (data) => {
-          window.location = data.url;
+          handleLoginEndpoint(data, () => {
+            this.authEndpointError({
+              message: this.get('i18n').t('login.endpointError')
+            });
+          });
         },
         (error) => {
-          this.get('messageBox').open({
-            title: this.get('i18n').t('common.serverError'),
-            message: this.get('i18n').t('components.accountAdd.errorGettingUrl') +
-              (error.message ? ': ' + error.message : ''),
-            type: 'warning'
-          });
+          this.authEndpointError(error);
         }
       );
     }
