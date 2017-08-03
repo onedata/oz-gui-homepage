@@ -82,12 +82,6 @@ export default [{
     iconName: 'social-rhea',
   },
   {
-    type: 'unitedid',
-    name: 'UnitedID',
-    iconType: 'png',
-    iconName: 'unitedid',
-  },
-  {
     type: 'cern',
     name: 'CERN (eduGAIN)',
     iconType: 'svg',
@@ -146,5 +140,11 @@ export default [{
     name: 'SURFSara' + _EG,
     iconType: 'png',
     iconName: 'surfsara',
+  },
+  {
+    type: 'unitedid',
+    name: 'UnitedID',
+    iconType: 'png',
+    iconName: 'unitedid',
   },
 ];
