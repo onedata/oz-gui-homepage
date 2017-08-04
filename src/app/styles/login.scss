@@ -10,6 +10,7 @@
 
 .social-box-component {
   display: inline-block;
+  vertical-align: top;
   &.disabled {
     opacity: 0.3;
     a {
@@ -49,10 +50,20 @@
   &.more {
     background-color: white;
     color: $color-dark-steel;
-    font-weight: bold;
-    line-height: 35px !important;
+    font-weight: bold;    
     &:hover {
       color: $color-dark-steel;
+    }
+    &::before {
+      content: '\B7\B7\B7';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      font-weight: normal;
+      font-size: 42px;
+      letter-spacing: -1.1px;
     }
   }
 }
