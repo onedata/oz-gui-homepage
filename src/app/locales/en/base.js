@@ -75,7 +75,7 @@ export default {
     noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
       'users created via onepanel administrative interface. Regular users must login via social or ' + 
       'institutional accounts, which are currently disabled by the administrators of this zone.',
-    dropdownSubtitle: 'A new account will be created automatically on first login',
+    dropdownSubtitle: 'Pick your identity provider',
     isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
     loginWith: 'Login with',

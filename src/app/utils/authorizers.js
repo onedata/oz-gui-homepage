@@ -28,58 +28,10 @@ export default [{
     iconName: 'key',
   },
   {
-    type: 'indigo',
-    name: 'Indigo',
-    iconType: 'oneicon',
-    iconName: 'social-indigo',
-  },
-  {
-    type: 'google',
-    name: 'Google+',
-    iconType: 'oneicon',
-    iconName: 'social-google',
-  },
-  {
-    type: 'facebook',
-    name: 'Facebook',
-    iconType: 'oneicon',
-    iconName: 'social-facebook',
-  },
-  {
-    type: 'github',
-    name: 'GitHub',
-    iconType: 'oneicon',
-    iconName: 'social-github',
-  },
-  {
-    type: 'dropbox',
-    name: 'Dropbox',
-    iconType: 'oneicon',
-    iconName: 'social-dropbox',
-  },
-  {
-    type: 'plgrid',
-    name: 'PLGrid OpenID',
-    iconType: 'oneicon',
-    iconName: 'social-plgrid',
-  },
-  {
-    type: 'egi',
-    name: 'EGI',
-    iconType: 'oneicon',
-    iconName: 'social-egi',
-  },
-  {
     type: 'elixir',
     name: 'ELIXIR',
     iconType: 'svg',
     iconName: 'elixir'
-  },
-  {
-    type: 'rhea',
-    name: 'RHEA KeyCloak',
-    iconType: 'oneicon',
-    iconName: 'social-rhea',
   },
   {
     type: 'cern',
@@ -88,10 +40,10 @@ export default [{
     iconName: 'cern',
   },
   {
-    type: 'cnrs',
-    name: 'CNRS' + _EG,
+    type: 'infn',
+    name: 'INFN' + _EG,
     iconType: 'svg',
-    iconName: 'cnrs',
+    iconName: 'infn',
   },
   {
     type: 'desy',
@@ -105,46 +57,92 @@ export default [{
     iconType: 'svg',
     iconName: 'embl',
   },
-  {
+  { 
+    type: 'cnrs',
+    name: 'CNRS' + _EG,
+    iconType: 'svg',
+    iconName: 'cnrs' 
+  },
+  { 
+    type: 'dropbox',
+    name: 'Dropbox',
+    iconType: 'oneicon',
+    iconName: 'social-dropbox' 
+  },
+  { 
+    type: 'egi',
+    name: 'EGI',
+    iconType: 'oneicon',
+    iconName: 'social-egi' 
+  },
+  { 
     type: 'esrf',
     name: 'ESRF' + _EG,
     iconType: 'svg',
-    iconName: 'esrf',
+    iconName: 'esrf' },
+  { 
+    type: 'facebook',
+    name: 'Facebook',
+    iconType: 'oneicon',
+    iconName: 'social-facebook' 
   },
-  {
+  { type: 'github',
+    name: 'GitHub',
+    iconType: 'oneicon',
+    iconName: 'social-github' 
+  },
+  { 
+    type: 'google',
+    name: 'Google+',
+    iconType: 'oneicon',
+    iconName: 'social-google'
+  },
+  { 
     type: 'ifae',
     name: 'IFAE' + _EG,
     iconType: 'jpg',
-    iconName: 'ifae',
+    iconName: 'ifae' 
   },
   {
-    type: 'infn',
-    name: 'INFN' + _EG,
+    type: 'indigo',
+    name: 'Indigo',
+    iconType: 'oneicon',
+    iconName: 'social-indigo' 
+  },
+  { 
+    type: 'kit', 
+    name: 'KIT' + _EG, 
     iconType: 'svg',
-    iconName: 'infn',
+    iconName: 'kit'
   },
-  {
-    type: 'kit',
-    name: 'KIT' + _EG,
-    iconType: 'svg',
-    iconName: 'kit',
+  { 
+    type: 'plgrid',
+    name: 'PLGrid OpenID',
+    iconType: 'oneicon',
+    iconName: 'social-plgrid' 
   },
-  {
+  { 
+    type: 'rhea',
+    name: 'RHEA KeyCloak',
+    iconType: 'oneicon',
+    iconName: 'social-rhea' 
+  },
+  { 
     type: 'stfc',
     name: 'STFC' + _EG,
     iconType: 'svg',
-    iconName: 'stfc',
+    iconName: 'stfc' 
   },
-  {
+  { 
     type: 'surfsara',
     name: 'SURFSara' + _EG,
     iconType: 'png',
-    iconName: 'surfsara',
+    iconName: 'surfsara' 
   },
-  {
+  { 
     type: 'unitedid',
     name: 'UnitedID',
     iconType: 'png',
-    iconName: 'unitedid',
+    iconName: 'unitedid' 
   },
 ];
