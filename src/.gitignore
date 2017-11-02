@@ -117,6 +117,7 @@ app/services/spaces-manager.js
 app/services/top-menu.js
 app/session-stores/application.js
 app/styles/animate.scss
+app/styles/authorizers.scss
 app/styles/bootstrap-config.scss
 app/styles/colors.scss
 app/styles/components/button.scss
@@ -190,9 +191,12 @@ app/templates/onezone.hbs
 app/templates/onezone/index.hbs
 app/templates/onezone/provider-redirect.hbs
 app/utils/authorizers.js
+app/utils/browser-post.js
 app/utils/generate-shell-command.js
+app/utils/handle-login-endpoint.js
 app/utils/safe-element-id.js
 app/utils/snake-to-camel.js
+app/utils/validate-get-login-endpoint.js
 config/environment.js
 docs/session.md
 lib/ember-cli-onedata-common/.gitignore
@@ -205,6 +209,7 @@ lib/ember-cli-onedata-common/addon/components/common-loader.js
 lib/ember-cli-onedata-common/addon/components/dialog-modal.js
 lib/ember-cli-onedata-common/addon/components/modals/elements/alert-panel.js
 lib/ember-cli-onedata-common/addon/components/modals/message-box.js
+lib/ember-cli-onedata-common/addon/components/modals/websocket-reconnect.js
 lib/ember-cli-onedata-common/addon/components/name-conflict.js
 lib/ember-cli-onedata-common/addon/components/one-checkbox-button.js
 lib/ember-cli-onedata-common/addon/components/one-checkbox-group.js
@@ -244,6 +249,7 @@ lib/ember-cli-onedata-common/addon/templates/components/common-loader.hbs
 lib/ember-cli-onedata-common/addon/templates/components/dialog-modal.hbs
 lib/ember-cli-onedata-common/addon/templates/components/modals/elements/alert-panel.hbs
 lib/ember-cli-onedata-common/addon/templates/components/modals/message-box.hbs
+lib/ember-cli-onedata-common/addon/templates/components/modals/websocket-reconnect.hbs
 lib/ember-cli-onedata-common/addon/templates/components/name-conflict.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-checkbox-button.hbs
 lib/ember-cli-onedata-common/addon/templates/components/one-checkbox-group.hbs
@@ -274,6 +280,7 @@ lib/ember-cli-onedata-common/app/components/common-loader.js
 lib/ember-cli-onedata-common/app/components/dialog-modal.js
 lib/ember-cli-onedata-common/app/components/modals/elements/alert-panel.js
 lib/ember-cli-onedata-common/app/components/modals/message-box.js
+lib/ember-cli-onedata-common/app/components/modals/websocket-reconnect.js
 lib/ember-cli-onedata-common/app/components/name-conflict.js
 lib/ember-cli-onedata-common/app/components/one-checkbox-button.js
 lib/ember-cli-onedata-common/app/components/one-checkbox-group.js
@@ -369,6 +376,18 @@ public/assets/fonts/lato/lato-hairlineitalic/lato-hairlineitalic.woff2
 public/assets/fonts/myriadpro/myriadpro-bold.otf
 public/assets/fonts/myriadpro/myriadpro-regular.otf
 public/assets/fonts/myriadpro/myriadpro-semibold.otf
+public/assets/images/auth-providers/cern.svg
+public/assets/images/auth-providers/cnrs.svg
+public/assets/images/auth-providers/desy.svg
+public/assets/images/auth-providers/elixir.svg
+public/assets/images/auth-providers/embl.svg
+public/assets/images/auth-providers/esrf.svg
+public/assets/images/auth-providers/ifae.jpg
+public/assets/images/auth-providers/infn.svg
+public/assets/images/auth-providers/kit.svg
+public/assets/images/auth-providers/stfc.svg
+public/assets/images/auth-providers/surfsara.png
+public/assets/images/auth-providers/unitedid.png
 public/assets/images/brand-logo.svg
 public/assets/images/index/for-researchers.svg
 public/assets/images/index/join-onedata-map.svg
@@ -393,8 +412,6 @@ public/assets/images/onezone/add-storage-expose.svg
 public/assets/images/onezone/add-storage-request.svg
 public/assets/images/onezone/arrow-down.svg
 public/assets/images/onezone/onezone-atlas.svg
-public/assets/images/social/elixir.svg
-public/assets/images/social/unitedid.png
 public/crossdomain.xml
 public/robots.txt
 tests/.jshintrc
@@ -415,4 +432,5 @@ tests/unit/services/message-box-test.js
 tests/unit/utils/add-conflict-labels-test.js
 tests/unit/utils/conflict-ids-array-test.js
 tests/unit/utils/generate-shell-command-test.js
+tests/unit/utils/validate-get-login-endpoint-test.js
 vendor/.gitkeep
