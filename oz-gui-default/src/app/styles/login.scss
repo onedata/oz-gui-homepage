@@ -10,6 +10,7 @@
 
 .social-box-component {
   display: inline-block;
+  vertical-align: top;
   &.disabled {
     opacity: 0.3;
     a {
@@ -26,9 +27,6 @@
 }
 
 .login-icon-box {
-  // default when provider is unknown
-  background-color: $color-login-plgrid;
-
   &.active {
     .one-icon {
       color: transparent !important;
@@ -38,33 +36,8 @@
   .one-icon {
     line-height: inherit;
   }
-
-  &.indigo {
-    background-color: $color-login-indigo;
-  }
-  &.github {
-    background-color: $color-login-github;
-  }
-  &.plgrid {
-    background-color: $color-login-plgrid;
-  }
-  &.google {
-    background-color: $color-login-google;
-  }
-  &.dropbox {
-    background-color: $color-login-dropbox;
-  }
-  &.facebook {
-    background-color: $color-login-facebook;
-  }
-  &.username {
-    background-color: $color-login-username;
-  }
-  &.egi {
-    background-color: $color-login-egi;
-  }
+  
   &.rhea {
-    background-color: $color-login-rhea;
     .one-icon {
       font-size: 50px;
     }
@@ -73,19 +46,24 @@
       font-size: 25px;
     }
   }
-  &.elixir {
-    background-color: $color-login-elixir;
-  }
-  &.unitedid {
-    background-color: $color-login-unitedid;
-  }
+  
   &.more {
     background-color: white;
     color: $color-dark-steel;
-    font-weight: bold;
-    line-height: 35px !important;
+    font-weight: bold;    
     &:hover {
       color: $color-dark-steel;
+    }
+    &::before {
+      content: '\B7\B7\B7';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      font-weight: normal;
+      font-size: 42px;
+      letter-spacing: -1.1px;
     }
   }
 }
@@ -124,6 +102,10 @@
       font-size: 18px;
       .social-icon-image {
         background-size: 20px 20px;
+      }
+      .spin-spinner {
+        //alignement fix
+        transform: translateY(-1px);
       }
     }
   }

@@ -4,6 +4,26 @@
 CHANGELOG
 ---------
 
+### Latest changes
+
+* VFS-3710 Using binary prefix units for displaying sizes (MiB, GiB, etc.)
+* VFS-3455 Refactor of Websocket reconnection modal
+* VFS-3508 Support for new authentication providers
+* VFS-3512 Safari login screen fixes
+* VFS-3337 Workaround for not showing some login icons when using AdBlock
+* VFS-3419 Improvements in login view: added loading spinners for more authenticators
+
+
+### 17.06.0-rc2
+
+* No changes in GUI since 17.06.0-rc1
+
+
+### 17.06.0-rc1
+
+* No changes in GUI since 17.06.0-beta6
+
+
 ### 17.06.0-beta1 - 17.06.0-beta6
 
 * VFS-3405 Showing messages on authentication and add account errors

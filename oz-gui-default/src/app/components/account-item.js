@@ -34,7 +34,7 @@ export default Ember.Component.extend({
   accepted: null,
 
   /**
-   * Use oneicon (fonticon) or image placed in ``/assets/images/social/{type}.{iconType}``
+   * Use oneicon (fonticon) or image placed in ``/assets/images/auth-providers/{type}.{iconType}``
    * @type {string} one of: oneicon, png, jpg, svg, <or other image format>
    */
   iconType: 'oneicon',
@@ -61,7 +61,7 @@ export default Ember.Component.extend({
     if (iconType === 'oneicon') {
       return `social-${this.get('type')}`;
     } else {
-      return `/assets/images/social/${type}.${iconType}`;
+      return `/assets/images/auth-providers/${type}.${iconType}`;
     }
   }),
 

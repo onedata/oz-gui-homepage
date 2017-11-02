@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   classNames: ['social-box-component'],
 
   /**
-   * Use oneicon (fonticon) or image placed in ``/assets/images/social/{iconName}.{iconType}``
+   * Use oneicon (fonticon) or image placed in ``/assets/images/auth-providers/{iconName}.{iconType}``
    * @type {string} one of: oneicon, png, jpg, svg, <or other image format>
    */
   iconType: 'oneicon',
@@ -43,6 +43,12 @@ export default Ember.Component.extend({
    */
   tip: '',
 
+  /**
+   * Spinner scale
+   * @type {number}
+   */
+  spinnerScale: 0.25,
+
   _iconName: computed('iconType', 'iconName', function() {
     let {
       iconName,
@@ -51,7 +57,7 @@ export default Ember.Component.extend({
     if (iconType === 'oneicon') {
       return iconName;
     } else {
-      return `/assets/images/social/${iconName}.${iconType}`;
+      return `/assets/images/auth-providers/${iconName}.${iconType}`;
     }
   }),
 
@@ -73,6 +79,11 @@ export default Ember.Component.extend({
     let link = this.get('link');
     return link && link.length !== 0;
   }.property('link'),
+
+  click() {
+    // hide tooltip
+    this.$().trigger('mouseout');
+  },
 
   actions: {
     clicked() {

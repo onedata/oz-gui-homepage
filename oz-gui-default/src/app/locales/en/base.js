@@ -75,7 +75,7 @@ export default {
     noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
       'users created via onepanel administrative interface. Regular users must login via social or ' + 
       'institutional accounts, which are currently disabled by the administrators of this zone.',
-    dropdownSubtitle: 'A new account will be created automatically on first login',
+    dropdownSubtitle: 'Pick your identity provider',
     isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
     loginWith: 'Login with',
@@ -84,6 +84,7 @@ export default {
     showMore: 'Show all identity providers',
     findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
+    endpointError: 'Authorization configuration is invalid, please contact system administrator',
     authenticationError: {
       title: 'Authentication error',
       addAccountTitle: 'Cannot link account',
@@ -114,6 +115,7 @@ export default {
     modals: {
       addSpaceStorage: {
         title: 'Add storage for',
+        getTokenFailed: 'Getting new token failed',
         requestSupport: {
           tabName: 'Request support',
           desc1: 'Request storage support for this space from existing provider.',
@@ -253,7 +255,7 @@ export default {
         title: 'First login',
         p1: 'You have successfully logged in and an account for you has been created.',
         p2: 'You are now on account management page. Here, you can connect other ' +
-        'accounts to your profile, modify your user data, manage your spaces' +
+        'accounts to your profile, modify your user data, manage your spaces ' +
         'and providers.',
         p3: 'We have created a default space for you. You need to find a ' +
         'provider that will support it before you can store your files.'

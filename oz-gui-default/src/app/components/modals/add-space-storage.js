@@ -62,7 +62,7 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
   /**
    * Sets a promise proxy object for ``supportTokenProxy``
    * and returns a promise (fetching token)
-   * @returns {Promise}
+   * @returns {Promise<string>}
    */
   _getNewSupportToken() {
     let spaceId = this.get('space.id');
@@ -83,10 +83,22 @@ export default Ember.Component.extend(ModalMixin, PromiseLoadingMixin, {
     },
 
     /**
-     * @returns {Promise}
+     * @returns {Promise<string>}
      */
     getNewSupportToken() {
-      return this._getNewSupportToken();
+      const {
+        i18nPrefixKey,
+        notify,
+        i18n,
+      } = this.getProperties('i18nPrefixKey', 'notify', 'i18n');
+      return this._getNewSupportToken()
+        .catch(error => {
+          const errorMesssage = i18n.t(i18nPrefixKey + '.getTokenFailed');
+          const message = error && error.message || error;
+          console.error(`Getting new token failed: ${message}`);
+          notify.error(errorMesssage);
+          throw error;
+        });
     },
     
     copySuccess() {

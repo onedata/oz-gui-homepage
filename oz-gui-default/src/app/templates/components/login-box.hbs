@@ -52,8 +52,11 @@
                       selected=selectedAuthorizer
                       dropdownClass="authorizers-dropdown"
                       placeholder=(t 'login.findProviderPlaceholder')
+                      disabled=_activeAuthorizer
                       as |authorizer|}}
                       {{social-box 
+                        active=(eq authorizer _activeAuthorizer)
+                        spinnerScale=0.15
                         type=authorizer.type
                         iconType=authorizer.iconType
                         iconName=authorizer.iconName

@@ -15,7 +15,6 @@
 <div class="row">
   <div class="col-xs-12">
     <h2>{{t "components.modals.addSpaceStorage.tabsCommon.token"}}</h2>
-    {{!-- TODO loading state --}}
     {{#promise-proxy-container proxy=tokenProxy}}
       <textarea class="token-input form-control" rows="4" readonly>{{tokenProxy.content}}</textarea>
     {{/promise-proxy-container}}
