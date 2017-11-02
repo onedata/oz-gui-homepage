@@ -1,0 +1,38 @@
+$ember-power-select-default-border-radius: $border-radius-base;
+$ember-power-select-default-border: 1px solid $color-grey-2;
+
+@import "../ember-power-select";
+
+.ember-power-select-option {
+  border-top: $ember-power-select-default-border;
+  padding: 6px;
+}
+
+.ember-power-select-search-input {
+  padding: 6px;
+}
+
+.ember-power-select-trigger {
+  .ember-power-select-status-icon {
+    font-family: 'oneicons' !important;
+    border: 0;
+    transform: none;
+    right: 0;
+    top: 0.4em;
+    margin: initial;
+    font-weight: bold;
+    &:before {
+      content: $oneicon-arrow-down;
+      margin-left: -1.7em;
+      font-size: 1.7em;
+    }
+  }
+  &[aria-expanded="true"] {
+    .ember-power-select-status-icon {
+      transform: none;
+      &:before {
+        content: $oneicon-arrow-up;
+      }
+    }
+  }
+}

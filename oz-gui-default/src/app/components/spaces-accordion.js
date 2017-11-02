@@ -14,6 +14,9 @@ export default Ember.Component.extend({
     /** If true, the createNewSpace button is a input field */
     createNewSpaceEditing: false,
 
+    isSavingSpace: false,
+    createNewSpaceName: null,
+
     spaces: null,
     spacesSorting: ['isDefault:desc', 'name'],
     spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
@@ -50,19 +53,19 @@ export default Ember.Component.extend({
 
       endCreateNewSpace: function(spaceName) {
         if (spaceName) {
-          try {
-            let store = this.get('store');
-            let space = store.createRecord('space', {
-              name: spaceName,
+          this.set('isSavingSpace', true);
+          let store = this.get('store');
+          let space = store.createRecord('space', {
+            name: spaceName,
+          });
+          // TODO: handle errors
+          let savingSpace = space.save();
+          savingSpace.finally(() => {
+            this.setProperties({
+              isSavingSpace: false,
+              createNewSpaceEditing: false,
             });
-            // TODO: handle errors
-            space.save().then(() => {
-              // TODO: some animation on new space entry?
-              // logger.debug(`Space ${spaceName} created successfully`);
-            });
-          } finally {
-            this.set('createNewSpaceEditing', false);
-          }
+          });
         }
       },
 

@@ -13,11 +13,17 @@ export default Ember.Service.extend({
   component: null,
 
   collapseFor(name) {
-    return this.get('component').$(`#collapse-${name}`);
+    let component = this.get('component');
+    if (component) {
+      return component.$(`#collapse-${name}`);
+    }
   },
 
   collapseHeaderFor(name) {
-    return this.get('component').$(`[href="#collapse-${name}"] h1`);
+    let component = this.get('component');
+    if (component) {
+      return component.$(`[href="#collapse-${name}"] h1`);
+    }
   },
 
   animateCollapseHeader(name) {
@@ -27,13 +33,17 @@ export default Ember.Service.extend({
 
   expandMain(name) {
     let $collapse = this.collapseFor(name);
-    $collapse.collapse('show');
-    this.animateCollapseHeader(name);
+    if ($collapse) {
+      $collapse.collapse('show');
+      this.animateCollapseHeader(name);
+    }
   },
 
   collapseMain(name) {
     let $collapse = this.collapseFor(name);
-    $collapse.collapse('hide');
-    this.animateCollapseHeader(name);
+    if ($collapse) {
+      $collapse.collapse('hide');
+      this.animateCollapseHeader(name);
+    }
   }
 });

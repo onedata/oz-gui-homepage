@@ -49,7 +49,7 @@
     vertical-align: middle;
   }
 
-  // container for oneicon like "(+) connect new account" in accounts settings
+  // container for oneicon like "(+) link new account" in accounts settings
   
 
   // container for standard icon in sidebar like space icon in spaces list
@@ -326,6 +326,7 @@
             padding-left: 8px;
             line-height: $onezone-secondary-accordion-heading-height;
             text-transform: none;
+            max-width: 250px;
 
             // TODO: max-width truncation in table-cell seems to be hacky
             // try to find out other solution
@@ -454,12 +455,11 @@
         }
 
         .get-support {
-          font-family: "Lato", sans-serif;
-          font-weight: 100;
-          font-style: italic;
-
           .icon {
             text-align: center;
+            .oneicon {
+              font-weight: bold;
+            }
           }
 
           // TODO: make dynamic
@@ -508,9 +508,16 @@
       left: -1px;
     }
 
+    .account-label {
+      max-width: 260px;
+    }
+
     .account-icon {
+      $-account-icon-radius: 16px;
+      
       position: relative;
-      width: 32px;
+      min-width: $-account-icon-radius*2;
+      width: $-account-icon-radius*2;
       height: $onezone-account-item-height;
       text-align: center;
 
@@ -526,6 +533,18 @@
           transform: translateY(-50%);
         }
       }
+      
+      .icon {
+        clip-path: circle($-account-icon-radius at center);
+      }
+
+      .social-icon-image {
+        width: 100%;
+        height: 100%;
+        background-size: 32px 32px;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
 
       .circle {
         position: absolute;
@@ -535,6 +554,7 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
+        // TODO make loop generator in SASS
         &.google {
           background-color: $color-login-google !important;
         }
@@ -558,6 +578,12 @@
         }
         &.rhea {
           background-color: $color-login-rhea !important;
+        }
+        &.elixir {
+          background-color: $color-login-elixir !important;
+        }
+        &.unitedid {
+          background-color: $color-login-unitedid !important;
         }
       }
       .icon {
@@ -596,7 +622,6 @@
 }
 
 .connect-new {
-  font-family: 'Lato', sans-serif;
   font-weight: 100;
   font-style: italic;
 }
@@ -630,6 +655,10 @@
   padding-bottom: 15px;
 }
 
+.tertiary-list .one-label.truncate {
+  max-width: 200px;
+}
+
 .tertiary-icon {
   width: 32px;
   line-height: 32px;
@@ -648,6 +677,15 @@
   .secondary-item-element {
     display: table-cell;
     vertical-align: middle;
+  }
+}
+
+.secondary-item-element {
+  .spinner-container {
+    &.spinner-32 {
+      width: 28px;
+      height: initial;
+    }
   }
 }
 
