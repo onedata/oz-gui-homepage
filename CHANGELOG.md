@@ -1,8 +1,15 @@
-# Release notes for project oz-gui-default
+# Release notes for project oz-gui-homepage
 
 
 CHANGELOG
 ---------
+
+### 17.06.0-rc6
+
+* Updating OZ GUI base to 17.06.0-rc6
+* VFS-3801 Added GitHub issues link and removed Jira and HipChat links from support
+* Bower repo URL and OwlCarousel update
+
 
 ### 17.06.0-beta6
 
