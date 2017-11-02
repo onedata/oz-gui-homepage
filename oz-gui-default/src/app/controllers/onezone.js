@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import ConflictIdsArray from 'ember-cli-onedata-common/utils/conflict-ids-array';
+import AuthenticationErrorHandlerMixin from 'oz-worker-gui/mixins/authentication-error-handler';
 
 const {
   String: {
@@ -31,56 +33,64 @@ const EXPAND_PARAMS = SIDEBAR_GROUPS.map(name => `expand_${name}`);
  * @copyright (C) 2016-2017 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-const controller = Ember.Controller.extend({
-  modalsManager: inject.service(),
-  onezoneSidebar: inject.service(),
-  session: inject.service(),
-  onezoneServer: inject.service(),
+const controller = Ember.Controller.extend(
+  AuthenticationErrorHandlerMixin,
+  {
+    
+    modalsManager: inject.service(),
+    onezoneSidebar: inject.service(),
+    session: inject.service(),
+    onezoneServer: inject.service(),
 
-  modal: computed.alias('modalsManager.currentModal'),
+    modal: computed.alias('modalsManager.currentModal'),
 
-  init: function () {
-    this._super();
-    schedule('afterRender',this,function() {
-      this.send('expandQuerySpecifiedAccordions');
-    });
-  },
+    user: computed.readOnly('model'),
 
-  modalInfo: Object.create({
-    name: null,
-    resolve: null,
-    reject: null,
-  }),
+    init: function () {
+      this._super();
+      schedule('afterRender',this,function() {
+        this.send('expandQuerySpecifiedAccordions');
+      });
+    },
 
-  __providersDidExpand: false,
+    modalInfo: Object.create({
+      name: null,
+      resolve: null,
+      reject: null,
+    }),
 
-  expandProvidersInSidebar: observer('model.providers.{isFulfilled,length}', function() {
-    let providers = this.get('model.providers');
-    if (!this.get('__providersDidExpand') && providers.get('isFulfilled') && providers.get('length') > 0) {
-      this.set('__providersDidExpand', true);
-      schedule('afterRender', this, function() {
-        this.get('onezoneSidebar').expandMain('providers');
-      });      
-    }
-  }),
+    __providersDidExpand: false,
 
-  serviceVersion: computed.readOnly('session.sessionDetails.serviceVersion'),
-  __serviceNameProxy: computed('onezoneServer', function () {
-    let promise = new Promise((resolve, reject) => {
-      this.get('onezoneServer').getZoneName().then(
-        ({ zoneName }) => resolve(zoneName),
-        () => reject(...arguments)
-      );
-    });
-    return ObjectPromiseProxy.create({ promise });
-  }),
-  serviceName: computed.readOnly('__serviceNameProxy.content'),
+    expandProvidersInSidebar: observer('model.providers.{isFulfilled,length}', function() {
+      let providers = this.get('model.providers');
+      if (!this.get('__providersDidExpand') && providers.get('isFulfilled') && providers.get('length') > 0) {
+        this.set('__providersDidExpand', true);
+        schedule('afterRender', this, function() {
+          this.get('onezoneSidebar').expandMain('providers');
+        });      
+      }
+    }),
 
-  actions: {
-    closeModal() {
-      this.get('modalsManager').closeModal(...arguments);
-    }
-  },
+    serviceVersion: computed.readOnly('session.sessionDetails.serviceVersion'),
+    __serviceNameProxy: computed('onezoneServer', function () {
+      let promise = new Promise((resolve, reject) => {
+        this.get('onezoneServer').getZoneName().then(
+          ({ zoneName }) => resolve(zoneName),
+          () => reject(...arguments)
+        );
+      });
+      return ObjectPromiseProxy.create({ promise });
+    }),
+    serviceName: computed.readOnly('__serviceNameProxy.content'),
+
+    actions: {
+      openModal() {
+        this.get('modalsManager').openModal(...arguments);
+      },
+      closeModal() {
+        this.get('modalsManager').closeModal(...arguments);
+      }
+    },
 });
 
 // Adds query params and 
@@ -105,5 +115,13 @@ expandMixin.actions['expandQuerySpecifiedAccordions'] = function() {
 };
 
 controller.reopen(expandMixin);
+
+let collectionsProxyMixin = {};
+['spaces', 'groups', 'providers'].forEach(collection => {
+  collectionsProxyMixin[collection] = computed(`user.${collection}`, function () {
+    return ConflictIdsArray.create({ content: this.get(`user.${collection}`) });
+  });
+});
+controller.reopen(collectionsProxyMixin);
 
 export default controller;

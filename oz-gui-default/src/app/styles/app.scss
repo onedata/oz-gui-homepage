@@ -51,6 +51,13 @@ $body-font: 'Open Sans';
 @import "login";
 @import "onezone";
 @import "notify";
+@import "authorizers";
+
+// backported from onepanel-gui
+@import "utils";
+@import "components/spin-spinner-extensions";
+
+@import "components/ember-power-select-overrides";
 
 // OZ components and styles
 @import "components/c-search";
@@ -73,6 +80,7 @@ $body-font: 'Open Sans';
 @import "components/message-box-modal";
 @import "components/one-option-button";
 @import "components/common-loader";
+
 
 html, body {
   height: 100%;
@@ -260,6 +268,10 @@ input {
   color: black;
 }
 
+textarea {
+  resize: none;
+}
+
 // TODO: there general-purpose classes should be moved to deps/gui styles
 
 .full-width {
@@ -357,5 +369,9 @@ input {
 }
 
 .container-home > .container:first-child, .container-home > .container-index {
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+.disable-pointer-events {
+  pointer-events: none !important;
 }

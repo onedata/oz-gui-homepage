@@ -1,11 +1,11 @@
-<div class="row row-centered">
-  <div class="{{containerClass}}">
+<div class="row buttons-list">
+  <div class="col-xs-12 col-centered">
     <div class="row row-centered">
       {{#if isLoading}}
 
-      <div class="spinner-container">
-        {{spin-spinner scale=1 lines=12 length=20 width=10}}
-      </div>
+        <div class="spinner-container">
+          {{spin-spinner scale=1 lines=12 length=20 width=10}}
+        </div>
 
       {{else}}
 
@@ -13,27 +13,35 @@
           {{t 'components.socialBoxList.fetchProvidersFailed'}}: {{errorMessage}}
         {{else}}
         <div>
-          {{#each supportedAuthorizers as |authorizerName|}}
-            <div class="{{boxContainerClasses}}">
-              {{!-- basicAuth is a special case --}}
-              {{#if (eq authorizerName 'basicAuth')}}
-                {{social-box type='username' action='showLoginForm' iconName='key'}}
-              {{else}}
-                {{!-- rhea is a special case with full size logo --}}
-                {{social-box 
-                  type=authorizerName
-                  fullSize=(eq authorizerName "rhea")
-                  action='authenticate'
-                }}
-              {{/if}}
-            </div>
+          {{#each supportedAuthorizers as |authorizer|}}
+            {{!-- basicAuth is a special case --}}
+            {{#if (eq authorizer.type 'basicAuth')}}
+              {{social-box 
+                type='username' 
+                iconType=authorizer.iconType 
+                iconName=authorizer.iconName
+                tip=(concat (t 'login.loginUsing') (t 'login.onepanelAccount'))
+                action='usernameBoxClick'}}
+            {{else}}
+              {{social-box 
+                type=authorizer.type
+                iconType=authorizer.iconType
+                iconName=authorizer.iconName
+                tip=(concat (t 'login.loginUsing') authorizer.name)
+                action='authenticate'
+              }}
+            {{/if}}
           {{/each}}
+          {{#if showMoreButton}}
+            {{social-box 
+              type="more"
+              iconType="text"
+              action='showMoreClick'
+              tip=(t 'login.showMore')
+            }}
+          {{/if}}
         </div>
         {{/if}}
-
-      {{modals/login-form modalId="login-form" open=loginFormOpened}}
-
-
       {{/if}}
     </div>
   </div>

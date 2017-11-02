@@ -16,9 +16,9 @@
                 </div>
               </div>
             {{/if}}
-            <div class="secondary-item-element secondary-header provider-header truncate">
-              {{provider.name}}
-            </div>
+            {{#truncated-string class="one-label secondary-item-element secondary-header provider-header"}}
+              {{name-conflict item=provider}}
+            {{/truncated-string}}
           </div>
           <div class="secondary-item-element star-toggle" {{action "toggleDefault"}}>
             {{#if provider.isDefault}}

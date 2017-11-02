@@ -1,9 +1,9 @@
 <div class="drop-panel">
   <div class="drop-title-bar">
     <div class="title-label">
-      <div class="provider-label truncate">
+      {{#truncated-string class="provider-label"}}
         {{provider.name}}
-      </div>
+      {{/truncated-string}}
       {{#unless provider.isOnline}}
         <div class="provider-label-secondary">
           {{#if (eq provider.status "offline")}}
@@ -34,26 +34,17 @@
         {{provider-place-drop-space space=space providerId=provider.id}}
       {{/each}}
     </ul>
+    <hr>
     {{#if (eq provider.status "online")}}
-      <hr>
-      {{#spin-button-onedata buttonType="submit"
-        action=(action "goToFiles")
-        class="btn btn-small btn-pale-green no-outline" spinnerColor="#fff"
-        inFlight=goToIsLoading
-        disabled=goToIsLoading
-      }}
+      {{#link-to "onezone.provider-redirect" provider.id
+        class="btn btn-small no-outline btn-go-to-files btn-pale-green"}}
         {{t "onezone.providerPlaceDrop.goToFiles"}}
-      {{/spin-button-onedata}}
+      {{/link-to}}
     {{else if (eq provider.status "pending")}}
-      <hr>
-      {{#spin-button-onedata
-        inFlight=true
-        defaultTimeout=0
-        startDelay=0
-        class="btn btn-small btn-disabled no-outline"
-      }}
+      <a href="javascript(0);"
+        class="btn btn-small no-outline btn-go-to-files btn-disabled">
         {{t "onezone.providerPlaceDrop.pending"}}
-      {{/spin-button-onedata}}
+      </a>
     {{/if}}
   </div>
 </div>

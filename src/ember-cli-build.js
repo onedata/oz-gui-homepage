@@ -67,10 +67,9 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   const BOWER_ASSETS = [
-    'owl-carousel/owl-carousel/owl.carousel.min.js',
-    'owl-carousel/owl-carousel/owl.carousel.css',
-    'owl-carousel/owl-carousel/owl.theme.css',
-    'owl-carousel/owl-carousel/owl.transitions.css',
+    'owl.carousel/dist/owl.carousel.min.js',
+    'owl.carousel/dist/assets/owl.carousel.min.css',
+    'owl.carousel/dist/assets/owl.theme.default.min.css',
     'bind-first/release/jquery.bind-first-0.2.3.min.js',
     'jquery-mousewheel/jquery.mousewheel.min.js',
     'jquery-searchable/dist/jquery.searchable-1.1.0.min.js',

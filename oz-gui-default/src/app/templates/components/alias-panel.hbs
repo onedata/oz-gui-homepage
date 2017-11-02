@@ -17,7 +17,7 @@
             </div>
           {{/if}}
           
-          <div class="secondary-item-element secondary-header alias-text readonly truncate">
+          <div class="secondary-item-element secondary-header alias-text readonly">
             {{#if aliasEditing}}
               {{input enter='endEditAlias' value=aliasTextEdit autofocus="autofocus"
                 disabled=isLoading class="alias-edit"}}
@@ -26,7 +26,9 @@
                 {{t 'common.loadingNamed' name=(t 'onezone.aliasPanel.userAlias')}}
               {{else}}
                 {{#if correctAlias}}
+                  {{#truncated-string}}
                   {{aliasText}}
+                  {{/truncated-string}}
                 {{else}}
                   <em>{{t 'onezone.aliasPanel.noAlias'}}</em>
                 {{/if}}

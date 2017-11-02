@@ -1,9 +1,13 @@
 <div class="account-icon icon secondary-item-element">
-  <div class="circle {{type}}"></div>
+  <div class="circle auth-icon {{type}}"></div>
   <div class="icon">
-    {{one-icon tagName="div" icon=iconName}}
+    {{#if (eq iconType "oneicon")}}
+      {{one-icon tagName="div" icon=iconName}}
+    {{else}}
+      <div class="social-icon-image" style={{socialIconStyle}}></div>
+    {{/if}}
   </div>
 </div>
-<div class="account-label one-label one-label-large secondary-item-element">
-  {{trim-string label 32}}
-</div>
+{{#truncated-string class="account-label one-label one-label-large secondary-item-element"}}
+  {{label}}
+{{/truncated-string}}

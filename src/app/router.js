@@ -29,7 +29,9 @@ Router.map(function() {
     });
   });
 
-  this.route('onezone', function() {});
+  this.route('onezone', function () {
+    this.route('provider-redirect', { path: '/provider-redirect/:providerId' });
+  });
 });
 
 export default Router;

@@ -22,7 +22,7 @@ doc:
 	jsdoc -c $(SRC_DIR)/.jsdoc.conf $(SRC_DIR)/app
 
 clean:
-	cd $(SRC_DIR) && rm -rf node_modules bower_components dist tmp
+	cd $(SRC_DIR) && rm -rf node_modules bower_components ../$(REL_DIR)/* tmp
 
 test: deps
 	cd $(SRC_DIR) && xvfb-run ember test

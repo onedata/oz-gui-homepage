@@ -10,9 +10,9 @@
             <div class="secondary-item-element secondary-icon space-icon">
               {{one-icon tagName='div' icon=(if space.isDefault "space-home" "space")}}
             </div>
-            <div class="secondary-item-element secondary-header space-header truncate">
-              {{space.name}}
-            </div>
+            {{#truncated-string  class="secondary-item-element secondary-header space-header"}}
+              {{name-conflict item=space}}
+            {{/truncated-string}}
             <div class="secondary-item-element secondary-header space-header-size">
               {{bytes-to-string space.totalSize}}
             </div>
@@ -46,7 +46,7 @@
         {{space-settings-drop space=space
           class="secondary-item-element settings-tool"
           toggleDefault='toggleDefault'
-          openModal="openModal" getSupport="showNewSupportToken"}}
+          openModal="openModal" getSupport="showSupportModal"}}
 
       </div>
 
@@ -67,20 +67,24 @@
               <div class="icon tertiary-icon">
                 {{one-icon tagName="div" icon=(if p.isDefault "provider-home" "provider")}}
               </div>
-              <div class="one-label after-icon truncate">
-                {{p.name}}
-              </div>
+              {{#truncated-string class="one-label after-icon"}}
+                {{name-conflict item=p}}
+              {{/truncated-string}}
             </div>
             <div class="icon clickable visible-on-parent-hover" {{action "showUnsupportSpaceModal" p}}>
               {{one-icon tagName="div" icon="leave-space"}}
             </div>
           </li>
         {{/each}}
-        <li class='get-support'>
-          {{!-- TODO: create some dropdown component, which does not close on click --}}
-          {{!-- TODO: like this: http://stackoverflow.com/questions/25089297/twitter-bootstrap-avoid-dropdown-menu-close-on-click-inside --}}
-          {{#bs-dropdown tagName="div" class="side-dropdown" open=supportTokenOpened}}
-            {{#bs-dropdown-toggle tagName="div" click=(action "showNewSupportToken")
+        <li class="get-support clickable" {{action "showSupportModal"}}>
+          <div class="icon tertiary-icon">
+            {{one-icon tagName="div" icon="add"}}
+          </div>
+          <div class="one-label after-icon">
+            {{t 'onezone.spacesAccordionItem.getSupport'}}
+          </div>
+          {{!--{{#bs-dropdown tagName="div" class="side-dropdown" open=supportTokenOpened}}
+            {{#bs-dropdown-toggle tagName="div" click=(action "showSupportModal")
               class="side-dropdown-toggle get-support-dropdown-toggle full-width clickable"}}
               <div class="icon tertiary-icon">
                 {{one-icon tagName="div" icon="add"}}
@@ -109,7 +113,7 @@
                 </div>
               {{/if}}
             {{/bs-dropdown-menu}}
-          {{/bs-dropdown}}
+          {{/bs-dropdown}}--}}
         </li>
       </ul>
 

@@ -7,7 +7,7 @@ let logoFor = function(name, format) {
 
 export default Ember.Component.extend({
   /** jQuery element for owl-carousel */
-  owl: null,
+  $owl: null,
 
   classNames: 'owl-carousel-component',
   tagName: 'div',
@@ -51,30 +51,29 @@ export default Ember.Component.extend({
   ],
 
   didInsertElement() {
-    this.set('owl', this.$().find('.owl-carousel'));
-    let owl = this.get('owl');
+    const $owl = this.set('$owl', this.$('.owl-carousel'));
 
-    owl.owlCarousel({
+    const owlCarousel = $owl.owlCarousel({
       autoPlay: 4000,
       items : 6,
       pagination: false,
     });
 
     // Custom Navigation Events
-    this.$().find('.owl-carousel-arrows .next').click(function() {
-        owl.trigger('owl.next');
+    this.$('.owl-carousel-arrows .next').click(function() {
+      owlCarousel.trigger('next.owl.carousel');
     });
 
-    this.$().find('.owl-carousel-arrows .prev').click(function() {
-        owl.trigger('owl.prev');
+    this.$('.owl-carousel-arrows .prev').click(function() {
+      owlCarousel.trigger('prev.owl.carousel');
     });
 
-    this.$().find('.owl-carousel-arrows').height(owl.height());
+    this.$('.owl-carousel-arrows').height($owl.height());
 
     let prevButton = this.$().find('.prev');
     let nextButton = this.$().find('.next');
-    [prevButton, nextButton].forEach((button) => {
-      button.css('margin-top', owl.height()/2 - button.height()/2);
+    [prevButton, nextButton].forEach(button => {
+      button.css('margin-top', $owl.height()/2 - button.height()/2);
     });
   }
 });

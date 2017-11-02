@@ -11,7 +11,8 @@ export default {
       yes: 'Yes',
       no: 'No',
       signin: 'Sign in',
-      join: 'Join'
+      join: 'Join',
+      close: 'Close',
     },
     notify: {
       clipboardSuccess: 'Text has been copied to clipboard.',
@@ -19,7 +20,9 @@ export default {
     },
     serverError: 'Server error',
     unknownError: 'Unknown error',
-    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources",
+    or: 'or',
+    back: 'Back'
   },
   services: {
     session: sessionLocales,
@@ -51,7 +54,7 @@ export default {
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "occupied. The system requires that emails are unique and connected to one " +
         "user. To add this OpenID account to your existing account, login on the " +
-        "existing account and use the option 'Connect new account' in Authentication Settings.",
+        "existing account and use the option 'Link new account' in Authentication Settings.",
       connectAccountEmailOccupied:
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "connected to another account. The system requires that emails are unique " +
@@ -65,16 +68,86 @@ export default {
     title: 'Login',
 
     boxTitle: 'login',
-    boxSubtitle: 'A new account will be created automatically on first login',
+    formSubtitle: 'Using your Onepanel account',
+    formSubtitleTip: 'This login method is available for administrators and special users ' +
+      'created via onepanel administrative interface. Regular users must login via social or ' +
+      'institutional accounts, which can be found in previous menu.',
+    noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
+      'users created via onepanel administrative interface. Regular users must login via social or ' + 
+      'institutional accounts, which are currently disabled by the administrators of this zone.',
+    dropdownSubtitle: 'Pick your identity provider',
+    isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
+    loginWith: 'Login with',
+    loginUsing: 'Login using ',
+    onepanelAccount: 'Onepanel account',
+    showMore: 'Show all identity providers',
+    findProviderPlaceholder: 'Find your identity provider...',
     version: 'version',
+    endpointError: 'Authorization configuration is invalid, please contact system administrator',
+    authenticationError: {
+      title: 'Authentication error',
+      addAccountTitle: 'Cannot link account',
+      backToLogin: 'Back to login',
+      // NOTE: if adding translation here, don't forget to add new message type to
+      // mixins/authentication_error_messages
+      codes: {
+        server_error: 'Server has encountered an unexpected error while processing ' +
+        'your login request. Please contact site administrators if the problem persists.',
+        invalid_state: 'Login failed due to bad request state - this usually ' + 
+          'happens when you do not complete your login process within 60 seconds ' +
+          'since redirection to chosen identity provider.',
+        invalid_request: 'Your login request could not be validated. Please ' +
+          'contact site administrators if the problem persists.',
+        account_already_linked_to_another_user: 'You cannot link this account because it ' +
+          'is already linked to another user profile.',
+        account_already_linked_to_current_user: 'This account is already linked ' +
+          'to your profile.',
+        access_token_invalid: 'Chosen identity provider has issued an invalid ' + 
+          'access token. This can be caused by a misconfiguration of the ' +
+          'identity provider or an expired session. Try to sign out from it ' + 
+          'and repeat the login process.',
+        unknown: 'Unknown reason.'
+      }
+    },
   },
-  components: { 
+  components: {
     modals: {
+      addSpaceStorage: {
+        title: 'Add storage for',
+        getTokenFailed: 'Getting new token failed',
+        requestSupport: {
+          tabName: 'Request support',
+          desc1: 'Request storage support for this space from existing provider.',
+          desc2: 'Pass the token below to the administrator of the preferred ' + 
+            'storage provider (e.g. via email).',
+          desc3: 'Each token can only be used once.',
+        },
+        exposeData: {
+          tabName: 'Expose existing data collection',
+          desc1: 'Expose storage with an existing data set through this space.',
+          desc2: 'Existing directories and files structure will be ' +
+            'automatically discovered and synchronized, allowing any member of ' +
+            'this space to access the data set.',
+        },
+        deployProvider: {
+          tabName: 'Deploy your own provider',
+          desc1: 'Deploy your own Oneprovider service and automatically support ' +
+            'this space using your storage.',
+        },
+        tabsCommon: {
+          descDistros: 'The following Linux distributions are supported:',
+          descCommand: 'The following command installs docker and configures ' +
+            'a dockerized Oneprovider instance.',
+          token: 'Token',
+          command: 'Command',
+          generateToken: 'Generate another token',
+        },
+      },
       loginForm: {
         title: 'Login with username and password',
-        usernameLabel: 'Username:',
-        passwordLabel: 'Password:',
+        usernameLabel: 'Username',
+        passwordLabel: 'Password',
         error: 'Authentication error:',
         success: 'Authenticated successfully!'
       },
@@ -140,7 +213,7 @@ export default {
       setHome: 'set as home',
       leave: 'leave',
       rename: 'rename',
-      getSupport: 'get support'
+      getSupport: 'add storage'
     }
   },
   logout: {
@@ -150,6 +223,10 @@ export default {
     title: 'Manage account',
     version: 'version',
 
+    providerRedirect: {
+      error: 'We are sorry, but URL for provider cannot be resolved',
+      redirecting: 'Redirecting to provider',
+    },
     messages: {
       noneProviders: {
         title: 'All your providers are offline',
@@ -178,7 +255,7 @@ export default {
         title: 'First login',
         p1: 'You have successfully logged in and an account for you has been created.',
         p2: 'You are now on account management page. Here, you can connect other ' +
-        'accounts to your profile, modify your user data, manage your spaces' +
+        'accounts to your profile, modify your user data, manage your spaces ' +
         'and providers.',
         p3: 'We have created a default space for you. You need to find a ' +
         'provider that will support it before you can store your files.'
@@ -203,7 +280,7 @@ export default {
       changePassword: 'Change your password'
     },
     accountAdd: {
-      connectNewAccount: 'Connect new account',
+      connectNewAccount: 'Link new account',
       connectBy: 'Connect by'
     },
     groupsList: {
@@ -217,9 +294,10 @@ export default {
       joinSpace: 'Join a space',
       readMore: 'Read more',
       noViewPermissions: 'You do not have privileges to view details of this space.',
+      creatingSpace: 'Creating space:',
     },
     spacesAccordionItem: {
-      getSupport: 'Get support',
+      getSupport: 'Add storage...',
       toggleDefaultFailed: 'Changing default space failed: {{errorMessage}}'
     },
     providersAccordion: {
