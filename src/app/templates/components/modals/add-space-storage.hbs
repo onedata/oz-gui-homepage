@@ -20,8 +20,8 @@
           {{modals/add-space-storage/request-support
             copySuccess=(action "copySuccess")
             copyError=(action "copyError")
-            tokenProxy=supportTokenProxy
             getToken=(action "getNewSupportToken")
+            tokenProxy=supportTokenProxy
           }}
         {{/bs-tab-pane}}
         {{#bs-tab-pane
@@ -30,6 +30,7 @@
           {{modals/add-space-storage/deploy-provider
             copySuccess=(action "copySuccess")
             copyError=(action "copyError")
+            getToken=(action "getNewSupportToken")
             tokenProxy=supportTokenProxy
           }}
         {{/bs-tab-pane}}
@@ -39,6 +40,7 @@
           {{modals/add-space-storage/expose-data
             copySuccess=(action "copySuccess")
             copyError=(action "copyError")
+            getToken=(action "getNewSupportToken")
             tokenProxy=supportTokenProxy
           }}
         {{/bs-tab-pane}}

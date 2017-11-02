@@ -62,7 +62,9 @@ export default Ember.Service.extend({
    * @param {String} providerName One of login providers, eg. google, dropbox
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched the endpoint
+   *   - ``data.method`` (string)
    *   - ``data.url`` (string)
+   *   - ``data.formData`` (object|undefined)
    * - ``reject(object: error)`` on failure
    */
   getLoginEndpoint(providerName) {
@@ -78,7 +80,9 @@ export default Ember.Service.extend({
    *  See login boxes for names of providers.
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched the URL
+   *   - ``data.method`` (string)
    *   - ``data.url`` (string)
+   *   - ``data.formData`` (object|undefined)
    * - ``reject(object: error)`` on failure
    */
   getConnectAccountEndpoint(providerName) {

@@ -22,13 +22,14 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <p>
-      {{!-- TODO handle copy success/failure with changing clipboard icon for a while--}}
-      {{#copy-button tagName="div" success="copySuccess" error="copyError"
-        class="btn btn-primary clickable pull-right"
-        clipboardTarget=_clipboardTarget}}
-        {{one-icon tagName="div" icon="clipboard-copy"}} Copy
-      {{/copy-button}}
-    </p>
+    <a class="clickable" {{action "getToken"}}>
+      {{t "components.modals.addSpaceStorage.tabsCommon.generateToken"}}
+    </a>
+    {{!-- TODO handle copy success/failure with changing clipboard icon for a while--}}
+    {{#copy-button tagName="div" success="copySuccess" error="copyError"
+      class="btn btn-primary clickable pull-right"
+      clipboardTarget=_clipboardTarget}}
+      {{one-icon tagName="div" icon="clipboard-copy"}} Copy
+    {{/copy-button}}
   </div>
 </div>

@@ -89,7 +89,6 @@ export default Ember.Service.extend({
     return new Promise((resolve, reject) => {
       let leavePromise = onezoneServer.userLeaveSpace(spaceId);
       leavePromise.then(() => {
-        space.unloadRecord();
         notify.info(i18n.t('services.spacesManager.leaveModal.success', {
           spaceName
         }));
