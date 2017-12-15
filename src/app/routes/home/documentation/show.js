@@ -20,7 +20,8 @@ export default Route.extend({
         console.error('Tried to pass absolute URL as documentation source');
         reject();
       } else {
-        resolve(deserializePathWithHash(gitbook_path));
+        const decodedPath = gitbook_path && decodeURIComponent(gitbook_path);
+        resolve(deserializePathWithHash(decodedPath));
       }
     });
   },
