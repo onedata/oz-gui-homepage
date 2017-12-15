@@ -66,3 +66,6 @@ src/tests/test-results.xml
 .vscodeignore
 jsconfig.json
 typings/
+
+# Ignoring package-lock because all packages has fixed versions
+package-lock.json
