@@ -1,6 +1,6 @@
 import Ember from 'ember'; 
 
-const VERSIONS_PATH = '/swagger/versions.json'; 
+const VERSIONS_PATH = '/docs/doc/swagger/versions.json'; 
 
 /**
  * Provide a JSON with components and versions of Swagger JSONs (AJAX GET).
