@@ -74,7 +74,7 @@ export default Ember.Component.extend({
    */
   swaggerJsonPath: Ember.computed('apiVersion', 'apiComponent', function() {
     let {apiVersion, apiComponent} = this.getProperties('apiVersion', 'apiComponent');
-    return `/swagger/${apiVersion}/${apiComponent}/swagger.json`;
+    return `/docs/doc/swagger/${apiVersion}/${apiComponent}/swagger.json`;
   }),
 
   /**
