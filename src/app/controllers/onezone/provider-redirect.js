@@ -14,7 +14,9 @@ const {
  */
 export default Ember.Controller.extend({
   messageBox: service(),
-  onezoneServer: service(),  
+  onezoneServer: service(),
+  
+  queryParams: ['back_forward'],
   
   /**
    * Stores error message if fetching provider URL failed

@@ -1,12 +1,17 @@
-{{page-title (t 'onezone.title')}}
+{{page-title (t "onezone.title")}}
 
 <div class="onezone-fog"></div>
 
-{{onezone-sidebar tagName='nav' class='onezone-sidebar'
-  providers=providers spaces=spaces authorizers=model.authorizers
-  tokens=model.clienttokens groups=groups
+{{onezone-sidebar
+  tagName="nav"
+  class="onezone-sidebar"
+  providers=providers
+  spaces=spaces
+  authorizers=model.authorizers
+  tokens=model.clienttokens
+  groups=groups
   openModal="openModal"}}
-{{onezone-top-bar tagName='header' class='onezone-top-bar'}}
+{{onezone-top-bar tagName="header" class="onezone-top-bar"}}
 
 <div class="onezone-container-application">
   <div class="onezone-container-application-inner">
@@ -48,5 +53,6 @@
 {{modals/authentication-error
   open=showAuthenticationError
   modalId="onezone-authentication-error"
-  authenticationError=authenticationError
+  authenticationErrorReason=authenticationErrorReason
+  authenticationErrorState=authenticationErrorState
 }}

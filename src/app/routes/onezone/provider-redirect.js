@@ -1,13 +1,23 @@
-import Ember from 'ember';
-
 /**
- * Content of onezone application - a world map with providers.
- * @module routes/home/onezone/index
+ * Redirect to some provider (URL got from backend).
+ * 
+ * @module routes/home/onezone/provider-redirect
  * @author Jakub Liput
- * @copyright (C) 2016-2017 ACK CYFRONET AGH
+ * @copyright (C) 2016-2018 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Route.extend({
+
+import Ember from 'ember';
+import RedirectRoute from 'ember-cli-onedata-common/mixins/routes/redirect';
+
+export default Ember.Route.extend(RedirectRoute, {
+  /** 
+   * @override
+   */
+  checkComeFromOtherRoute(currentHash) {
+    return !/\/onezone\/provider-redirect/.test(currentHash);
+  },
+      
   model({ providerId }) {
     let user = this.modelFor('onezone');
     let providers = user.get('providers');

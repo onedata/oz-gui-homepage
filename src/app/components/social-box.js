@@ -1,11 +1,18 @@
 import Ember from 'ember';
+import contrast from 'npm:contrast';
+import {
+  defaultIconBackgroundColor,
+  defaultIconPath,
+  darkFgColor,
+  lightFgColor,
+} from 'oz-worker-gui/utils/auth-box-config';
 
 /**
  * Renders single login button. Can optionally has a "link" property set to go
  * to a provided link instead of invoking action.
  * @module components/social-box
  * @author Jakub Liput
- * @copyright (C) 2016-2017 ACK CYFRONET AGH
+ * @copyright (C) 2016-2018 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 
@@ -19,29 +26,37 @@ export default Ember.Component.extend({
   classNames: ['social-box-component'],
 
   /**
-   * Use oneicon (fonticon) or image placed in ``/assets/images/auth-providers/{iconName}.{iconType}``
-   * @type {string} one of: oneicon, png, jpg, svg, <or other image format>
-   */
-  iconType: 'oneicon',
-
-  /**
-   * Oneicon character name (for iconType == oneicon) or image file name
-   * (without extension)
+   * @virtual 
+   * Id of authorizer, e.g. google, plgrid, dropbox, google, facebook, ...
    * @type {string}
    */
-  iconName: 'key',
-
-  /** Name of social/login service (eg. 'twitter') */
-  type: null,
-
-  /** Href for link when clicked */
-  link: '',
+  authId: undefined,
 
   /**
+   * @virtual
+   * @type {string}
+   */
+  iconPath: undefined,
+
+  /**
+   * @virtual
+   * @type {string}
+   */
+  iconBackgroundColor: undefined,
+
+  /**
+   * @virtual
    * Text for tooltip
    * @type {string}
    */
   tip: '',
+
+  /**
+   * @virtual
+   * URL to go when clicked
+   * @type {string}
+   */
+  link: '',
 
   /**
    * Spinner scale
@@ -49,36 +64,56 @@ export default Ember.Component.extend({
    */
   spinnerScale: 0.25,
 
-  _iconName: computed('iconType', 'iconName', function() {
-    let {
-      iconName,
-      iconType,
-    } = this.getProperties('iconName', 'iconType');
-    if (iconType === 'oneicon') {
-      return iconName;
+  authIdClass: computed('authId', function authIdClass() {
+    let authId = this.get('authId');
+    if (authId) {
+      return 'idp-' + authId.replace(/ /g, '-');
     } else {
-      return `/assets/images/auth-providers/${iconName}.${iconType}`;
+      return '';
     }
   }),
+  
+  /**
+   * @type {Ember.ComputedProperty<string>}
+   */
+  socialIconStyle: computed(
+    'authId',
+    'iconPath',
+    function socialIconStyle() {
+      if (this.get('authId') === 'more') {
+        return htmlSafe('');
+      } else {
+        let iconPath = this.get('iconPath');
+        iconPath = iconPath || defaultIconPath;
+        iconPath = iconPath.replace(/"/g, '\\"');
+        const style = `background-image: url("${iconPath}");`;
+        return htmlSafe(style);
+      }
+    }),
 
-  socialIconStyle: computed('_iconName', 'iconType', function () {
-    let {
-      _iconName,
-      iconType,
-    } = this.getProperties('_iconName', 'iconType');
-    let style = '';
-    if (iconType !== 'oneicon') {
-      style = `background-image: url(${_iconName});`;
-    } else {
-      style = '';
-    }
-    return htmlSafe(style);
-  }),
+  /**
+   * @type {Ember.ComputedProperty<string>}
+   */
+  aStyle: computed(
+    'iconBackgroundColor',
+    function aStyle() {
+      let iconBackgroundColor;
+      if (this.get('authId') === 'more') {
+        iconBackgroundColor = '#fff';
+      } else {
+        iconBackgroundColor = this.get('iconBackgroundColor') || defaultIconBackgroundColor;
+      }
+      let fgColor = contrast(iconBackgroundColor) === 'light' ? darkFgColor : lightFgColor;
+      iconBackgroundColor = iconBackgroundColor.replace(/;/g, '\\;');
+      fgColor = fgColor.replace(/;/g, '\\;');
+      const style = `background-color: ${iconBackgroundColor}; color: ${fgColor};`;
+      return htmlSafe(style);
+    }),
 
-  hasLink: function() {
+  hasLink: computed('link', function hasLink() {
     let link = this.get('link');
     return link && link.length !== 0;
-  }.property('link'),
+  }),
 
   click() {
     // hide tooltip
@@ -91,7 +126,7 @@ export default Ember.Component.extend({
         if (this.get('hasLink')) {
           window.location = this.get('link');
         } else {
-          this.sendAction('action', this);
+          this.get('action')(this);
         }
       }
     }

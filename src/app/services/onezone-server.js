@@ -12,13 +12,15 @@ import Ember from 'ember';
  */
 export default Ember.Service.extend({
   server: Ember.inject.service(),
-
+  
   /**
-   *  Fetch list of supported authorizers (for login).
+   * Fetch list of supported authorizers (for login).
    *
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched authorizers list
-   *   - ``data.authorizers`` (array<string>) An array with short auth. providers ids
+   *   - ``data.authorizers`` (AuthProvider[]) An array with auth. providers data
+   *     the order in array is the same as desired order on login screen;
+   *     each authorizer has: id, displayName, iconPath, iconBackgroundColor
    * - ``reject(object: error)`` on failure
    */
   getSupportedAuthorizers() {

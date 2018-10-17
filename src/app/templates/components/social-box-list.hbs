@@ -10,34 +10,23 @@
       {{else}}
 
         {{#if errorMessage}}
-          {{t 'components.socialBoxList.fetchProvidersFailed'}}: {{errorMessage}}
+          {{t "components.socialBoxList.fetchProvidersFailed"}}: {{errorMessage}}
         {{else}}
         <div>
           {{#each supportedAuthorizers as |authorizer|}}
-            {{!-- basicAuth is a special case --}}
-            {{#if (eq authorizer.type 'basicAuth')}}
-              {{social-box 
-                type='username' 
-                iconType=authorizer.iconType 
-                iconName=authorizer.iconName
-                tip=(concat (t 'login.loginUsing') (t 'login.onepanelAccount'))
-                action='usernameBoxClick'}}
-            {{else}}
-              {{social-box 
-                type=authorizer.type
-                iconType=authorizer.iconType
-                iconName=authorizer.iconName
-                tip=(concat (t 'login.loginUsing') authorizer.name)
-                action='authenticate'
-              }}
-            {{/if}}
+            {{social-box
+              authId=authorizer.id
+              iconPath=authorizer.iconPath
+              iconBackgroundColor=authorizer.iconBackgroundColor
+              tip=(concat (t "login.loginUsing") authorizer.displayName)
+              action=(action (if (eq authorizer.id "onepanel") "usernameBoxClick" "authenticate"))
+            }}
           {{/each}}
           {{#if showMoreButton}}
             {{social-box 
-              type="more"
-              iconType="text"
-              action='showMoreClick'
-              tip=(t 'login.showMore')
+              authId="more"
+              action=(action "showMoreClick")
+              tip=(t "login.showMore")
             }}
           {{/if}}
         </div>

@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import AUTHORIZERS from 'oz-worker-gui/utils/authorizers';
 import AuthenticationErrorMessage from 'oz-worker-gui/mixins/authentication-error-message';
 import _ from 'lodash';
 import handleLoginEndpoint from 'oz-worker-gui/utils/handle-login-endpoint';
+import safeExec from 'ember-cli-onedata-common/utils/safe-method-execution';
 
 const {
   computed,
@@ -19,7 +19,15 @@ const {
  */
 export default Ember.Component.extend(AuthenticationErrorMessage, {
   onezoneServer: Ember.inject.service(),
+  supportedAuthorizersService: Ember.inject.service('supportedAuthorizers'),
   messageBox: Ember.inject.service(),
+
+  /**
+   * Admin message provided by backend
+   * @type {string}
+   * @virtual
+   */
+  loginNotification: null,
 
   /**
    * List of authorizers
@@ -55,7 +63,7 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
    * A code of last authentication error (or null)
    * @type {string|null}
    */
-  authenticationError: null,
+  authenticationErrorReason: null,
 
   showAuthenticationError: false,
 
@@ -78,7 +86,7 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
   authorizersForSelect: computed('supportedAuthorizers.[]', function () {
     let supportedAuthorizers = this.get('supportedAuthorizers');
     if (supportedAuthorizers) {
-      return supportedAuthorizers.filter(auth => auth.type !== 'basicAuth');
+      return supportedAuthorizers.filter(auth => auth.id !== 'onepanel');
     } else {
       return [];
     }
@@ -91,45 +99,52 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
 
   _activeAuthorizer: null,
 
+  /**
+   * @type {Ember.ComputedProperty<string>}
+   */
+  loginBoxClasses: computed(
+    'hasAuthorizersForSelect',
+    'isUsernameLoginActive',
+    'isProvidersDropdownVisible',
+    function () {
+      const {
+        hasAuthorizersForSelect,
+        isUsernameLoginActive,
+        isProvidersDropdownVisible,
+      } = this.getProperties(
+        'hasAuthorizersForSelect',
+        'isUsernameLoginActive',
+        'isProvidersDropdownVisible'
+      );
+      let classes = hasAuthorizersForSelect & !isUsernameLoginActive ?
+        'authorizers-login' : 'username-login';
+      if (isProvidersDropdownVisible) {
+        classes += ' with-authorizers-dropdown';
+      }
+      return classes;
+    }
+  ),
+
   init() {
     this._super(...arguments);
-    if (this.get('authenticationError')) {
+    if (this.get('authenticationErrorReason')) {
       this.set('showAuthenticationError', true);
     }
+    this.initSupportedAuthorizers();
   },
 
-  initSupportedAuthorizers: function () {
+  initSupportedAuthorizers() {
     this.set('isLoading', true);
-    const p = this.get('onezoneServer').getSupportedAuthorizers();
-    p.then((data) => {
-      let predefinedAuthorizersList = AUTHORIZERS.map(auth => auth.type);
-      let authorizers = [];
-      predefinedAuthorizersList.forEach((auth, index) => {
-        if (data.authorizers.indexOf(auth) > -1) {
-          authorizers.push(AUTHORIZERS[index]);
-        }
-      });
-      data.authorizers.forEach((auth) => {
-        if (predefinedAuthorizersList.indexOf(auth) === -1) {
-          // default configuration for unknown authorizer
-          authorizers.push({
-            type: auth,
-            name: auth.capitalize(),
-            iconType: 'oneicon',
-            iconName: 'key',
-          });
-        }
-      });
-      this.set('supportedAuthorizers', authorizers);
-    });
-
-    p.catch(error => {
-      const msg = error && error.message || this.get('i18n').t('components.socialBoxList.fetchProvidersFailedUnknown');
-      this.set('errorMessage', msg);
-    });
-
-    p.finally(() => this.set('isLoading', false));
-  }.on('init'),
+    this.get('supportedAuthorizersService').getSupportedAuthorizers()
+      .then(({ authorizers }) => {
+        safeExec(this, 'set', 'supportedAuthorizers', authorizers);
+      })
+      .catch(error => {
+        const msg = error && error.message || this.get('i18n').t('components.socialBoxList.fetchProvidersFailedUnknown');
+        this.set('errorMessage', msg);
+      })
+      .finally(() => this.set('isLoading', false));
+  },
 
   didInsertElement() {
     this._super(...arguments);
@@ -164,7 +179,7 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
   actions: {
     authorizerSelected(authorizer) {
       this.set('selectedAuthorizer', authorizer);
-      this.send('authenticate', authorizer.type);
+      this.send('authenticate', authorizer.id);
     },
     // TODO: what if there is server error?
     /** Get a login endpoint URL from server and go to it */

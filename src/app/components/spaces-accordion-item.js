@@ -105,12 +105,10 @@ export default Ember.Component.extend({
     },
     
     copySuccess() {
-      this.selectTokenText();
       this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
     },
     
     copyError() {
-      this.selectTokenText();
       this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
     },
     
