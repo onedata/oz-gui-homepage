@@ -29,9 +29,11 @@ export default Ember.Component.extend(AuthenticationErrorMessageMixin, {
    * To inject.
    * @type {string}
    */
-  authenticationError: null,
+  authenticationErrorReason: null,
+  
+  authenticationErrorState: null,
 
-  authenticationErrorChanged: on('init', observer('authenticationError', function () {
-    this.set('showAuthenticationError', !!this.get('authenticationError'));
+  authenticationErrorChanged: on('init', observer('authenticationErrorReason', function () {
+    this.set('showAuthenticationError', !!this.get('authenticationErrorReason'));
   })),
 });

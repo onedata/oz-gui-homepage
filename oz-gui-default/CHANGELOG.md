@@ -6,6 +6,10 @@ CHANGELOG
 
 ### Latest changes
 
+* VFS-4702 Support for customizable authorization providers icons, colors and names
+* VFS-4553 Fixed browser back from Oneprovider to Onezone GUI (wrong redirect and broken WebSocket in Safari)
+* VFS-4668 Added additional information box to login page
+* VFS-4455 Fixed wrong position of provider spinner and handling space creation errors
 * VFS-3710 Using binary prefix units for displaying sizes (MiB, GiB, etc.)
 * VFS-3455 Refactor of Websocket reconnection modal
 * VFS-3508 Support for new authentication providers

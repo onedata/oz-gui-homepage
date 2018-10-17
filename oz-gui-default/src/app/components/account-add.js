@@ -1,9 +1,12 @@
 import Ember from 'ember';
 import PromiseLoadingMixin from 'ember-cli-onedata-common/mixins/promise-loading';
 import bindFloater from 'ember-cli-onedata-common/utils/bind-floater';
-import authorizers from 'oz-worker-gui/utils/authorizers';
-import _ from 'lodash';
 import handleLoginEndpoint from 'oz-worker-gui/utils/handle-login-endpoint';
+
+const {
+  computed,
+  get,
+} = Ember;
 
 /**
  * An add account button, which shows popup with authorization providers.
@@ -18,34 +21,20 @@ export default Ember.Component.extend(PromiseLoadingMixin, {
   classNameBindings: ['isLoading:sidebar-item-is-loading'],
   messageBox: Ember.inject.service(),
 
-  /**
-   * To inject.
-   * @required
-   * @type {Array<String>}
-   */
-  supportedAuthorizers: null,
-
   isLoading: false,
 
+  shownAuthorizers: computed('supportedAuthorizers', function shownAuthorizers() {
+    return this.get('supportedAuthorizers').filter(a => get(a, 'id') !== 'onepanel');
+  }),
+  
   didInsertElement() {
     let popup = this.$().find('.account-add-popup');
-    let updater = bindFloater(popup);
+    let updater = bindFloater(popup, undefined, {
+      posY: 'middle',
+    });
     this.$().on('mouseover', updater);
     $('.accordion-container').on('scroll', updater);
   },
-
-  // TODO: handle unknown authorizers  
-  authProviders: Ember.computed('supportedAuthorizers.[]', function () {
-    let supportedAuthorizers = this.get('supportedAuthorizers');
-    if (supportedAuthorizers && supportedAuthorizers.length > 0) {
-      const authProviders = supportedAuthorizers
-        .filter(id => id !== 'basicAuth')
-        .map((id) => _.find(authorizers, a => a && a.type === id));
-      return authProviders;
-    } else {
-      return [];
-    }
-  }),
 
   authEndpointError(error) {
     this.get('messageBox').open({

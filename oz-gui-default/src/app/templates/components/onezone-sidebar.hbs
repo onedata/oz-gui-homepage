@@ -1,5 +1,5 @@
 <div class="brand">
-  {{#link-to 'home'}}
+  {{#link-to "home"}}
     <div class="logo"></div>
   {{/link-to}}
 </div>
@@ -8,32 +8,32 @@
   <div class="accordion main-accordion">  
 
     {{#sidebar-main-group collapseId="providers"
-      title=(t 'onezone.sidebar.filesHead')}}
+      title=(t "onezone.sidebar.filesHead")}}
       {{providers-accordion providers=providers}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="spaces"
-      title=(t 'onezone.sidebar.manageSpacesHead')}}
+      title=(t "onezone.sidebar.manageSpacesHead")}}
       {{spaces-accordion spaces=spaces openModal="openModal"}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="groups"
-      title=(t 'onezone.sidebar.manageGroupsHead')}}
+      title=(t "onezone.sidebar.manageGroupsHead")}}
       {{groups-panel groups=groups}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="tokens"
-      title=(t 'onezone.sidebar.tokensHead')}}
+      title=(t "onezone.sidebar.tokensHead")}}
       {{tokens-list tokens=tokens}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="accounts"
-      title=(t 'onezone.sidebar.connectHead')}}
+      title=(t "onezone.sidebar.connectHead")}}
       {{accounts-list authorizers=authorizers}}
     {{/sidebar-main-group}}
 
     {{#sidebar-main-group collapseId="alias"
-      title=(t 'onezone.sidebar.aliasHead')}}
+      title=(t "onezone.sidebar.aliasHead")}}
       {{alias-panel}}
     {{/sidebar-main-group}}
 

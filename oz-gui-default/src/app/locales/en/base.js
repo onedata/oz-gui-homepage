@@ -1,4 +1,5 @@
 import sessionLocales from 'ember-cli-onedata-common/locales/en/session';
+import resourceLoadError from 'ember-cli-onedata-common/locales/en/components/resource-load-error';
 
 export default {
   common: {
@@ -76,7 +77,6 @@ export default {
       'users created via onepanel administrative interface. Regular users must login via social or ' + 
       'institutional accounts, which are currently disabled by the administrators of this zone.',
     dropdownSubtitle: 'Pick your identity provider',
-    isolatedZone: 'isolated zone',
     unknownZoneName: 'unknown',
     loginWith: 'Login with',
     loginUsing: 'Login using ',
@@ -86,27 +86,22 @@ export default {
     version: 'version',
     endpointError: 'Authorization configuration is invalid, please contact system administrator',
     authenticationError: {
-      title: 'Authentication error',
+      title: 'Authentication error!',
       addAccountTitle: 'Cannot link account',
       backToLogin: 'Back to login',
+      contactInfo: 'If the problem persists, please contact the site administrators and quote the below request state identifier:',
       // NOTE: if adding translation here, don't forget to add new message type to
       // mixins/authentication_error_messages
       codes: {
-        server_error: 'Server has encountered an unexpected error while processing ' +
-        'your login request. Please contact site administrators if the problem persists.',
-        invalid_state: 'Login failed due to bad request state - this usually ' + 
-          'happens when you do not complete your login process within 60 seconds ' +
-          'since redirection to chosen identity provider.',
-        invalid_request: 'Your login request could not be validated. Please ' +
-          'contact site administrators if the problem persists.',
-        account_already_linked_to_another_user: 'You cannot link this account because it ' +
-          'is already linked to another user profile.',
-        account_already_linked_to_current_user: 'This account is already linked ' +
-          'to your profile.',
-        access_token_invalid: 'Chosen identity provider has issued an invalid ' + 
-          'access token. This can be caused by a misconfiguration of the ' +
-          'identity provider or an expired session. Try to sign out from it ' + 
-          'and repeat the login process.',
+        bad_auth_config: 'The Onezone server seems to be misconfigured.',
+        invalid_state: 'Login failed due to bad request state - this can happen if you do not complete your login process within {{attribute}} seconds since redirection to chosen Identity Provider.',
+        invalid_auth_request: 'Your login request could not be validated.',
+        idp_unreachable: 'The Identity Provider of your choice seems to be temporarily unavailable, please try again later.',
+        bad_idp_response: 'Your Identity Provider returned an unexpected response.',
+        cannot_resolve_required_attribute: 'Could not resolve required attribute "{{attribute}}" from the information sent by your Identity Provider.',
+        internal_server_error: 'The server has encountered an unexpected error while processing your login request.',
+        account_already_linked_to_another_user: 'You cannot link this account because it is already linked to another user profile.',
+        account_already_linked_to_current_user: 'This account is already linked to your profile.',
         unknown: 'Unknown reason.'
       }
     },
@@ -214,7 +209,8 @@ export default {
       leave: 'leave',
       rename: 'rename',
       getSupport: 'add storage'
-    }
+    },
+    resourceLoadError,
   },
   logout: {
     failed: 'Session invalidation failed - cannot logout'
@@ -295,6 +291,7 @@ export default {
       readMore: 'Read more',
       noViewPermissions: 'You do not have privileges to view details of this space.',
       creatingSpace: 'Creating space:',
+      createSpaceFailed: 'Space creation failed!',
     },
     spacesAccordionItem: {
       getSupport: 'Add storage...',

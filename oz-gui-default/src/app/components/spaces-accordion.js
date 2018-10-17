@@ -1,85 +1,102 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  inject: {
+    service
+  },
+} = Ember;
+
 /**
  * A list of spaces. Container for spaces-accordion-items.
  * @module components/spaces-accordion
  * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @copyright (C) 2016-2018 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
-export default Ember.Component.extend({
-    store: Ember.inject.service('store'),
-    classNames: ['secondary-accordion', 'spaces-accordion', 'accordion-content'],
+export default Component.extend({
+  i18n: service(),
+  store: service(),
+  notify: service(),
 
-    /** If true, the createNewSpace button is a input field */
-    createNewSpaceEditing: false,
+  classNames: ['secondary-accordion', 'spaces-accordion', 'accordion-content'],
 
-    isSavingSpace: false,
-    createNewSpaceName: null,
+  /** If true, the createNewSpace button is a input field */
+  createNewSpaceEditing: false,
 
-    spaces: null,
-    spacesSorting: ['isDefault:desc', 'name'],
-    spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
+  isSavingSpace: false,
+  createNewSpaceName: null,
 
-    isLoading: Ember.computed.alias('spaces.isUpdating'),
+  spaces: null,
+  spacesSorting: ['isDefault:desc', 'name'],
+  spacesSorted: Ember.computed.sort('spaces', 'spacesSorting'),
 
-    unsupportSpaceSpacet: null,
-    unsupportSpaceProvider: null,
-    isUnsupportModalOpened: false,
-    isJoinSpaceModalOpened: false,
+  isLoading: Ember.computed.alias('spaces.isUpdating'),
 
-    actions: {
-      openModal() {
-        this.sendAction('openModal', ...arguments);
-      },
+  unsupportSpaceSpacet: null,
+  unsupportSpaceProvider: null,
+  isUnsupportModalOpened: false,
+  isJoinSpaceModalOpened: false,
 
-      startCreateNewSpace: function() {
-        this.set('createNewSpaceName', null);
-        if (!this.get('createNewSpaceEditing')) {
-          this.set('createNewSpaceEditing', true);
-        }
-        let $input = this.$('#create-new-space-name');
-        $input.focus();
-      },
+  actions: {
+    openModal() {
+      this.sendAction('openModal', ...arguments);
+    },
 
-      // TODO: this should be invoked when pressing Esc when in editing mode
-      // TODO: maybe create a global object, in which any cancel action can be registered
-      // TODO: eg. service('cancel').register(fun);
-      cancelCreateNewSpace: function() {
-        if (this.get('createNewSpaceEditing')) {
-          this.set('createNewSpaceEditing', false);
-        }
-      },
+    startCreateNewSpace: function () {
+      this.set('createNewSpaceName', null);
+      if (!this.get('createNewSpaceEditing')) {
+        this.set('createNewSpaceEditing', true);
+      }
+      let $input = this.$('#create-new-space-name');
+      $input.focus();
+    },
 
-      endCreateNewSpace: function(spaceName) {
-        if (spaceName) {
-          this.set('isSavingSpace', true);
-          let store = this.get('store');
-          let space = store.createRecord('space', {
-            name: spaceName,
-          });
-          // TODO: handle errors
-          let savingSpace = space.save();
-          savingSpace.finally(() => {
+    // TODO: this should be invoked when pressing Esc when in editing mode
+    // TODO: maybe create a global object, in which any cancel action can be registered
+    // TODO: eg. service('cancel').register(fun);
+    cancelCreateNewSpace: function () {
+      if (this.get('createNewSpaceEditing')) {
+        this.set('createNewSpaceEditing', false);
+      }
+    },
+
+    endCreateNewSpace: function (spaceName) {
+      if (spaceName) {
+        this.set('isSavingSpace', true);
+        const {
+          i18n,
+          store,
+          notify
+        } = this.getProperties('store', 'notify', 'i18n');
+        let space = store.createRecord('space', {
+          name: spaceName,
+        });
+        return space.save()
+          .catch(error => {
+            console.error(`Failed to create new space "${spaceName}": ${error}`);
+            notify.error(i18n.t('onezone.spacesAccordion.createSpaceFailed'));
+          })
+          .finally(() => {
             this.setProperties({
               isSavingSpace: false,
               createNewSpaceEditing: false,
             });
           });
-        }
-      },
-
-      startJoinSpace() {
-        this.set('isJoinSpaceModalOpened', true);
-      },
-
-      showUnsupportSpaceModal(space, provider) {
-        this.setProperties({
-          isUnsupportModalOpened: true,
-          unsupportSpaceSpace: space,
-          unsupportSpaceProvider: provider
-        });
-      },
+      }
     },
+
+    startJoinSpace() {
+      this.set('isJoinSpaceModalOpened', true);
+    },
+
+    showUnsupportSpaceModal(space, provider) {
+      this.setProperties({
+        isUnsupportModalOpened: true,
+        unsupportSpaceSpace: space,
+        unsupportSpaceProvider: provider
+      });
+    },
+  },
 
 });
