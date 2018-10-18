@@ -9,7 +9,8 @@
 
 import Ember from 'ember';
 
-const AUTHENTICATION_ERROR_KEY = 'authentication_error';
+const AUTHENTICATION_ERROR_REASON_KEY = 'authentication_error_reason';
+const AUTHENTICATION_ERROR_STATE_KEY = 'authentication_error_state';
 
 const {
   inject: { service },
@@ -19,9 +20,14 @@ export default Ember.Mixin.create({
   cookies: service(),
   
   getAuthenticationError() {
-    let cookies = this.get('cookies');
-    let authenticationError = cookies.read(AUTHENTICATION_ERROR_KEY);
-    this.set('authenticationError', authenticationError);
-    cookies.clear(AUTHENTICATION_ERROR_KEY);
+    const cookies = this.get('cookies');
+    const authenticationErrorReason = cookies.read(AUTHENTICATION_ERROR_REASON_KEY);
+    const authenticationErrorState = cookies.read(AUTHENTICATION_ERROR_STATE_KEY);
+    this.setProperties({
+      authenticationErrorReason,
+      authenticationErrorState,
+    });
+    cookies.clear(AUTHENTICATION_ERROR_REASON_KEY);
+    cookies.clear(AUTHENTICATION_ERROR_STATE_KEY);
   },
 });

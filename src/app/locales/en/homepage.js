@@ -77,7 +77,7 @@ export default {
       title: 'Want to know more? Talk to us',
       privacy: 'Privacy',
       tos: 'ToS',
-      copyright: '&copy; 2017 Onedata.org'
+      copyright: '&copy; 2018 Onedata.org'
     }
   },
   support: {

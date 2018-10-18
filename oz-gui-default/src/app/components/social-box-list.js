@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 
   actions: {
     authenticate(socialBox) {
-      const providerName = socialBox.get('type');
+      const providerName = socialBox.get('authId');
       socialBox.set('active', true);
       this.get('authenticate')(providerName).finally(() => {
         socialBox.set('active', false);

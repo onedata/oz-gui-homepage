@@ -16,16 +16,21 @@
                 {{t 'login.unknownZoneName'}}
               {{/if}}
             </div>
-            <div class="zone-zone">
-              {{t 'login.isolatedZone'}}
-            </div>
+            {{#if model.brandSubtitle}}
+              <div class="zone-zone">
+                {{model.brandSubtitle}}
+              </div>
+            {{/if}}
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  {{login-box authenticationError=authenticationError}}
+  {{login-box
+    authenticationErrorReason=authenticationErrorReason
+    authenticationErrorState=authenticationErrorState
+    loginNotification=model.loginNotification}}
 </div>
 
 <div class="login-service-version">{{t "login.version"}} {{model.serviceVersion}}</div>

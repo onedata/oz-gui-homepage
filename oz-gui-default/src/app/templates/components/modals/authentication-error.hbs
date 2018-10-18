@@ -1,4 +1,5 @@
 {{#bs-modal open=showAuthenticationError
+    class="authentication-error-modal"
     body=false
     footer=false
     id=modalId
@@ -14,8 +15,14 @@
     {{status-panel
       blocking=true
       type="error"
-      message=authenticationErrorText
+      message=(concat authenticationErrorText " " (if showErrorContactInfo (t "login.authenticationError.contactInfo")))
     }}
+    {{#if showErrorContactInfo}}
+      {{input-copy
+        inputValue=authenticationErrorState
+        class="authentication-error-state-input-copy light"
+      }}
+    {{/if}}
   {{/bs-modal-body}}
   {{#bs-modal-footer as |footer|}}
     {{#bs-button action=(action "close" target=footer) type="default" disabled=isWorking

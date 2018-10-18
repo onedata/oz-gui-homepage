@@ -1,6 +1,6 @@
 {
   "name": "oz-worker-gui",
-  "version": "17.06.0-rc6",
+  "version": "0.0.0-current",
   "description": "GUI for oz-worker with homepage pages added",
   "private": true,
   "directories": {
@@ -22,6 +22,7 @@
     "broccoli-asset-rev": "2.4.2",
     "chai": "3.5.0",
     "chai-jquery": "2.0.0",
+    "contrast": "1.0.1",
     "broccoli-funnel": "1.0.9",
     "ember-ajax": "2.0.1",
     "ember-bootstrap": "0.11.3",
@@ -42,7 +43,7 @@
     "ember-cli-jshint": "2.0.1",
     "ember-cli-mocha": "0.13.2",
     "ember-cli-release": "1.0.0-beta.2",
-    "ember-cli-sass": "5.5.1",
+    "ember-cli-sass": "7.1.7",
     "ember-cli-sri": "2.1.1",
     "ember-cli-test-loader": "1.1.1",
     "ember-cli-uglify": "1.2.0",

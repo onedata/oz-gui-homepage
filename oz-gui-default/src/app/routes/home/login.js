@@ -33,6 +33,8 @@ export default LoginRoute.extend({
             resolve({
               zoneName: data.zoneName,
               serviceVersion: data.serviceVersion,
+              brandSubtitle: data.brandSubtitle,
+              loginNotification: data.loginNotification,
             });
           },
           (error) => {
@@ -40,6 +42,8 @@ export default LoginRoute.extend({
             resolve({
               zoneName: null,
               serviceVersion: null,
+              brandSubtitle: null,
+              loginNotification: null,
             });
           }
         );
@@ -48,6 +52,8 @@ export default LoginRoute.extend({
         resolve({
           zoneName: null,
           serviceVersion: null,
+          brandSubtitle: null,
+          loginNotification: null,
         });
       }
     });

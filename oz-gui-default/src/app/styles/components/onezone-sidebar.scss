@@ -292,6 +292,11 @@
           vertical-align: middle;
           background-color: #3A3A3A;
 
+          // a hack to position in the middle
+          .provider-pending {
+            transform: translateY(-50%) translateY(1px);
+          }
+          
           .go-to-provider {
             cursor: pointer; cursor: hand;
           }
