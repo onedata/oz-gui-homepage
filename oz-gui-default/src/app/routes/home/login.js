@@ -7,8 +7,8 @@ let LoginRoute = PageBase.extend(UnauthenticatedRouteMixin);
 /**
  * A login page, only true "home subpage" in standard OZ GUI. Show login widgets.
  * @module routes/home/login
- * @author Jakub Liput
- * @copyright (C) 2016 ACK CYFRONET AGH
+ * @author Jakub Liput, Michal Borzecki
+ * @copyright (C) 2016-2018 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default LoginRoute.extend({
@@ -19,8 +19,15 @@ export default LoginRoute.extend({
   name: 'login',
   zoneName: null,
 
-  beforeModel() {    
-    if (this.get('session.isAuthenticated')) {
+  /**
+   * If true, route will redirect to main page if user is authenticated
+   * @type {boolean}
+   */
+  redirectIfAuthenticated: true,
+
+  beforeModel() {
+    if (this.get('session.isAuthenticated') &&
+      this.get('redirectIfAuthenticated')) {
       this.transitionTo('onezone');
     }
   },

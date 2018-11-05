@@ -14,7 +14,7 @@ const {
  * Shows a list of authorizers and a login form.
  * @module components/login-box
  * @author Jakub Liput, Michal Borzecki
- * @copyright (C) 2016-2017 ACK CYFRONET AGH
+ * @copyright (C) 2016-2018 ACK CYFRONET AGH
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend(AuthenticationErrorMessage, {
@@ -29,6 +29,13 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
    */
   loginNotification: null,
 
+  /**
+   * @virtual optional
+   * If true, the login will be used in testing mode (will not create session)
+   * @type {boolean}
+   */
+  testMode: false,
+  
   /**
    * List of authorizers
    * @type {Array.AuthorizerInfo}
@@ -134,8 +141,9 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
   },
 
   initSupportedAuthorizers() {
+    const testMode = this.get('testMode');
     this.set('isLoading', true);
-    this.get('supportedAuthorizersService').getSupportedAuthorizers()
+    this.get('supportedAuthorizersService').getSupportedAuthorizers(testMode)
       .then(({ authorizers }) => {
         safeExec(this, 'set', 'supportedAuthorizers', authorizers);
       })
@@ -184,9 +192,10 @@ export default Ember.Component.extend(AuthenticationErrorMessage, {
     // TODO: what if there is server error?
     /** Get a login endpoint URL from server and go to it */
     authenticate(providerName) {
+      const testMode = this.get('testMode');
       let provider = _.find(this.get('supportedAuthorizers'), { type: providerName });
       this.set('_activeAuthorizer', provider);
-      const p = this.get('onezoneServer').getLoginEndpoint(providerName);
+      const p = this.get('onezoneServer').getLoginEndpoint(providerName, testMode);
       p.then(
         (data) => {
           handleLoginEndpoint(data, () => {

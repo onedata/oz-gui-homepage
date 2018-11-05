@@ -78,8 +78,15 @@
               {{/if}}
             </div>
           </div>
+        {{else if (and (not isLoading) (not errorMessage))}}
+          <p class="no-login-methods">{{t "login.noLoginMethods"}}</p>
         {{/if}}
-        {{#if (and loginNotification (not isLoading))}}
+        {{#if testMode}}
+          <div class="login-notification test-mode-notification">
+            <span>{{t "login.loginTestMode"}}</span><br>
+            {{#link-to "home"}}{{t "login.goBackToMainPage"}}{{/link-to}}
+          </div>
+        {{else if (and loginNotification (not isLoading))}}
           <div class="login-notification">{{loginNotification}}</div>
         {{/if}}
       {{/if}}

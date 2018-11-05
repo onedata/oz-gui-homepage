@@ -384,6 +384,16 @@
     transition: transform 0.3s linear;
     word-wrap: break-word;
   }
+  .test-mode-notification {
+    background-color: rgba($color-yellow, 0.5);
+    border: 1px solid darken($color-yellow, 3%);
+    a {
+      color: $onedata-mint-green;
+      &:hover, &:active {
+        color: darken($onedata-mint-green, 10%);
+      }
+    }
+  }
   .authorizers-login {
     &.with-authorizers-dropdown {
       .login-notification {
@@ -411,4 +421,9 @@
     position: initial;
     transform: none;
   }
+}
+
+.no-login-methods {
+  margin-top: $padding-large-horizontal;
+  text-align: center;
 }

@@ -16,6 +16,7 @@ export default Ember.Service.extend({
   /**
    * Fetch list of supported authorizers (for login).
    *
+   * @param {boolean} testMode if true, uses test authorizers
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched authorizers list
    *   - ``data.authorizers`` (AuthProvider[]) An array with auth. providers data
@@ -23,8 +24,10 @@ export default Ember.Service.extend({
    *     each authorizer has: id, displayName, iconPath, iconBackgroundColor
    * - ``reject(object: error)`` on failure
    */
-  getSupportedAuthorizers() {
-    return this.get('server').publicRPC('getSupportedAuthorizers');
+  getSupportedAuthorizers(testMode) {
+    return this.get('server').publicRPC('getSupportedAuthorizers', {
+      testMode,
+    });
   },
 
   /**
@@ -62,6 +65,7 @@ export default Ember.Service.extend({
    * Fetch a URL to login endpoint.
    *
    * @param {String} providerName One of login providers, eg. google, dropbox
+   * @param {boolean} testMode if true, do not create session
    * @returns {RSVP.Promise} A backend operation completion:
    * - ``resolve(object: data)`` when successfully fetched the endpoint
    *   - ``data.method`` (string)
@@ -69,9 +73,10 @@ export default Ember.Service.extend({
    *   - ``data.formData`` (object|undefined)
    * - ``reject(object: error)`` on failure
    */
-  getLoginEndpoint(providerName) {
+  getLoginEndpoint(providerName, testMode) {
     return this.get('server').publicRPC('getLoginEndpoint', {
-      provider: providerName
+      provider: providerName,
+      testMode,
     });
   },
 
