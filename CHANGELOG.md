@@ -4,6 +4,11 @@
 CHANGELOG
 ---------
 
+### Current changes
+
+* VFS-4955 Using bundled API docs, ReDoc update to 2.0-alpha.x
+
+
 ### 17.06.0-rc6
 
 * Updating OZ GUI base to 17.06.0-rc6

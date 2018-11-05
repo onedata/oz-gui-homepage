@@ -7,7 +7,8 @@ const {
     alias
   },
   inject,
-  observer
+  observer,
+  run: { scheduleOnce },
 } = Ember;
 
 /**
@@ -58,4 +59,12 @@ export default Controller.extend({
     let {apiComponent, apiVersion} = this.getProperties('apiComponent', 'apiVersion');
     this.get('apiController').setProperties({apiComponent, apiVersion});
   }),
+  
+  actions: {
+    iframeSrcLoadingChanged(isLoading) {
+      scheduleOnce('afterRender', this, () => {
+        this.set('apiController.iframeSrcLoading', isLoading);
+      });
+    },
+  },
 });
