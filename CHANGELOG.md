@@ -6,6 +6,7 @@ CHANGELOG
 
 ### Latest changes
 
+* VFS-5013 Support for test login page
 * VFS-4702 Support for customizable authorization providers icons, colors and names
 * VFS-4553 Fixed browser back from Oneprovider to Onezone GUI (wrong redirect and broken WebSocket in Safari)
 * VFS-4668 Added additional information box to login page
