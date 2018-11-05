@@ -83,6 +83,7 @@ app/controllers/home/login.js
 app/controllers/onezone.js
 app/controllers/onezone/index.js
 app/controllers/onezone/provider-redirect.js
+app/controllers/test/login.js
 app/helpers/.gitkeep
 app/initializers/i18n.js
 app/initializers/inject-session.js
@@ -109,6 +110,7 @@ app/routes/index.js
 app/routes/onezone.js
 app/routes/onezone/index.js
 app/routes/onezone/provider-redirect.js
+app/routes/test/login.js
 app/serializers/application.js
 app/serializers/user.js
 app/services/modals-manager.js
@@ -190,9 +192,12 @@ app/templates/components/tokens-list-item.hbs
 app/templates/components/tokens-list.hbs
 app/templates/home/login.hbs
 app/templates/home/logout.hbs
+app/templates/login.hbs
 app/templates/onezone.hbs
 app/templates/onezone/index.hbs
 app/templates/onezone/provider-redirect.hbs
+app/templates/test.js
+app/templates/test/login.js
 app/utils/auth-box-config.js
 app/utils/browser-post.js
 app/utils/generate-shell-command.js
