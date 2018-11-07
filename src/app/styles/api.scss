@@ -32,6 +32,13 @@
       }
     }
   }
+  
+  .api-iframe-loading-spinner {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    color: $text-color;
+  }
 }
 
 .api-dropdown-versions {

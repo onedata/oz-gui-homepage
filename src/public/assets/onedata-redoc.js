@@ -70,23 +70,19 @@ function jumpToAnchor(anchor) {
   var element;
   switch (type) {
     case 'section':
-      element = document.querySelector('h1[section="' + anchor + '"] .share-link, h2[section="' + anchor + '"] .share-link');
+      element = document.querySelector('div[data-section-id="' + anchor + '"] a');
       break;
     case 'tag':
-      element = document.querySelector('div.tag-info a.share-link[orig-href="#' + anchor + '"]');
-      // find .tag-info parent
-      while (!element.classList.contains('tag-info')) {
-        element = element.parentElement;
-      }
+      element = document.querySelector('div[data-section-id="' + anchor + '"] h1');
       break;
     case 'operation':
-      var operationId = anchor.match(/operation\/(.*)/)[1];
-      element = document.querySelector('operation[operation-id="' + operationId + '"] .operation-content .operation-header');
+      element = document.querySelector('div[data-section-id="' + anchor + '"] h2 a');
       break;
     default:
       throw 'Cannot resolve anchor type: ' + anchor;
   }
   window.scrollTo(0, offset(element).top - JUMP_SCROLL_MARGIN_TOP);
+  return element;
 }
 
 /**
@@ -119,41 +115,49 @@ function handleLinkOpen(event) {
  * 2. to have external href for accessing section/tag/operation from
  *    outside Homepage.
  */
-function afterRender() {
-  console.debug('Onedata ReDoc integration: after render');
+function postProcessing() {
+  console.debug('Onedata ReDoc integration: post processing');
   // live collection
-  var shareLinks = document.getElementsByClassName('share-link');
+  var shareLinks = document.querySelectorAll('a:not([orig-href])');
   Array.from(shareLinks).forEach(function(sl) {
     var origHref = sl.getAttribute('href');
-    sl.setAttribute('orig-href', origHref);
-    sl.setAttribute('href', homepageLink(origHref));
-    // it works even with pressing "enter" on link
-    sl.addEventListener('click', handleLinkOpen);
+    if (origHref && origHref.startsWith('#')) {
+      sl.setAttribute('orig-href', origHref);
+      sl.setAttribute('href', homepageLink(origHref));
+      // it works even with pressing "enter" on link
+      sl.addEventListener('click', handleLinkOpen); 
+    }
   });
   // HACK convert wrongly generated swagger.json links (badly used relative link)
   try {
-    var swaggerUrl = document.getElementsByClassName('openapi-button')[0].href;
-    Array.from(document.getElementsByTagName('a')).filter(function(a) {
-      return a.href.match(/swagger.json/);
-    }).forEach(function(a) {
-      a.href = swaggerUrl;
-    });
+    var swaggerUrl = window.location.href.replace(/(.*)\/.*/, '$1/swagger.json');
+    Array.from(document.querySelectorAll('a[href*="swagger.json"]'))
+      .forEach(function(a) {
+        a.href = swaggerUrl;
+      });
   } catch (error) {
     console.warn('Failed to convert bad relative swagger.json links: ' + error);
   }
   
-  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, document.parentOrigin);
-  if (document.apiAnchor) {
-    redocAnchorChanged(document.apiAnchor);
+  if (!document.postProcessingJumpDone && document.apiAnchor) {
+    var anchorElement = redocAnchorChanged(document.apiAnchor);
+    if (anchorElement) {
+      document.postProcessingJumpDone = true;
+    }
+  }
+  
+  if (!document.iframeLoaded) {
+    setTimeout(postProcessing, 200);
   }
 }
 
 function redocAnchorChanged(anchor) {
-  jumpToAnchor(anchor);
+  return jumpToAnchor(anchor);
 }
 
 function getUrlHashPart(url) {
-  return url.match(RE_HASH)[1];
+  var m = url.match(RE_HASH);
+  return m ? m[1] : '';
 }
 
 function handleMessage(event) {
@@ -169,20 +173,8 @@ window.history.replaceState = function (stateObj, title, url) {
   PARENT_WINDOW.history.replaceState(null, null, homepageLink(getUrlHashPart(url)));
 };
 
-/// MAIN - wait for ReDoc to render (currently polling) and perform integration tasks
-
-var __ONEDATA__redocIsReady = false;
-var __ONEDATA__redocCheckReadyId = null;
-
-function checkReady() {
-  if (__ONEDATA__redocIsReady) {
-    window.clearInterval(__ONEDATA__redocCheckReadyId);
-  } else if (!document.querySelector('redoc.loading')) {
-    __ONEDATA__redocIsReady = true;
-    afterRender();
-  }
-}
-
-__ONEDATA__redocCheckReadyId = window.setInterval(checkReady, 100);
+/// MAIN
 
 window.addEventListener("message", handleMessage, false);
+
+postProcessing();

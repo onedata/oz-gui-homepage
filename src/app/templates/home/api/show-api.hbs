@@ -2,8 +2,10 @@
   <div class="row-index row-redoc">
     {{#if (and iframeApiVersion apiComponent)}}
       {{redoc-iframe apiVersion=iframeApiVersion apiComponent=apiComponent
-      anchor=anchor
-      aboveElementSelector=".api-components-menu"}}
+        anchor=anchor
+        aboveElementSelector=".api-components-menu"
+        iframeSrcLoadingChanged=(action "iframeSrcLoadingChanged")
+      }}
     {{/if}}
   </div>
 </div>

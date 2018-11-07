@@ -79,12 +79,5 @@ module.exports = function(defaults) {
 
   BOWER_ASSETS.forEach(path => app.import(app.bowerDirectory + '/' + path));
 
-  // copy assets for libraries that will be used as separate files (not concatenated into vendor)
-  var redocAssets = new Funnel('bower_components/redoc', {
-    srcDir: '/dist',
-    include: ['redoc.min.js', 'redoc.min.js.map'],
-    destDir: '/assets'
-  });
-
-  return app.toTree([redocAssets]);
+  return app.toTree([]);
 };
