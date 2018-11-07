@@ -122,7 +122,7 @@ export default Ember.Component.extend({
    * - `/assets/onedata-redoc.js` - code for Onedata Homepage and ReDoc integration
    *   see this file for details
    * 
-   * Also two variables are setted for the iframe context:
+   * Also two variables are set for the iframe context:
    * - `document.apiAnchor` - if an anchor is passed in ``anchor`` property then
    *   try to jump to proper section/tag/operation in ReDoc docs
    * - `apiBaseUrl` - a URL of current location where this component is rendered
@@ -157,9 +157,6 @@ export default Ember.Component.extend({
   changeRedocAnchor(anchor) {
     let redocWindow = this.$()[0].contentWindow;
     redocWindow.postMessage({type: 'anchor-changed', message: anchor}, '*');
-  },
-
-  onRedocRendered() {
   },
   
   /**
