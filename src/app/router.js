@@ -6,6 +6,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('test', function() {
+    this.route('login');
+  });
+  
   this.route('home', function() {
     [
       'get-started',
@@ -19,7 +23,7 @@ Router.map(function() {
     ].forEach((homepagePage) => {
       this.route(homepagePage);
     });
-
+    
     this.route('api', function() {
       this.route('show-api', {path: ':api_version/:api_component'});
     });
