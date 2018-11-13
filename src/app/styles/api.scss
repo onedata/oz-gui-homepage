@@ -1,3 +1,5 @@
+$-loading-anchor-row-height: 40px;
+
 .container-home {
   .container-redoc {
     margin: 0;
@@ -6,6 +8,30 @@
       padding-top: 0px;
       padding-bottom: 0px;
       background-color: #FFF;
+      .row-loading-anchor {
+        position: absolute;
+        height: 0;
+        left: 0;
+        right: 0;
+        line-height: $-loading-anchor-row-height;
+        background-color: #8A8A8A;
+        text-align: center;
+        font-size: $top-font-size;
+        color: transparent;
+        transition: height linear 0.5s, color linear 0.5s;
+      }
+      .redoc-iframe {
+        transition: padding-top linear 0.5s;
+      }
+      &.iframe-src-loading {
+        .row-loading-anchor {
+          height: $-loading-anchor-row-height;
+          color: inherit;
+        }
+        .redoc-iframe {
+          padding-top: $-loading-anchor-row-height;
+        }
+      }
     }
   }
 }

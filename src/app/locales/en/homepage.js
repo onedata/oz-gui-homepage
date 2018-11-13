@@ -99,6 +99,9 @@ export default {
     }
   },
   api: {
-    title: 'API'
+    title: 'API',
+    showApi: {
+      loading: 'Loading',
+    },
   }
 };

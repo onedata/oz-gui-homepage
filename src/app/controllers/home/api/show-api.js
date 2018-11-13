@@ -4,7 +4,8 @@ const {
   Controller,
   computed,
   computed: {
-    alias
+    alias,
+    reads,
   },
   inject,
   observer,
@@ -37,6 +38,7 @@ export default Controller.extend({
 
   apiComponent: alias('model.apiComponent'),
   apiVersion: alias('model.apiVersion'),
+  iframeSrcLoading: reads('apiController.iframeSrcLoading'),
 
   /**
    * A version of API passed to iframe with ReDoc.

@@ -138,15 +138,13 @@ function postProcessing() {
   } catch (error) {
     console.warn('Failed to convert bad relative swagger.json links: ' + error);
   }
-  
-  if (!document.postProcessingJumpDone && document.apiAnchor) {
+    
+  if (document.iframeLoaded) {
     var anchorElement = redocAnchorChanged(document.apiAnchor);
     if (anchorElement) {
       document.postProcessingJumpDone = true;
     }
-  }
-  
-  if (!document.iframeLoaded) {
+  } else {
     setTimeout(postProcessing, 200);
   }
 }
