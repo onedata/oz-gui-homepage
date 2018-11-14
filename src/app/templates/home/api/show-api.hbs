@@ -1,7 +1,9 @@
 <div class="container-index container-redoc">
   <div class={{concat "row-index row-redoc " (if (and iframeSrcLoading anchor) "iframe-src-loading")}}>
     <div class="row-loading-anchor">
-      {{t "api.showApi.loading"}} {{anchor}}...
+      <span class="loading-text">
+        {{t "api.showApi.loading"}} {{anchor}}...
+      </span>
     </div>
     {{#if (and iframeApiVersion apiComponent)}}
       {{redoc-iframe apiVersion=iframeApiVersion apiComponent=apiComponent

@@ -14,11 +14,15 @@ $-loading-anchor-row-height: 40px;
         left: 0;
         right: 0;
         line-height: $-loading-anchor-row-height;
-        background-color: #8A8A8A;
+        background-color: $color-api-components-background;
         text-align: center;
         font-size: $top-font-size;
-        color: transparent;
-        transition: height linear 0.5s, color linear 0.5s;
+        color: $color-api-components-text;
+        transition: height 0.5s linear 0.25s;
+        .loading-text {
+          opacity: 0;
+          transition: opacity 0.25s linear;
+        }
       }
       .redoc-iframe {
         transition: padding-top linear 0.5s;
@@ -26,7 +30,11 @@ $-loading-anchor-row-height: 40px;
       &.iframe-src-loading {
         .row-loading-anchor {
           height: $-loading-anchor-row-height;
-          color: inherit;
+          transition: height 0.5s linear;
+          .loading-text {
+            opacity: 1;
+            transition: opacity 0.25s linear 0.5s;
+          }
         }
         .redoc-iframe {
           padding-top: $-loading-anchor-row-height;
