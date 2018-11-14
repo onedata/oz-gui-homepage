@@ -36,10 +36,15 @@ export default Controller.extend({
    */
   defaultVersion: null,
 
+  /**
+   * @type {number|null}
+   */
+  documentLoadStatus: null,
+  
   apiComponent: alias('model.apiComponent'),
   apiVersion: alias('model.apiVersion'),
   iframeSrcLoading: reads('apiController.iframeSrcLoading'),
-
+  
   /**
    * A version of API passed to iframe with ReDoc.
    * As the iframe with API will read specific version,
@@ -59,7 +64,14 @@ export default Controller.extend({
 
   apiComponentOrVersionUpdated: observer('apiComponent', 'apiVersion', function() {
     let {apiComponent, apiVersion} = this.getProperties('apiComponent', 'apiVersion');
+    this.set('documentLoadStatus', null);
     this.get('apiController').setProperties({apiComponent, apiVersion});
+  }),
+  
+  disableIframeSrcLoading: observer('documentLoadStatus', function disableIframeSrcLoading() {
+    if (this.get('documentLoadStatus') >= 400) {
+      this.set('apiController.iframeSrcLoading', false);
+    }
   }),
   
   actions: {

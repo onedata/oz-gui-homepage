@@ -1,3 +1,5 @@
+import httpStatusPage from './components/http-status-page';
+
 export default {
   application: {
     homepage: 'homepage',
@@ -11,6 +13,9 @@ export default {
     media: 'media',
     blog: 'blog',
     api: 'API',
+  },
+  components: {
+    httpStatusPage,
   },
   index: {
     atlas: {
@@ -90,7 +95,7 @@ export default {
     dedicatedSupport: {
       title: 'Dedicated support',
       introMayApply: 'Organizations using onedata may apply for a dedicated support including',
-      bulletConfiguring: 'configuring and performance tuning by out experts',
+      bulletConfiguring: 'configuring and performance tuning by our experts',
       bulletImplementing: 'implementing additional functionalities',
       bulletAdopting: 'adopting to organization\'s needs',
       bulletSolving: 'solving problems',

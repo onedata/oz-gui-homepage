@@ -6,11 +6,18 @@
       </span>
     </div>
     {{#if (and iframeApiVersion apiComponent)}}
-      {{redoc-iframe apiVersion=iframeApiVersion apiComponent=apiComponent
-        anchor=anchor
-        aboveElementSelector=".api-components-menu"
-        iframeSrcLoadingChanged=(action "iframeSrcLoadingChanged")
-      }}
+      {{#if (or (not documentLoadStatus) (lt documentLoadStatus 400))}}
+        {{redoc-iframe
+          apiVersion=iframeApiVersion
+          apiComponent=apiComponent
+          anchor=anchor
+          aboveElementSelector=".api-components-menu"
+          iframeSrcLoadingChanged=(action "iframeSrcLoadingChanged")
+          documentLoadStatusChanged=(action (mut documentLoadStatus))
+        }}
+      {{else}}
+        {{http-status-page statusCode=documentLoadStatus}}
+      {{/if}}
     {{/if}}
   </div>
 </div>

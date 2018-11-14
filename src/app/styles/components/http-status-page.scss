@@ -1,0 +1,23 @@
+.http-status-page {
+  background-image: url("/assets/images/404.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #5494E8;
+  .status-page-header {
+    color: $onedata-red;
+    padding-top: 60px;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .status-page-subheader {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #000;
+  }
+}
