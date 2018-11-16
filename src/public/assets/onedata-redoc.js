@@ -116,6 +116,15 @@ function handleMenuItemOpen(event) {
   event.stopPropagation();
 }
 
+function processInternalLink(lnk) {
+  var origHref = lnk.getAttribute('href');
+  lnk.setAttribute('orig-href', origHref);
+  lnk.setAttribute('href', homepageLink(origHref));
+  // it works even with pressing "enter" on link
+  lnk.addEventListener('click', handleLinkOpen); 
+  lnk.setAttribute('data-is-click-handler', 'true');
+}
+
 /**
  * When all links are rendered, we want to change them:
  * 1. to handle click with our custom method - ``handleLinkOpen``,
@@ -126,14 +135,7 @@ function postProcessing() {
   console.debug('Onedata ReDoc integration: post processing');
   // live collection
   var anchorLinks = document.querySelectorAll('a[href^="#"]:not([orig-href]):not([data-is-click-handler])');
-  Array.from(anchorLinks).forEach(function(lnk) {
-    var origHref = lnk.getAttribute('href');
-    lnk.setAttribute('orig-href', origHref);
-    lnk.setAttribute('href', homepageLink(origHref));
-    // it works even with pressing "enter" on link
-    lnk.addEventListener('click', handleLinkOpen); 
-    lnk.setAttribute('data-is-click-handler', 'true');
-  });
+  Array.from(anchorLinks).forEach(processInternalLink);
   var externalLinks = document.querySelectorAll('a:not([href^="#"]):not([orig-href]):not([data-is-click-handler])');
   Array.from(externalLinks).forEach(function(lnk) {
     lnk.addEventListener('click', handleLinkOpen); 
@@ -168,6 +170,11 @@ function postProcessing() {
     var logo = document.querySelector('img[src$="-logo.svg"');
     if (logo) {
       logo.setAttribute('src', logo.getAttribute('src').replace('https://onedata.org/', '/'));
+    }
+    // HACK remove misleading link from logo
+    var logoLink = document.querySelector('.menu-content a[href^="https://onedata.org"]');
+    if (logoLink) {
+      logoLink.href = 'javascript:void(0);';
     }
     // HACK hack for current wrong links, it should be fixed in documentation in future
     var supportLinks = document.querySelectorAll('a[href="https://onedata.org/support"]');
