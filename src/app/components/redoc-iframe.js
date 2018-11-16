@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import bindElementTop from 'oz-worker-gui/utils/bind-element-top';
+import safeExec from 'ember-cli-onedata-common/utils/safe-method-execution';
 
 function stripUrlFromQueryParams(href) {
   let match = href.match(/(.*?)\?.*|.*/);
@@ -71,6 +72,13 @@ export default Ember.Component.extend({
    */
   aboveElementSelector: '.api-components-menu',
   
+  /**
+   * When src of iframe changes, we make a test request to check if the resource
+   * can be fetched. This property will be set to status of HEAD request.
+   * @type {number}
+   */
+  srcLoadStatus: null,
+  
   redocDocumentPath: Ember.computed('apiVersion', 'apiComponent', function() {
     let {apiVersion, apiComponent} = this.getProperties('apiVersion', 'apiComponent');
     return `/docs/doc/swagger/${apiVersion}/${apiComponent}/redoc-static.html`;
@@ -106,6 +114,16 @@ export default Ember.Component.extend({
     const src = this.get('src');
     if (src && src !== 'about:blank') {
       this.get('iframeSrcLoadingChanged')(true);
+      this.set('srcLoadStatus', null);
+      const documentLoadStatusChanged = this.get('documentLoadStatusChanged');
+      var req = new XMLHttpRequest();
+      req.open('HEAD', src);
+      const self = this;
+      req.addEventListener('loadend', function() {
+        safeExec(self, 'set', 'srcLoadStatus', this.status);
+        documentLoadStatusChanged(this.status);
+      });
+      req.send();
       Ember.run.next(this, 'srcLoadStarted');
     }
   }),
@@ -131,26 +149,33 @@ export default Ember.Component.extend({
    * For more information about integration code, see `/assets/onedata-redoc.js`.
    */
   srcLoadStarted() {
-    console.debug('component:redoc-iframe: srcLoadStarted check');
-    const iframeDocument = this.element.contentDocument;
-    if (iframeDocument && this.element.src === iframeDocument.location.href && iframeDocument.head && iframeDocument.body && iframeDocument.getElementById('redoc')) {
-      const baseUrl = stripUrlFromQueryParams(window.location.href);
-      iframeDocument.apiBaseUrl = escapeJsString(baseUrl);
-      iframeDocument.parentOrigin = escapeJsString(window.location.origin);
-      iframeDocument.apiAnchor = this.get('anchor');
-      
-      const onedataRedocScript = iframeDocument.createElement('script');
-      onedataRedocScript.src = '/assets/onedata-redoc.js';
-      iframeDocument.body.appendChild(onedataRedocScript);
-      
-      const onedataRedocStyle = iframeDocument.createElement('link');
-      onedataRedocStyle.rel = 'stylesheet';
-      onedataRedocStyle.type = 'text/css';
-      onedataRedocStyle.href = '/assets/redoc.css';
-      iframeDocument.head.appendChild(onedataRedocStyle);
-      console.debug('component:redoc-iframe: srcLoadStarted done');
-    } else {
-      Ember.run.later(this, 'srcLoadStarted', 100);
+    if (!this.isDestroyed) {
+      console.debug('component:redoc-iframe: srcLoadStarted check');
+      const iframeDocument = this.element.contentDocument;
+      if (iframeDocument && this.element.src === iframeDocument.location.href && iframeDocument.head && iframeDocument.body && iframeDocument.getElementById('redoc')) {
+        const baseUrl = stripUrlFromQueryParams(window.location.href);
+        iframeDocument.apiBaseUrl = escapeJsString(baseUrl);
+        iframeDocument.parentOrigin = escapeJsString(window.location.origin);
+        iframeDocument.apiAnchor = this.get('anchor');
+        
+        const onedataRedocScript = iframeDocument.createElement('script');
+        onedataRedocScript.src = '/assets/onedata-redoc.js';
+        iframeDocument.body.appendChild(onedataRedocScript);
+        
+        const onedataRedocStyle = iframeDocument.createElement('link');
+        onedataRedocStyle.rel = 'stylesheet';
+        onedataRedocStyle.type = 'text/css';
+        onedataRedocStyle.href = '/assets/redoc.css';
+        iframeDocument.head.appendChild(onedataRedocStyle);
+        console.debug('component:redoc-iframe: srcLoadStarted done');
+      } else {
+        const srcLoadStatus = this.get('srcLoadStatus');
+        if (srcLoadStatus && srcLoadStatus >= 400) {
+          this.get('iframeSrcLoadingChanged')(false);
+        } else {
+          Ember.run.later(this, 'srcLoadStarted', 100);
+        }      
+      } 
     }
   },
   
