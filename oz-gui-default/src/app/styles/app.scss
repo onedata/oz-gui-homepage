@@ -46,11 +46,17 @@ $body-font: 'Open Sans';
 @import "onedata-common";
 
 @import "colors";
+@import "animate";
 @import "fonts";
 @import "login";
 @import "onezone";
 @import "notify";
-@import "animate";
+
+// backported from onepanel-gui
+@import "utils";
+@import "components/spin-spinner-extensions";
+
+@import "components/ember-power-select-overrides";
 
 // OZ components and styles
 @import "components/c-search";
@@ -73,6 +79,9 @@ $body-font: 'Open Sans';
 @import "components/message-box-modal";
 @import "components/one-option-button";
 @import "components/common-loader";
+@import 'components/resource-load-error';
+@import 'components/error-inline';
+
 
 html, body {
   height: 100%;
@@ -163,7 +172,7 @@ html:not(.test-runner) {
     }
 
     h2 {
-      font-family: 'Myriad Pro Semibold', 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       @include respond-to(screen-xs) {
         font-size: $body-font-size-xs * 1.5;
       }
@@ -258,6 +267,10 @@ html:not(.test-runner) {
 input {
   font-family: 'Open Sans';
   color: black;
+}
+
+textarea {
+  resize: none;
 }
 
 // TODO: there general-purpose classes should be moved to deps/gui styles
@@ -357,5 +370,47 @@ input {
 }
 
 .container-home > .container:first-child, .container-home > .container-index {
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+.disable-pointer-events {
+  pointer-events: none !important;
+}
+
+.input-with-button {
+  display: table;
+  width: 100%;
+
+  > * {
+    display: table-cell;
+    // TODO enable when hack from .btn removed
+    // vertical-align: middle;
+  }
+
+  > *:first-child {
+    width: 100%;
+  }
+
+  input, .form-control {
+    height: $input-height-base;
+    text-overflow: ellipsis;
+  }
+
+  .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: $input-height-base;
+    height: $input-height-base;
+    border: none;
+    color: inherit !important;
+    background: transparent !important;
+    .oneicon {
+      font-size: 32px;
+    }
+    &:hover, &:focus, &:active {
+      background: transparent;
+    }
+  }
 }

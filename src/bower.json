@@ -1,7 +1,7 @@
 {
   "name": "oz-worker-gui",
   "dependencies": {
-    "ember": "2.8.3",
+    "ember": "2.11",
     "ember-cli-shims": "0.1.3",
     "ember-load-initializers": "0.1.7",
     "ember-qunit": "0.4.22",
@@ -12,7 +12,7 @@
     "qunit": "2.0.1",
     "bootstrap": "3.3.7",
     "bootstrap-sass": "3.3.7",
-    "owl-carousel": "1.3.2",
+    "owl.carousel": "2.2.1",
     "bind-first": "jquery.bind-first#^0.2.3",
     "jquery-mousewheel": "3.1.13",
     "jquery-searchable": "1.1.0",
@@ -21,10 +21,9 @@
     "chai": "3.5.0",
     "ember-mocha-adapter": "0.3.1",
     "spin.js": "2.3.2",
-    "redoc": "1.7.0",
     "srcdoc-polyfill": "0.2.0"
   },
-    "resolutions": {
+  "resolutions": {
     "jquery": "3.1.1"
   }
 }

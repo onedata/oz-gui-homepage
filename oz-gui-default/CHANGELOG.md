@@ -4,6 +4,59 @@
 CHANGELOG
 ---------
 
+### Latest changes
+
+* VFS-5013 Support for test login page
+* VFS-4702 Support for customizable authorization providers icons, colors and names
+* VFS-4553 Fixed browser back from Oneprovider to Onezone GUI (wrong redirect and broken WebSocket in Safari)
+* VFS-4668 Added additional information box to login page
+* VFS-4455 Fixed wrong position of provider spinner and handling space creation errors
+* VFS-3710 Using binary prefix units for displaying sizes (MiB, GiB, etc.)
+* VFS-3455 Refactor of Websocket reconnection modal
+* VFS-3508 Support for new authentication providers
+* VFS-3512 Safari login screen fixes
+* VFS-3337 Workaround for not showing some login icons when using AdBlock
+* VFS-3419 Improvements in login view: added loading spinners for more authenticators
+
+
+### 17.06.0-rc2
+
+* No changes in GUI since 17.06.0-rc1
+
+
+### 17.06.0-rc1
+
+* No changes in GUI since 17.06.0-beta6
+
+
+### 17.06.0-beta1 - 17.06.0-beta6
+
+* VFS-3405 Showing messages on authentication and add account errors
+* VFS-3408 Added UnitedID social icon
+* VFS-3331 Added ELIXIR social icon; Added possibility to use images as social icons
+* VFS-3390 More tooltips for long and truncated names
+* VFS-3284 Provider can now be opened optionally in new tab or window 
+* VFS-3349 New login screen: new layout and selector for authorizers if there is a large number of them
+* VFS-3302 Showing hashes for conflicting space, group and provider names in Onezone
+* VFS-3332 Loader indicator when creating space
+* VFS-3331 Added ELIXIR social icon and possibility to use images as social icons
+* VFS-3311 New support space modal with support token, deploy provider command and expose data command
+
+
+### 3.0.0-rc15
+
+* VFS-3172, VFS-3173 Displaying Zone name and version in Onezone and login view
+* VFS-3222 Added RHEA social icon
+* VFS-3214 Fix blocking message when at least one provider is offline
+
+
+### 3.0.0-rc13
+
+* VFS-3047 Fixing JS errors on browsers other than Chrome/Blink engine
+* VFS-3047 Added "pending" status of provider
+* VFS-3004 Upgrading to Ember 2.11; upgrading packages
+
+
 ### 3.0.0-rc12
 
 * VFS-2881 Reordered panels in Onezone sidebar, automatic context expand

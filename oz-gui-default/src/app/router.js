@@ -6,13 +6,19 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('test', function() {
+    this.route('login');
+  });
+  
   this.route('home', function() {
     ['login', 'logout'].forEach((homepagePage) => {
       this.route(homepagePage);
     });
   });
 
-  this.route('onezone', function() {});
+  this.route('onezone', function() {
+    this.route('provider-redirect', { path: '/provider-redirect/:providerId'});
+  });
 });
 
 export default Router;

@@ -1,16 +1,27 @@
-{{page-title (t 'onezone.title')}}
+{{page-title (t "onezone.title")}}
 
 <div class="onezone-fog"></div>
 
-{{onezone-sidebar tagName='nav' class='onezone-sidebar'
-  providers=model.providers spaces=model.spaces authorizers=model.authorizers
-  tokens=model.clienttokens groups=model.groups
+{{onezone-sidebar
+  tagName="nav"
+  class="onezone-sidebar"
+  providers=providers
+  spaces=spaces
+  authorizers=model.authorizers
+  tokens=model.clienttokens
+  groups=groups
   openModal="openModal"}}
-{{onezone-top-bar tagName='header' class='onezone-top-bar'}}
+{{onezone-top-bar tagName="header" class="onezone-top-bar"}}
 
 <div class="onezone-container-application">
   <div class="onezone-container-application-inner">
     {{outlet}}
+  </div>
+  <div class="zone-service-info">
+    <span class="zone-service-name">{{serviceName}}</span>
+    {{#if serviceVersion}}
+      <span class="zone-service-version">{{t "onezone.version"}} {{serviceVersion}}</span>
+    {{/if}}
   </div>
 </div>
 
@@ -33,4 +44,15 @@
   originalName=modal.options.originalName
   btnClass="btn-primary"
   closeModal=(action "closeModal")
+}}
+
+{{modals/add-space-storage open=(eq modal.type "addSpaceStorage")
+  space=modal.options.space
+}}
+
+{{modals/authentication-error
+  open=showAuthenticationError
+  modalId="onezone-authentication-error"
+  authenticationErrorReason=authenticationErrorReason
+  authenticationErrorState=authenticationErrorState
 }}

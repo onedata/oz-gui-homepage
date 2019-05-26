@@ -1,4 +1,5 @@
 import sessionLocales from 'ember-cli-onedata-common/locales/en/session';
+import resourceLoadError from 'ember-cli-onedata-common/locales/en/components/resource-load-error';
 
 export default {
   common: {
@@ -11,7 +12,8 @@ export default {
       yes: 'Yes',
       no: 'No',
       signin: 'Sign in',
-      join: 'Join'
+      join: 'Join',
+      close: 'Close',
     },
     notify: {
       clipboardSuccess: 'Text has been copied to clipboard.',
@@ -19,7 +21,9 @@ export default {
     },
     serverError: 'Server error',
     unknownError: 'Unknown error',
-    fatalApplicationErrorResources: "A fatal error occured loading application's resources"
+    fatalApplicationErrorResources: "A fatal error occured loading application's resources",
+    or: 'or',
+    back: 'Back'
   },
   services: {
     session: sessionLocales,
@@ -51,7 +55,7 @@ export default {
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "occupied. The system requires that emails are unique and connected to one " +
         "user. To add this OpenID account to your existing account, login on the " +
-        "existing account and use the option 'Connect new account' in Authentication Settings.",
+        "existing account and use the option 'Link new account' in Authentication Settings.",
       connectAccountEmailOccupied:
         "One or more e-mail addresses returned by the OpenID provider are already " +
         "connected to another account. The system requires that emails are unique " +
@@ -65,15 +69,83 @@ export default {
     title: 'Login',
 
     boxTitle: 'login',
-    boxSubtitle: 'A new account will be created automatically on first login',
-    unknownZoneName: 'unknown'
+    formSubtitle: 'Using your Onepanel account',
+    formSubtitleTip: 'This login method is available for administrators and special users ' +
+      'created via onepanel administrative interface. Regular users must login via social or ' +
+      'institutional accounts, which can be found in previous menu.',
+    noProvidersFormSubtitleTip: 'This login method is available for administrators and special ' + 
+      'users created via onepanel administrative interface. Regular users must login via social or ' + 
+      'institutional accounts, which are currently disabled by the administrators of this zone.',
+    dropdownSubtitle: 'Pick your identity provider',
+    unknownZoneName: 'unknown',
+    loginWith: 'Login with',
+    loginUsing: 'Login using ',
+    onepanelAccount: 'Onepanel account',
+    showMore: 'Show all identity providers',
+    findProviderPlaceholder: 'Find your identity provider...',
+    version: 'version',
+    endpointError: 'Authorization configuration is invalid, please contact system administrator',
+    noLoginMethods: 'There are no login methods configured.',
+    loginTestMode: 'This is the test login page - based on test.auth.config - used for login simulation and diagnostics.',
+    goBackToMainPage: 'Go back to the main page.',
+    authenticationError: {
+      title: 'Authentication error!',
+      addAccountTitle: 'Cannot link account',
+      backToLogin: 'Back to login',
+      contactInfo: 'If the problem persists, please contact the site administrators and quote the below request state identifier:',
+      // NOTE: if adding translation here, don't forget to add new message type to
+      // mixins/authentication_error_messages
+      codes: {
+        bad_auth_config: 'The Onezone server seems to be misconfigured.',
+        invalid_state: 'Login failed due to bad request state - this can happen if you do not complete your login process within {{attribute}} seconds since redirection to chosen Identity Provider.',
+        invalid_auth_request: 'Your login request could not be validated.',
+        idp_unreachable: 'The Identity Provider of your choice seems to be temporarily unavailable, please try again later.',
+        bad_idp_response: 'Your Identity Provider returned an unexpected response.',
+        cannot_resolve_required_attribute: 'Could not resolve required attribute "{{attribute}}" from the information sent by your Identity Provider.',
+        internal_server_error: 'The server has encountered an unexpected error while processing your login request.',
+        account_already_linked_to_another_user: 'You cannot link this account because it is already linked to another user profile.',
+        account_already_linked_to_current_user: 'This account is already linked to your profile.',
+        unknown: 'Unknown reason.'
+      }
+    },
   },
-  components: { 
+  components: {
     modals: {
+      addSpaceStorage: {
+        title: 'Add storage for',
+        getTokenFailed: 'Getting new token failed',
+        requestSupport: {
+          tabName: 'Request support',
+          desc1: 'Request storage support for this space from existing provider.',
+          desc2: 'Pass the token below to the administrator of the preferred ' + 
+            'storage provider (e.g. via email).',
+          desc3: 'Each token can only be used once.',
+        },
+        exposeData: {
+          tabName: 'Expose existing data collection',
+          desc1: 'Expose storage with an existing data set through this space.',
+          desc2: 'Existing directories and files structure will be ' +
+            'automatically discovered and synchronized, allowing any member of ' +
+            'this space to access the data set.',
+        },
+        deployProvider: {
+          tabName: 'Deploy your own provider',
+          desc1: 'Deploy your own Oneprovider service and automatically support ' +
+            'this space using your storage.',
+        },
+        tabsCommon: {
+          descDistros: 'The following Linux distributions are supported:',
+          descCommand: 'The following command installs docker and configures ' +
+            'a dockerized Oneprovider instance.',
+          token: 'Token',
+          command: 'Command',
+          generateToken: 'Generate another token',
+        },
+      },
       loginForm: {
         title: 'Login with username and password',
-        usernameLabel: 'Username:',
-        passwordLabel: 'Password:',
+        usernameLabel: 'Username',
+        passwordLabel: 'Password',
         error: 'Authentication error:',
         success: 'Authenticated successfully!'
       },
@@ -139,15 +211,21 @@ export default {
       setHome: 'set as home',
       leave: 'leave',
       rename: 'rename',
-      getSupport: 'get support'
-    }
+      getSupport: 'add storage'
+    },
+    resourceLoadError,
   },
   logout: {
     failed: 'Session invalidation failed - cannot logout'
   },
   onezone: {
     title: 'Manage account',
+    version: 'version',
 
+    providerRedirect: {
+      error: 'We are sorry, but URL for provider cannot be resolved',
+      redirecting: 'Redirecting to provider',
+    },
     messages: {
       noneProviders: {
         title: 'All your providers are offline',
@@ -176,7 +254,7 @@ export default {
         title: 'First login',
         p1: 'You have successfully logged in and an account for you has been created.',
         p2: 'You are now on account management page. Here, you can connect other ' +
-        'accounts to your profile, modify your user data, manage your spaces' +
+        'accounts to your profile, modify your user data, manage your spaces ' +
         'and providers.',
         p3: 'We have created a default space for you. You need to find a ' +
         'provider that will support it before you can store your files.'
@@ -201,7 +279,7 @@ export default {
       changePassword: 'Change your password'
     },
     accountAdd: {
-      connectNewAccount: 'Connect new account',
+      connectNewAccount: 'Link new account',
       connectBy: 'Connect by'
     },
     groupsList: {
@@ -215,9 +293,11 @@ export default {
       joinSpace: 'Join a space',
       readMore: 'Read more',
       noViewPermissions: 'You do not have privileges to view details of this space.',
+      creatingSpace: 'Creating space:',
+      createSpaceFailed: 'Space creation failed!',
     },
     spacesAccordionItem: {
-      getSupport: 'Get support',
+      getSupport: 'Add storage...',
       toggleDefaultFailed: 'Changing default space failed: {{errorMessage}}'
     },
     providersAccordion: {
@@ -236,6 +316,7 @@ export default {
     tokensAccordionItem: {},
     providerPlaceDrop: {
       offline: 'offline',
+      pending: 'verifying...',
       goToFiles: 'Go to your files',
       goToFilesErrorMessage: 'Could not fetch URL of selected provider',
       hostnameCopySuccess: 'Provider hostname copied to clipboard',

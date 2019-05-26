@@ -1,12 +1,16 @@
 <div class="drop-panel">
   <div class="drop-title-bar">
     <div class="title-label">
-      <div class="provider-label truncate">
+      {{#truncated-string class="provider-label"}}
         {{provider.name}}
-      </div>
-      {{#unless provider.isWorking}}
-        <div class="provider-offline">
-          {{t "onezone.providerPlaceDrop.offline"}}
+      {{/truncated-string}}
+      {{#unless provider.isOnline}}
+        <div class="provider-label-secondary">
+          {{#if (eq provider.status "offline")}}
+            {{t "onezone.providerPlaceDrop.offline"}}
+          {{else if (eq provider.status "pending")}}
+            {{t "onezone.providerPlaceDrop.pending"}}
+          {{/if}}
         </div>  
       {{/unless}}
     </div>
@@ -30,16 +34,17 @@
         {{provider-place-drop-space space=space providerId=provider.id}}
       {{/each}}
     </ul>
-    {{#if provider.isWorking}}
-      <hr>
-      {{#spin-button-onedata buttonType="submit"
-        action=(action "goToFiles")
-        class="btn btn-small btn-pale-green no-outline" spinnerColor="#fff"
-        inFlight=goToIsLoading
-        disabled=goToIsLoading
-      }}
+    <hr>
+    {{#if (eq provider.status "online")}}
+      {{#link-to "onezone.provider-redirect" provider.id
+        class="btn btn-small no-outline btn-go-to-files btn-pale-green"}}
         {{t "onezone.providerPlaceDrop.goToFiles"}}
-      {{/spin-button-onedata}}
+      {{/link-to}}
+    {{else if (eq provider.status "pending")}}
+      <a href="javascript(0);"
+        class="btn btn-small no-outline btn-go-to-files btn-disabled">
+        {{t "onezone.providerPlaceDrop.pending"}}
+      </a>
     {{/if}}
   </div>
 </div>

@@ -6,10 +6,13 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('test', function() {
+    this.route('login');
+  });
+  
   this.route('home', function() {
     [
       'get-started',
-      'documentation',
       // 'community',
       // 'download',
       'support',
@@ -20,13 +23,19 @@ Router.map(function() {
     ].forEach((homepagePage) => {
       this.route(homepagePage);
     });
-
+    
     this.route('api', function() {
       this.route('show-api', {path: ':api_version/:api_component'});
     });
+
+    this.route('documentation', function() {
+      this.route('show', {path: '*gitbook_path'});
+    });
   });
 
-  this.route('onezone', function() {});
+  this.route('onezone', function () {
+    this.route('provider-redirect', { path: '/provider-redirect/:providerId' });
+  });
 });
 
 export default Router;

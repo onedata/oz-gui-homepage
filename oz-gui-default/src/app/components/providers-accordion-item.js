@@ -23,6 +23,8 @@ export default Ember.Component.extend({
   /** Provider model to display - should be injected */
   provider: null,
 
+  isPending: computed.equal('provider.status', 'pending'),
+
   spaces: computed('provider.spaces', function() {
     return this.get('provider.spaces');
   }),
@@ -40,8 +42,8 @@ export default Ember.Component.extend({
 
   iconColorClass: function() {
     let provider = this.get('provider');
-    return (provider && provider.get('isWorking')) ? 'color-provider-working' : 'color-provider-not-working';
-  }.property('provider.isWorking'),
+    return provider.get('isStatusValid') ? `color-provider-${provider.get('status')}` : 'color-provider-pending';
+  }.property('provider.status'),
 
   classNames: ['secondary-accordion-item', 'providers-accordion-item'],
 

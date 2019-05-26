@@ -15,6 +15,9 @@
 // note, that it works only for one level iframe
 var PARENT_WINDOW = window.parent;
 
+// get hash part from URL (cutting # sign)
+var RE_HASH = /.*?#(.*)/;
+
 /**
  * jQuery offset method (fitted to this code)
  */
@@ -44,12 +47,16 @@ function offset(elem) {
  * @param {String} originalHref (not a homepage href!)
  */
 function anchorType(anchor) {
-  var match = anchor.match(/^#?(section|tag|operation)/);
-  return match ? match[1] : null;
+  try {
+    var match = anchor.match(/^#?(section|tag|operation)/);
+    return match ? match[1] : null;
+  } catch (error) {
+    return null;
+  }
 }
 
 function stripHashChar(anchor) {
-  if (anchor.charAt(0) === '#') {
+  if (anchor && anchor.charAt(0) === '#') {
     anchor = anchor.substr(1);
   }
   return anchor;
@@ -65,23 +72,15 @@ function jumpToAnchor(anchor) {
   var element;
   switch (type) {
     case 'section':
-      element = document.querySelector('h1[section="' + anchor + '"],h2[section="' + anchor + '"]');
-      break;
     case 'tag':
-      element = document.querySelector('div.tag-info a.share-link[orig-href="#' + anchor + '"]');
-      // find .tag-info parent
-      while (!element.classList.contains('tag-info')) {
-        element = element.parentElement;
-      }
-      break;
     case 'operation':
-      var operationId = anchor.match(/operation\/(.*)/)[1];
-      element = document.querySelector('method[operation-id="' + operationId + '"]');
+      element = document.querySelector('div[data-section-id="' + anchor + '"]');
       break;
     default:
       throw 'Cannot resolve anchor type: ' + anchor;
   }
-  window.scrollTo(0, offset(element).top);
+  window.scrollTo(0, offset(element).top + 4);
+  return element;
 }
 
 /**
@@ -89,19 +88,41 @@ function jumpToAnchor(anchor) {
  * @return {String} Eg. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone?anchor=#operation/modify_provider
  */
 function homepageLink(originalHref) {
-  return document.apiBaseUrl + '?anchor=' + stripHashChar(originalHref);
+  var link = document.apiBaseUrl;
+  if (originalHref) {
+    link += '?anchor=' + stripHashChar(originalHref);
+  }
+  return link;
 }
 
 /**
  * Prevent to go to external API documentation section link, because we are in iframe.
- * Instead jump to anchor (see ``jumoToAnchor``).
+ * Instead jump to anchor (see ``jumpToAnchor``).
  * @param {MouseEvent} event
  */
 function handleLinkOpen(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   var origHref = event.target.getAttribute('orig-href');
-  PARENT_WINDOW.location = homepageLink(origHref);
+  if (origHref) {
+    PARENT_WINDOW.location = homepageLink(origHref);
+  } else {
+    PARENT_WINDOW.location = event.currentTarget.getAttribute('href');
+  }
+}
+
+function handleMenuItemOpen(event) {
+  PARENT_WINDOW.location = homepageLink(event.currentTarget.getAttribute('data-item-id'));
+  event.stopPropagation();
+}
+
+function processInternalLink(lnk) {
+  var origHref = lnk.getAttribute('href');
+  lnk.setAttribute('orig-href', origHref);
+  lnk.setAttribute('href', homepageLink(origHref));
+  // it works even with pressing "enter" on link
+  lnk.addEventListener('click', handleLinkOpen); 
+  lnk.setAttribute('data-is-click-handler', 'true');
 }
 
 /**
@@ -110,25 +131,77 @@ function handleLinkOpen(event) {
  * 2. to have external href for accessing section/tag/operation from
  *    outside Homepage.
  */
-function afterRender() {
-  console.debug('Onedata ReDoc integration: after render');
+function postProcessing() {
+  console.debug('Onedata ReDoc integration: post processing');
   // live collection
-  var shareLinks = document.getElementsByClassName('share-link');
-  Array.from(shareLinks).forEach(function(sl) {
-    var origHref = sl.getAttribute('href');
-    sl.setAttribute('orig-href', origHref);
-    sl.setAttribute('href', homepageLink(origHref));
-    // it works even with pressing "enter" on link
-    sl.addEventListener('click', handleLinkOpen);
+  var anchorLinks = document.querySelectorAll('a[href^="#"]:not([orig-href]):not([data-is-click-handler])');
+  Array.from(anchorLinks).forEach(processInternalLink);
+  var externalLinks = document.querySelectorAll('a:not([href^="#"]):not([orig-href]):not([data-is-click-handler])');
+  Array.from(externalLinks).forEach(function(lnk) {
+    lnk.addEventListener('click', handleLinkOpen); 
+    lnk.setAttribute('data-is-click-handler', 'true');
   });
-  PARENT_WINDOW.postMessage({type: 'redoc-rendered'}, document.parentOrigin);
-  if (document.apiAnchor) {
-    redocAnchorChanged(document.apiAnchor);
+  var menuItems = document.querySelectorAll('li[data-item-id]:not([data-is-click-handler])');
+  Array.from(menuItems).forEach(function(item) {
+    item.addEventListener('click', handleMenuItemOpen);
+    item.setAttribute('data-is-click-handler', 'true');
+  });
+  // HACK convert wrongly generated swagger.json links (badly used relative link)
+  try {
+    var swaggerUrl = window.location.href.replace(/(.*)\/.*/, '$1/swagger.json');
+    Array.from(document.querySelectorAll('a[href*="swagger.json"]'))
+      .forEach(function(a) {
+        a.href = swaggerUrl;
+      });
+  } catch (error) {
+    console.warn('Failed to convert bad relative swagger.json links: ' + error);
   }
+  // convert documentation links
+  try {
+    Array.from(document.querySelectorAll('a[href^="https://onedata.org/docs/doc/"]'))
+      .forEach(function(a) {
+        a.href = a.href.replace(/https:\/\/onedata.org\/docs\//g, window.location.origin + '/#/home/documentation/');
+      });
+  } catch (error) {
+    console.warn('Failed to convert bad relative swagger.json links: ' + error);
+  }
+  
+  if (document.postProcessingIteration < 1) {
+    var logo = document.querySelector('img[src$="-logo.svg"');
+    if (logo) {
+      logo.setAttribute('src', logo.getAttribute('src').replace('https://onedata.org/', '/'));
+    }
+    // HACK remove misleading link from logo
+    var logoLink = document.querySelector('.menu-content a[href^="https://onedata.org"]');
+    if (logoLink) {
+      logoLink.href = 'javascript:void(0);';
+    }
+    // HACK hack for current wrong links, it should be fixed in documentation in future
+    var supportLinks = document.querySelectorAll('a[href="https://onedata.org/support"]');
+    Array.from(supportLinks).forEach(function(a) {
+      a.href = 'https://onedata.org/#/home/support';
+    });
+  }
+  
+  if (document.iframeLoaded) {
+    var anchorElement = redocAnchorChanged(document.apiAnchor);
+    if (anchorElement) {
+      document.postProcessingJumpDone = true;
+    }
+  } else {
+    setTimeout(postProcessing, 200);
+  }
+  
+  document.postProcessingIteration += 1;
 }
 
 function redocAnchorChanged(anchor) {
-  jumpToAnchor(anchor);
+  return jumpToAnchor(anchor);
+}
+
+function getUrlHashPart(url) {
+  var m = url.match(RE_HASH);
+  return m ? m[1] : '';
 }
 
 function handleMessage(event) {
@@ -139,20 +212,14 @@ function handleMessage(event) {
   }
 }
 
-/// MAIN - wait for ReDoc to render (currently polling) and perform integration tasks
+// pass ReDoc URL change parent window
+window.history.replaceState = function (stateObj, title, url) {
+  PARENT_WINDOW.history.replaceState(null, null, homepageLink(getUrlHashPart(url)));
+};
 
-var __ONEDATA__redocIsReady = false;
-var __ONEDATA__redocCheckReadyId = null;
-
-function checkReady() {
-  if (__ONEDATA__redocIsReady) {
-    window.clearInterval(__ONEDATA__redocCheckReadyId);
-  } else if (!document.querySelector('redoc.loading')) {
-    __ONEDATA__redocIsReady = true;
-    afterRender();
-  }
-}
-
-__ONEDATA__redocCheckReadyId = window.setInterval(checkReady, 100);
+/// MAIN
 
 window.addEventListener("message", handleMessage, false);
+
+document.postProcessingIteration = 0;
+postProcessing();

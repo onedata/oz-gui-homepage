@@ -8,13 +8,19 @@
     <li class="non-hoverable">
       {{!-- TODO: add spinner (there is some problems with positioning) --}}
       <div class="account-label">
-        {{t 'components.accountsList.loadingAccounts'}}
+        {{t "components.accountsList.loadingAccounts"}}
       </div>
     </li>
   {{else}}
-    {{#each authorizersSorted as |account|}}
+    {{#each authItems as |authItem|}}
     <li class="non-hoverable">
-      {{account-item type=account.type label=account.email clickable=false}}
+      {{account-item
+        authId=authItem.id
+        iconPath=authItem.iconPath
+        iconBackgroundColor=authItem.iconBackgroundColor
+        label=authItem.email
+        clickable=false
+      }}
     </li>
     {{/each}}
   {{/if}}
@@ -24,7 +30,7 @@
   {{#if loadingSupportedAuthorizers}}
     <li class="non-hoverable">
       <div class="loading-supported-authorizers">
-        {{t 'components.accountsList.loadingSupportedAuthorizers'}}
+        {{t "components.accountsList.loadingSupportedAuthorizers"}}
       </div>
     </li>
   {{else}}

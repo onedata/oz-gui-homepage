@@ -21,9 +21,24 @@
   animation-iteration-count: infinite;
 }
 
+.animated.fast {
+  -webkit-animation-duration: 0.33s;
+  animation-duration: 0.33s;
+}
+
 .animated.hinge {
   -webkit-animation-duration: 2s;
   animation-duration: 2s;
+}
+
+.animated.very-slow {
+  -webkit-animation-duration: 4s;
+  animation-duration: 4s;
+}
+
+.animated.short-delay {
+  -webkit-animation-delay: 0.33s;
+  animation-delay: 0.33s;
 }
 
 /// Own animations
@@ -41,5 +56,129 @@
 }
 
 .sidebar-tab-flash {
-  animation: sidebar-tab-flash 1s;
+  animation-name: sidebar-tab-flash;
+}
+
+@mixin pulse-keyframes($name, $attributes, $val1, $val2) {
+  @keyframes #{$name} {
+    0% {
+      @each $attr in $attributes {
+        #{$attr}: $val1;
+      }
+    }
+    50% {
+      @each $attr in $attributes {
+        #{$attr}: $val2;
+      }
+    }
+    100% {
+      @each $attr in $attributes {
+        #{$attr}: $val1;
+      }
+    }
+  }
+}
+
+@mixin animation-fg-color-change($name, $c1, $c2) {
+  @include pulse-keyframes($name, color border-color, $c1, $c2);
+  .#{$name} {
+    animation-name: #{$name};
+  }
+}
+
+@mixin animation-bg-color-change($name, $c1, $c2) {
+  @include pulse-keyframes($name, background-color, $c1, $c2);
+  .#{$name} {
+    animation-name: #{$name};
+  }
+}
+
+@keyframes fadeInLeftBig {
+  from {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInLeftBig {
+  animation-name: fadeInLeftBig;
+}
+
+@keyframes fadeOutLeftBig {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+.fadeOutLeftBig {
+  animation-name: fadeOutLeftBig;
+}
+
+@keyframes fadeInRightBig {
+  from {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInRightBig {
+  animation-name: fadeInRightBig;
+}
+
+@keyframes fadeOutRightBig {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+.fadeOutRightBig {
+  animation-name: fadeOutRightBig;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
 }

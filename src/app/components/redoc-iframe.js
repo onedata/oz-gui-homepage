@@ -1,7 +1,6 @@
 import Ember from 'ember';
-
-// from srcdoc-polyfill
-/* globals srcDoc */
+import bindElementTop from 'oz-worker-gui/utils/bind-element-top';
+import safeExec from 'ember-cli-onedata-common/utils/safe-method-execution';
 
 function stripUrlFromQueryParams(href) {
   let match = href.match(/(.*?)\?.*|.*/);
@@ -28,11 +27,9 @@ function escapeJsString(value) {
  * @license This software is released under the MIT license cited in 'LICENSE.txt'.
  */
 export default Ember.Component.extend({
-  windowMessages: Ember.inject.service(),
-
   tagName: 'iframe',
-  attributeBindings: ['srcdoc'],
-  classNames: ['redoc-iframe'],
+  attributeBindings: ['src', 'onload'],
+  classNames: ['redoc-iframe', 'one-iframe'],
 
   /**
    * To inject.
@@ -52,6 +49,14 @@ export default Ember.Component.extend({
    */
   apiComponent: null,
 
+    /**
+   * @virtual
+   * Notifies true when src in iframe is changed but it's body is not loaded yet.
+   * Notifies false when the body loads.
+   * @type {boolean}
+   */
+  iframeSrcLoadingChanged: () => {},
+  
   /**
    * To inject. Optional.
    * A ReDoc internal link, eg. ``#operation/modify_provider``
@@ -66,60 +71,36 @@ export default Ember.Component.extend({
    * @type {String}
    */
   aboveElementSelector: '.api-components-menu',
-
+  
   /**
-   * Generate HTTP resource path to Swagger JSON.
-   * @type {String}
+   * When src of iframe changes, we make a test request to check if the resource
+   * can be fetched. This property will be set to status of HEAD request.
+   * @type {number}
    */
-  swaggerJsonPath: Ember.computed('apiVersion', 'apiComponent', function() {
+  srcLoadStatus: null,
+  
+  redocDocumentPath: Ember.computed('apiVersion', 'apiComponent', function() {
     let {apiVersion, apiComponent} = this.getProperties('apiVersion', 'apiComponent');
-    return `/swagger/${apiVersion}/${apiComponent}/swagger.json`;
+    return `/docs/doc/swagger/${apiVersion}/${apiComponent}/redoc-static.html`;
   }),
-
+  
+  src: Ember.computed('redocDocumentPath', function src() {
+    const redocDocumentPath = this.get('redocDocumentPath');
+    if (redocDocumentPath) {
+      Ember.run.scheduleOnce('afterRender', this, 'srcChanged');
+      return redocDocumentPath;
+    }
+  }),
+    
   /**
-   * Generates an HTML for iframe with API documentation.
-   * It renders redoc using redoc tag and importing redoc JS.
-   *
-   * The generated document has included:
-   * - ``/assets/redoc.css`` - custom styles to modify ReDoc look for Onedata integration
-   * - ``/assets/redoc.min.js`` - RedDoc documentation system (https://github.com/Rebilly/ReDoc)
-   *   that will set up a documentation
-   * - ``/assets/onedata-redoc.js`` - code for Onedata Homepage and ReDoc integration
-   *   see this file for details
-   * 
-   * Also two variables are setted for the iframe context:
-   * - ``document.apiAnchor`` - if an anchor is passed in ``anchor`` property then
-   *   try to jump to proper section/tag/operation in ReDoc docs
-   * - ``apiBaseUrl`` - a URL of current location where this component is rendered
-   *   e.g. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone (without query string "?query=...")
-   * 
-   * For more information about integration code, see ``/assets/onedata-redoc.js``.
-   * @type {String}
+   * Sets `iframeLoaded` flag in iframe's document.
+   * @type {function}
    */
-  srcdoc: Ember.computed('swaggerJsonPath', function() {
-    let {swaggerJsonPath} = this.getProperties('swaggerJsonPath');
-    let baseUrl = stripUrlFromQueryParams(window.location.href);
-
-    swaggerJsonPath = escapeJsString(swaggerJsonPath);
-    baseUrl = escapeJsString(baseUrl);
-
-    return `
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="/assets/redoc.css">
-  </head>
-  <body>
-    <redoc spec-url="${swaggerJsonPath}" hide-hostname=true></redoc>
-    <script src="/assets/redoc.min.js"></script>
-    <script>
-      document.apiBaseUrl = "${baseUrl}";
-      document.parentOrigin = "${escapeJsString(window.location.origin)}";
-    </script>
-    <script src="/assets/onedata-redoc.js"></script>
-  </body>
-</html>
-`;
+  onload: Ember.computed(function onload() {
+    return () => {
+      this.get('iframeSrcLoadingChanged')(false);
+      this.element.contentDocument.iframeLoaded = true;
+    };
   }),
   
   anchorChanged: Ember.observer('anchor', function() {
@@ -129,54 +110,94 @@ export default Ember.Component.extend({
     }
   }),
   
+  srcChanged: Ember.observer('src', function srcChanged() {
+    const src = this.get('src');
+    if (src && src !== 'about:blank') {
+      this.get('iframeSrcLoadingChanged')(true);
+      this.set('srcLoadStatus', null);
+      const documentLoadStatusChanged = this.get('documentLoadStatusChanged');
+      var req = new XMLHttpRequest();
+      req.open('HEAD', src);
+      const self = this;
+      req.addEventListener('loadend', function() {
+        safeExec(self, 'set', 'srcLoadStatus', this.status);
+        documentLoadStatusChanged(this.status);
+      });
+      req.send();
+      Ember.run.next(this, 'srcLoadStarted');
+    }
+  }),
+  
+  init() {
+    this._super(...arguments);
+    this.srcChanged();
+  },
+  
+  /**
+   * Adds custom code to ReDoc document as soon as possible
+   * 
+   * - `/assets/redoc.css` - custom styles to modify ReDoc look for Onedata integration
+   * - `/assets/onedata-redoc.js` - code for Onedata Homepage and ReDoc integration
+   *   see this file for details
+   * 
+   * Also two variables are set for the iframe context:
+   * - `document.apiAnchor` - if an anchor is passed in ``anchor`` property then
+   *   try to jump to proper section/tag/operation in ReDoc docs
+   * - `apiBaseUrl` - a URL of current location where this component is rendered
+   *   e.g. https://veilfsdev.com/#/home/api/3.0.0-rc11/onezone (without query string "?query=...")
+   * 
+   * For more information about integration code, see `/assets/onedata-redoc.js`.
+   */
+  srcLoadStarted() {
+    if (!this.isDestroyed) {
+      console.debug('component:redoc-iframe: srcLoadStarted check');
+      const iframeDocument = this.element.contentDocument;
+      if (iframeDocument && this.element.src === iframeDocument.location.href && iframeDocument.head && iframeDocument.body && iframeDocument.getElementById('redoc')) {
+        const baseUrl = stripUrlFromQueryParams(window.location.href);
+        iframeDocument.apiBaseUrl = escapeJsString(baseUrl);
+        iframeDocument.parentOrigin = escapeJsString(window.location.origin);
+        iframeDocument.apiAnchor = this.get('anchor');
+        
+        const onedataRedocScript = iframeDocument.createElement('script');
+        onedataRedocScript.src = '/assets/onedata-redoc.js';
+        iframeDocument.body.appendChild(onedataRedocScript);
+        
+        const onedataRedocStyle = iframeDocument.createElement('link');
+        onedataRedocStyle.rel = 'stylesheet';
+        onedataRedocStyle.type = 'text/css';
+        onedataRedocStyle.href = '/assets/redoc.css';
+        iframeDocument.head.appendChild(onedataRedocStyle);
+        console.debug('component:redoc-iframe: srcLoadStarted done');
+      } else {
+        const srcLoadStatus = this.get('srcLoadStatus');
+        if (srcLoadStatus && srcLoadStatus >= 400) {
+          this.get('iframeSrcLoadingChanged')(false);
+        } else {
+          Ember.run.later(this, 'srcLoadStarted', 100);
+        }      
+      } 
+    }
+  },
+  
   changeRedocAnchor(anchor) {
     let redocWindow = this.$()[0].contentWindow;
     redocWindow.postMessage({type: 'anchor-changed', message: anchor}, '*');
   },
-
-  /**
-   * Use srcdoc-polyfill for IE/Edge support
-   */
-  updateSrcdocPolyfill: Ember.observer('srcdoc', function() {
-    Ember.run.schedule('afterRender', this, function() {
-      srcDoc.set(this.$()[0]);
-    });    
-  }),
-
+  
   /**
    * Will bind to ``window.resize`` event to change top fixed position of
    * its parent. This is done because of problems with positioning content
    * below a top bar.
    */
   didInsertElement() {
-    let {windowMessages, anchor} = this.getProperties('windowMessages', 'anchor');
-
-    windowMessages.onWindowMessage('redoc-rendered', () => {
-      if (anchor) {
-        this.changeRedocAnchor(anchor);
-      }
-    });
-
     let $aboveElement = $(this.get('aboveElementSelector'));
     Ember.assert($aboveElement.length === 1, 'above element should exist');
-    let $container = this.$().parent();
-    $container.css({
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      bottom: 0
-    });
-    let __resizeFun = () => {
-      $container.css('top', ($aboveElement.offset().top + $aboveElement.height()) + 'px');
-    };
-    $(window).on('resize.redocIframe', __resizeFun);
-    __resizeFun();
-    this.updateSrcdocPolyfill();
+    let $belowElement = this.$().parent();
+    let updater = bindElementTop($aboveElement, $belowElement);
+    $(window).on('resize.redocIframe', updater);
   },
 
   willDestroyElement() {
-    let windowMessages = this.get('windowMessages');
     $(window).off('.redocIframe');
-    windowMessages.offWindowMessage('redoc-rendered');
   }
 });

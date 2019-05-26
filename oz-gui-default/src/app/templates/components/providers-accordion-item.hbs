@@ -9,9 +9,16 @@
             <div class="secondary-icon provider-icon">
               {{one-icon tagName="div" icon=iconName class=iconColorClass}}
             </div>
-          <div class="secondary-item-element secondary-header provider-header truncate">
-              {{provider.name}}
-            </div>
+            {{#if isPending}}
+              <div class="secondary-item-element provider-pending">
+                <div class="spinner-container spinner-32">
+                  {{spin-spinner scale=0.16 lines=12 length=20 width=10 top=14}}
+                </div>
+              </div>
+            {{/if}}
+            {{#truncated-string class="one-label secondary-item-element secondary-header provider-header"}}
+              {{name-conflict item=provider}}
+            {{/truncated-string}}
           </div>
           <div class="secondary-item-element star-toggle" {{action "toggleDefault"}}>
             {{#if provider.isDefault}}

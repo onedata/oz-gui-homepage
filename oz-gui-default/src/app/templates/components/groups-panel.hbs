@@ -6,9 +6,9 @@
           <div class="secondary-item-element secondary-icon">
             {{one-icon tagName="div" icon="group"}}
           </div>
-          <div class="secondary-item-element secondary-header">
-            {{group.name}}
-          </div>
+          {{#truncated-string class="secondary-item-element secondary-header"}}
+            {{name-conflict item=group}}
+          {{/truncated-string}}
         </div>
       {{/sidebar-list-item}}
     {{/each}}

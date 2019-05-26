@@ -5,9 +5,6 @@ const {
   computed,
   inject,
   A,
-  on,
-  observer,
-  run
 } = Ember;
 
 /**
@@ -59,17 +56,13 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
   },
+  
+  didInsertElement() {
+    this.prepareFloaters();
+  },
 
-  watchPrivilegesChanged: on('didInsertElement', observer('hasViewPrivilege', function() {
-    run.schedule('afterRender',this,function() {
-      if (this.get('hasViewPrivilege')) {
-        this.prepareGetSupportTokenFloaters();
-      }
-    });
-  })),
-
-  prepareGetSupportTokenFloaters() {
-    let self = this;
+  prepareFloaters() {
+    let self = this;  
     this.$().find('.floater').each(function() {
       let ft = $(this);
       let updatePosition = bindFloater(ft);
@@ -88,12 +81,6 @@ export default Ember.Component.extend({
     });
   },
 
-  selectTokenText() {
-    let input = this.$().find('input')[0];
-    input.focus();
-    input.setSelectionRange(0, input.value.length);
-  },
-
   actions: {
     uncollapse() {
       this.$(`#${this.get('collapseId')}`).collapse('show');
@@ -103,37 +90,10 @@ export default Ember.Component.extend({
       this.sendAction('openModal', ...arguments);
     },
 
-    /**
-     * If the support token is hidden, show it.
-     * Then, regardless of dropdown state, fetch new.
-     */
-    showNewSupportToken() {
-      let __getSupportTokenUpdatePosition = this.get('__getSupportTokenUpdatePosition');
-      this.send('uncollapse');
-      setTimeout(() => {
-        let supportTokenOpened = this.get('supportTokenOpened');
-        if (!supportTokenOpened) {
-          this.set('supportTokenOpened', true);
-        }
-        setTimeout(__getSupportTokenUpdatePosition, 0);
-        this.send('getNewSupportToken');
-      }, 0);
-    },
-
-    getNewSupportToken() {
-      let space = this.get('space');
-      this.set('supportToken', null);
-      if (space) {
-        this.get('onezoneServer').getTokenProviderSupportSpace(space.get('id'))
-          .then((data) => {
-            const token = data.token;
-            // TODO: only debug, should be removed in future
-            console.debug('Fetched new support token: ' + token);
-            this.set('supportToken', token);
-          });
-      } else {
-        console.warn('Tried to get new support token, but no space is assigned to item');
-      }
+    showSupportModal() {
+      this.send('openModal', 'addSpaceStorage', {
+        space: this.get('space'),
+      });
     },
 
     /** Set the space as default, unsetting other spaces */
@@ -145,15 +105,13 @@ export default Ember.Component.extend({
     },
     
     copySuccess() {
-      this.selectTokenText();
       this.get('notify').info(this.get('i18n').t('common.notify.clipboardSuccess'));
     },
     
     copyError() {
-      this.selectTokenText();
       this.get('notify').warn(this.get('i18n').t('common.notify.clipboardFailure'));
     },
-
+    
     goToProvider(provider) {
       this.get('space.providers').forEach((p) => p.set('isSelected', false));
       provider.set('isSelected', true);

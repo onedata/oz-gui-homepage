@@ -13,10 +13,9 @@
             </p>
           </div>
           <div class="row-get-started-button">
-            <a href="/docs/doc/getting_started/what_is_onedata.html"
-               class="btn btn-large btn-index">
+            {{#link-to "home.documentation.show" "doc/getting_started/what_is_onedata.html" class="btn btn-large btn-index"}}
               {{t 'index.atlas.getStarted'}}
-            </a>
+            {{/link-to}}
           </div>
         </div>
         <div class="col-md-8">
@@ -140,10 +139,20 @@
         {{!-- TODO: links --}}
         <div class="row row-centered">
           <div class="col-xs-6 text-right">
-            {{social-box type='github' link='https://github.com/onedata'}}
+            {{social-box
+              authId="github"
+              iconPath="assets/images/auth-providers/github.svg"
+              iconBackgroundColor="#1E2325"
+              link="https://github.com/onedata"
+            }}
           </div>
           <div class="col-xs-6 text-left">
-            {{social-box type='facebook' link='https://www.facebook.com/onedataorg/'}}
+            {{social-box
+              authId="facebook"
+              iconPath="assets/images/auth-providers/facebook.svg"
+              iconBackgroundColor="#5B87C5"
+              link="https://www.facebook.com/onedataorg"
+            }}
           </div>
         </div>
       </div>

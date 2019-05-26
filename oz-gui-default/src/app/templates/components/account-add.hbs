@@ -15,17 +15,22 @@
         </div>
       {{/if}}
       <div class="secondary-item-element account-label connect-new one-label one-label-large">
-        {{t 'onezone.accountAdd.connectNewAccount'}}
+        {{t "onezone.accountAdd.connectNewAccount"}}
       </div>
       
     </div>
     
   </div>
-  <div class="dropdown-menu dropdown-menu-right floater account-add-popup">
-    {{!-- TODO: style --}}
-    {{#each authProviders as |authProvider|}}
-      {{account-item type=authProvider.type label=authProvider.label
-        mode="connect" action="connectNewAccount"}}
+  <div class="dropdown-menu dropdown-menu-right dropdown-menu-middle-arrow floater account-add-popup">
+    {{#each shownAuthorizers as |authProvider|}}
+      {{account-item
+        authId=authProvider.id
+        iconPath=authProvider.iconPath
+        iconBackgroundColor=authProvider.iconBackgroundColor
+        label=(concat (concat (t "onezone.accountAdd.connectBy") " ") authProvider.displayName)
+        mode="connect"
+        action=(action "connectNewAccount")
+      }}
     {{/each}}
   </div>
 </div>

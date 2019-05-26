@@ -15,7 +15,7 @@ const {
 export default DS.Model.extend({
   /**
    * Provider of authentication.
-   * Allowed: github, plgrid, google, dropbox, facebook
+   * Allowed: github, plgrid, google, dropbox, facebook, rhea
    * @type {String}
    */
   type: attr('string'),

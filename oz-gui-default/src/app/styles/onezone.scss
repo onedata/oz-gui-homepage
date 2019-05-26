@@ -16,8 +16,8 @@ $color-onezone-fog-base: #8294b1;
 $color-onezone-fog: rgba($color-onezone-fog-base, 0.8);
 
 $color-button: #5094E4;
-$color-provider-working: #6ACB94;
-$color-provider-not-working: #7B7B7B;
+$color-provider-online: #6ACB94;
+$color-provider-offline: $color-grey-7;
 
 $color-onezone-search: #2A2A2A;
 
@@ -26,12 +26,39 @@ $color-onezone-panel-body: #60687E;
 
 $color-onezone-panel-hover: rgba(255, 255, 255, 0.1);
 
-.color-provider-working {
-  color: $color-provider-working;
+@include animation-fg-color-change(
+  provider-pending-fg,
+  $color-provider-offline,
+  $color-provider-online
+);
+
+@include animation-bg-color-change(
+  provider-pending-bg,
+  $color-provider-offline,
+  $color-provider-online
+);
+
+.provider-pending-animation {
+  @extend .animated;
+  @extend .infinite;
+  @extend .hinge; 
 }
 
-.color-provider-not-working {
-  color: $color-provider-not-working;
+.provider-pending-fg-animated {
+  @extend .provider-pending-animation;
+  @extend .provider-pending-fg;
+}
+
+.color-provider-online {
+  color: $color-provider-online;
+}
+
+.color-provider-pending {
+  @extend .provider-pending-fg-animated;
+}
+
+.color-provider-offline {
+  color: $color-provider-offline;
 }
 
 $search-box-height: 36px;
@@ -56,3 +83,44 @@ $search-box-height: 36px;
   padding-left: $onezone-sidebar-width + $onezone-content-padding;
   padding-top: $onezone-top-bar-height + $onezone-content-padding;
 }
+
+.zone-service-info {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 11pt;
+  .zone-service-name {
+    color: rgba(white, .7);
+  }
+  .zone-service-version {
+    margin-left: 10px;
+    color: rgba(white, .5);
+  }
+}
+
+.full-content-message {
+  transform: translateX(-50%) translateY(150px);
+  font-size: 24px;
+  
+  .message-part {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.provider-redirect {
+  text-align: center;
+  .provider-name {
+    font-weight: bold;
+  }
+  .truncate.provider-name {
+    max-width: 240px;
+  }
+}
+
+.authentication-error-modal {
+  .authentication-error-state-input-copy {
+    padding-top: 30px;
+  }
+}
+
