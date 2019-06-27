@@ -22,7 +22,7 @@ export default PageBase.extend({
     let defaultComponent = model.components[0].id;
     this.transitionTo('home.api.show-api', Ember.Object.create({
       apiComponent: defaultComponent,
-      apiVersion: 'latest'
+      apiVersion: 'stable'
     }));
   },
 });

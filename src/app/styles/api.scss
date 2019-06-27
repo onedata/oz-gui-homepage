@@ -115,6 +115,12 @@ $-loading-anchor-row-height: 40px;
   background-color: $color-api-components-version-background;
   color: $color-api-components-version-text !important;
 
+  .api-version-string.has-name {
+    .api-version-string-version {
+      color: $onedata-gray;
+    }
+  }
+  
   .dropdown-menu {
     min-width: 100%;
     width: inherit;
@@ -130,6 +136,12 @@ $-loading-anchor-row-height: 40px;
       
       &:hover {
         color: $color-api-components-text-active;
+        
+        .api-version-string.has-name {
+          .api-version-string-version {
+            color: $color-api-components-text-active-light;
+          }
+        }
       }
 
       &.active-item {
@@ -153,6 +165,12 @@ $-loading-anchor-row-height: 40px;
       
       .dropdown-toggle-label {
         color: $color-api-components-text-active !important;
+        
+        .api-version-string.has-name {
+          .api-version-string-version {
+            color: $color-api-components-text-active-light;
+          }
+        }
       }
     }
 

@@ -105,6 +105,7 @@ export default {
   },
   api: {
     title: 'API',
+    stable: 'stable',
     showApi: {
       loading: 'Loading',
     },
