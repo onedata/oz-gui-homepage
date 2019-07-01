@@ -40,40 +40,46 @@ export default Controller.extend({
    * @type {number|null}
    */
   documentLoadStatus: null,
-  
+
   apiComponent: alias('model.apiComponent'),
   apiVersion: alias('model.apiVersion'),
   iframeSrcLoading: reads('apiController.iframeSrcLoading'),
-  
+
   /**
    * A version of API passed to iframe with ReDoc.
    * As the iframe with API will read specific version,
    * we need to convert special version strings to specific versions.
-   * Eg. latest to specific latest.
+   * Eg. stable to specific stable.
    * 
    * @type {computed<string>}
    */
-  iframeApiVersion: computed('apiVersion', function() {
-    let apiVersion = this.get('apiVersion');
-    if (apiVersion === 'latest') {
-      return this.get('defaultVersion');
-    } else {
-      return apiVersion;
+  iframeApiVersion: computed(
+    'apiVersion',
+    'defaultVersion',
+    function iframeApiVersion() {
+      let apiVersion = this.get('apiVersion');
+      if (apiVersion === 'stable') {
+        return this.get('defaultVersion');
+      } else {
+        return apiVersion;
+      }
     }
+  ),
+
+  apiComponentOrVersionUpdated: observer('apiComponent', 'apiVersion', function () {
+    let { apiComponent, apiVersion } = this.getProperties('apiComponent',
+      'apiVersion');
+    this.set('documentLoadStatus', null);
+    this.get('apiController').setProperties({ apiComponent, apiVersion });
   }),
 
-  apiComponentOrVersionUpdated: observer('apiComponent', 'apiVersion', function() {
-    let {apiComponent, apiVersion} = this.getProperties('apiComponent', 'apiVersion');
-    this.set('documentLoadStatus', null);
-    this.get('apiController').setProperties({apiComponent, apiVersion});
-  }),
-  
-  disableIframeSrcLoading: observer('documentLoadStatus', function disableIframeSrcLoading() {
-    if (this.get('documentLoadStatus') >= 400) {
-      this.set('apiController.iframeSrcLoading', false);
-    }
-  }),
-  
+  disableIframeSrcLoading: observer('documentLoadStatus',
+    function disableIframeSrcLoading() {
+      if (this.get('documentLoadStatus') >= 400) {
+        this.set('apiController.iframeSrcLoading', false);
+      }
+    }),
+
   actions: {
     iframeSrcLoadingChanged(isLoading) {
       scheduleOnce('afterRender', this, () => {

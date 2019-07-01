@@ -37,6 +37,16 @@ export default Route.extend({
     });
   },
 
+  redirect({ apiComponent, apiVersion }) {
+    if (apiVersion === 'latest') {
+      const apiModel = this.modelFor('home.api');
+      this.transitionTo('home.api.show-api', {
+        apiComponent,
+        apiVersion: apiModel.order[0],
+      });
+    }
+  },
+  
   setupController(controller/*, model*/) {
     this._super(...arguments);
     let apiModel = this.modelFor('home.api');

@@ -6,6 +6,7 @@ CHANGELOG
 
 ### Current changes
 
+* VFS-5542 Changed items in API version selector (stable instead of latest)
 * VFS-4955 Using bundled API docs, ReDoc update to 2.0-alpha.x
 
 

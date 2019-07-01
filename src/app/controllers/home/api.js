@@ -29,6 +29,8 @@ export default Ember.Controller.extend({
    * @type {String[]}
    */
   apiVersions: Ember.computed('model.order.[]', function() {
-    return ['latest', ...this.get('model.order')];
+    return ['stable', ...this.get('model.order')];
   }),
+  
+  stableVersion: Ember.computed.reads('model.default'),
 });

@@ -49,7 +49,11 @@
     {{/if}}
     {{#bs-dropdown-toggle class="full-width clickable"}}
       <span class="dropdown-toggle-label">
-        {{apiVersion}}
+        {{#if (eq apiVersion "stable")}}
+          {{api-version-string name="stable" version=stableVersion}}
+        {{else}}
+          {{api-version-string version=apiVersion}}
+        {{/if}}
       </span>
       <span class="dropdown-toggle-button">
         <div class="triangle-down"></div>  
@@ -61,7 +65,11 @@
           tagName="li"
           class=(concat "clickable " (if (eq version apiVersion) " active-item"))
         }}
-          {{version}}
+          {{#if (eq version "stable")}}
+            {{api-version-string name="stable" version=stableVersion}}
+          {{else}}
+            {{api-version-string version=version}}
+          {{/if}}
         {{/link-to}}
       {{/each}}
     {{/bs-dropdown-menu}}
